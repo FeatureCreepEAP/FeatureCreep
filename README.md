@@ -7,3 +7,5 @@ https://featurecreepmc.downwithamerica.com
 https://featurecreepdz.downwithamerica.com
 https://featurecreepmc.minecraftmoddevelopment.com
 https://featurecreepdz.minecraftmoddevelopment.com
+
+Please Use a Branch for the correct version you want.
