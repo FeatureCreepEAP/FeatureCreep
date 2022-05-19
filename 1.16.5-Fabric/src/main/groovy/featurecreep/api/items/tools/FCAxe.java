@@ -1,0 +1,112 @@
+package featurecreep.api.items.tools;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.jboss.dmr.ModelNode;
+
+import featurecreep.api.items.FCItemAPI;
+import featurecreep.api.ui.tabs.vanilla.VanillaCreativeTab;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+
+public class FCAxe extends AxeItem implements FCItemAPI
+{
+	public String public_modid;
+	public String public_name;
+	public int number_id;
+	public ItemGroup default_tab;
+	
+	public FCAxe(int id, String modid, String name, ItemGroup group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	{
+		super(material, attackDamage, attackSpeed, new Item.Settings().group(group));
+		public_modid = modid;
+		public_name = name;
+		registerModels(this);
+		this.default_tab = group;
+	this.number_id = id;
+		}
+
+		
+	public FCAxe(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	{this(id, modid, name, VanillaCreativeTab.getVanillaGroupFromString(group), material, attackDamage, attackSpeed);}
+		
+	
+	public void registerModels(Item item) {
+		// TODO Auto-generated method stub
+		//I could just do a long string but i will need to use this format for some other things so may as well start 
+		ModelNode node = new ModelNode();
+		node.get("parent").set("item/generated");
+		node.get("textures").get("layer0").set(public_modid + ":items/" + public_name);
+		
+		System.out.print(node.toJSONString(false));
+	 
+
+	      try {
+	 
+	    		File myObj = new File("resourcepacks/fcpack_8/assets/" + public_modid + "/models/item/" + public_name + ".json");
+	    	  System.out.println(myObj.toString());
+	    		myObj.getParentFile().mkdirs();
+	    		
+	    		
+	    		FileWriter myWriter = new FileWriter(myObj);
+	          myWriter.write(node.toJSONString(true));
+			myWriter.close();
+  		
+	    		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	      
+	      
+	      
+	      
+	      
+	}
+
+
+
+
+		
+		public String getModId() {
+			// TODO Auto-generated method stub
+			return public_modid;
+		}
+
+
+
+
+		
+		public String getUnlocName() {
+			// TODO Auto-generated method stub
+			return public_name;
+		}
+
+
+
+
+		
+		public int getNumberID() {
+			// TODO Auto-generated method stub
+			return number_id;
+		}
+
+
+
+
+		
+		public ItemGroup getDefaultCreativeTab() {
+			// TODO Auto-generated method stub
+			return default_tab;
+		}
+		
+		
+	
+	
+	
+	
+}
