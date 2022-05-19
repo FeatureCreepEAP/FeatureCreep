@@ -1,0 +1,53 @@
+
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "${maven_group}",
+	  "id": "featurecreep",
+  "version": "${version}",
+
+  "name": "FeatureCreepMC",
+  "description": "A mod which adds many features from older mods to other versions and loads mods.",
+  "authors": [
+    "Me!"
+  ],
+		"authors": [ "You" ],
+	  "contact": {
+    "homepage": "https://featurecreepmc.downwithamerica.com/",
+    "sources": "https://featurecreepmc.downwithamerica.com/src"
+  },
+
+  "license": "JSharp4Life Licence 1",
+  "icon": "assets/modid/icon.png",
+		"intermediate_mappings": "net.fabricmc:intermediary",
+
+		"environment": "*",
+		"entrypoints": {
+			"init": [
+      "featurecreep.FeatureCreepMCInit"
+			]
+		},
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"version": "${loader_version}"
+			},
+			{
+				"id": "quilt_base",
+				"version": "*"
+			},
+			{
+				"id": "minecraft",
+				"version": ">=${minecraft_version}"
+			},
+			{
+				"id": "java",
+				"version": ">=17"
+			}
+		]
+	},
+	"mixin": [
+    "featurecreep.mixins.json"
+	]
+}
+
