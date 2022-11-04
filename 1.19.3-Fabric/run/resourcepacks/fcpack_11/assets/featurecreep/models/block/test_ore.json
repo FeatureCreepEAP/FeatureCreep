@@ -1,0 +1,1 @@
+{"parent" : "minecraft:block/cube", "textures" : {"down" : "featurecreep:blocks/test_ore_down", "east" : "featurecreep:blocks/test_ore_east", "north" : "featurecreep:blocks/test_ore_north", "particle" : "featurecreep:blocks/test_ore_particle", "south" : "featurecreep:blocks/test_ore_south", "up" : "featurecreep:blocks/test_ore_up", "west" : "featurecreep:blocks/test_ore_west"}}

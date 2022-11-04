@@ -1,0 +1,16 @@
+{
+    "type" => "generic_pickaxe",
+    "modid" => "featurecreep",
+    "item_name" => "dmr_pickaxe",
+    "id" => 3006,
+    "group" => "TOOLS",
+    "attack_damage" => 0,
+    "attack_speed" => 0,
+    "material" => {
+        "max_uses" => 5000,
+        "efficiency" => 20,
+        "attack_damage" => 18,
+        "harvest_level" => 8,
+        "enchantability" => 20
+    }
+}

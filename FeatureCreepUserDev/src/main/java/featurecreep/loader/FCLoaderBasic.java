@@ -1,11 +1,8 @@
 package featurecreep.loader;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import featurecreep.FeatureCreep;
-import net.fabricmc.loader.api.FabricLoader;
 
 //For Loading Basic Mods used in Pre Release 1&2, Deprecated but still usable, for now
 public class FCLoaderBasic {

@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "gDg",
+        "/i ",
+        " # "
+    ],
+    "key": {
+        "g": {
+            "item": "featurecreep:steel_ingot"
+        },
+        "D": {
+            "item": "minecraft:diamond"
+        },
+        "/": {
+            "item": "featurecreep:titanium_ingot"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "#": {
+            "item": "minecraft:stick"
+        }
+    },
+      "result": {
+        "item": "featurecreep:optimised_pickaxe",
+        "count": 1
+    }
+}

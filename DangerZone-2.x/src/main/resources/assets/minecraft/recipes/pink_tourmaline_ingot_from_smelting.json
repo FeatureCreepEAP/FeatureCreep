@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "featurecreep:pink_tourmaline_ore"
+  },
+  "result": "featurecreep:pink_tourmaline_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

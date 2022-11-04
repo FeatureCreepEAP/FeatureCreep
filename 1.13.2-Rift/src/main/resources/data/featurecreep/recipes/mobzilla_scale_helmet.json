@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "featurecreep:mobzilla_scale"
+    }
+  },
+  "result": {
+    "item": "featurecreep:mobzilla_scale_helmet"
+  }
+}

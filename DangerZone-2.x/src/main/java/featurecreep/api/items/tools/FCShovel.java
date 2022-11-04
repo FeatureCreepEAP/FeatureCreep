@@ -1,21 +1,23 @@
 package featurecreep.api.items.tools;
 
 import dangerzone.items.Item;
-import dangerzone.items.ItemPickAxe;
+import dangerzone.items.ItemShovel;
 import featurecreep.FeatureCreep;
 import featurecreep.api.items.FCItemAPI;
 import featurecreep.api.ui.FCCreativeTab;
 import featurecreep.api.ui.tabs.vanilla.VanillaCreativeTab;
 
-public class FCShovel extends ItemPickAxe implements FCItemAPI
+public class FCShovel extends ItemShovel implements FCItemAPI
 {
 	public String public_modid;
 	public String public_name;
 	public int number_id;
 	public FCCreativeTab default_tab;
+	public FCToolMaterial mat;
+	public int damage;
+	public int attackspeed;
 	
-
-	public FCShovel(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	public FCShovel(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
 		super(modid + ":" + name, FeatureCreep.gamepath+"/resourcepacks/fcpack_8/assets/" + modid + "/textures/items/" + name + ".png", material.durability, material.attack, material.speed);
 		public_modid = modid;
@@ -24,10 +26,13 @@ public class FCShovel extends ItemPickAxe implements FCItemAPI
 		this.default_tab = group;
 		this.itemID = id;
 		this.number_id = id;
-	}
+		this.mat = material;
+		this.damage = attackDamage;
+		attackspeed = attackSpeed;
+		}
 
 			
-		public FCShovel(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+		public FCShovel(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{this(id, modid, name, (FCCreativeTab)null, material, attackDamage, attackSpeed);}
 		
 	
@@ -79,6 +84,10 @@ public class FCShovel extends ItemPickAxe implements FCItemAPI
 		
 	
 	
+		
+		public FCToolMaterial getFCToolMaterial()	{return mat;}
+		public int getToolAttackDamage() {return damage;}
+		public int getAttackSpeed() {return attackspeed;}
 	
 	
 }

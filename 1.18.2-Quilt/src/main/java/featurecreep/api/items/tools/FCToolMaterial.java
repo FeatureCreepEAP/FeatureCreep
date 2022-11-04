@@ -1,5 +1,10 @@
 package featurecreep.api.items.tools;
 
+import featurecreep.api.blocks.FCBlock;
+import featurecreep.api.blocks.FCBlockAPI;
+import featurecreep.api.blocks.FCOre;
+import featurecreep.api.items.FCItem;
+import featurecreep.api.items.FCItemAPI;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -17,7 +22,7 @@ public class FCToolMaterial implements ToolMaterial
 	public static Ingredient repair;
 	public static Item repair_item;
 	
-	private FCToolMaterial(int harvestLevel, int maxUses, float efficiency, float damage, int enchantability, Ingredient repairMaterial)
+	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, Ingredient repairMaterial)
 	{
 		harvest = harvestLevel;
 		durability = maxUses;
@@ -30,15 +35,45 @@ public class FCToolMaterial implements ToolMaterial
 	}
 	
 	
-	public FCToolMaterial (int harvestLevel, int maxUses, float efficiency, float damage, int enchantability, Item repairItem)
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, Item repairItem)
 	{
 		
-	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repair_item));
+	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
 	}
 	
-	public FCToolMaterial (int harvestLevel, int maxUses, float efficiency, float damage, int enchantability, Block repairItem)
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, Block repairItem)
 	{
-		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repair_item));
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
+	}
+	
+	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCItem repairItem)
+	{
+		
+	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
+	}
+	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCItemAPI repairItem)
+	{
+		
+	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem((Item)repairItem));
+	}
+	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCBlockAPI repairItem)
+	{
+		
+	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem((Block)repairItem));
+	}
+	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCBlock repairItem)
+	{
+		
+	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
+	}
+	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCOre repairItem)
+	{
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
 	}
 	
 	
@@ -51,12 +86,12 @@ public class FCToolMaterial implements ToolMaterial
 		return durability;
 	}
 
-	public float getToolEfficiency() {
+	public int getToolEfficiency() {
 		// TODO Auto-generated method stub
 		return speed;
 	}
 
-	public float getToolAttackDamage() {
+	public int getToolAttackDamage() {
 		// TODO Auto-generated method stub
 		return attack;
 	}
@@ -72,12 +107,14 @@ public class FCToolMaterial implements ToolMaterial
 		return enchantness;
 	}
 
-	public Ingredient getToolRepairIngredient() {
+	
+	// TODO make these return stuff eventually and public
+	private Ingredient getToolRepairIngredient() {
 		// TODO Auto-generated method stub
 		return repair;
 	}
 	
-	public ItemConvertible getToolRepairItem() {
+	private ItemConvertible getToolRepairItem() {
 		// TODO Auto-generated method stub
 		return repair_item;
 	}
@@ -110,11 +147,12 @@ public class FCToolMaterial implements ToolMaterial
 	return	this.getToolEnchantability();
 	}
 
-
+//Do not Use
 	@Override
 	public Ingredient getRepairIngredient() {
 		// TODO Auto-generated method stub
-return this.getToolRepairIngredient();
+//return this.getToolRepairIngredient();
+ return FCIngredient.ingredientFromItem(repair_item);
 	}
 
 

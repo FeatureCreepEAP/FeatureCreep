@@ -1,5 +1,7 @@
 package featurecreep.api.items.tools;
 
+import featurecreep.api.blocks.FCBlock;
+import featurecreep.api.blocks.FCOre;
 import featurecreep.api.items.FCItem;
 
 public class FCIngredient {
@@ -10,11 +12,16 @@ public class FCIngredient {
 		return null;
 
 	}
-	//public static FCIngredient ingredientFromItem(Block item)
-	//{
+	public static FCIngredient ingredientFromItem(FCBlock item)
+    {
+		return null;
 
-	//}
+	}
 	
-	
+	public static FCIngredient ingredientFromItem(FCOre item)
+    {
+		return null;
+
+	}
 	
 }

@@ -13,43 +13,43 @@ public VanillaCreativeTab(String name) {
 //Minecraft Only
 public static ItemGroup getVanillaGroupFromString(VanillaCreativeTab groupname)
 {
-if (groupname.tabname == "BUILDING_BLOCKS")
+if (groupname.tabname.equals("BUILDING_BLOCKS"))
 {
 return ItemGroup.BUILDING_BLOCKS;	
 }
-else if (groupname.tabname == "BREWING")
+else if (groupname.tabname.equals("BREWING"))
 {
 	return ItemGroup.BREWING;	
 }
-else if (groupname.tabname == "COMBAT")
+else if (groupname.tabname.equals("COMBAT"))
 {
 	return ItemGroup.COMBAT;
 }
-else if (groupname.tabname == "DECORATIONS")
+else if (groupname.tabname.equals("DECORATIONS"))
 {
 	return ItemGroup.DECORATIONS;
 }
-else if (groupname.tabname == "FOOD")
+else if (groupname.tabname.equals("FOOD"))
 {
 	return ItemGroup.FOOD;
 }
-else if (groupname.tabname == "MATERIALS")
+else if (groupname.tabname.equals("MATERIALS"))
 {
 	return ItemGroup.MATERIALS;
 }
-else if (groupname.tabname == "MISC")
+else if (groupname.tabname.equals("MISC"))
 {
 	return ItemGroup.MISC;
 }
-else if (groupname.tabname == "REDSTONE")
+else if (groupname.tabname.equals("REDSTONE"))
 {
 	return ItemGroup.REDSTONE;
 }
-else if (groupname.tabname == "TOOLS")
+else if (groupname.tabname.equals("TOOLS"))
 {
 	return ItemGroup.TOOLS;
 }
-else if (groupname.tabname == "TRANSPORTATION")
+else if (groupname.tabname.equals("TRANSPORTATION"))
 {
 	return ItemGroup.TRANSPORTATION;
 }else

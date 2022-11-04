@@ -1,0 +1,5 @@
+{
+"parent": "block/cube_all", 
+"textures":{
+"all": "featurecreep:blocks/tigers_eye_block"
+}}

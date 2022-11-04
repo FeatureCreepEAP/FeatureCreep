@@ -1,53 +1,42 @@
-
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "${maven_group}",
-	  "id": "featurecreep",
-  "version": "${version}",
-
-  "name": "FeatureCreepMC",
-  "description": "A mod which adds many features from older mods to other versions and loads mods.",
-  "authors": [
-    "Me!"
-  ],
-		"authors": [ "You" ],
-	  "contact": {
-    "homepage": "https://featurecreepmc.downwithamerica.com/",
-    "sources": "https://featurecreepmc.downwithamerica.com/src"
-  },
-
-  "license": "JSharp4Life Licence 1",
-  "icon": "assets/modid/icon.png",
+		"group": "com.example",
+		"id": "featurecreep",
+		"version": "${version}",
+		"metadata": {
+			"name": "FeatureCreepMC",
+			"description": "A mod which adds many features from older mods to other versions and loads mods.",
+			"contributors": {
+				"Me!": "Owner"
+			},
+			"contact": {
+				"homepage": "https://featurecreepmc.downwithamerica.com/",
+				"issues": "https://pagure.io/FeatureCreep/issues",
+				"sources": "https://featurecreepmc.downwithamerica.com/src"
+			},
+			"icon": "assets/example_mod/icon.png"
+		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
-
-		"environment": "*",
 		"entrypoints": {
-			"init": [
-      "featurecreep.FeatureCreepMCInit"
-			]
+			"init": "featurecreep.FeatureCreepMCInit"
 		},
 		"depends": [
 			{
 				"id": "quilt_loader",
-				"version": "${loader_version}"
+				"versions": ">=0.16.0-"
 			},
 			{
-				"id": "quilt_base",
-				"version": "*"
+				"id": "quilted_fabric_api",
+				"versions": ">=1.0.0-"
 			},
 			{
 				"id": "minecraft",
-				"version": ">=${minecraft_version}"
-			},
-			{
-				"id": "java",
-				"version": ">=17"
+				"versions": ">=1.18.2"
 			}
 		]
 	},
-	"mixin": [
+"mixin": [
     "featurecreep.mixins.json"
 	]
 }
-

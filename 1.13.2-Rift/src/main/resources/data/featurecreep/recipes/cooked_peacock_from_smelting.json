@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "featurecreep:peacock_leg"
+  },
+  "result": "featurecreep:cooked_peacock_leg",
+  "experience": 1.0,
+  "cookingtime": 200
+}

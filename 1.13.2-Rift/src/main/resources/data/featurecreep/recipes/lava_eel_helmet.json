@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "featurecreep:lava_eel"
+    }
+  },
+  "result": {
+    "item": "featurecreep:lava_eel_helmet"
+  }
+}

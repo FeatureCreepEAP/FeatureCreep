@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "C",
+        "G"
+    ],
+    "key": {
+        "#": {
+            "item": "featurecreep:gasoline_petrol"
+        },
+        "C": {
+            "item": "featurecreep:gasoline_petrol"
+        },
+        "G": {
+            "item": "minecraft:glass_bottle"
+        }
+    },
+    "result": {
+        "item": "featurecreep:drinkable_gasoline_petrol",
+        "count": 1
+    }
+}

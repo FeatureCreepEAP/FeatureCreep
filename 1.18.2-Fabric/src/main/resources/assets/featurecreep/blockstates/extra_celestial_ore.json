@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "featurecreep:block/extra_celestial_ore"
+    }
+  }
+}

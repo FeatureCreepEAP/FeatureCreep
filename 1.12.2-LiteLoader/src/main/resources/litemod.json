@@ -1,0 +1,8 @@
+{
+    "name": "featurecreep",
+    "version": 4.0,
+    "mcversion": "1.12.2",
+    "mixinConfigs": [
+"featurecreep.mixins.json"
+    ]
+}

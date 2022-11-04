@@ -1,0 +1,1 @@
+ {"type":"crafting_shaped","pattern":["###","XOX","@@@"],"key":{"#":{"item":"minecraft:cactus"},"X":{"item":"minecraft:redstone_block","data":0},"O":{"item":"minecraft:diamond_pickaxe"},"@":{"item":"minecraft:gunpowder"}},"result":{"item":"featurecreep:miners_dream"}} 

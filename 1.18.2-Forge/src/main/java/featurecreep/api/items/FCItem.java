@@ -9,6 +9,7 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.api.ui.tabs.vanilla.VanillaCreativeTab;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FCItem extends Item implements FCItemAPI
 {
@@ -25,6 +26,9 @@ public class FCItem extends Item implements FCItemAPI
 	registerModels(this);
 	this.default_tab = group;
 	this.number_id = id;
+	
+//	setRegistryName(modid, name);
+ //   ForgeRegistries.ITEMS.register(this);
 	}
 
 	
@@ -35,7 +39,13 @@ public class FCItem extends Item implements FCItemAPI
 	
 
 	
-	public void registerModels(Item item) {
+	
+	
+	
+	
+	
+	
+		public void registerModels(Item item) {
 		// TODO Auto-generated method stub
 		//I could just do a long string but i will need to use this format for some other things so may as well start 
 		ModelNode node = new ModelNode();
@@ -47,15 +57,21 @@ public class FCItem extends Item implements FCItemAPI
 
 	      try {
 	 
-	    		File myObj = new File("resourcepacks/fcpack_8/assets/" + public_modid + "/models/item/" + public_name + ".json");
-	    	  System.out.println(myObj.toString());
+	    		File myObj = new File(featurecreep.api.PackLoader.fc_pack_location+ "/assets/" + public_modid + "/models/item/" + public_name + ".json");
+	    
+	    	  	if (!myObj.exists()) {
+
+	    		System.out.println(myObj.toString());
 	    		myObj.getParentFile().mkdirs();
 	    		
 	    		
 	    		FileWriter myWriter = new FileWriter(myObj);
 	          myWriter.write(node.toJSONString(true));
 			myWriter.close();
-  		
+
+	    	  	}
+			
+			
 	    		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,6 +84,7 @@ public class FCItem extends Item implements FCItemAPI
 	      
 	      
 	}
+
 
 
 

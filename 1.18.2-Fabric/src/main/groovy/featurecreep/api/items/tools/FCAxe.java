@@ -18,8 +18,11 @@ public class FCAxe extends AxeItem implements FCItemAPI
 	public String public_name;
 	public int number_id;
 	public ItemGroup default_tab;
+	public FCToolMaterial mat;
+	public int damage;
+	public int attackspeed;
 	
-	public FCAxe(int id, String modid, String name, ItemGroup group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	public FCAxe(int id, String modid, String name, ItemGroup group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
 		super(material, attackDamage, attackSpeed, new Item.Settings().group(group));
 		public_modid = modid;
@@ -27,14 +30,17 @@ public class FCAxe extends AxeItem implements FCItemAPI
 		registerModels(this);
 		this.default_tab = group;
 	this.number_id = id;
+	this.mat = material;
+	this.damage = attackDamage;
+	attackspeed = attackSpeed;
 		}
 
 		
-	public FCAxe(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	public FCAxe(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{this(id, modid, name, VanillaCreativeTab.getVanillaGroupFromString(group), material, attackDamage, attackSpeed);}
 		
 	
-	public void registerModels(Item item) {
+			public void registerModels(Item item) {
 		// TODO Auto-generated method stub
 		//I could just do a long string but i will need to use this format for some other things so may as well start 
 		ModelNode node = new ModelNode();
@@ -46,15 +52,21 @@ public class FCAxe extends AxeItem implements FCItemAPI
 
 	      try {
 	 
-	    		File myObj = new File("resourcepacks/fcpack_8/assets/" + public_modid + "/models/item/" + public_name + ".json");
-	    	  System.out.println(myObj.toString());
+	    		File myObj = new File(featurecreep.api.PackLoader.fc_pack_location+ "/assets/" + public_modid + "/models/item/" + public_name + ".json");
+	    
+	    	  	if (!myObj.exists()) {
+
+	    		System.out.println(myObj.toString());
 	    		myObj.getParentFile().mkdirs();
 	    		
 	    		
 	    		FileWriter myWriter = new FileWriter(myObj);
 	          myWriter.write(node.toJSONString(true));
 			myWriter.close();
-  		
+
+	    	  	}
+			
+			
 	    		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,7 +117,9 @@ public class FCAxe extends AxeItem implements FCItemAPI
 		}
 		
 		
-	
+		public FCToolMaterial getFCToolMaterial()	{return mat;}
+		public int getToolAttackDamage() {return damage;}
+		public int getAttackSpeed() {return attackspeed;}
 	
 	
 	

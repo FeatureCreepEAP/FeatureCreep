@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XX",
+    " S",
+    " S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "featurecreep:tigers_eye"
+    }
+  },
+  "result": {
+    "item": "featurecreep:tigers_eye_hoe"
+  }
+}

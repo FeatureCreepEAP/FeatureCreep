@@ -1,0 +1,16 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "featurecreep:aluminium_ingot"
+    }
+  },
+  "result": {
+    "item": "featurecreep:aluminium_block"
+  }
+}

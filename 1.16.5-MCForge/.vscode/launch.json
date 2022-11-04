@@ -1,0 +1,73 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Minecraft Client",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "net.fabricmc.devlaunchinjector.Main",
+      "vmArgs": "\"-Dfabric.dli.config\u003d/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/.gradle/loom-cache/launch.cfg\" \"-Dfabric.dli.env\u003dclient\" \"-XX:+IgnoreUnrecognizedVMOptions\" \"--add-exports\u003djava.base/sun.security.util\u003dALL-UNNAMED\" \"--add-exports\u003djdk.naming.dns/com.sun.jndi.dns\u003djava.naming\" \"--add-opens\u003djava.base/java.util.jar\u003dALL-UNNAMED\" \"-Dfabric.dli.main\u003dnet.minecraftforge.userdev.LaunchTesting\"",
+      "args": "",
+      "env": {
+        "MOD_CLASSES": "main%%/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/build/resources/main:main%%/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/build/classes/java/main",
+        "MCP_MAPPINGS": "loom.stub",
+        "MCP_VERSION": "20210115.111550",
+        "FORGE_VERSION": "36.2.39",
+        "assetIndex": "1.16.5-1.16",
+        "assetDirectory": "/home/rhel/.gradle/caches/fabric-loom/assets",
+        "nativesDirectory": "/home/rhel/.gradle/caches/fabric-loom/1.16.5/natives",
+        "FORGE_GROUP": "net.minecraftforge",
+        "target": "fmluserdevclient",
+        "MC_VERSION": "1.16.5"
+      },
+      "projectName": ""
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Data",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "net.fabricmc.devlaunchinjector.Main",
+      "vmArgs": "\"-Dfabric.dli.config\u003d/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/.gradle/loom-cache/launch.cfg\" \"-Dfabric.dli.env\u003ddata\" \"-XX:+IgnoreUnrecognizedVMOptions\" \"--add-exports\u003djava.base/sun.security.util\u003dALL-UNNAMED\" \"--add-exports\u003djdk.naming.dns/com.sun.jndi.dns\u003djava.naming\" \"--add-opens\u003djava.base/java.util.jar\u003dALL-UNNAMED\" \"-Dfabric.dli.main\u003dnet.minecraftforge.userdev.LaunchTesting\"",
+      "args": "",
+      "env": {
+        "MOD_CLASSES": "main%%/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/build/resources/main:main%%/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/build/classes/java/main",
+        "MCP_MAPPINGS": "loom.stub",
+        "MCP_VERSION": "20210115.111550",
+        "FORGE_VERSION": "36.2.39",
+        "assetIndex": "1.16.5-1.16",
+        "assetDirectory": "/home/rhel/.gradle/caches/fabric-loom/assets",
+        "FORGE_GROUP": "net.minecraftforge",
+        "target": "fmluserdevdata",
+        "MC_VERSION": "1.16.5"
+      },
+      "projectName": ""
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "net.fabricmc.devlaunchinjector.Main",
+      "vmArgs": "\"-Dfabric.dli.config\u003d/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/.gradle/loom-cache/launch.cfg\" \"-Dfabric.dli.env\u003dserver\" \"-XX:+IgnoreUnrecognizedVMOptions\" \"--add-exports\u003djava.base/sun.security.util\u003dALL-UNNAMED\" \"--add-exports\u003djdk.naming.dns/com.sun.jndi.dns\u003djava.naming\" \"--add-opens\u003djava.base/java.util.jar\u003dALL-UNNAMED\" \"-Dfabric.dli.main\u003dnet.minecraftforge.userdev.LaunchTesting\"",
+      "args": "\"nogui\"",
+      "env": {
+        "MOD_CLASSES": "main%%/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/build/resources/main:main%%/home/rhel/Documents/FeatureCreep/esr/1.16.5-MCForge/build/classes/java/main",
+        "MCP_MAPPINGS": "loom.stub",
+        "MCP_VERSION": "20210115.111550",
+        "FORGE_VERSION": "36.2.39",
+        "FORGE_GROUP": "net.minecraftforge",
+        "target": "fmluserdevserver",
+        "MC_VERSION": "1.16.5"
+      },
+      "projectName": ""
+    }
+  ]
+}

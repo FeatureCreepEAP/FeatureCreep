@@ -57,7 +57,10 @@ public class FCItem  implements FCItemAPI
 	
 	
 	
-	
+	public void registerModels(FCItem item) {
+		   
+	      
+	}
 	
 	
 	

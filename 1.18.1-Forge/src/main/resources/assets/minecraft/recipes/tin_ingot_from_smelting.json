@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "featurecreep:tin_ore"
+  },
+  "result": "featurecreep:tin_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

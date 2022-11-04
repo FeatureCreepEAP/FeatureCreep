@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SXS",
+    "SSS"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:melon_slice"
+    },
+    "S": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "result": {
+    "item": "featurecreep:watermelon_slice"
+  }
+}

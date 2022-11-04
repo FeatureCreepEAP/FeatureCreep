@@ -1,0 +1,21 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "featurecreep:lettuce"
+    },
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "featurecreep:tomato"
+    },
+    {
+      "item": "featurecreep:cooked_crab_meat"
+    }
+  ],
+  "result": {
+    "item": "featurecreep:crab_patty",
+    "count": 1
+  }
+}

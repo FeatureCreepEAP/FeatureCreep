@@ -16,7 +16,5 @@ public class FCIngredient {
 		return Ingredient.ofItems(item);
 
 	}
-	
-	
-	
+
 }

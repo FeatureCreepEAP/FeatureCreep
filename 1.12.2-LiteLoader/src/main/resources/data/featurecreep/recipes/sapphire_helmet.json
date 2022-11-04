@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "featurecreep:sapphire"
+    }
+  },
+  "result": {
+    "item": "featurecreep:sapphire_helmet"
+  }
+}

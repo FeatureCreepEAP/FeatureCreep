@@ -1,13 +1,12 @@
 package featurecreep.api;
 
-import featurecreep.api.ui.FCCreativeTab;
+import net.minecraft.item.ItemGroup;
 
 public interface BlockOrItem {
 
 	public String getModId();
 	public String getUnlocName();
 	public int getNumberID();
-	public FCCreativeTab getDefaultCreativeTab();
-	
+	public ItemGroup getDefaultCreativeTab();
 	
 }

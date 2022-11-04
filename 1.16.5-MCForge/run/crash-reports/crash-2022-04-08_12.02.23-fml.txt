@@ -1,0 +1,122 @@
+---- Minecraft Crash Report ----
+// But it works on my machine.
+
+Time: 08/04/2022, 12:02
+Description: Mod loading error has occurred
+
+java.lang.Exception: Mod Loading has failed
+	at net.minecraftforge.logging.CrashReportExtender.dumpModLoadingCrashReport(CrashReportExtender.java:50) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2364%2370!/:?] {re:classloading}
+	at net.minecraftforge.client.loading.ClientModLoader.completeModLoading(ClientModLoader.java:147) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2364%2370!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.MinecraftClient.lambda$new$1(MinecraftClient.java:654) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.util.Util.ifPresentOrElse(Util.java:410) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading}
+	at net.minecraft.client.MinecraftClient.lambda$new$2(MinecraftClient.java:650) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.gui.screen.SplashOverlay.render(SplashOverlay.java:135) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.render.GameRenderer.render(GameRenderer.java:854) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1097) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.MinecraftClient.run(MinecraftClient.java:757) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.main.Main.main(Main.java:214) ~[forge-1.18.2-40.0.43-minecraft-project-@-mapped.jar%2365!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.ForgeClientUserdevLaunchHandler.lambda$launchService$0(ForgeClientUserdevLaunchHandler.java:38) ~[fmlloader-1.18.2-40.0.43.jar-alfd-transformed.jar%230!/:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:37) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:106) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:77) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-9.1.3.jar-alfd-transformed.jar%235!/:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:149) [bootstraplauncher-1.0.0.jar-alfd-transformed.jar:1.0.0+1.0.0+main.26de0917] {}
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at featurecreep.FeatureCreepMCInit.commonSetup(FeatureCreepMCInit.java:94) ~[%2369!/:?] {re:mixin,re:classloading}
+-- MOD featurecreep --
+Details:
+	Mod File: main
+	Failure message: FeatureCreep (featurecreep) encountered an error during the common_setup event phase
+		java.lang.NullPointerException: Cannot read the array length because "contents" is null
+	Mod Version: 4.0
+	Mod Issue URL: NOT PROVIDED
+	Exception message: java.lang.NullPointerException: Cannot read the array length because "contents" is null
+Stacktrace:
+	at featurecreep.FeatureCreepMCInit.commonSetup(FeatureCreepMCInit.java:94) ~[%2369!/:?] {re:mixin,re:classloading}
+	at net.minecraftforge.eventbus.EventBus.doCastFilter(EventBus.java:247) ~[eventbus-5.0.7.jar-alfd-transformed.jar%234!/:?] {}
+	at net.minecraftforge.eventbus.EventBus.lambda$addListener$11(EventBus.java:239) ~[eventbus-5.0.7.jar-alfd-transformed.jar%234!/:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:302) ~[eventbus-5.0.7.jar-alfd-transformed.jar%234!/:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:283) ~[eventbus-5.0.7.jar-alfd-transformed.jar%234!/:?] {}
+	at net.minecraftforge.fml.javafmlmod.FMLModContainer.acceptEvent(FMLModContainer.java:120) ~[javafmllanguage-1.18.2-40.0.43.jar-alfd-transformed.jar%2366!/:?] {}
+	at net.minecraftforge.fml.ModContainer.lambda$buildTransitionHandler$4(ModContainer.java:121) ~[fmlcore-1.18.2-40.0.43.jar-alfd-transformed.jar%2368!/:?] {}
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?] {}
+	at java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1796) ~[?:?] {}
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373) ~[?:?] {}
+	at java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182) ~[?:?] {}
+	at java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655) ~[?:?] {}
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622) ~[?:?] {}
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165) ~[?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.18.2
+	Minecraft Version ID: 1.18.2
+	Operating System: Linux (amd64) version 4.18.0-348.12.2.el8_5.x86_64
+	Java Version: 17.0.2, Red Hat, Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Red Hat, Inc.
+	Memory: 479425976 bytes (457 MiB) / 1455423488 bytes (1388 MiB) up to 7319060480 bytes (6980 MiB)
+	CPUs: 64
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Opteron(tm) Processor 6282 SE
+	Identifier: AuthenticAMD Family 21 Model 1 Stepping 2
+	Microarchitecture: Bulldozer
+	Frequency (GHz): -0.00
+	Number of physical packages: 4
+	Number of physical CPUs: 32
+	Number of logical CPUs: 64
+	Graphics card #0 name: MGA G200eW WPCM450
+	Graphics card #0 vendor: Matrox Electronics Systems Ltd. (0x102b)
+	Graphics card #0 VRAM (MB): 16.00
+	Graphics card #0 deviceId: 0x0532
+	Graphics card #0 versionInfo: unknown
+	Graphics card #1 name: Pitcairn XT GL [FirePro W7000]
+	Graphics card #1 vendor: Advanced Micro Devices, Inc. [AMD/ATI] (0x1002)
+	Graphics card #1 VRAM (MB): 256.00
+	Graphics card #1 deviceId: 0x6808
+	Graphics card #1 versionInfo: unknown
+	Virtual memory max (MB): 28076.36
+	Virtual memory used (MB): 18231.93
+	Swap memory total (MB): 14120.00
+	Swap memory used (MB): 1053.75
+	JVM Flags: 0 total; 
+	ModLauncher: 9.1.3+9.1.3+main.9b69c82a
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		 mixin PLUGINSERVICE 
+		 eventbus PLUGINSERVICE 
+		 slf4jfixer PLUGINSERVICE 
+		 object_holder_definalize PLUGINSERVICE 
+		 runtime_enum_extender PLUGINSERVICE 
+		 capability_token_subclass PLUGINSERVICE 
+		 accesstransformer PLUGINSERVICE 
+		 runtimedistcleaner PLUGINSERVICE 
+		 mixin TRANSFORMATIONSERVICE 
+		 ForgeLoomMixinRemapperInjector TRANSFORMATIONSERVICE 
+		 fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@null
+		minecraft@1.0
+	Mod List: 
+		forge-1.18.2-40.0.43-minecraft-project-@-mapped.ja|Minecraft                     |minecraft                     |1.18.2              |SIDED_SETU|Manifest: NOSIGNATURE
+		main                                              |FeatureCreep                  |featurecreep                  |4.0                 |ERROR     |Manifest: NOSIGNATURE
+		                                                  |Forge                         |forge                         |40.0.43             |SIDED_SETU|Manifest: NOSIGNATURE
+	Crash Report UUID: 7f9b3380-c616-479a-8d5a-32b6c0c7851a
+	FML: 40.0
+	Forge: net.minecraftforge:40.0.43

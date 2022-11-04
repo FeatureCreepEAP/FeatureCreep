@@ -10,18 +10,23 @@ public class FCSword implements FCItemAPI
 	public String public_name;
 	public int number_id;
 	public FCCreativeTab default_tab;
-	 
+	public FCToolMaterial mat;
+	public int damage;
+	public int attackspeed;
 	
-	public FCSword(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	public FCSword(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
 		public_modid = modid;
 		public_name = name;
 		this.default_tab = group;
 	this.number_id = id;
+	this.mat = material;
+	this.damage = attackDamage;
+	attackspeed = attackSpeed;
 		}
 
 		
-		public FCSword(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+		public FCSword(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{this(id, modid, name, (FCCreativeTab)null, material, attackDamage, attackSpeed);}
 
 		
@@ -58,6 +63,10 @@ public class FCSword implements FCItemAPI
 		}
 		
 		
+		public FCToolMaterial getFCToolMaterial()	{return mat;}
+		public int getToolAttackDamage() {return damage;}
+		public int getAttackSpeed() {return attackspeed;}
+	
 	
 	
 	

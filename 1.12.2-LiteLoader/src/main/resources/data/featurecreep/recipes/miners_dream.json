@@ -1,0 +1,1 @@
+ {"type":"crafting_shaped","pattern":["SSS","XOX","YYY"],"key":{"S":{"item":"minecraft:cactus"},"X":{"item":"minecraft:redstone_block","data":0},"O":{"item":"minecraft:diamond_pickaxe"},"Y":{"item":"minecraft:gunpowder"}},"result":{"item":"featurecreep:miners_dream"}} 

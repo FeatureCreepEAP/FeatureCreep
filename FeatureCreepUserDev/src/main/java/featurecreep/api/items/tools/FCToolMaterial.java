@@ -1,6 +1,10 @@
 package featurecreep.api.items.tools;
 
+import featurecreep.api.blocks.FCBlock;
+import featurecreep.api.blocks.FCBlockAPI;
+import featurecreep.api.blocks.FCOre;
 import featurecreep.api.items.FCItem;
+import featurecreep.api.items.FCItemAPI;
 
 public class FCToolMaterial 
 {
@@ -13,7 +17,7 @@ public class FCToolMaterial
 	public static FCIngredient repair;
 	public static FCItem repair_item;
 	
-	private FCToolMaterial(int harvestLevel, int maxUses, float efficiency, float damage, int enchantability, FCIngredient repairMaterial)
+	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCIngredient repairMaterial)
 	{
 		harvest = harvestLevel;
 		durability = maxUses;
@@ -26,17 +30,30 @@ public class FCToolMaterial
 	}
 	
 	
-	public FCToolMaterial (int harvestLevel, int maxUses, float efficiency, float damage, int enchantability, FCItem repairItem)
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCItem repairItem)
 	{
-		
-	this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repair_item));
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
 	}
 	
-//	public FCToolMaterial (int harvestLevel, int maxUses, float efficiency, float damage, int enchantability, Block repairItem)
-//	{
-//		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repair_item));
-//	}
 	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCItemAPI repairItem)
+	{
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem((FCItem)repairItem));
+	}
+
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCBlockAPI repairItem)
+	{
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem((FCBlock)repairItem));
+	}
+	
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCBlock repairItem)
+	{
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
+	}
+	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCOre repairItem)
+	{
+		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem(repairItem));
+	}
 	
 	
 	

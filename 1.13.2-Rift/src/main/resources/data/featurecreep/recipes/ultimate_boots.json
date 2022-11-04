@@ -1,0 +1,18 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "T T",
+    "U U"
+  ],
+  "key": {
+    "T": {
+      "item": "featurecreep:titanium_ingot"
+    },
+    "U": {
+      "item": "featurecreep:uranium_ingot"
+    }
+  },
+  "result": {
+    "item": "featurecreep:ultimate_boots"
+  }
+}

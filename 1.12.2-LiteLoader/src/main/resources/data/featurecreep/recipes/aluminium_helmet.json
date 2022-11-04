@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "featurecreep:aluminium_ingot"
+    }
+  },
+  "result": {
+    "item": "featurecreep:aluminium_helmet"
+  }
+}

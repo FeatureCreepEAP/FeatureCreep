@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "TU",
+    "TI",
+    " I"
+  ],
+  "key": {
+    "T": {
+      "item": "featurecreep:titanium_ingot"
+    },
+    "U": {
+      "item": "featurecreep:uranium_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "featurecreep:ultimate_axe"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "featurecreep:block/silver_ore"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "featurecreep:uranium_ore"
+  },
+  "result": "featurecreep:uranium_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

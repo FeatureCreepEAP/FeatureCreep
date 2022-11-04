@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XX",
+    " S",
+    " S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "featurecreep:ruby"
+    }
+  },
+  "result": {
+    "item": "featurecreep:ruby_hoe"
+  }
+}

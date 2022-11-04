@@ -5,7 +5,8 @@ import featurecreep.api.items.FCItem;
 
 public class FCCreativeTab {
 
-	
+	public String id;	
+
 	public FCCreativeTab(int index, String id, FCItem item)
 	{
 

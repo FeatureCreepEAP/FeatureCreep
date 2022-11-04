@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "featurecreep:tigers_eye"
+    }
+  },
+  "result": {
+    "item": "featurecreep:tigers_eye_helmet"
+  }
+}

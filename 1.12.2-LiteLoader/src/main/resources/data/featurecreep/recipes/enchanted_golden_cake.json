@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SXS",
+    "SSS"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:cake"
+    },
+    "S": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "featurecreep:enchanted_golden_cake"
+  }
+}

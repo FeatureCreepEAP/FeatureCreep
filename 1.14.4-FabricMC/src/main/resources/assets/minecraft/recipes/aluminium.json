@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "featurecreep:aluminium_ore"
+  },
+  "result": "featurecreep:aluminium_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

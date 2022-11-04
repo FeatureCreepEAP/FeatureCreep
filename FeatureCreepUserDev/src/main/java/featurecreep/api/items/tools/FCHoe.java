@@ -6,28 +6,28 @@ import featurecreep.api.ui.tabs.vanilla.VanillaCreativeTab;
 
 public class FCHoe implements FCItemAPI
 {
-		public String public_modid;
+	public String public_modid;
 	public String public_name;
 	public int number_id;
 	public FCCreativeTab default_tab;
-
-	public FCHoe(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
+	public FCToolMaterial mat;
+	public int damage;
+	public int attackspeed;
+	
+	public FCHoe(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
 		public_modid = modid;
 		public_name = name;
 		this.default_tab = group;
 	this.number_id = id;
-		
-	}
+	this.mat = material;
+	this.damage = attackDamage;
+	attackspeed = attackSpeed;
+		}
 
 		
-		public FCHoe(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, float attackSpeed)
-		{this(id, modid, name, (FCCreativeTab)null, material, attackDamage, attackSpeed);}
-		
-	
-
-
-
+		public FCHoe(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
+	{this(id, modid, name, (FCCreativeTab)null, material, attackDamage, attackSpeed);}
 
 		
 		public String getModId() {
@@ -63,4 +63,11 @@ public class FCHoe implements FCItemAPI
 		}
 		
 		
+		public FCToolMaterial getFCToolMaterial()	{return mat;}
+		public int getToolAttackDamage() {return damage;}
+		public int getAttackSpeed() {return attackspeed;}
+	
+	
+	
+	
 }

@@ -1,25 +1,16 @@
 package featurecreep;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import featurecreep.api.FCForgeRegistries;
-import featurecreep.api.FCRegistries;
-import featurecreep.loader.PluginModuleFinder;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.Items;
+import featurecreep.legacy.FCBlocks;
+import featurecreep.legacy.FCItems;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -32,12 +23,11 @@ import net.minecraftforge.fml.loading.FMLPaths;
 		public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 //	    public static final Logger LOGGER = LogManager.getLogger();
 
-		protected static Path gamepath = FMLPaths.GAMEDIR.get();
-		protected static String modpath = FMLPaths.MODSDIR.toString();
+		public static Path gamepath = Paths.get(System.getProperty("user.dir"));
+		protected static String modpath = gamepath.toString() + "/mods/";
 
                 
 	    public FeatureCreepMCInit() {
-	    
 		  	  
 	        FeatureCreep.onInitialise();
       	    	
@@ -49,15 +39,18 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	        
 	        
 	        // This listener is fired on both client and server during setup.
-	        MOD_BUS.addListener(this::commonSetup);
+	        //MOD_BUS.addListener(this::commonSetup);
 	        // This listener is only fired during client setup, so we can use client-side methods here.
-	        MOD_BUS.addListener(this::clientSetup);
+	        //MOD_BUS.addListener(this::clientSetup);
 
-	        MOD_BUS.addListener(this::loadcomplete);
+	  //      MOD_BUS.addListener(this::loadcomplete);
 
 	        
 	        
-	        
+	    	FCBlocks.ITEMS.register(MOD_BUS);
+	    	FCBlocks.BLOCKS.register(MOD_BUS);
+	    	FCItems.ITEMS.register(MOD_BUS);
+	    	
 	        // Most other events are fired on Forge's bus.
 	        // If we want to use annotations to register event listeners,
 	        // we need to register our object like this!
@@ -77,10 +70,10 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	    
 	    
 
-	    private void commonSetup(final FMLCommonSetupEvent event) {	    	
+//	    private void commonSetup(final FMLCommonSetupEvent event) {	    	
 	    	
-	    	LOGGER.info("Hello from common setup! This is *after* registries are done, so we can do this:");
-	        LOGGER.info("Look, I found a {}!", Items.DIAMOND.getRegistryName());
+//	    	LOGGER.info("Hello from common setup! This is *after* registries are done, so we can do this:");
+//	        LOGGER.info("Look, I found a {}!", Items.DIAMOND.getRegistryName());
 
 	        
 	        
@@ -89,21 +82,21 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	        
 	    	
 	    	
-	    }
+	    //}
 
-	    private void clientSetup(final FMLClientSetupEvent event) {
-	        LOGGER.info("Hey, we're on Minecraft version {}!", MinecraftClient.getInstance().getGameVersion());
-	    }
+//	    private void clientSetup(final FMLClientSetupEvent event) {
+//	        LOGGER.info("Hey, we're on Minecraft version {}!", MinecraftClient.getInstance().getGameVersion());
+//	    }
 
-	    @SubscribeEvent
-	    public void kaboom(ExplosionEvent.Detonate event) {
-	        LOGGER.info("Kaboom! Something just blew up in {}!", event.getWorld());
-	    }
+//	    @SubscribeEvent
+//	    public void kaboom(ExplosionEvent.Detonate event) {
+//	        LOGGER.info("Kaboom! Something just blew up in {}!", event.getWorld());
+//	    }
 	    
-	    @SubscribeEvent
-	    public void loadcomplete(FMLLoadCompleteEvent event) {
+//	    @SubscribeEvent
+//	    public void loadcomplete(FMLLoadCompleteEvent event) {
 
-	    }
+//	    }
 	    
 	    
 	}

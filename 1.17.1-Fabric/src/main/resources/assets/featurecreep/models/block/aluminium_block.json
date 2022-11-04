@@ -1,0 +1,6 @@
+{
+"parent": "block/cube_all", 
+"textures":{
+"all": "featurecreep:blocks/aluminium_block",
+ "particle": "featurecreep:blocks/aluminium_block"
+}}
