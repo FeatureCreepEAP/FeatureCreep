@@ -1,17 +1,9 @@
 package featurecreep;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.jboss.modules.ModuleLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import featurecreep.legacy.FeatureCreepMC;
-import featurecreep.loader.PluginModuleFinder;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 
 
 public class FeatureCreepMCInit implements ModInitializer {
@@ -28,7 +20,7 @@ public class FeatureCreepMCInit implements ModInitializer {
 LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
-   FeatureCreepMC.onInitialize();
+  // FeatureCreepMC.onInitialize();
 }
 
 

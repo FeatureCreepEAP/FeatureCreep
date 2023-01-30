@@ -3,8 +3,8 @@ package featurecreep;
 import java.io.File;
 import java.nio.file.Path;
 
-import featurecreep.api.FCPackLoad;
-import featurecreep.api.PackLoader;
+import featurecreep.api.bg.FCPackLoad;
+import featurecreep.api.bg.PackLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

@@ -2,7 +2,7 @@ package featurecreep;
 
 import java.io.IOException;
 
-import featurecreep.api.FCForgeRegistries;
+import featurecreep.api.bg.registries.FCForgeRegistries;
 import featurecreep.loader.FCLoaderBasicR4;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;

@@ -1,58 +1,67 @@
 package featurecreep;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Path;
 
 import org.jboss.logging.Logger;
 import org.jboss.modules.ModuleLoader;
 
 import featurecreep.api.GameInjections;
-import featurecreep.api.PackLoader;
+import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.datapacks.DataPackLoader;
+import featurecreep.api.bg.items.vanilla.VanillaItems;
+import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
+import featurecreep.api.bg.registries.FCRegistries;
+import featurecreep.api.bg.ui.FCCreativeTabs;
 import featurecreep.api.parsers.DataParseContent;
-import featurecreep.api.ui.FCCreativeTabs;
+import featurecreep.content.FCBlocks;
 import featurecreep.content.FCItems;
-import featurecreep.loader.FCLoaderBasicR2;
-import featurecreep.loader.FCLoaderBasicR4;
+import featurecreep.loader.FCLoaderBasicR5;
+import featurecreep.loader.GetPackagesFromClassClassLoader;
+import mx.kenzie.mirror.Mirror;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.launchwrapper.Launch;
 
 public class FeatureCreep {
 
-	public ModuleLoader modloader;
-	public static Path gamepath = Launch.minecraftHome.toPath();
-	public static String modpath = gamepath + ("/mods/");	
+public ModuleLoader modloader;
+public static Path gamepath = Launch.minecraftHome.toPath();
+public static String modpath = gamepath + ("/mods/");	
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	
-	private static String[] dependancies = {""};
+private static String[] dependancies = {""};
 	public static String[] modpaths = {modpath};
-	public static String[] packages_needed = {"net/minecraft", ""};
-//I need to load all the packages	
+	public static String[] packages_needed = {""};
 	
-	public static void onInitialise() {
+
+		public static void onInitialise() {
 		// TODO Auto-generated method stub
-	
 			System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID " + io.smallrye.common.os.Process.getProcessId());
-
-	
-	
-	    System.out.println(modpath);
-
-		
-		GameInjections.inject();
-		FCCreativeTabs.onInitialise();
-		FCItems.onInitialise();
-		//FCLoaderBasicR2.loadMods(modpath);
-		FCLoaderBasicR4.loadMods(modpaths, dependancies, packages_needed);
-		DataParseContent.parseContent();
-
-		PackLoader.loadPacks(FCLoaderBasicR4.modules);
-		
-		
-		
-
-		
+			GameInjections.inject();
+			FCCreativeTabs.onInitialise();
+			VanillaItems.onInitialise();
+			FCItems.onInitialise();
+			FCBlocks.onInitialise();
+			packages_needed = GetPackagesFromClassClassLoader.getPacakgesFromClassLoaderClassAsStringArray(FeatureCreep.class);
+			FCLoaderBasicR5.loadMods(modpaths, dependancies, packages_needed); //This runs fast on LL for some reason, maybe it is because of the extra ram
+			DataParseContent.parseContent();
+			FCRegistries.generateModels();
+			PackLoader.loadPacks(FCLoaderBasicR5.modules);	
+			OrespawnBasicFeatureParser.spawnOresFromDefaultConfig();
+			DataPackLoader.onInitialise();
+			try {
+				RenderItem.class.getDeclaredMethod("rereg", null).invoke(Minecraft.getMinecraft().getRenderItem(), null);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| NoSuchMethodException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		}
-	
 	
 	
 	

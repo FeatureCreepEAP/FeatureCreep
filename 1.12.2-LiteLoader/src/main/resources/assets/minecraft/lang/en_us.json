@@ -1,5 +1,6 @@
 {
     "item.featurecreep.amethyst": "Amethyst",
+      "multiplayer.disconnect.not_whitelisted": "You are not allow-listed on this server!",
     "block.featurecreep.amethyst_block": "Amethyst Block",
     "item.featurecreep.ruby": "Ruby",
     "block.featurecreep.ruby_block": "Ruby Block",

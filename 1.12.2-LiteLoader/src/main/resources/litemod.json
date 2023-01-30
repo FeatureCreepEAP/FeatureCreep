@@ -4,5 +4,6 @@
     "mcversion": "1.12.2",
     "mixinConfigs": [
 "featurecreep.mixins.json"
-    ]
+    ],
+    	"classTransformerClasses" : "featurecreep.FCCoreMod"
 }

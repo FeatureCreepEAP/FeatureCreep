@@ -1,26 +1,27 @@
 package featurecreep.content;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.DatafiedObjectRegistration;
-import featurecreep.api.FCRegistries;
-import featurecreep.api.items.FCItem;
-import featurecreep.api.items.armour.ArmourProtectionValuesArray;
-import featurecreep.api.items.armour.FCArmour;
-import featurecreep.api.items.armour.FCArmourMaterial;
-import featurecreep.api.items.armour.FCArmourSlots;
-import featurecreep.api.items.datafied.dmr.FCItemAsDMR;
-import featurecreep.api.items.tools.FCAxe;
-import featurecreep.api.items.tools.FCHoe;
-import featurecreep.api.items.tools.FCPickaxe;
-import featurecreep.api.items.tools.FCShovel;
-import featurecreep.api.items.tools.FCSword;
-import featurecreep.api.items.tools.FCToolMaterial;
-import featurecreep.api.items.tools.datafied.dmr.FCAxeAsDMR;
-import featurecreep.api.items.tools.datafied.dmr.FCHoeAsDMR;
-import featurecreep.api.items.tools.datafied.dmr.FCPickaxeAsDMR;
-import featurecreep.api.items.tools.datafied.dmr.FCShovelAsDMR;
-import featurecreep.api.items.tools.datafied.dmr.FCSwordAsDMR;
-import featurecreep.api.ui.FCCreativeTabs;
+import featurecreep.api.bg.craftingzone.CraftingZone;
+import featurecreep.api.bg.items.FCItem;
+import featurecreep.api.bg.items.armour.ArmourProtectionValuesArray;
+import featurecreep.api.bg.items.armour.FCArmour;
+import featurecreep.api.bg.items.armour.FCArmourMaterial;
+import featurecreep.api.bg.items.armour.FCArmourSlots;
+import featurecreep.api.bg.items.datafied.dmr.FCItemAsDMR;
+import featurecreep.api.bg.items.tools.FCAxe;
+import featurecreep.api.bg.items.tools.FCHoe;
+import featurecreep.api.bg.items.tools.FCPickaxe;
+import featurecreep.api.bg.items.tools.FCShovel;
+import featurecreep.api.bg.items.tools.FCSword;
+import featurecreep.api.bg.items.tools.FCToolMaterial;
+import featurecreep.api.bg.items.tools.datafied.dmr.FCAxeAsDMR;
+import featurecreep.api.bg.items.tools.datafied.dmr.FCHoeAsDMR;
+import featurecreep.api.bg.items.tools.datafied.dmr.FCPickaxeAsDMR;
+import featurecreep.api.bg.items.tools.datafied.dmr.FCShovelAsDMR;
+import featurecreep.api.bg.items.tools.datafied.dmr.FCSwordAsDMR;
+import featurecreep.api.bg.registries.DatafiedObjectRegistration;
+import featurecreep.api.bg.registries.FCRegistries;
+import featurecreep.api.bg.ui.FCCreativeTabs;
 
 public class FCItems {
 
@@ -59,6 +60,22 @@ public static FCArmour AMETHYST_BOOTS = new FCArmour(3016, FeatureCreep.modid, "
 
 
 
+public static FCItem TITANIUM_INGOT = new FCItem(3018, FeatureCreep.modid, "titanium_ingot", FCCreativeTabs.MATERIALS);
+public static FCItem TITANIUM_NUGGET = new FCItem(3019, FeatureCreep.modid, "titanium_nugget", FCCreativeTabs.MATERIALS);
+public static FCItem URANIUM_INGOT = new FCItem(3020, FeatureCreep.modid, "uranium_ingot", FCCreativeTabs.MATERIALS);
+public static FCItem URANIUM_NUGGET = new FCItem(3021, FeatureCreep.modid, "uranium_nugget", FCCreativeTabs.MATERIALS);
+public static FCItem ALUMINIUM_INGOT = new FCItem(3022, FeatureCreep.modid, "aluminium_ingot", FCCreativeTabs.MATERIALS);
+public static FCItem COPPER_INGOT = new FCItem(3023, FeatureCreep.modid, "copper_ingot", FCCreativeTabs.MATERIALS);
+public static FCItem TIN_INGOT = new FCItem(3024, FeatureCreep.modid, "tin_ingot", FCCreativeTabs.MATERIALS);
+public static FCItem SILVER_INGOT = new FCItem(3025, FeatureCreep.modid, "silver_ingot", FCCreativeTabs.MATERIALS);
+public static FCItem OIL = new FCItem(3026, FeatureCreep.modid, "oil", FCCreativeTabs.MATERIALS);
+public static FCItem GASOLINE_PETROL = new FCItem(3027, FeatureCreep.modid, "gasoline_petrol", FCCreativeTabs.MATERIALS);
+public static FCItem RUBY = new FCItem(3028, FeatureCreep.modid, "ruby", FCCreativeTabs.MATERIALS);
+public static FCItem TIGERS_EYE_INGOT = new FCItem(3028, FeatureCreep.modid, "tigers_eye_ingot", FCCreativeTabs.MATERIALS);
+
+
+
+
 	public static void onInitialise() {
 	// TODO Auto-generated method stub
 	
@@ -82,10 +99,34 @@ FCRegistries.registerItem(AMETHYST_CHESTPLATE);
 FCRegistries.registerItem(AMETHYST_LEGGINS);
 FCRegistries.registerItem(AMETHYST_BOOTS);
 		
+
+FCRegistries.registerItem(TITANIUM_INGOT);
+FCRegistries.registerItem(TITANIUM_NUGGET);
+FCRegistries.registerItem(URANIUM_INGOT);
+FCRegistries.registerItem(URANIUM_NUGGET);
+FCRegistries.registerItem(ALUMINIUM_INGOT);
+FCRegistries.registerItem(COPPER_INGOT);
+FCRegistries.registerItem(TIN_INGOT);
+FCRegistries.registerItem(SILVER_INGOT);
+FCRegistries.registerItem(OIL);
+FCRegistries.registerItem(GASOLINE_PETROL);
+FCRegistries.registerItem(RUBY);
+FCRegistries.registerItem(TIGERS_EYE_INGOT);
+
+
+
+CraftingZone.addShapedCrafting(TITANIUM_INGOT, 1, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET, TITANIUM_NUGGET);
+CraftingZone.addShapedCrafting(URANIUM_INGOT, 1, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET, URANIUM_NUGGET);
+
+
+
+
 }
 
 
 
 	
 }
+
+
 

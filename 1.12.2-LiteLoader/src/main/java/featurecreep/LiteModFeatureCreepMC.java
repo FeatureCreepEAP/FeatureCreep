@@ -9,8 +9,8 @@ import com.mumfrey.liteloader.Configurable;
 import com.mumfrey.liteloader.Tickable;
 import com.mumfrey.liteloader.modconfig.ConfigPanel;
 
-import featurecreep.legacy.ExampleModConfigPanel;
 import net.minecraft.client.Minecraft;
+import net.minecraft.launchwrapper.Launch;
 
 
 //@ExposableOptions(strategy = ConfigStrategy.Versioned, filename="featurecreep.json")
@@ -30,8 +30,9 @@ public class LiteModFeatureCreepMC implements Tickable , Configurable{	// This l
 	@Override
 	public void init(File configfile) {
 		// TODO Auto-generated method stub
+	//	Launch.classLoader.registerTransformer("featurecreep.FCCoreMod");
      	FeatureCreep.onInitialise();
-     	featurecreep.legacy.LiteModFeatureCreepMC.initilise(configfile);
+     	//featurecreep.legacy.LiteModFeatureCreepMC.initilise(configfile);
 	}
 
 	@Override
@@ -63,7 +64,8 @@ public class LiteModFeatureCreepMC implements Tickable , Configurable{	// This l
     @Override
     public Class<? extends ConfigPanel> getConfigPanelClass()
     {
-        return ExampleModConfigPanel.class;
+      //  return ExampleModConfigPanel.class; 
+    	return null;
     }
 
 

@@ -2,7 +2,7 @@ package featurecreep;
 
 import java.io.IOException;
 
-import featurecreep.api.orespawn.OrespawnBasicFeatureParser;
+import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
@@ -38,8 +38,8 @@ public class CoreMod implements IClassTransformer{
 		    CtConstructor c = cc.getConstructors()[0];
 		    cc.defrost();
 //c.insertAfter("featurecreep.api.orespawn.OrespawnBasicFeatureParser.place(this);");
-	c.insertAfter("for (int f = 0; f < featurecreep.api.orespawn.OrespawnBasicFeatureParser.configed.size(); f++) {"
-			+ "this.a(boq.b.e, (bpn)featurecreep.api.orespawn.OrespawnBasicFeatureParser.configed.get(f));"
+	c.insertAfter("for (int f = 0; f < featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser.configed.size(); f++) {"
+			+ "this.a(boq.b.e, (bpn)featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser.configed.get(f));"
 			+ "}");    
 c.insertAfter("System.out.println(\"HI\");");
 		    System.out.println("JA");

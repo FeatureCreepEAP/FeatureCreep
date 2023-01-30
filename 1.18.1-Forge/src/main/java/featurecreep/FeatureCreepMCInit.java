@@ -6,13 +6,10 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import featurecreep.legacy.FCBlocks;
-import featurecreep.legacy.FCItems;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 
 
 
@@ -58,9 +55,9 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	        // or using static methods to listen to events,
 	        // feel free to check out the Forge wiki!
 	    	
-	    	FCBlocks.ITEMS.register(MOD_BUS);
-	    	FCBlocks.BLOCKS.register(MOD_BUS);
-	    	FCItems.ITEMS.register(MOD_BUS);
+//	    	FCBlocks.ITEMS.register(MOD_BUS);
+//	    	FCBlocks.BLOCKS.register(MOD_BUS);
+//	    	FCItems.ITEMS.register(MOD_BUS);
 	    		
 
 	    }

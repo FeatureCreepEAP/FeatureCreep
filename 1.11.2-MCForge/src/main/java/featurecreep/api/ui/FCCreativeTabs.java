@@ -1,5 +1,6 @@
 package featurecreep.api.ui;
 
+import featurecreep.api.registries.GlobalRegistries;
 import featurecreep.api.ui.tabs.vanilla.VanillaCreativeTab;
 
 public class FCCreativeTabs
@@ -19,6 +20,18 @@ public class FCCreativeTabs
 	public static void onInitialise() {
 	// TODO Auto-generated method stub
 	
+		GlobalRegistries.ITEMGROUPS.add(BREWING);
+		GlobalRegistries.ITEMGROUPS.add(BUILDING_BLOCKS);
+		GlobalRegistries.ITEMGROUPS.add(COMBAT);
+		GlobalRegistries.ITEMGROUPS.add(DECORATIONS);
+		GlobalRegistries.ITEMGROUPS.add(FOOD);
+		GlobalRegistries.ITEMGROUPS.add(MATERIALS);
+		GlobalRegistries.ITEMGROUPS.add(MISC);
+		GlobalRegistries.ITEMGROUPS.add(REDSTONE);
+		GlobalRegistries.ITEMGROUPS.add(TOOLS);
+		GlobalRegistries.ITEMGROUPS.add(TRANSPORTATION);
+
+		
 }
 	
 	

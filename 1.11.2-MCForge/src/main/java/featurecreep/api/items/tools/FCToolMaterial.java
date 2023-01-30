@@ -8,13 +8,13 @@ import net.minecraft.item.Item.ToolMaterial;
 public class FCToolMaterial 
 {
 
-	public static int harvest;
-	public static int durability;
-	public static int speed;
-	public static int attack;
-	public static int enchantness;
-	public static Ingredient repair;
-	public static Item repair_item;
+	public  int harvest;
+	public  int durability;
+	public  int speed;
+	public  int attack;
+	public  int enchantness;
+	public  Ingredient repair;
+	public  Item repair_item;
 	
 	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, Ingredient repairMaterial)
 	{

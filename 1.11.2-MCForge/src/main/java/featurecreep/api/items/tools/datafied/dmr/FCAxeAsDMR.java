@@ -1,55 +1,55 @@
 package featurecreep.api.items.tools.datafied.dmr;
 
-import featurecreep.api.items.datafied.dmr.FCItemAsDMR;
-import featurecreep.api.items.tools.FCToolMaterial;
-import featurecreep.api.ui.FCCreativeTab;
-import featurecreep.api.ui.tabs.vanilla.VanillaCreativeTab;
+import org.jboss.dmr.ModelNode;
 
-public class FCAxeAsDMR extends FCItemAsDMR 
+import featurecreep.api.items.datafied.dmr.FCItemAsDMR;
+import featurecreep.api.items.tools.FCAxe;
+import featurecreep.api.items.tools.FCToolMaterial;
+import featurecreep.api.items.tools.ToolsAPI;
+import featurecreep.api.parsers.ParseDMRItem;
+import featurecreep.api.registries.UniversalRegistryGettersAndSetters;
+import featurecreep.api.ui.tabs.UnifiedItemGroupGetter;
+import featurecreep.content.FCItems;
+import net.minecraft.item.Item;
+
+public class FCAxeAsDMR extends FCItemAsDMR<FCAxeAsDMR> implements ToolsAPI<FCAxeAsDMR>
+
 {
-	public String public_modid;
-	public String public_name;
-	public int number_id;
-	public String default_tab;
-	public FCToolMaterial mat;
-	public int damage;
-	public int attackspeed;
+
+	public featurecreep.api.bg.items.tools.ToolFieldHolder holder = new featurecreep.api.bg.items.tools.ToolFieldHolder();
+@Override	public featurecreep.api.bg.items.tools.ToolFieldHolder holder() {	return holder;	}
+
 	
-	
-	public FCAxeAsDMR(int id, String modid, String name, FCCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
+	public FCAxeAsDMR(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
 super (id, modid,name, group);
-		public_modid = modid;
-		public_name = name;
-		this.default_tab = group.id;
-	this.number_id = id;
-	this.mat = material;
-	this.damage = attackDamage;
-	attackspeed = attackSpeed;	
+initialise(id,modid,name,group,material,attackDamage, attackSpeed);		
+
+	
 		}
 
 		
-	public FCAxeAsDMR(int id, String modid, String name, VanillaCreativeTab group, FCToolMaterial material, int attackDamage, int attackSpeed)
-	{
-		super (id, modid,name, group);
-		public_modid = modid;
-		public_name = name;
-		this.default_tab = group.tabname;
-	this.number_id = id;
-	this.mat = material;
-	this.damage = attackDamage;
-	attackspeed = attackSpeed;	
-	}
-		
+@Override
+public ModelNode toModelNode()
+{
+	ModelNode node = super.toModelNode();
+    node.get("attack_damage").set(getToolAttackDamage());
+    node.get("attack_speed").set(getAttackSpeed());
+    node.get("material").get("max_uses").set(getFCToolMaterial().getToolMaxUses());
+    node.get("material").get("efficiency").set(getFCToolMaterial().getToolEfficiency());
+    node.get("material").get("attack_damage").set(getFCToolMaterial().getToolAttackDamage());
+    node.get("material").get("harvest_level").set(getFCToolMaterial().getToolHarvestLevel());
+    node.get("material").get("enchantability").set(getFCToolMaterial().getToolEnchantability());	
+    return node;
+}
 
-		
-	
 
-	
-	public FCToolMaterial getFCToolMaterial()	{return mat;}
-	public int getToolAttackDamage() {return damage;}
-	public int getAttackSpeed() {return attackspeed;}
-	
+@Override
+public Item get()
+{
+ModelNode node = ParseDMRItem.getModelNodeFromDMRItem(this);
+return new FCAxe(node.get("id").asInt(), node.get("modid").asString(), node.get("item_name").asString(), UniversalRegistryGettersAndSetters.getFCItemGroupbyName(node.get("group").asString()), new FCToolMaterial(node.get("material").get("harvest_level").asInt(), node.get("material").get("max_uses").asInt(), node.get("material").get("efficiency").asInt(), node.get("material").get("attack_damage").asInt(), node.get("material").get("enchantability").asInt(), FCItems.AMETHYST), node.get("attack_damage").asInt(), node.get("attack_speed").asInt());	
+}
 	
 	
 	

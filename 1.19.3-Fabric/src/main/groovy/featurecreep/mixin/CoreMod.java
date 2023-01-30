@@ -16,14 +16,14 @@ import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtMethod;
+import javassist.CtNewMethod;
 import javassist.NotFoundException;
 import javassist.bytecode.AnnotationsAttribute;
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.ConstPool;
 import javassist.bytecode.annotation.Annotation;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.OrePlacedFeatures;
 
 public class CoreMod implements IMixinConfigPlugin {
 
@@ -122,20 +122,53 @@ public class CoreMod implements IMixinConfigPlugin {
 	  
 	  
     if (transformedName.equals("net.minecraft.class_442")) {
-      //	return GameOptionsInjection(basicClass);
-      //return PizzaMixer.mix(TitleScreenMixin.class, basicClass);
       return titlescreenja(basicClass);
     } else if (transformedName.equals("net.minecraft.class_5478")) {
-      //	return GameOptionsInjection(basicClass);
-      //return PizzaMixer.mix(TitleScreenMixin.class, basicClass);
       return overworldbiomecreation(basicClass);
+    }else if (transformedName.equals("net.minecraft.class_3283"))
+    {
+    	return transformresourcemanager(basicClass);
     }
 
     return basicClass;
 
   }
 
-  @Override
+  public byte[] transformresourcemanager(byte[] basicClass) {
+	// TODO Auto-generated method stub
+	  
+	  
+      try {
+		ClassPool pool = ClassPool.getDefault();
+		  pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_3283", basicClass));
+
+		  pool.appendSystemPath();
+		  CtClass cc = pool.get("net.minecraft.class_3283");
+		//  CtMethod m = CtNewMethod.make(
+		 //         "public void registerFCPack() { field_14227.add(new featurecreep.api.FCPackLoad(new java.io.File(featurecreep.api.datapacks.DataPackLoader.datapacklocation))); }",
+		  //        cc);
+
+		  CtMethod m = cc.getDeclaredMethod("method_14445");
+		  
+		  m.insertBefore("System.out.println(\"Testin JA\");");
+		  m.insertBefore("field_14227.add(new featurecreep.api.bg.FCPackLoad(new java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));");
+		  //cc.addMethod(m);
+		  CtConstructor cons = cc.getDeclaredConstructors()[0];
+	  cons.insertAfter("field_14227 = featurecreep.api.io.BasicIO.setFromArray($1);");
+		  return cc.toBytecode();//SHould maybe also be redefining the providers in the constructor, but it works on TLauncher so maybe it works everywhere on fabric without it, ill still include it anyhow, may remove it if iknow it conflicts with some mods
+	} catch (NotFoundException | CannotCompileException | IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  
+	  
+	  
+      
+	  
+	  return null;
+}
+
+@Override
   public void onLoad(String mixinPackage) {
     // TODO Auto-generated method stub
 
@@ -175,72 +208,7 @@ public class CoreMod implements IMixinConfigPlugin {
   public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     // TODO Auto-generated method stub
 
-    /*
-		System.out.println("CoreModPlugin");
-		System.out.println(mixinClassName);
-		
-		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-		targetClass.accept(cw);
-		
-		
-		
-		
-		
-		
-     
-		
-		
-		Class MixinProcessorClass;
-		Field processor = null;
-		try {
-			MixinProcessorClass = Class.forName("org.spongepowered.asm.mixin.transformer.MixinTransformer");
-			 processor = MixinProcessorClass.getDeclaredField("processor");
-
-	
-			 ClassNode classNode = new ClassNode(ASM.API_VERSION);
-		        classNode.name = targetClassName.replace('.', '/');
-		        classNode.version = MixinEnvironment.getCompatibilityLevel().getClassVersion();
-		        classNode.superName = Constants.OBJECT;
-			
-		        ClassReader classReader = new MixinClassReader(Core.transform(targetClassName, targetClassName, cw.toByteArray()), targetClassName);
-		     
-
-		        classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
-
-		        
-		        
-			
-			processor.setAccessible(true);
-	Method applymethod = 		Class.forName("org.spongepowered.asm.mixin.transformer.MixinProcessor").getMethod("applyMixins");
-	applymethod.invoke(processor.getType(), MixinEnvironment.getCurrentEnvironment(), targetClassName, classNode);
-
-		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	
-
-*/
+ 
 
     System.out.println(targetClassName);
     ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);

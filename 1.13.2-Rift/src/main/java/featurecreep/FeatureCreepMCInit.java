@@ -2,15 +2,13 @@ package featurecreep;
 
 import java.io.File;
 
-import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.riftloader.listener.InitializationListener;
 //import org.dimdev.riftloader.listener.InitializationListener;
 import org.jboss.logging.Logger;
 
-import featurecreep.api.FCPackLoad;
-import featurecreep.api.PackLoader;
-import featurecreep.legacy.FeatureCreepMC;
+import featurecreep.api.bg.FCPackLoad;
+import featurecreep.api.bg.PackLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.launchwrapper.Launch;
 
@@ -33,8 +31,8 @@ public class FeatureCreepMCInit implements ItemAdder, InitializationListener{
 	public void registerItems() {
 		// TODO Auto-generated method stub
      	FeatureCreep.onInitialise();
-FeatureCreepMC.registerItems();
-FeatureCreepMC.registerBlocks();     	
+//FeatureCreepMC.registerItems();
+//FeatureCreepMC.registerBlocks();     	
 
 MinecraftClient.getInstance().getResourcePackManager().registerProvider(new FCPackLoad(new File(PackLoader.fc_pack_location)));
 

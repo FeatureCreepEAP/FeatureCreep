@@ -1,0 +1,5 @@
+{
+"parent": "block/cube_all", 
+"textures":{
+"all": "featurecreep:blocks/silver_ore"
+}}

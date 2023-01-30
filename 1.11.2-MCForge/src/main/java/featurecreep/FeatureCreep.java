@@ -25,41 +25,20 @@ private static String[] dependancies = {""};
 	public static String[] modpaths = {modpath};
 	public static String[] packages_needed = {""};
 	
-//TODO Make Packages Needed list all forge packages as its not linear like Fabric
-	
-	public static void onInitialise() {
-		
-				System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID " + io.smallrye.common.os.Process.getProcessId());
-
-		
-		
-		String packlist = "";
-	    for (int l = 0; l < Package.getPackages().length; l++) {
-	    	packlist = packlist + Package.getPackages()[l].getName().replace(".", "/") +  ":";
-	    }
-	    packlist = packlist+ "net/minecraftforge/fml/javafmlmod:net/minecraft/item";
-	    System.out.println(packlist);
-	    packages_needed =  packlist.split(":");
-		
+		public static void onInitialise() {
 		// TODO Auto-generated method stub
-	//Log4J1 has been removed from JbossLogging files  and all but HostName and GetHostinfo from SmallRyeCommonNet
-		//GameData.unfreezeData();	
-//System.out.println(dependancies[1]+ ":" + dependancies[0]);
+		System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID " + io.smallrye.common.os.Process.getProcessId());
 		GameInjections.inject();
 		FCCreativeTabs.onInitialise();
 		FCItems.onInitialise();
-		//FCLoaderBasicR2.loadMods(modpaths, dependancies);
-		
-		
-		FCLoaderBasicR4.loadMods(modpaths, dependancies, packages_needed);
-
+		FCBlocks.onInitialise();
+		packages_needed = GetPackagesFromClassClassLoader.getPacakgesFromClassLoaderClassAsStringArray(FeatureCreep.class);
+		FCLoaderBasicR5.loadMods(modpaths, dependancies, packages_needed);
 		DataParseContent.parseContent();
-
-		
-		PackLoader.loadPacks(FCLoaderBasicR4.modules);
-
-	}
-	
+		PackLoader.loadPacks(FCLoaderBasicR5.modules);	
+		OrespawnBasicFeatureParser.spawnOresFromDefaultConfig();
+			
+		}
 	
 	
 	

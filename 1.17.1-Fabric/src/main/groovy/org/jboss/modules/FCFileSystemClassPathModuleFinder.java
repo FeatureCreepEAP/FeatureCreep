@@ -3,85 +3,67 @@ package org.jboss.modules;
 import java.io.File;
 import java.util.Set;
 
-import featurecreep.loader.FCLoaderBasicR4;
-import featurecreep.loader.FCLoaderBasicR5;
-import featurecreep.loader.jbm.FCBootModuleLoader;
+import featurecreep.loader.FCLoaderBasic;
 
-public class FCFileSystemClassPathModuleFinder extends FileSystemClassPathModuleFinder{
+public class FCFileSystemClassPathModuleFinder extends FileSystemClassPathModuleFinder {
 
-	public FCFileSystemClassPathModuleFinder(ModuleLoader baseModuleLoader) {
-		super(baseModuleLoader);
-		// TODO Auto-generated constructor stub
-	}
+  FCLoaderBasic load;
+  public static Set<String> jdk_paths = JDKSpecific.getJDKPaths();
 
-	
-	
-	
-@Override
-	   void addSystemDependencies(final ModuleSpec.Builder builder) {
+  public FCFileSystemClassPathModuleFinder(ModuleLoader baseModuleLoader, FCLoaderBasic load) {
+    super(baseModuleLoader);
+    // TODO Auto-generated constructor stub
+    this.load = load;
+  }
 
-	
-	Set<String> packs = new FastCopyHashSet<>(1024);
-	
-//	for (int p = 0; p < JDKSpecific.getJDKPaths().size(); p++) {
+  @Override
+  public void addSystemDependencies(final ModuleSpec.Builder builder) {
 
-	//packs.add(JDKSpecific.getJDKPaths().addAll(packs));
-packs.addAll(JDKSpecific.getJDKPaths());
-	
-//	}	
-	
-	
-	
-	
-	   for (int c = 0; c < FCLoaderBasicR5.packages_needed.length; c++) {
+    //This need to be reworked to account for already loaded modules
 
-	packs.add(FCLoaderBasicR5.packages_needed[c]);
+    LocalLoader lod = JDKSpecific.getSystemLocalLoader();
 
-	   }
-	
-		   builder.addDependency(new LocalDependencySpecBuilder()
-		            .setLocalLoader(ClassLoaderLocalLoader.SYSTEM)
-		            .setLoaderPaths(packs)
-		            .build());
+    
+    
+    
+    
+    
+    builder.addDependency(new LocalDependencySpecBuilder()
+      .setLocalLoader(lod)
+      .setLoaderPaths(load.getNeededPackages())
+      .build());
 
-		   
-		   for (int j = 0; j < FCLoaderBasicR5.getJars.length; j++) {
-				  
-			   File file = new File(FCLoaderBasicR5.getJars[j]);
+    for (int j = 0; j < load.getCombinedFiles().size(); j++) {
 
-			   //System.out.println(FCLoaderBasicR5.fcfile);
-			   if (file != null && file.exists() && !file.toString().contains(".nil.jar")) {
-				   System.out.println("Adding Dependancy to Module "+file);
-			   
-				   
-	            	  final ModuleLoader loader;
-	                  final ModuleLoader environmentLoader;
-	                    environmentLoader = FCBootModuleLoader.INSTANCE;
-                	            	                    
-	                    loader = new ModuleLoader(new FileSystemClassPathModuleFinder(environmentLoader));
-	                    try {
-							Module  agentModule = loader.loadModule(new File(file.toString()).getAbsolutePath());
-							builder.addDependency(
-					                new ModuleDependencySpecBuilder()
-					         //           .setModuleLoader(agentModule.getModuleLoader())
-					                    .setName(agentModule.getName())
-					                    .build()
-					            );
-	                    
-	                    } catch (ModuleLoadException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				   
-			   
-			   }
-			   
-			   
-}
-	
-		   
-}
-		   
-		   
-		   
+      File file = load.getCombinedFiles().get(j);
+
+      //System.out.println(FCLoaderBasicR5.fcfile);
+      if (file != null && file.exists() && !file.toString().contains(".nil.jar")) {
+      //  System.out.println("Adding Dependancy to Module " + file); soon enable for debug mode
+
+        final ModuleLoader loader;
+        final ModuleLoader environmentLoader;
+        environmentLoader = load.getBootModuleLoader();
+
+        loader = new ModuleLoader(new FileSystemClassPathModuleFinder(environmentLoader));
+        try {
+          Module agentModule = loader.loadModule(new File(file.toString()).getAbsolutePath());
+          builder.addDependency(
+            new ModuleDependencySpecBuilder()
+            //           .setModuleLoader(agentModule.getModuleLoader())
+            .setName(agentModule.getName())
+            .build()
+          );
+
+        } catch (ModuleLoadException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+
+      }
+
+    }
+
+  }
+
 }

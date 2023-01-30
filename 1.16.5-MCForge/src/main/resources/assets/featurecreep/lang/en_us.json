@@ -7,6 +7,7 @@
     "block.featurecreep.tigers_eye_block": "Tiger's Eye Block,",
     "item.featurecreep.oil": "Oil,",
     "item.featurecreep.salt": "Salt,",
+      "multiplayer.disconnect.not_whitelisted": "You are not allow-listed on this server!",
     "item.featurecreep.titanium_ingot": "Titanium Ingot,",
     "item.featurecreep.titanium_nugget": "Titanium Nugget,",
     "block.featurecreep.titanium_block": "Titanium Block,",

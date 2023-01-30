@@ -1,17 +1,9 @@
 package featurecreep;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.jboss.modules.ModuleLoader;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import featurecreep.legacy.FeatureCreepMC;
-import featurecreep.loader.PluginModuleFinder;
 
 
 
@@ -29,7 +21,7 @@ public class FeatureCreepMCInit implements ModInitializer {
 LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
-   FeatureCreepMC.onInitialize(mod);
+  // FeatureCreepMC.onInitialize(mod);
 }
 
 

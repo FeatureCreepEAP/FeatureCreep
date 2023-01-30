@@ -2,11 +2,12 @@ package featurecreep.api.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class BasicIO {
@@ -64,13 +65,18 @@ public class BasicIO {
 		}
 
 		String fileContent = contentBuilder.toString();
-
+		
 	
 	return fileContent;
 	}
 	
 	
-	
+	public static Set setFromArray(Object[] objects)
+	{
+		return new java.util.HashSet<>(java.util.Arrays.asList(objects));
+		
+	}
 	
 	
 }
+

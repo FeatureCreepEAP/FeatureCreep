@@ -1,16 +1,24 @@
 package featurecreep.api;
 
 import java.io.IOException;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
+import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.CtNewMethod;
 import javassist.NotFoundException;
+import net.minecraft.client.settings.GameSettings;
 
 
 
 
 
-public class GameInjections {
+
+public class GameInjections{
 
 	
 	
@@ -18,17 +26,36 @@ public class GameInjections {
 	{
 		try {
 
+			
+			
+			//Method [] meths = GameSettings.class.getDeclaredMethods();
+		//	for (int m = 0; m < meths.length; m++) {
+// System.out.println(meths[m].toString());
+	//		}
+			
+		//	try {
+		//		GameSettings settings = (GameSettings) GameSettings.class.getDeclaredField("INSTANCE").get(GameSettings);
+		//		Method meth = GameSettings.class.getDeclaredMethod("fcpackadd");
+		//		meth.invoke(settings);
+			
+		//	} catch (NoSuchFieldException e) {
+		///		// TODO Auto-generated catch block
+		//		e.printStackTrace();
+		//	}
+			
+			
+			
+			
+			
+			
 			//AddInjections();
 
-			GameOptionsInjection();
-			TitleScreenInjection();
+	//		GameOptionsInjection();
+	//		TitleScreenInjection();
 			
 
 			
 			
-		} catch (NotFoundException | CannotCompileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,20 +76,18 @@ public class GameInjections {
 	
 	
 	
-	public static void GameOptionsInjection() throws NotFoundException, CannotCompileException, IOException
+	public static byte[] GameOptionsInjection(byte[] bites)
 	{
 		
-
+byte[] arr = bites;
 		
-	/*	
+		System.out.println("Starting Javaassit");
 		
 		try {
 
 			
 			
 			
-			System.out.println(Arrays.toString(GameInjections.class.getClassLoader().getDefinedPackages()));
-		    
 System.out.println("trying to inject");			
 			
 			
@@ -71,17 +96,21 @@ System.out.println("trying to inject");
 		
 			
 	    ClassPool pool = ClassPool.getDefault();
-	    CtClass cc = pool.get("net.minecraft.class_315");
-	  //  CtMethod m = cc.getDeclaredMethod(MCObfList.GameOptions_Load);
-	    CtMethod m = CtNewMethod.make(
+	    pool.insertClassPath(new ByteArrayClassPath("net.minecraft.client.settings.GameSettings", arr));
+
+
+	    pool.appendSystemPath();
+	    CtClass cc = pool.get("net.minecraft.client.settings.GameSettings");
+//	    CtMethod m = cc.getDeclaredMethod("func_74300_a");
+	   CtMethod m = CtNewMethod.make(
                 "public void fcpackadd() {}",
                 cc);
 
 	    //" + "this." + MCObfList.GameOptions_ResourcePacks + ".add(\"fcpack_9\");" +  "System.out.println(\\\"fcpack_9\\\"); 
 	    
 	    
-	    CtField f = cc.getField(MCObfList.GameOptions_ResourcePacks);
-	    m.insertBefore("this." + MCObfList.GameOptions_ResourcePacks + ".add(\"fcpack_9\");");
+//	    CtField f = cc.getField(MCObfList.GameOptions_ResourcePacks);
+	    m.insertBefore("this.field_151453_l.add(\"fcpack_3\"); System.out.println(\"Adding FCPack3\");");
 	  //  cc.writeFile();
 	    
 	    //byte[] classFile = cc.toBytecode();
@@ -94,16 +123,16 @@ System.out.println("trying to inject");
 	//	System.out.println(Arrays.toString(GameInjections.class.getClassLoader().getDefinedPackages()));
 
 	    
-	   cc.toClass(net.minecraft.client.option.GameOptions.class);
 
 	    
 	    
-	    Method meth = net.minecraft.client.option.GameOptions.class.getDeclaredMethod("fcpackadd");
-	    meth.invoke(null);
+	//    Method meth = net.minecraft.client.option.GameOptions.class.getDeclaredMethod("fcpackadd");
+	 //   meth.invoke(null);
 	    
 	    
-	    
-		System.out.println(cc.toString());
+	    arr =  cc.toBytecode();
+
+	//	System.out.println(cc.toString());
 			
 			//MinecraftClient.getInstance().options.resourcePacks.add("fcpack_9");
 			
@@ -112,11 +141,12 @@ System.out.println("trying to inject");
 			e.printStackTrace();
 		}
 		
-		*/
+	
 		
-		
-			
-		
+		System.out.println("Yay Javaassist Worked!, though its capability is limted");
+
+			return arr;
+
 	}
 
 
@@ -137,7 +167,17 @@ System.out.println("trying to inject");
 	*/
 	
 	}
-	
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 	

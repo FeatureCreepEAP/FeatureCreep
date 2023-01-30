@@ -3,8 +3,8 @@ package featurecreep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import featurecreep.api.PizzaMixer;
 import featurecreep.legacy.FeatureCreepMC;
+import featurecreep.pizzamixin.PizzaMixer;
 import featurecreep.pizzamixin.TitleScreenMixin;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
@@ -24,7 +24,7 @@ public class FeatureCreepMCInit implements ModInitializer{
 LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
-   FeatureCreepMC.onInitialize();
+  // FeatureCreepMC.onInitialize();
 }
 
 

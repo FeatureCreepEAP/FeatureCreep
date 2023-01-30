@@ -2,8 +2,6 @@ package featurecreep;
 
 import java.nio.file.Path;
 
-import featurecreep.legacy.FCBlocks;
-import featurecreep.legacy.FCItems;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -33,9 +31,9 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	        //FCForgeRegistries.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 			
-			FCBlocks.ITEMS.register(MOD_BUS);
-			FCBlocks.BLOCKS.register(MOD_BUS);
-			FCItems.ITEMS.register(MOD_BUS);
+		//	FCBlocks.ITEMS.register(MOD_BUS);
+		//	FCBlocks.BLOCKS.register(MOD_BUS);
+		//	FCItems.ITEMS.register(MOD_BUS);
 			
 	        
 	        // This listener is fired on both client and server during setup.

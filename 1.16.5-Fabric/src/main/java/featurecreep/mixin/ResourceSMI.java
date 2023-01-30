@@ -21,7 +21,7 @@ public class ResourceSMI {
 	@Inject(method = "load", at = @At("RETURN"))
 	private void onLoad(CallbackInfo ci) {
 
-		this.resourcePacks.add("fcpack_6");		
+		this.resourcePacks.add("fcpack_9");		
 		System.out.println("Adding FCPack");
 	}
 	

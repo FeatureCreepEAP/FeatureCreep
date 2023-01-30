@@ -2,6 +2,7 @@
     "item.featurecreep.amethyst": "Amethyst",
     "block.featurecreep.amethyst_block": "Amethyst Block",
     "item.featurecreep.ruby": "Ruby",
+      "multiplayer.disconnect.not_whitelisted": "You are not allow-listed on this server!",
     "block.featurecreep.ruby_block": "Ruby Block",
     "item.featurecreep.tigers_eye": "Tiger's Eye",
     "block.featurecreep.tigers_eye_block": "Tiger's Eye Block",

@@ -29,7 +29,7 @@ public class FeatureCreepMCInit implements ModInitializer {
 LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
-   FeatureCreepMC.onInitialize(mod);
+ //  FeatureCreepMC.onInitialize(mod);
 }
 
 
