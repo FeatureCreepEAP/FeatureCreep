@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "featurecreep:corndog"
-  },
-  "result": "featurecreep:cooked_corndog",
-  "experience": 1.0,
-  "cookingtime": 200
-}

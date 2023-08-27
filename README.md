@@ -9,3 +9,5 @@ https://featurecreepmc.minecraftmoddevelopment.com
 https://featurecreepdz.minecraftmoddevelopment.com
 
 Please Use a Branch for the correct version you want.
+
+NOTE: WE ARE CURRENTLY CHANGING BUILD ENV and MAPPINGS, NOT ALL VERSIONS MAY APPEAR ATM BUT WILL ALL BE ADDED BACK

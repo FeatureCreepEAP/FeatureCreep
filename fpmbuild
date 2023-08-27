@@ -1,0 +1,31 @@
+#!/bin/sh
+echo "We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:"
+echo "	#1) Respect the privacy of others."
+echo "	#2) Think before you type."
+echo "	#3) With great power comes great responsibility."	
+if [ $PWD = ~ ];
+	
+then
+	
+	echo "You are running fpmbuild from your Home Directory, your fpm data will be stored at ~/fpmbuild"
+	
+	#[ loc = ~/fpmbuild ]
+	
+	java -Xss1g -jar ~/fpmbuild/.fpmbuild/jruby-complete-9.3.7.0.jar ~/fpmbuild/.fpmbuild/fpmbuildmain.rb ~/fpmbuild $1 $2 $3 $4
+	
+else
+	
+	echo ""
+	
+	#[ loc = $PWD ]
+	
+        java -Xss1g -jar $PWD/.fpmbuild/jruby-complete-9.3.7.0.jar $PWD/.fpmbuild/fpmbuildmain.rb $PWD $1 $2 $3 $4
+	
+ 
+	
+#echo ~
+	
+#echo $PWD
+	
+fi

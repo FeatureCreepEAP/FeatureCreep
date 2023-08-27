@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "featurecreep:tigers_eye_ore"
-  },
-  "result": "featurecreep:tigers_eye",
-  "experience": 1.0,
-  "cookingtime": 200
-}

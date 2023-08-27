@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "featurecreep:platinum_ore"
-  },
-  "result": "featurecreep:platinum_ingot",
-  "experience": 1.0,
-  "cookingtime": 200
-}

@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "featurecreep:uranium_ore"
-  },
-  "result": "featurecreep:uranium_nugget",
-  "experience": 1.0,
-  "cookingtime": 200
-}

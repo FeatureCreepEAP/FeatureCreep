@@ -1,7 +1,0 @@
-{
-    "type" => "generic_item",
-    "modid" => "featurecreep",
-    "item_name" => "dmr_test",
-    "id" => 3011,
-    "group" => "MATERIALS"
-}

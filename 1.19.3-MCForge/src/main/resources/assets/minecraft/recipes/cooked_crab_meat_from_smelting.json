@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "featurecreep:crab_meat"
-  },
-  "result": "featurecreep:cooked_crab_meat",
-  "experience": 1.0,
-  "cookingtime": 200
-}

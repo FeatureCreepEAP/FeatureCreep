@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "minecraft:iron_ingot"
-  },
-  "result": "featurecreep:steel_ingot",
-  "experience": 1.0,
-  "cookingtime": 200
-}

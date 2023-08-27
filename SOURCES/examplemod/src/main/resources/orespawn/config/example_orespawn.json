@@ -1,0 +1,37 @@
+{
+    "version": "3.3",
+    "spawns": {
+        "ore_example": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+		"size": 5,
+                "variation": 4,
+                "frequency": 5,
+                "minHeight": 0,
+                "maxHeight": 300
+            },
+	    "blocks": [ { "name": "example:example_ore", "chance": 100 } ]
+        },
+                "ore_example_single_sided": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+		"size": 5,
+                "variation": 4,
+                "frequency": 5,
+                "minHeight": 0,
+                "maxHeight": 300
+            },
+	    "blocks": [ { "name": "example:example_single_sided_ore", "chance": 100 } ]
+        }
+    }
+}

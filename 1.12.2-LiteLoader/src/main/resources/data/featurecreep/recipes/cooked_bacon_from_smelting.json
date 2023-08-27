@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "featurecreep:bacon"
-  },
-  "result": "featurecreep:cooked_bacon",
-  "experience": 1.0,
-  "cookingtime": 200
-}
