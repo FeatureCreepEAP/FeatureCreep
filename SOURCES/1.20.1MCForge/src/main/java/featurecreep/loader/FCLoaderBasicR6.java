@@ -1,6 +1,7 @@
 package featurecreep.loader;
 
 import java.io.File;
+import java.lang.instrument.Instrumentation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
@@ -9,6 +10,7 @@ import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.jboss.modules.ClassTransformer;
@@ -19,6 +21,8 @@ import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoadException;
 import org.jboss.modules.ModuleLoader;
 import org.jboss.modules.ModuleSpec;
+
+import featurecreep.loader.eventviewer.EventViewer;
 
 public class FCLoaderBasicR6 implements FCLoaderBasic {
 
@@ -232,6 +236,61 @@ System.out.println("Loading Runabble Mods");
 public void addNeededPackages(String[] packages_needed) {
 	// TODO Auto-generated method stub
 	current_packages_exported.addAll(Arrays.asList(packages_needed));
+}
+
+//UNSUPPORTED IN R6
+@Override
+public Module loadModule(String name, boolean runnable) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Map<File, ModuleSpec> getCustomRootSpecs() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Map<Module, ArrayList<String>> getAgents() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Instrumentation getInstrumentation() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public void runAgents() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public ClassTransformer getMainTransformer() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public EventViewer getEventViewer() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<String> known_nils() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public boolean getModsLoaded() {
+	// TODO Auto-generated method stub
+	return false;
 }
 
 }

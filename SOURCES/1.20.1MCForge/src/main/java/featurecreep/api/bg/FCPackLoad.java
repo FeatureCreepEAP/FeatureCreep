@@ -18,6 +18,7 @@ import game.PackSources;
 import game.ResourcePackInfo;
 import game.ResourcePackProvider;
 import game.ResourceType;
+import game.instantTextBoxBuilder;
 import game.instantTextBoxType;
 
 public class FCPackLoad implements ResourcePackProvider {
@@ -37,7 +38,7 @@ public class FCPackLoad implements ResourcePackProvider {
 
 	
 	
-	 class DirPackLoader implements ResourcePackInfo.Loader{
+	class DirPackLoader implements ResourcePackInfo.Loader{
 
 
 
@@ -72,9 +73,12 @@ public class FCPackLoad implements ResourcePackProvider {
 	        catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	        ResourcePackInfo.Loader packFactory = new DirPackLoader();
+	       // ResourcePackInfo.Loader packFactory = new DirPackLoader();
+	        ResourcePackInfo.Loader packFactory = name -> new DirectoryResourcePack(name, loc.toPath(), false);
+
 	        ResourcePackInfo.PackMcMeta metadata = ResourcePackInfo.def_unknown_20936("datapack", packFactory);
-	        ResourcePackInfo pack = ResourcePackInfo.def_unknown_20932("datapack", instantTextBoxType.translatable("fcpack"), true, packFactory, metadata,ResourceType.CLIENT_RESOURCES, ResourcePackInfo.InsertionPosition.TOP, true, PackSources.BUILTIN);
+	       // instantTextBoxType mutable_builder = instantTextBoxType.empty();//instantTextBoxType.translate("fcpack");
+	        ResourcePackInfo pack = ResourcePackInfo.def_unknown_20932("datapack", null, true, packFactory, metadata,ResourceType.CLIENT_RESOURCES, ResourcePackInfo.InsertionPosition.TOP, true, PackSources.BUILTIN);
 	        if (pack != null) {
 	            System.out.println("Adding FCDatapack");
 	            consumer.accept(pack);

@@ -23,19 +23,20 @@ public Path repos_dir = new File(macros.get("%{_sysconfdir}")+"/etc/yum.repos.d/
 	//Constructor
 	public DnfJava() {
 		DNFMacros.setDefaultMacros(this);
-		InstalledPackageNamesParser.getPackageNames(this);
-		
+		InstalledPackageNamesParser.getPackageNames(this);		
+	System.out.println("Init DnfJava");
+	}
+	
+	
+	
+	public void addRepos() {
+		repos_dir.toFile().mkdirs();
 		//Get all the Files in repos_dir
 		for(File repo : repos_dir.toFile().listFiles()) {
 			repos.add(YumRepo.fromFile(repo));
 		}
 		
-		
-		
-		
 	}
-	
-	
 	
 	public void parseArgs(String[] args) {
 		if (args[0].equals("dnf")){
@@ -44,7 +45,18 @@ public Path repos_dir = new File(macros.get("%{_sysconfdir}")+"/etc/yum.repos.d/
 		
 		
 	}
+
+	public ArrayList<com.asbestosstar.dnfjava.packages.Package> getInstalledPackages() {
+        return installed_packages;
+    }
 	
+    public Path getPackageDatabase() {
+        return package_database;
+    }
+    
+    public Path getXmlSpecLocation() {
+        return xmlSpecLocation;
+    }
 	public void setDBPath(String path) {
 		package_database = new File(path).toPath();
 	}

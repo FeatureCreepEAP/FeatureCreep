@@ -26,23 +26,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="target/generated-sources/annotations">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="test" value="true"/>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -160,7 +143,7 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/mergetool-1.1.5-api.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/mergetool-1.1.7-api.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/minecraft-merged-intermediary1.20.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/mixin-0.8.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/mixin-0.8.5.jar" sourcepath="/home/rhel/Descargas/Mixin-master.zip"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/modlauncher-10.0.9.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/nashorn-core-15.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/netty-buffer-4.1.82.Final.jar"/>
@@ -186,6 +169,7 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/toml-3.6.4.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/typetools-0.6.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/unsafe-0.2.0.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/mcforge1.20mcfci.jar" sourcepath="/home/rhel/Descargas/mcforge1.20mcfcisrc.zip"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.1MCForge/mcforge1.20mcfci.jar" sourcepath="/home/rhel/Descargas/mcforge1.20mcfcisrc"/>
+	<classpathentry kind="lib" path="/home/rhel/Descargas/mcforge1.20mcfcisrc.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
