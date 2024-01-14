@@ -18,6 +18,7 @@ public class DataPackLoader {
 		File location = new File(datapacklocation);
 		location.delete();
 		location.deleteOnExit();
+		//MinecraftClient.getInstance().getResourcePackManager().addPackFinder(new featurecreep.api.FCPackLoad(new java.io.File(featurecreep.api.datapacks.DataPackLoader.datapacklocation)));
 	//	Set<ResourcePackProvider> provs =	(Set<ResourcePackProvider>)Mirror.of(MinecraftClient.getInstance().getResourcePackManager()).field("field_14227");
 	//	provs.add(new FCPackLoad(new File(datapacklocation)));
 		//.register was removed in a version of MC so we must mirror it

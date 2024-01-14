@@ -1,9 +1,11 @@
 package featurecreep.api.bg.items.armour;
 
 import featurecreep.api.bg.items.FCItemAPI;
+import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FCArmour extends ArmorItem implements FCItemAPI<FCArmour>{
 
@@ -21,6 +23,8 @@ public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.b
 initialise( id,  modid,  name, group);
 		setSlot(slot);
 		setFCMaterial(material);
+		 FCRegistries.registerItem(this);
+
 
 	
 	}

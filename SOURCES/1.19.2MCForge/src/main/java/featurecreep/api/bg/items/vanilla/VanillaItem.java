@@ -8,6 +8,7 @@ TRY TO AVOID THIS CLASS, USE IN THE WRONG CIRCUMSTANCES CAN LEAD TO CRASH/MOD NO
 **/
 public class VanillaItem implements FCItemAPI<VanillaItem>{
 
+	
 public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
 @Override public featurecreep.api.bg.items.ItemFieldHolder holder() {	return holder;	}
 	

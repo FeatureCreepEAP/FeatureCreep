@@ -1,7 +1,9 @@
 package featurecreep.api.bg.items;
 
+import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.item.Item;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FCItem extends Item implements FCItemAPI<FCItem>
 {
@@ -14,12 +16,13 @@ public class FCItem extends Item implements FCItemAPI<FCItem>
 	{
 		super(new Item.Settings().group(group.get()));
 initialise(id, modid, name, group);
+	
+	
+	
+	 FCRegistries.registerItem(this);
 	}
 
-
-	
 	
 	
 	
 }
-

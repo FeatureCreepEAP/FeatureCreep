@@ -27,5 +27,4 @@ public interface UnifiedItemGroupGetter {
 	{
 	return holder.tab_name;	
 	}
-	
 }

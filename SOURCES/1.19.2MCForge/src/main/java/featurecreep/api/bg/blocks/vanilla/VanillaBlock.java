@@ -10,9 +10,9 @@ TRY TO AVOID THIS CLASS, USE IN THE WRONG CIRCUMSTANCES CAN LEAD TO CRASH/MOD NO
 **/
 public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 
+	
 		public featurecreep.api.bg.blocks.BlockFieldHolder holder = new featurecreep.api.bg.blocks.BlockFieldHolder();
 	@Override public featurecreep.api.bg.blocks.BlockFieldHolder holder() {	return holder;	}
-	
 	
 	public Block vanilla_block; //BE VERY CAREFUL
 	public BlockState state; //BE EVEN MORE CAREFUL WITH THIS, MC SPECIFC TO NEW VERSIONS

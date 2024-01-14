@@ -1,8 +1,10 @@
 package featurecreep.api.bg.items.tools;
 
+import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.PickaxeItem;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FCPickaxe extends PickaxeItem implements ToolsAPI<FCPickaxe>
 {
@@ -14,6 +16,8 @@ public class FCPickaxe extends PickaxeItem implements ToolsAPI<FCPickaxe>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Settings().group(group.get()));
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
+FCRegistries.registerItem(this);
+
 	}
 
 	

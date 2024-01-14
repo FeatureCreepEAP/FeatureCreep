@@ -14,6 +14,7 @@ public VanillaEntity(AbstractEntity ent) {
 	this(ent.get());
 }
 
+
 @Override
 public Entity get() {
 	// TODO Auto-generated method stub

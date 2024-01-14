@@ -1,26 +1,38 @@
 package featurecreep.api.bg.blocks;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.jboss.dmr.ModelNode;
 import org.jetbrains.annotations.Nullable;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
+import featurecreep.api.bg.blocks.drop.BlockDropArrayObjects;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
+import featurecreep.api.bg.blocks.materials.VanillaBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
+import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
+import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
 import featurecreep.api.bg.world.FCWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.OreBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FCOre extends OreBlock implements FCBlockAPI<FCOre> {
 
@@ -33,8 +45,12 @@ public class FCOre extends OreBlock implements FCBlockAPI<FCOre> {
     super(Block.Settings.of(material.get()).strength(strength / 10));
 initialise(id, modid, name,  group, material, strength, drops);
 resource = ore_material;
-  }
 
+//ForgeRegistries.BLOCKS.register(public_modid+":"+public_name, this);
+
+//ForgeRegistries.ITEMS.register(public_modid+":"+public_name, new BlockItem(this, new Item.Settings().group(default_tab)));
+  
+  }
 
 
 	  @Override
@@ -77,8 +93,11 @@ resource = ore_material;
 
   @Override
   public FCOre isSingleSided(boolean answer) {
-holder().	    single_sided = answer;
+	holder().    single_sided = answer;
 	return this;  
   }
+  
+  
+  
 
 }

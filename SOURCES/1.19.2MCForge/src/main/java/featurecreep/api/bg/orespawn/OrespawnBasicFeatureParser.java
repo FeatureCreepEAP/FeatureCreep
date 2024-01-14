@@ -3,26 +3,29 @@ package featurecreep.api.bg.orespawn;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import featurecreep.FeatureCreep;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import featurecreep.api.bg.registries.FCForgeRegistries;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreConfiguredFeatures;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.PlacedFeatures;
@@ -31,17 +34,53 @@ import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.PlacementModifier;
 import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegistryObject;
 
 public class OrespawnBasicFeatureParser {
 
 	
 	
+
+	//	  static Codec<ExampleBiomeModifier> EXAMPLE_CODEC = RecordCodecBuilder.create(builder -> builder.group(
+		        // declare fields
+	//        Biome.REGISTRY_ENTRY_LIST_CODEC.fieldOf("biomes").forGetter(ExampleBiomeModifier::biomes),
+//		        PlacedFeature.REGISTRY_CODEC.fieldOf("feature").forGetter(ExampleBiomeModifier::feature)
+		      // declare constructor
+	//	      ).apply(builder, ExampleBiomeModifier::new));
 	
+	
+	
+	//Converting to yarn hard	  
+	//ForgeRegistries also hard
+		  
+		  static	  RegistryObject<Codec<ExampleBiomeModifier>> EXAMPLE_CODEC;
+		  
+		  
+		  
+		  static List<RegistryEntry<PlacedFeature>> placed = new ArrayList<RegistryEntry<PlacedFeature>>();
+		  
+		  
 	//I gotta rewrite all of the Orespawn Module including this part once I get more time
 	//Loads the contents from %GAMEDIR%/orespawn/config/
 	public static void spawnOresFromDefaultConfig()
 	{
 	
+		
+		EXAMPLE_CODEC =	FCForgeRegistries.BIOME_MODIFIER_SERIALIZERS.register("fccodec", () -> RecordCodecBuilder.create(builder -> builder.group(
+		        // declare fields
+		        Biome.REGISTRY_ENTRY_LIST_CODEC.fieldOf("biomes").forGetter(ExampleBiomeModifier::biomes),
+		        PlacedFeature.REGISTRY_CODEC.fieldOf("feature").forGetter(ExampleBiomeModifier::feature)
+		      // declare constructor
+		      ).apply(builder, ExampleBiomeModifier::new)));
+		
+		FCForgeRegistries.BIOME_MODIFIER_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		//System.out.println(EXAMPLE_CODEC.get().toString());
+
+		
+		
 	String orespawn_dir = new String (FeatureCreep.gamepath.toString() +  ("/orespawn/config/"));
 	File file = new File(orespawn_dir);
 		
@@ -153,7 +192,8 @@ if (node.get("enabled").asBoolean() == true)
 
 	 final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
-	 BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLACED.getKey().get());
+//	 BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLACED.getKey().get());
+placed.add(ORE_PLACED);	 
 
 }
 	
@@ -189,6 +229,42 @@ private static List<PlacementModifier> modifiersWithCount(int count, PlacementMo
 
 }
 	
+
+
+public record ExampleBiomeModifier(RegistryEntryList<Biome> biomes, RegistryEntry<PlacedFeature> feature) implements BiomeModifier
+{
+
+
+  public Codec<? extends BiomeModifier> codec()
+  {
+    return EXAMPLE_CODEC.get();
+  }
+
+
+public void modify(RegistryEntry<Biome> biome, Phase phase, Builder builder) {
+	// TODO Auto-generated method stub
+
+	 // add a feature to all specified biomes
+    if (phase == Phase.ADD) // all biomes currently, this system sucks
+    {
+    
+    	
+    	for (int f = 0; f < placed.size(); f++) {
+
+    		builder.getGenerationSettings().feature(GenerationStep.Feature.UNDERGROUND_ORES, placed.get(f));
+		}	
+    	
+    
+    
+    
+    }
+	
+}
+
+
+}
+
+
 	
 	
 }

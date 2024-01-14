@@ -8,10 +8,12 @@ import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObjects;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
+import featurecreep.api.bg.blocks.materials.VanillaBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
+import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
 import featurecreep.api.bg.world.FCWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -32,7 +34,7 @@ public BlockFieldHolder holder = new BlockFieldHolder();
   public FCBlock(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops) {
     super(Block.Settings.of(material.get()).strength(strength / 10));
     initialise(id, modid, name,  group, material, strength, drops);
-
+    
   }
 
 
@@ -74,10 +76,14 @@ public BlockFieldHolder holder = new BlockFieldHolder();
 	    
 
 	  }
+
+
   @Override
   public FCBlock isSingleSided(boolean answer) {
 	    holder().single_sided = answer;
 	return this;  
   }
+
+
 
 }

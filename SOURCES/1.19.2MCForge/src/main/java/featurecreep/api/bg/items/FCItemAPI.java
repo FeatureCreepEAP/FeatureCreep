@@ -21,7 +21,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public interface FCItemAPI<T> extends BlockOrItem<T> {
-
 @Override public ItemFieldHolder holder();
 
 
@@ -56,10 +55,8 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
     }
 
   }
-
-
-
-	public default Item get()
+  
+  	public default Item get()
 	{
 
 		if (this instanceof Item) {
@@ -71,11 +68,9 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 		}
 	
 	}
-
-
-	
-
-  	@Override
+  	
+  	
+	@Override
   	public default void appendOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {};
   	@Override
 	public default void appendUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {};
@@ -122,7 +117,7 @@ LivingEntity ent;
 if (e instanceof LivingEntity)		{
 	ent = (LivingEntity)e;
 try {
-	Method meth = LivingEntity.class.getDeclaredMethod("method_6098", ItemStack.class, int.class);
+	Method meth = LivingEntity.class.getDeclaredMethod("func_184584_a", ItemStack.class, int.class);
 		meth.setAccessible(true);
 		meth.invoke(ent, toStack(1), 0);//Maybe? not sure about this, use may be better
 } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -137,11 +132,7 @@ try {
 	@Override
 	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().postMine(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
 
-
-  
-  	
   	
 	
 	
-
 }

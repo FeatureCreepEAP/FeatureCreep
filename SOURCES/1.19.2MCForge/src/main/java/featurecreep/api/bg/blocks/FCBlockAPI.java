@@ -29,8 +29,8 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 @Override
 	public BlockFieldHolder holder();
 
-
-	 
+	  
+	
 	public default void initialise(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops) {
 		initialise(id, modid, name, group);
 		setDropArrayObjects(drops);
@@ -207,7 +207,6 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		    }
 	  }
 	
-	
 		public default Block get()
 	{
 
@@ -220,11 +219,10 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		}
 	
 	}
-	
 		
 		
-
-	  	@Override
+		
+		@Override
 	  	public default void appendOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {};
 	  	@Override
 		public default void appendUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {};
@@ -271,7 +269,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	if (e instanceof LivingEntity)		{
 		ent = (LivingEntity)e;
 	try {
-		Method meth = LivingEntity.class.getDeclaredMethod("method_6098", ItemStack.class, int.class);
+		Method meth = LivingEntity.class.getDeclaredMethod("func_184584_a", ItemStack.class, int.class);
 			meth.setAccessible(true);
 			meth.invoke(ent, toStack(1), 0);//Maybe? not sure about this, use may be better
 	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -338,6 +336,9 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 			 public default void executeDropItem(FCWorld worl, FCBlockPos pos, BlockOrItem drop) {Block.dropStack(worl.get(), pos, drop.toStack(1));}
 
 			public default void dropItem(FCWorld worl, FCBlockPos pos, BlockOrItem drop) {}
+		
+	
+		
 		
 		
 	

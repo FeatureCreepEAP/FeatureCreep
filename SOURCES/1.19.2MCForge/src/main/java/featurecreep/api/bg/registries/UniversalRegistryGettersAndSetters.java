@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class UniversalRegistryGettersAndSetters {
 
@@ -63,7 +64,7 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerItem(Item item, String registry_name, ItemGroup default_tab, int id)
 	{
-		Registry.register(Registry.ITEM, new Identifier(registry_name), item);
+	    ForgeRegistries.ITEMS.register(new Identifier(registry_name), item);
     }
 	
 	public static void registerItem(FCItemAPI item)
@@ -182,8 +183,9 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerBlock(Block block, String registry_name, ItemGroup default_tab, int id)
 	{
-		Registry.register(Registry.BLOCK, new Identifier(registry_name), block);
-		Registry.register(Registry.ITEM, new Identifier(registry_name), new BlockItem(block, new Item.Settings().group(default_tab)));
+		ForgeRegistries.BLOCKS.register(new Identifier(registry_name), block);	
+	    ForgeRegistries.ITEMS.register(registry_name, new BlockItem(block, new Item.Settings().group(default_tab)));
+
 	}
 	
 	public static void registerBlock(FCBlockAPI block)

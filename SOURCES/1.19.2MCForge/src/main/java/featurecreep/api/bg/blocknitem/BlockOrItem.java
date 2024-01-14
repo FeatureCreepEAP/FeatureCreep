@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 
 public interface BlockOrItem<T> {
 
-	
+
 	public default void initialise(int id, String modid, String name, UnifiedItemGroupGetter group) {
 	setModId(modid);
 	setUnlocName(name);
@@ -53,9 +53,9 @@ public interface BlockOrItem<T> {
 	{
 		return (getModId()+":"+getUnlocName());
 	}
-	
-	
-	public Object get();
+
+
+public Object get();
 
 	public	default ItemStack toStack(int amount) {
 	  if (this instanceof FCItemAPI) {
@@ -80,7 +80,7 @@ public interface BlockOrItem<T> {
 
 	public TextureInfo appendGetTextureInfo();
 
-		public void appendLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
+	public void appendLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
 
 
 	public void appendOnFoodEaten(AbstractEntity e);
@@ -111,7 +111,8 @@ public interface BlockOrItem<T> {
 
 
 
-	
+
+
 	
 }
 
