@@ -2,9 +2,6 @@ package featurecreep.api.bg.items.armour;
 
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.items.armour.ArmourProtectionValuesArray;
-import featurecreep.api.bg.items.armour.FCArmourSlot;
-import featurecreep.api.bg.items.armour.FCArmourSlots;
 import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
 import game.Armour;
@@ -147,16 +144,16 @@ implements ArmourMaterial {
 
     @Override
     public int getProtection(Armour.ArmourPeice var1) {
-        if (var1.equals((Object)Armour.ArmourPeice.BOOTS)) {
+        if (var1.equals(Armour.ArmourPeice.BOOTS)) {
             return this.getFCProtection(FCArmourSlots.BOOTS);
         }
-        if (var1.equals((Object)Armour.ArmourPeice.TUNIC)) {
+        if (var1.equals(Armour.ArmourPeice.TUNIC)) {
             return this.getFCProtection(FCArmourSlots.TUBIC);
         }
-        if (var1.equals((Object)Armour.ArmourPeice.LEGGINGS)) {
+        if (var1.equals(Armour.ArmourPeice.LEGGINGS)) {
             return this.getFCProtection(FCArmourSlots.LEGGINGS);
         }
-        if (var1.equals((Object)Armour.ArmourPeice.HELMET)) {
+        if (var1.equals(Armour.ArmourPeice.HELMET)) {
             return this.getFCProtection(FCArmourSlots.HELMET);
         }
         return 0;

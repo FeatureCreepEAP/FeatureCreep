@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/vecmath-1.5.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/soundsystem-20120107.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-xml_2.11-1.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-swing_2.11-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-reflect-2.11.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-parser-combinators_2.11-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-library-2.11.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-continuations-plugin_2.11.1-1.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-continuations-library_2.11-1.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-compiler-2.11.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-actors-migration_2.11-1.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/scala-actors-2.11.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/realms-1.9.8.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/platform-3.4.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/oshi-core-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/netty-all-4.0.23.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/netty-1.8.8.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/lzma-0.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/lwjgl_util-2.9.4-nightly-20150209.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/lwjgl-platform-2.9.4-nightly-20150209-natives-osx.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/lwjgl-platform-2.9.4-nightly-20150209-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/lwjgl-2.9.4-nightly-20150209.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/librarylwjglopenal-20100824.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/libraryjavasound-20101123.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/launchwrapper-1.12.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jutils-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jsr305-3.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jopt-simple-4.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jna-3.4.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jline-2.13.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jinput-platform-2.0.5-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jinput-platform-2.0.5-natives-osx.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jinput-platform-2.0.5-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jinput-2.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/jansi-1.11.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/icu4j-core-mojang-51.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/guava-17.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/fastutil-7.0.12_mojang.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/config-1.2.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/commons-lang3-3.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/commons-compress-1.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/codecwav-20101023.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/codecjorbis-20101023.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/authlib-1.5.22.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/akka-actor_2.11-2.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/forge-1.12.2-14.23.5.2859-injectedfci.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/log4j-core-2.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/log4j-api-2.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/liteloader-1.12.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/forge-1.12.2-14.23.5.2859-injected.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-util-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-util-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-util-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-tree-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-tree-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-tree-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-tree-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-tree-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-tree-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-debug-all-5.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-commons-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-commons-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-commons-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-analysis-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-analysis-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-analysis-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-all-4.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/asm-8.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

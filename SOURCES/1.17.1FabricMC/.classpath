@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-16">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/unsafe-0.2.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/typetools-0.8.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/toml-3.6.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/text2speech-1.11.3-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/text2speech-1.11.3-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/text2speech-1.11.3-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/text2speech-1.11.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/terminalconsoleappender-1.2.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/slf4j-api-1.8.0-beta4.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/securejarhandler-0.9.54.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/qslfci.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/patchy-2.1.6.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/oshi-core-5.7.5.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/netty-all-4.1.25.Final.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/nashorn-core-15.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/modlauncher-9.0.7.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/mixin-0.8.4.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/maven-artifact-3.6.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.2-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.2-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-tinyfd-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-stb-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-opengl-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-openal-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-jemalloc-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-glfw-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.2-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.2-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.2-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.1-natives-windows.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.1-natives-macos.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.1-natives-linux.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.1-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/lwjgl-3.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/log4j-slf4j18-impl-2.15.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/log4j-slf4j18-impl-2.14.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/log4j-core-2.15.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/log4j-core-2.14.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/log4j-api-2.15.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/log4j-api-2.14.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jutils-1.0.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jopt-simple-5.0.4.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jopt-simple-5.0.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jna-platform-5.8.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jna-5.8.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jline-terminal-3.12.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jline-reader-3.12.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/jinput-2.0.5.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/java-objc-bridge-1.0.0-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/java-objc-bridge-1.0.0-natives-osx.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/java-objc-bridge-1.0.0-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/java-objc-bridge-1.0.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/javabridge-1.1.23.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/icu4j-66.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/httpcore-4.3.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/httpclient-4.3.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/guava-21.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/gson-2.8.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/forgespi-4.0.10.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/fmlloader-1.17.1-37.1.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/fastutil-8.2.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/fabric-loader-0.14.17.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/eventbus-5.0.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/datafixerupper-4.0.26.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/coremods-5.0.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/core-3.6.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/commons-logging-1.1.3.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/commons-lang3-3.8.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/commons-lang3-3.5.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/commons-io-2.5.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/commons-compress-1.8.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/commons-codec-1.10.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/client.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/brigadier-1.0.18.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/bootstraplauncher-0.1.17.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/blocklist-1.0.5.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/authlib-2.3.31.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/asm-util-9.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/asm-tree-9.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/asm-commons-9.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/asm-analysis-9.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/asm-9.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/antlr4-runtime-4.9.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/accesstransformers-8.0.4.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/1.17.1minecraft-fci.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/1.17.1fabricapifci.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

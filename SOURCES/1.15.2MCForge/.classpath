@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/text2speech-1.10.3-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/text2speech-1.10.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/soundsystem-20120107.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/realms-1.13.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/realms-1.13.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/platform-3.4.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/Plasma-build.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/patchy-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/oshi-core-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/netty-all-4.1.25.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/mixin-0.7.11-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lzma-java-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-stb-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-stb-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-opengl-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-opengl-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-openal-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-openal-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-jemalloc-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-jemalloc-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-glfw-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-glfw-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/lwjgl-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/log4j-core-2.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/log4j-api-2.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/libraryjavasound-20101123.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/launchwrapper-1.12.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/jutils-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/jopt-simple-5.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/jna-4.4.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/jinput-2.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/icu4j-core-mojang-51.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/httpclient-4.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/guava-21.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/fmlloader-1.17.1-37.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/fastutil-8.2.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/fastutil-7.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/eventbus-5.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/datafixerupper-1.0.19.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/datafixerupper-1.0.16.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/cursed-fabric-loader-b705ae1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/cursed-fabric-loader-671a1bb.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/commons-compress-1.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/codecwav-20101023.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/codecjorbis-20101023.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/brigadier-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/brigadier-0.1.27.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/authlib-1.5.25.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-util-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-util-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-util-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-util-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-tree-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-tree-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-tree-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-tree-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-tree-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-tree-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-debug-all-5.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-commons-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-commons-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-commons-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-commons-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-commons-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-commons-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-analysis-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-analysis-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-analysis-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-analysis-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-analysis-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-all-4.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/asm-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.15.2MCForge/1.15.2minecraft-fci.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

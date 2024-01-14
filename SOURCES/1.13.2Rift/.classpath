@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/text2speech-1.10.3-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/text2speech-1.10.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/soundsystem-20120107.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/Rift-jitpack-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/Rift-d4cd7b0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/rift-1.0.4-105.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/realms-1.13.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/realms-1.13.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/platform-3.4.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/Plasma-build.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/patchy-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/oshi-core-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/netty-all-4.1.25.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/mixin-0.7.11-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lzma-java-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-stb-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-stb-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-opengl-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-opengl-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-openal-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-openal-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-jemalloc-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-jemalloc-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-glfw-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-glfw-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-3.1.6-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/lwjgl-3.1.6.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/log4j-core-2.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/log4j-api-2.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/libraryjavasound-20101123.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/launchwrapper-1.12.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/jutils-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/jopt-simple-5.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/jna-4.4.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/jinput-2.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/icu4j-core-mojang-51.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/httpclient-4.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/guava-21.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/fastutil-8.2.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/fastutil-7.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/datafixerupper-1.0.19.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/datafixerupper-1.0.16.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/cursed-fabric-loader-b705ae1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/cursed-fabric-loader-671a1bb.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/commons-compress-1.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/codecwav-20101023.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/codecjorbis-20101023.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/brigadier-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/brigadier-0.1.27.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/authlib-1.5.25.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-util-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-util-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-util-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-util-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-tree-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-tree-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-tree-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-tree-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-tree-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-tree-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-debug-all-5.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-commons-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-commons-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-commons-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-commons-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-commons-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-commons-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-analysis-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-analysis-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-analysis-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-analysis-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-analysis-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-all-4.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-9.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-7.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-6.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/asm-6.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/1.13.2-rift-1.0.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/1.13.2minecraft-fci.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.13.2Rift/eventbus-5.0.3.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

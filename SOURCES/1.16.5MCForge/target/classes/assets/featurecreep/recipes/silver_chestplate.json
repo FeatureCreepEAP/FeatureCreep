@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X X",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "featurecreep:silver_ingot"
+    }
+  },
+  "result": {
+    "item": "featurecreep:silver_chestplate"
+  }
+}

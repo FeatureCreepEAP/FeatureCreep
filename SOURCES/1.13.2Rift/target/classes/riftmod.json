@@ -1,0 +1,14 @@
+{
+	"id": "featurecreep",
+	"name": "FeatureCreepMC",
+	"authors": [
+		""
+	],
+	"listeners": [
+		"featurecreep.FeatureCreepMCInit"
+	],
+  "mixins": [
+    "featurecreep.mixins.json"
+  ]
+
+}

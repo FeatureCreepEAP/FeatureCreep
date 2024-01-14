@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.1",
+  "package": "featurecreep.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+"ResourceSMI"
+  ],
+  "client": [
+    "ExampleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
