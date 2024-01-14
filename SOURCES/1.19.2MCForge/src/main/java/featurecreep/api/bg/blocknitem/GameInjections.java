@@ -1,12 +1,9 @@
 package featurecreep.api.bg.blocknitem;
 
 import java.io.IOException;
-import java.util.List;
 
 import javassist.CannotCompileException;
 import javassist.NotFoundException;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
 
 
 
@@ -17,7 +14,7 @@ public class GameInjections {
 	
 	public static void inject()
 	{
-		try {
+	/*	try {
 
 			//AddInjections();
 
@@ -36,7 +33,7 @@ public class GameInjections {
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 	

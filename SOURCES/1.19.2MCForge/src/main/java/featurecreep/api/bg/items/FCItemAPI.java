@@ -15,10 +15,10 @@ import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.world.FCWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import game.Item;
+import game.ItemStack;
+import game.LivingEntity;
+import game.Player;
 
 public interface FCItemAPI<T> extends BlockOrItem<T> {
 @Override public ItemFieldHolder holder();
@@ -90,16 +90,16 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 	public default void appendOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {};
 
 	@Override
-	public default void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {get().onCraft(ic.toStack(1), worl.get(), p.get());};
+	public default void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {get().onCreated(ic.toStack(1), worl.get(), p.get());};
 	@Override
-	public default void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {get().inventoryTick(ic.toStack(1), worl.get(), e.get(), 0, false);}
+	public default void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {get().onUpdate(ic.toStack(1), worl.get(), e.get(), 0, false);}
 
 	//@Overridepublic default boolean executeOnLeftClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {get().post}
 	@Override
-	public default boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {PlayerEntity ent = (PlayerEntity)holder.get();get().use(worl.get(), ent, ent.getActiveHand());return true;}
+	public default boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {Player ent = (Player)holder.get();get().onItemRightClick(worl.get(), ent, ent.getActiveHand());return true;}
 	@Override
 	public default boolean executeAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount) {
-		get().postHit(toStack(1), (LivingEntity)ent.get(), (LivingEntity)ent.get());
+		get().onHit(toStack(1), (LivingEntity)ent.get(), (LivingEntity)ent.get());
 		return true;
 	}
 	@Override
@@ -108,7 +108,7 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 	}
 	@Override
 	public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-		get().postMine(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
+		get().onBlockDestroyed(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
 	}
 	
 	@Override
@@ -130,7 +130,7 @@ try {
 		
 	}
 	@Override
-	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().postMine(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
+	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().onBlockDestroyed(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
 
   	
 	

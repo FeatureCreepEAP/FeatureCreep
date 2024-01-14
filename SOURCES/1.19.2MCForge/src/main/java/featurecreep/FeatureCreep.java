@@ -5,10 +5,9 @@ import java.nio.file.Path;
 
 import org.jboss.logging.Logger;
 import org.jboss.modules.ModuleLoader;
-import org.quiltmc.loader.api.QuiltLoader;
 
-import featurecreep.api.GameInjections;
 import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.blocknitem.GameInjections;
 import featurecreep.api.bg.datapacks.DataPackLoader;
 import featurecreep.api.bg.items.vanilla.VanillaItems;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
@@ -19,24 +18,29 @@ import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR7;
 import featurecreep.loader.GetPackagesFromClassLoader;
+import net.minecraftforge.registries.GameData;
 
 public class FeatureCreep {
 
 
-	public static Path gamepath = QuiltLoader.getGameDir();	
-	public static String modpath = QuiltLoader.getGameDir() + ("/mods/");	
+	public static Path gamepath = FeatureCreepMCInit.gamepath;
+	public static String modpath = FeatureCreepMCInit.modpath;
 		public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
 	public static FCLoaderBasic loader = new FCLoaderBasicR7(new Path[] {new File(modpath).toPath()}, new Path[] {}, packages_needed, 4, true);
-	public static ModuleLoader modloader = loader.getLoader();
+	public static ModuleLoader modloader = loader.getLoader();	
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	
-	private static String[] dependancies = {""};
+private static String[] dependancies = {""};
 	public static String[] modpaths = {modpath};
-
+	
+//TODO Make Packages Needed list all forge packages as its not linear like Fabric
 	
 		public static void onInitialise() {
 		// TODO Auto-generated method stub
+			
+			GameData.unfreezeData();
+			
 			System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID " + io.smallrye.common.os.Process.getProcessId());
 			GameInjections.inject();
 			FCCreativeTabs.onInitialise();

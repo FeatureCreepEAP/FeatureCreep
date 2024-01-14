@@ -1,12 +1,9 @@
 package featurecreep.api;
 
 import java.io.IOException;
-import java.util.List;
 
 import javassist.CannotCompileException;
 import javassist.NotFoundException;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
 
 
 

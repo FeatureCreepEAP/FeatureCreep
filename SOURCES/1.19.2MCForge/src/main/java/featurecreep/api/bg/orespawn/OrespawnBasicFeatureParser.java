@@ -13,31 +13,30 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.registries.FCForgeRegistries;
-import net.minecraft.block.Block;
-import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.structure.rule.RuleTest;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryEntryList;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.YOffset;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.feature.PlacedFeatures;
-import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.PlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import game.Biome;
+import game.BiomePlacementModifier;
+import game.Block;
+import game.BlockMatcher;
+import game.CountGenerationAttribute;
+import game.GameRegistries;
+import game.GenerationPlacement;
+import game.HeightRangePlacementModifier;
+import game.MapVerticleAnchor;
+import game.NudgerConfig;
+import game.NudgerPlacements;
+import game.PlacementModifier;
+import game.RegistryEntry;
+import game.RegistryEntryList;
+import game.ResourceLocation;
+import game.SquarePlacementModifier;
+import game.TerrainPlacementMod;
+import game.WorldGenFeature;
+import game.WorldGenerationObjectConfiguration;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
+import obf.class_unknown_1069.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -60,7 +59,7 @@ public class OrespawnBasicFeatureParser {
 		  
 		  
 		  
-		  static List<RegistryEntry<PlacedFeature>> placed = new ArrayList<RegistryEntry<PlacedFeature>>();
+		  static List<RegistryEntry<GenerationPlacement>> placed = new ArrayList<RegistryEntry<GenerationPlacement>>();
 		  
 		  
 	//I gotta rewrite all of the Orespawn Module including this part once I get more time
@@ -72,7 +71,7 @@ public class OrespawnBasicFeatureParser {
 		EXAMPLE_CODEC =	FCForgeRegistries.BIOME_MODIFIER_SERIALIZERS.register("fccodec", () -> RecordCodecBuilder.create(builder -> builder.group(
 		        // declare fields
 		        Biome.REGISTRY_ENTRY_LIST_CODEC.fieldOf("biomes").forGetter(ExampleBiomeModifier::biomes),
-		        PlacedFeature.REGISTRY_CODEC.fieldOf("feature").forGetter(ExampleBiomeModifier::feature)
+		        GenerationPlacement.REGISTRY_CODEC.fieldOf("feature").forGetter(ExampleBiomeModifier::feature)
 		      // declare constructor
 		      ).apply(builder, ExampleBiomeModifier::new)));
 		
@@ -151,46 +150,46 @@ public static void 	splitOS3Basic(ModelNode node)
 public static void 	parseOS3Basic(ModelNode node,String name)
 {
 	
-if (node.get("enabled").asBoolean() == true)
-{
-	//List<String> replace_registry_names = new ArrayList<String>(); We will do array list later
-	String replace_registry_names = new String();
-	if (node.get("replaces").asString().equals("default"))
+	if (node.get("enabled").asBoolean() == true)
 	{
-		replace_registry_names = "minecraft:stone";
-	}else
-	{
-		replace_registry_names = node.get("replaces").asString();
-	}
-	
-	replace_registry_names = getCorrectNameSpace(replace_registry_names);
-	
-	
-	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = Registry.BLOCK.get(new Identifier(block_identifier[0], block_identifier[1]));
-	
-	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
-	
-	
-	
-	
-	System.out.println(getCorrectNameSpace(new_block));
-	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = Registry.BLOCK.get(new Identifier(new_block_identifier[0], new_block_identifier[1]));
-	
-	
-	
-	
-	System.out.println(replacedBlock.getName());
-	System.out.println(newBlock.getName());
+		//List<String> replace_registry_names = new ArrayList<String>(); We will do array list later
+		String replace_registry_names = new String();
+		if (node.get("replaces").asString().equals("default"))
+		{
+			replace_registry_names = "minecraft:stone";
+		}else
+		{
+			replace_registry_names = node.get("replaces").asString();
+		}
+		
+		replace_registry_names = getCorrectNameSpace(replace_registry_names);
+		
+		
+		String[] block_identifier = replace_registry_names.split(":");
+		Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+		
+		String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
+		
+		
+		
+		
+		System.out.println(getCorrectNameSpace(new_block));
+		String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
+		Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+		
+		
+		
+		
+		System.out.println(replacedBlock.getName());
+		System.out.println(newBlock.getName());
 
-    final RuleTest RULE = new BlockMatchRuleTest(replacedBlock);
+		BlockMatcher RULE = new BlockMatcher(replacedBlock);
 
-	
-	// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, replacedBlock.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, replacedBlock.getDefaultState())), 4));
-     RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register(name, Feature.ORE, new OreFeatureConfig(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()));//I need to also include veriation in the future
 
-	 final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
+		// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, replacedBlock.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, replacedBlock.getDefaultState())), 4));
+	     RegistryEntry<WorldGenerationObjectConfiguration<TerrainPlacementMod, ?>> ORE_CONFIG = NudgerConfig.register(name, WorldGenFeature.ORE, new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()));//I need to also include veriation in the future
+
+		 final RegistryEntry<GenerationPlacement> ORE_PLACED = NudgerPlacements.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(MapVerticleAnchor.fixed(node.get("parameters").get("minHeight").asInt()), MapVerticleAnchor.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
 //	 BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLACED.getKey().get());
 placed.add(ORE_PLACED);	 
@@ -221,17 +220,17 @@ return new_string;
 }
 
 private static List<PlacementModifier> modifiers(PlacementModifier countModifier, PlacementModifier heightModifier) {
-    return List.of(countModifier, SquarePlacementModifier.of(), heightModifier, BiomePlacementModifier.of());
+    return List.of(countModifier, SquarePlacementModifier.basic(), heightModifier, BiomePlacementModifier.standard());
 }
 
 private static List<PlacementModifier> modifiersWithCount(int count, PlacementModifier heightModifier) {
-    return modifiers(CountPlacementModifier.of(count), heightModifier);
+    return modifiers(CountGenerationAttribute.count(count), heightModifier);
 
 }
 	
 
 
-public record ExampleBiomeModifier(RegistryEntryList<Biome> biomes, RegistryEntry<PlacedFeature> feature) implements BiomeModifier
+public record ExampleBiomeModifier(RegistryEntryList<Biome> biomes, RegistryEntry<GenerationPlacement> feature) implements BiomeModifier
 {
 
 
@@ -251,7 +250,7 @@ public void modify(RegistryEntry<Biome> biome, Phase phase, Builder builder) {
     	
     	for (int f = 0; f < placed.size(); f++) {
 
-    		builder.getGenerationSettings().feature(GenerationStep.Feature.UNDERGROUND_ORES, placed.get(f));
+    		builder.getGenerationSettings().addFeature(Feature.UNDERGROUND_ORES, placed.get(f));
 		}	
     	
     

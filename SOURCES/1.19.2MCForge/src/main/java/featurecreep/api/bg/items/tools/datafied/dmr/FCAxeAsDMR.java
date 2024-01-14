@@ -10,13 +10,13 @@ import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.parsers.ParseDMRItem;
 import featurecreep.content.FCItems;
-import net.minecraft.item.Item;
+import game.Item;
 
 public class FCAxeAsDMR extends FCItemAsDMR<FCAxeAsDMR> implements ToolsAPI<FCAxeAsDMR>
 
 {
 
-		public featurecreep.api.bg.items.tools.ToolFieldHolder holder = new featurecreep.api.bg.items.tools.ToolFieldHolder();
+	public featurecreep.api.bg.items.tools.ToolFieldHolder holder = new featurecreep.api.bg.items.tools.ToolFieldHolder();
 @Override	public featurecreep.api.bg.items.tools.ToolFieldHolder holder() {	return holder;	}
 
 	
@@ -25,7 +25,7 @@ public class FCAxeAsDMR extends FCItemAsDMR<FCAxeAsDMR> implements ToolsAPI<FCAx
 super (id, modid,name, group);
 initialise(id,modid,name,group,material,attackDamage, attackSpeed);		
 
-	
+
 		}
 
 		

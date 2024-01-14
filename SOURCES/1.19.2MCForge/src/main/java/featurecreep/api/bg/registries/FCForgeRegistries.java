@@ -2,7 +2,7 @@ package featurecreep.api.bg.registries;
 
 import com.mojang.serialization.Codec;
 
-import net.minecraft.item.Item;
+import game.Item;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

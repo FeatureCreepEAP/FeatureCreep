@@ -1,13 +1,8 @@
 package featurecreep.api.bg.datapacks;
 
 import java.io.File;
-import java.util.Set;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.bg.FCPackLoad;
-import mx.kenzie.mirror.Mirror;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.ResourcePackProvider;
 
 public class DataPackLoader {
 
@@ -18,7 +13,6 @@ public class DataPackLoader {
 		File location = new File(datapacklocation);
 		location.delete();
 		location.deleteOnExit();
-		//MinecraftClient.getInstance().getResourcePackManager().addPackFinder(new featurecreep.api.FCPackLoad(new java.io.File(featurecreep.api.datapacks.DataPackLoader.datapacklocation)));
 	//	Set<ResourcePackProvider> provs =	(Set<ResourcePackProvider>)Mirror.of(MinecraftClient.getInstance().getResourcePackManager()).field("field_14227");
 	//	provs.add(new FCPackLoad(new File(datapacklocation)));
 		//.register was removed in a version of MC so we must mirror it

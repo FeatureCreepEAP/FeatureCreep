@@ -1,11 +1,11 @@
 package featurecreep.api.bg.ui.tabs;
 
-import net.minecraft.item.ItemGroup;
+import game.CreativeTab;
 
 public interface UnifiedItemGroupGetter {
 
 	
-	public ItemGroup get();	
+	public CreativeTab get();	
 	
 	ItemGroupHolder holder = new ItemGroupHolder();
 	String tab_name = holder.tab_name;

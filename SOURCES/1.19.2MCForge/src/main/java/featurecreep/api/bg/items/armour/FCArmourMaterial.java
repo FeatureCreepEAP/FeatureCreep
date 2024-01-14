@@ -4,23 +4,23 @@ import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.sound.SoundEvent;
+import game.ArmourMaterial;
+import game.DivisionDesigner;
+import game.SoundEffect;
+import game.ToolRepairIngredient;
 
-public class FCArmourMaterial implements ArmorMaterial{
+public class FCArmourMaterial implements ArmourMaterial{
 
 	public  int durability;
 	public  ArmourProtectionValuesArray protection;
 	public  int enchantability;
-	public  Ingredient repair;
+	public  ToolRepairIngredient repair;
 	public  int toughness;
 	public  String name;
 	public  int knockback_resistance;
 	public AbstractSoundEffect sound;
 	
-public FCArmourMaterial (int durability, ArmourProtectionValuesArray protection, int enchantability, Ingredient repair, String name, int toughness, int knockback_resistance, AbstractSoundEffect sound)
+public FCArmourMaterial (int durability, ArmourProtectionValuesArray protection, int enchantability, ToolRepairIngredient repair, String name, int toughness, int knockback_resistance, AbstractSoundEffect sound)
 {
 this.durability = durability;
 this.protection = protection;
@@ -107,24 +107,24 @@ public  int getFCTextureNumber(FCArmourSlot slot)
 }
 
 
-
-    public int getDurability(EquipmentSlot var1)
+@Override
+    public int getDurability(DivisionDesigner var1)
     {
     	return this.durability;	
     }
-
-    public int getProtectionAmount(EquipmentSlot var1)
+	@Override
+    public int getProtectionAmount(DivisionDesigner var1)
     {
-    	if (var1.equals(EquipmentSlot.HEAD)){
+    	if (var1.equals(DivisionDesigner.HEAD)){
     	return this.protection.getHelmetProtectionValue();
     	}
-    	else if (var1.equals(EquipmentSlot.CHEST)){
+    	else if (var1.equals(DivisionDesigner.CHEST)){
         	return this.protection.getChestplateProtectionValue();
         	}
-    	else if (var1.equals(EquipmentSlot.LEGS)){
+    	else if (var1.equals(DivisionDesigner.LEGS)){
         	return this.protection.getLeggingsProtectionValue();
         	}
-    	else if (var1.equals(EquipmentSlot.FEET)){
+    	else if (var1.equals(DivisionDesigner.FEET)){
         	return this.protection.getBootsProtectionValue();
         	}
     	else {
@@ -132,36 +132,37 @@ public  int getFCTextureNumber(FCArmourSlot slot)
         	}
     	
     	}
-
+	@Override
     public int getEnchantability()
     {
     	return this.enchantability;
     }
-
-    public SoundEvent getEquipSound() // Sound I will do Later
+	@Override
+    public SoundEffect getEquipSound() // Sound I will do Later
     {
     	return sound.get();
     }
-
-    public Ingredient getRepairIngredient()
+	@Override
+    public ToolRepairIngredient getRepairIngredient()
     {
     	return this.repair;
     }
-
+	@Override
     public String getName()
     {
     	return this.name;
     }
-
+	@Override
     public float getToughness()
     {
     	return this.toughness;	
     }
 
-    public float getKnockbackResistance()
-    {
+	@Override
+	public float knockback_resistance() {
+		// TODO Auto-generated method stub
     	return this.knockback_resistance;
-    }
+	}
 
     
     

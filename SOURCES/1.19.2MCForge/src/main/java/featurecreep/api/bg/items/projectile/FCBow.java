@@ -1,12 +1,11 @@
 package featurecreep.api.bg.items.projectile;
 
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Item;
+import game.Bow;
+import game.Item;
 
-public class FCBow extends BowItem  implements FCItemAPI<FCBow>{
+public class FCBow extends Bow  implements FCItemAPI<FCBow>{
 
 	
 
@@ -16,9 +15,9 @@ public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.b
 	
 public FCBow(int id, String modid, String name, UnifiedItemGroupGetter group)
 {
-	super(new Item.Settings().group(group.get()));
+	super(new Item.Info().setCreativeTab(group.get()));
 initialise(id, modid, name, group);
-FCRegistries.registerItem(this);
+
 
 }
 

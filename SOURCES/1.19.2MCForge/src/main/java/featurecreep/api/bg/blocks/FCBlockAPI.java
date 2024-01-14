@@ -19,10 +19,10 @@ import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import game.Block;
+import game.ItemStack;
+import game.LivingEntity;
+import game.Player;
 
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
@@ -242,16 +242,16 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		public default void appendOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {};
 
 		@Override
-		public default void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {get().asItem().onCraft(ic.toStack(1), worl.get(), p.get());};
+		public default void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {get().asItem().onCreated(ic.toStack(1), worl.get(), p.get());};
 		@Override
-		public default void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {get().asItem().inventoryTick(ic.toStack(1), worl.get(), e.get(), 0, false);}
+		public default void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {get().asItem().onUpdate(ic.toStack(1), worl.get(), e.get(), 0, false);}
 
 		//@Overridepublic default boolean executeOnLeftClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {get().post}
 		@Override
-		public default boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {PlayerEntity ent = (PlayerEntity)holder.get();get().asItem().use(worl.get(), ent, ent.getActiveHand());return true;}
+		public default boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {Player ent = (Player)holder.get();get().asItem().onItemRightClick(worl.get(), ent, ent.getActiveHand());return true;}
 		@Override
 		public default boolean executeAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount) {
-			get().asItem().postHit(toStack(1), (LivingEntity)ent.get(), (LivingEntity)ent.get());
+			get().asItem().onHit(toStack(1), (LivingEntity)ent.get(), (LivingEntity)ent.get());
 			return true;
 		}
 		@Override
@@ -260,7 +260,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		}
 		@Override
 		public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-			get().asItem().postMine(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
+			get().asItem().onBlockDestroyed(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
 		}
 		
 		@Override
@@ -282,7 +282,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 			
 		}
 		@Override
-		public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().asItem().postMine(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
+		public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().asItem().onBlockDestroyed(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
 
 
 		//We really soon gotta change these for prefered state
@@ -333,7 +333,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 			public default void executeOnStepped(AbstractEntity e, FCWorld w, FCBlockPos pos) {get().onSteppedOn(w.get(), pos, get().getDefaultState(), e.get());}
 
 			public default void onStepped(AbstractEntity e, FCWorld w, FCBlockPos pos) {}
-			 public default void executeDropItem(FCWorld worl, FCBlockPos pos, BlockOrItem drop) {Block.dropStack(worl.get(), pos, drop.toStack(1));}
+			 public default void executeDropItem(FCWorld worl, FCBlockPos pos, BlockOrItem drop) {Block.drop(worl.get(), pos, drop.toStack(1));}
 
 			public default void dropItem(FCWorld worl, FCBlockPos pos, BlockOrItem drop) {}
 		
