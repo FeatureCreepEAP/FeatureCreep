@@ -1,10 +1,10 @@
 package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
+import game.Axe;
+import game.Item;
 
-public class FCAxe extends AxeItem implements ToolsAPI<FCAxe>
+public class FCAxe extends Axe implements ToolsAPI<FCAxe>
 {
 
 
@@ -14,7 +14,7 @@ public class FCAxe extends AxeItem implements ToolsAPI<FCAxe>
 	
 	public FCAxe(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
-		super(material, attackDamage, attackSpeed, new Item.Settings().group(group.get()));
+		super(material, attackDamage, attackSpeed, new Item.Info().setCreativeTab(group.get()));
 	initialise(id,modid,name, group,material,attackDamage,attackSpeed);
 		}
 

@@ -1,7 +1,7 @@
 package featurecreep.api.bg.entity;
 
 import featurecreep.api.bg.world.FCWorld;
-import net.minecraft.entity.Entity;
+import game.Entity;
 
 public interface AbstractEntity {
 

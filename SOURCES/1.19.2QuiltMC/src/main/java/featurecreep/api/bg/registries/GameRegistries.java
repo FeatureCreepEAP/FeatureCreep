@@ -3,13 +3,12 @@
  */
 package featurecreep.api.bg.registries;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import game.Biome;
+import game.Block;
+import game.CreativeTab;
+import game.Item;
+import game.MapWorldGenerationRegistries;
+import game.ResourceLocation;
 
 /**
  * @author rhel
@@ -21,42 +20,42 @@ public class GameRegistries {
 	
 	public static Item getItemFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return Registry.ITEM.get(new Identifier(registry_name));
+		return game.GameRegistries.ITEM.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Item getItemFromGameRegistries(int id)
 	{
-		return Item.byRawId(id);
+		return Item.byID(id);
 	}
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name)
 	{
-		return Registry.ITEM.containsId(new Identifier(registry_name));
+		return game.GameRegistries.ITEM.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return Registry.BLOCK.get(new Identifier(registry_name));
+		return game.GameRegistries.BLOCK.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(int id)
 	{
-		return Registry.BLOCK.get(id);//May not work
+		return game.GameRegistries.BLOCK.get(id);//May not work
 	}
 	
 	public static boolean BlockKeyExistsInRegistry(String registry_name)
 	{
-		return Registry.BLOCK.containsId(new Identifier(registry_name));
+		return game.GameRegistries.BLOCK.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	
-	public static ItemGroup getItemGroupByName(String name)
+	public static CreativeTab getItemGroupByName(String name)
 	{
-		for (int t = 0; t < ItemGroup.GROUPS.length; t++) {
+		for (int t = 0; t < CreativeTab.GROUPS.length; t++) {
 	
 			
-			if (ItemGroup.GROUPS[t].getName().equals(name)) {
-				return ItemGroup.GROUPS[t];
+			if (CreativeTab.GROUPS[t].getName().equals(name)) {
+				return CreativeTab.GROUPS[t];
 			}
 	
 	
@@ -65,13 +64,13 @@ public class GameRegistries {
 		return null;
 	}
 	
-	public static ItemGroup getItemGroupByID(int id)
+	public static CreativeTab getItemGroupByID(int id)
 	{
-		for (int t = 0; t < ItemGroup.GROUPS.length; t++) {
+		for (int t = 0; t < CreativeTab.GROUPS.length; t++) {
 	
 			
-			if (ItemGroup.GROUPS[t].getIndex() == id) {
-				return ItemGroup.GROUPS[t];
+			if (CreativeTab.GROUPS[t].getIndex() == id) {
+				return CreativeTab.GROUPS[t];
 			}
 	
 	
@@ -85,17 +84,17 @@ public class GameRegistries {
 	//Will need to change some biome registries after we add biomes
 	public static Biome getBiomeFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return BuiltinRegistries.BIOME.get(new Identifier(registry_name));
+		return MapWorldGenerationRegistries.BIOME.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Biome getBiomeFromGameRegistries(int id)
 	{
-		return BuiltinRegistries.BIOME.get(id);
+		return MapWorldGenerationRegistries.BIOME.get(id);
 	}
 	
 	public static boolean BiomeKeyExistsInRegistry(String registry_name)
 	{
-		return BuiltinRegistries.BIOME.containsId(new Identifier(registry_name));
+		return MapWorldGenerationRegistries.BIOME.containsRL(new ResourceLocation(registry_name));
 	}
 	
 }

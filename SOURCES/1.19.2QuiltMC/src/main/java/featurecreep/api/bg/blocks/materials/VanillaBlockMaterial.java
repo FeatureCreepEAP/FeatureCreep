@@ -1,12 +1,12 @@
 package featurecreep.api.bg.blocks.materials;
 
-import net.minecraft.block.Material;
+import game.BlockMaterial;
 
 public class VanillaBlockMaterial implements UnifiedBlockMaterial{
 
-	public Material get;
+	public BlockMaterial get;
 	
-	protected VanillaBlockMaterial (Material material)
+	protected VanillaBlockMaterial (BlockMaterial material)
 	{
 	get = material;	
 	}
@@ -17,7 +17,7 @@ public class VanillaBlockMaterial implements UnifiedBlockMaterial{
 	}
 
 	@Override
-	public Material get() {
+	public BlockMaterial get() {
 		// TODO Auto-generated method stub
 		return get;
 	}

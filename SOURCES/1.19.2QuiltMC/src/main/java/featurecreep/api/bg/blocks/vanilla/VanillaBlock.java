@@ -2,8 +2,8 @@ package featurecreep.api.bg.blocks.vanilla;
 
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.ui.FCCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import game.Block;
+import game.BlockState;
 
 /**
 TRY TO AVOID THIS CLASS, USE IN THE WRONG CIRCUMSTANCES CAN LEAD TO CRASH/MOD NOT LOADING. STAY WITHIN DOCUMENTATION UNLESS YOU REALLY KNOW WHAT YOU ARE DOING
@@ -24,7 +24,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 		setUnlocName(registry_name.split(":")[1]);
 		//registerModels(); We do not need this at this time, maybe in the future we can do something with it
 		setDefaultCreativeTab(FCCreativeTabs.TOOLS.get()); //May not work on all versions, we may need to remove this. Yay it works on 1.13 and newer, we will need to check about 1.19.3 though, 1.19.3 does not work but i can put a generic tab. Soon I will make a porting tab though
-		setNumberID(block.getRawIdFromState(state));//Will just be 0 in some versions most likely. Getting from States will be weird though Gotta Maybe find a way to incorperate those
+		setNumberID(block.getIdFromBlockState(state));//Will just be 0 in some versions most likely. Getting from States will be weird though Gotta Maybe find a way to incorperate those
 	this.state = state;
 	}
 	

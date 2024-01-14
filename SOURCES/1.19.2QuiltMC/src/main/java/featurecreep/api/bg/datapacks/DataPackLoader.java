@@ -1,13 +1,8 @@
 package featurecreep.api.bg.datapacks;
 
 import java.io.File;
-import java.util.Set;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.bg.FCPackLoad;
-import mx.kenzie.mirror.Mirror;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.ResourcePackProvider;
 
 public class DataPackLoader {
 

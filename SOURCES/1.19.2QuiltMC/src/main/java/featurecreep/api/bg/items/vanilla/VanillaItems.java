@@ -4,8 +4,8 @@ import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.registries.VanillaRegistries;
 import featurecreep.api.bg.ui.FCCreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import game.Item;
+import game.Items;
 
 public class VanillaItems {
 

@@ -1,6 +1,6 @@
 package featurecreep.api.bg.items.armour;
 
-import net.minecraft.entity.EquipmentSlot;
+import game.DivisionDesigner;
 
 public class FCArmourSlot {
 
@@ -14,24 +14,24 @@ public class FCArmourSlot {
 	}
 	
 	
-	public EquipmentSlot getSlot()
+	public DivisionDesigner getSlot()
 	{
 		if (this.location.equals("HELMET"))
 		{
-			return EquipmentSlot.HEAD;
+			return DivisionDesigner.HEAD;
 		} else if (this.location.equals("TUBIC"))
 		{
-		return EquipmentSlot.CHEST;	
+		return DivisionDesigner.CHEST;	
 		}else if (this.location.equals("LEGGINGS"))
 		{
-			return EquipmentSlot.LEGS;
+			return DivisionDesigner.LEGS;
 		}else if (this.location.equals("BOOTS"))
 		{
-			return EquipmentSlot.FEET;
+			return DivisionDesigner.FEET;
 		}
 		else
 		{
-		return EquipmentSlot.HEAD; // Head is Default. I soon got to find a better way to register custom locations when i get more time	
+		return DivisionDesigner.HEAD; // Head is Default. I soon got to find a better way to register custom locations when i get more time	
 			
 		}
 		

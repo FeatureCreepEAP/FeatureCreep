@@ -1,12 +1,12 @@
 package featurecreep.api.bg.entity;
 
-import net.minecraft.entity.player.PlayerEntity;
+import game.Player;
 
 public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer{
 	
-	PlayerEntity entity;
+	Player entity;
 	
-	public VanillaPlayer(PlayerEntity ent) {
+	public VanillaPlayer(Player ent) {
 		super(ent);
 		// TODO Auto-generated constructor stub
 	entity = ent;
@@ -18,7 +18,7 @@ public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer
 	}
 
 	@Override
-	public PlayerEntity get() {
+	public Player get() {
 		return entity;
 	}
 

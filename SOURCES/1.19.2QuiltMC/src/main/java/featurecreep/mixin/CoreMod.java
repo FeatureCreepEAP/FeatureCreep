@@ -15,6 +15,7 @@ import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtMethod;
 import javassist.NotFoundException;
 
@@ -52,8 +53,12 @@ public byte[] transformresourcemanager(byte[] basicClass) {
 			  CtClass cc = pool.get("net.minecraft.class_3283");
 			  CtMethod m = cc.getDeclaredMethod("method_14445");
 			  m.insertBefore("System.out.println(\"Testin JA\");");
+			  
 			  m.insertBefore("field_14227.add(new featurecreep.api.bg.FCPackLoad(new java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));");
+CtConstructor cons = cc.getDeclaredConstructors()[0];
+cons.insertAfter("field_14227 = featurecreep.api.io.BasicIO.setFromArray($2);");
 
+			  
 			  return cc.toBytecode();
 		} catch (NotFoundException | CannotCompileException | IOException e) {
 			// TODO Auto-generated catch block

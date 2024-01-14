@@ -1,11 +1,11 @@
 package featurecreep.api.bg.entity;
 
-import net.minecraft.entity.player.PlayerEntity;
+import game.Player;
 
 public interface AbstractPlayer extends AbstractLivingEntity {
 
 	@Override
-	public PlayerEntity get();
+	public Player get();
 
 	
 }

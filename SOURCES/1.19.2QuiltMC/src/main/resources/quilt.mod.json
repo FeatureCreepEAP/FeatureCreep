@@ -1,0 +1,42 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "com.example",
+		"id": "featurecreep",
+		"version": "${version}",
+		"metadata": {
+			"name": "FeatureCreepMC",
+			"description": "A mod which adds many features from older mods to other versions and loads mods.",
+			"contributors": {
+				"Me!": "Owner"
+			},
+			"contact": {
+				"homepage": "https://featurecreepmc.downwithamerica.com/",
+				"issues": "https://pagure.io/FeatureCreep/issues",
+				"sources": "https://featurecreepmc.downwithamerica.com/src"
+			},
+			"icon": "assets/example_mod/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"init": "featurecreep.FeatureCreepMCInit"
+		},
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.16.0-"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": ">=1.0.0-"
+			},
+			{
+				"id": "minecraft",
+				"versions": "*"
+			}
+		]
+	},
+"mixin": [
+    "featurecreep.mixins.json"
+	]
+}

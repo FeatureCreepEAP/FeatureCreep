@@ -2,10 +2,10 @@ package featurecreep.api.bg.ui;
 
 import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import game.CreativeTab;
+import game.ItemStack;
 
-public class FCCreativeTab extends ItemGroup implements UnifiedItemGroupGetter{
+public class FCCreativeTab extends CreativeTab implements UnifiedItemGroupGetter{
 
 public String id;	
 	
@@ -33,7 +33,7 @@ id=id;
 		return null;
 	}
 	@Override
-	public ItemGroup get() {
+	public CreativeTab get() {
 		// TODO Auto-generated method stub
 		return this;
 	}

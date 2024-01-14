@@ -2,10 +2,10 @@ package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.recipe.Ingredient;
+import game.Item;
+import game.ItemConvertible;
+import game.ToolMaterial;
+import game.ToolRepairIngredient;
 
 public class FCToolMaterial implements ToolMaterial
 {
@@ -15,10 +15,10 @@ public class FCToolMaterial implements ToolMaterial
 	public  int speed;
 	public  int attack;
 	public  int enchantness;
-	public  Ingredient repair;
+	public  ToolRepairIngredient repair;
 	public  Item repair_item;
 	
-	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, Ingredient repairMaterial)
+	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, ToolRepairIngredient repairMaterial)
 	{
 		harvest = harvestLevel;
 		durability = maxUses;
@@ -78,7 +78,7 @@ public class FCToolMaterial implements ToolMaterial
 
 	
 	// TODO make these return stuff eventually and public
-	private Ingredient getToolRepairIngredient() {
+	private ToolRepairIngredient getToolRepairIngredient() {
 		// TODO Auto-generated method stub
 		return repair;
 	}
@@ -98,7 +98,7 @@ public class FCToolMaterial implements ToolMaterial
 
 
 	@Override
-	public int getMiningLevel() {
+	public int getHarvestLevel() {
 		// TODO Auto-generated method stub
 	return	this.getToolHarvestLevel();
 	}
@@ -111,7 +111,7 @@ public class FCToolMaterial implements ToolMaterial
 	}
 
 	@Override
-	public Ingredient getRepairIngredient() {
+	public ToolRepairIngredient getRepairIngredient() {
 		// TODO Auto-generated method stub
 //return this.getToolRepairIngredient();
  return getToolRepairIngredient();
@@ -119,13 +119,13 @@ public class FCToolMaterial implements ToolMaterial
 
 
 	@Override
-	public int getDurability() {
+	public int getMaxUses() {
 		// TODO Auto-generated method stub
 		return this.getToolMaxUses();
 	}
 
 	@Override
-	public float getMiningSpeedMultiplier() {
+	public float getEfficiency() {
 		// TODO Auto-generated method stub
 		return	this.getToolEfficiency();
 		}

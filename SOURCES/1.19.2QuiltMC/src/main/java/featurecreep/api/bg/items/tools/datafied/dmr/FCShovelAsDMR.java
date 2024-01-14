@@ -10,7 +10,7 @@ import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.parsers.ParseDMRItem;
 import featurecreep.content.FCItems;
-import net.minecraft.item.Item;
+import game.Item;
 
 public class FCShovelAsDMR extends FCItemAsDMR<FCShovelAsDMR> implements ToolsAPI <FCShovelAsDMR>
 {

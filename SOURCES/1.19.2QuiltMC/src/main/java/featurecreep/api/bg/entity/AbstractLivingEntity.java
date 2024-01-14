@@ -1,6 +1,6 @@
 package featurecreep.api.bg.entity;
 
-import net.minecraft.entity.LivingEntity;
+import game.LivingEntity;
 
 public interface AbstractLivingEntity extends AbstractEntity{
 

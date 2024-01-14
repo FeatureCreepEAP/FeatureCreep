@@ -1,19 +1,19 @@
 package featurecreep.api.bg.items.tools;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.recipe.Ingredient;
+import game.Block;
+import game.Item;
+import game.ToolRepairIngredient;
 
 public class FCIngredient {
 
-	public static Ingredient ingredientFromItem(Item item)
+	public static ToolRepairIngredient ingredientFromItem(Item item)
 	{
-		return Ingredient.ofItems(item);
+		return ToolRepairIngredient.ofItems(item);
 
 	}
-	public static Ingredient ingredientFromItem(Block item)
+	public static ToolRepairIngredient ingredientFromItem(Block item)
 	{
-		return Ingredient.ofItems(item);
+		return ToolRepairIngredient.ofItems(item);
 
 	}
 

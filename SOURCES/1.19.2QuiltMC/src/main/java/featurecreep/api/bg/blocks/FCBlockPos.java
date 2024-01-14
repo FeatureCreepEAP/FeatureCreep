@@ -1,6 +1,6 @@
 package featurecreep.api.bg.blocks;
 
-import net.minecraft.util.math.BlockPos;
+import game.BlockPos;
 
 public class FCBlockPos extends BlockPos{
 

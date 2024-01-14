@@ -1,7 +1,7 @@
 package featurecreep.api.bg.ui.tabs.vanilla;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import net.minecraft.item.ItemGroup;
+import game.CreativeTab;
 
 public class VanillaCreativeTab  implements UnifiedItemGroupGetter
 {
@@ -9,52 +9,52 @@ public class VanillaCreativeTab  implements UnifiedItemGroupGetter
 	
 public VanillaCreativeTab(String name) {
 	tabname=name;
-	setTabName(getVanillaGroupFromString(this).getDisplayName().getString()); //May not work, ideally tabname will be used for most //In Yarn the ID is the String name, kinda throws off considering here its the number
+	setTabName(getVanillaGroupFromString(this).getName()); //May not work, ideally tabname will be used for most //In Yarn the ID is the String name, kinda throws off considering here its the number
 	setID(getVanillaGroupFromString(this).getIndex());
 }
 
 //Minecraft Only
-public static ItemGroup getVanillaGroupFromString(VanillaCreativeTab groupname)
+public static CreativeTab getVanillaGroupFromString(VanillaCreativeTab groupname)
 {
 if (groupname.tabname.equals("BUILDING_BLOCKS"))
 {
-return ItemGroup.BUILDING_BLOCKS;	
+return CreativeTab.BUILDING_BLOCKS;	
 }
 else if (groupname.tabname.equals("BREWING"))
 {
-	return ItemGroup.BREWING;	
+	return CreativeTab.BREWING;	
 }
 else if (groupname.tabname.equals("COMBAT"))
 {
-	return ItemGroup.COMBAT;
+	return CreativeTab.COMBAT;
 }
 else if (groupname.tabname.equals("DECORATIONS"))
 {
-	return ItemGroup.DECORATIONS;
+	return CreativeTab.DECORATIONS;
 }
 else if (groupname.tabname.equals("FOOD"))
 {
-	return ItemGroup.FOOD;
+	return CreativeTab.FOOD;
 }
 else if (groupname.tabname.equals("MATERIALS"))
 {
-	return ItemGroup.MATERIALS;
+	return CreativeTab.MATERIALS;
 }
 else if (groupname.tabname.equals("MISC"))
 {
-	return ItemGroup.MISC;
+	return CreativeTab.MISC;
 }
 else if (groupname.tabname.equals("REDSTONE"))
 {
-	return ItemGroup.REDSTONE;
+	return CreativeTab.REDSTONE;
 }
 else if (groupname.tabname.equals("TOOLS"))
 {
-	return ItemGroup.TOOLS;
+	return CreativeTab.TOOLS;
 }
 else if (groupname.tabname.equals("TRANSPORTATION"))
 {
-	return ItemGroup.TRANSPORTATION;
+	return CreativeTab.TRANSPORTATION;
 }else
 {
 	return null;
@@ -67,7 +67,7 @@ else if (groupname.tabname.equals("TRANSPORTATION"))
 }
 
 @Override
-public ItemGroup get() {
+public CreativeTab get() {
 	// TODO Auto-generated method stub
 	return getVanillaGroupFromString(this);
 }

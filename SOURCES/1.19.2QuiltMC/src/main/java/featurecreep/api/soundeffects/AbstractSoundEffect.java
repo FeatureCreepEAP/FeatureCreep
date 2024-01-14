@@ -1,9 +1,9 @@
 package featurecreep.api.soundeffects;
 
-import net.minecraft.sound.SoundEvent;
+import game.SoundEffect;
 
 public interface AbstractSoundEffect {
 	
-	public SoundEvent get();
+	public SoundEffect get();
 
 }

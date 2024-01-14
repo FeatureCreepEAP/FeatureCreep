@@ -9,11 +9,12 @@ import java.util.function.Consumer;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.api.bg.datapacks.DataPackLoader;
-import net.minecraft.resource.DirectoryResourcePack;
-import net.minecraft.resource.ResourcePackProfile;
-import net.minecraft.resource.ResourcePackProfile.Factory;
-import net.minecraft.resource.ResourcePackProvider;
-import net.minecraft.resource.ResourcePackSource;
+import game.DirectoryResourcePack;
+import game.PackSources;
+import game.ResourcePackInfo;
+import game.ResourcePackInfo.IFactory;
+import game.ResourcePackInfo.InsertionPosition;
+import game.ResourcePackProvider;
 
 public class FCPackLoad implements ResourcePackProvider{
 
@@ -47,7 +48,7 @@ public FCPackLoad(File location) {
 
 
 	@Override
-	public void register(Consumer<ResourcePackProfile> var1, Factory var2) {
+	public void register(Consumer<ResourcePackInfo> var1, IFactory var2) {
 		// TODO Auto-generated method stub
 		
 		
@@ -90,7 +91,7 @@ public FCPackLoad(File location) {
 	
 	
 	      
-	      ResourcePackProfile pack =     ResourcePackProfile.of("data"+PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), var2, ResourcePackProfile.InsertionPosition.TOP, ResourcePackSource.PACK_SOURCE_BUILTIN);
+	      ResourcePackInfo pack =     ResourcePackInfo.createResourcePack("data"+PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), var2, InsertionPosition.TOP, PackSources.BUILTIN);
 			
 			 if (pack != null) {
 	            

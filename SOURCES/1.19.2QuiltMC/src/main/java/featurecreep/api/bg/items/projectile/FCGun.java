@@ -15,7 +15,7 @@ public class FCGun extends FCBow{
 
 	
 	  @Override
-	    public int getRange() {
+	    public int getShootRange() {
 	        return 200;
 	    }
 	

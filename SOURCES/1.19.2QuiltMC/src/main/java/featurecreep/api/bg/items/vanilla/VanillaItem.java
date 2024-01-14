@@ -1,7 +1,7 @@
 package featurecreep.api.bg.items.vanilla;
 
 import featurecreep.api.bg.items.FCItemAPI;
-import net.minecraft.item.Item;
+import game.Item;
 
 /**
 TRY TO AVOID THIS CLASS, USE IN THE WRONG CIRCUMSTANCES CAN LEAD TO CRASH/MOD NOT LOADING. STAY WITHIN DOCUMENTATION UNLESS YOU REALLY KNOW WHAT YOU ARE DOING
@@ -20,8 +20,8 @@ public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.b
 		setModId(registry_name.split(":")[0]);
 		setUnlocName(registry_name.split(":")[1]);
 		//registerModels(); We do not need this at this time, maybe in the future we can do something with it
-		setDefaultCreativeTab(item.getGroup()); //May not work on all versions, we may need to remove this. Yay it works on 1.13 and newer, we will need to check about 1.19.3 though
-		setNumberID(item.getRawId(item));//Will just be 0 in some versions most likely
+		setDefaultCreativeTab(item.getCreativeTab()); //May not work on all versions, we may need to remove this. Yay it works on 1.13 and newer, we will need to check about 1.19.3 though
+		setNumberID(item.getID(item));//Will just be 0 in some versions most likely
 	}
 	
 	public VanillaItem(FCItemAPI item, String registry_name) //As a backup or for ported items

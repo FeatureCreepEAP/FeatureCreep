@@ -1,6 +1,6 @@
 package featurecreep.api.bg.entity;
 
-import net.minecraft.entity.Entity;
+import game.Entity;
 
 public class VanillaEntity implements AbstractEntity{
 

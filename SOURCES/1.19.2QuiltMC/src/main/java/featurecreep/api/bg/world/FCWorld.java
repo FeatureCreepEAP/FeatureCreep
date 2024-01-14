@@ -1,6 +1,6 @@
 package featurecreep.api.bg.world;
 
-import net.minecraft.world.World;
+import game.World;
 
 public class FCWorld {
 

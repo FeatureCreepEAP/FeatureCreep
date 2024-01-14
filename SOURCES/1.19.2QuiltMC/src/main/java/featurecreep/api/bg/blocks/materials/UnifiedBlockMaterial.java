@@ -1,11 +1,11 @@
 package featurecreep.api.bg.blocks.materials;
 
-import net.minecraft.block.Material;
+import game.BlockMaterial;
 
 public interface UnifiedBlockMaterial {
 
 	
-	public Material get(); 
+	public BlockMaterial get(); 
 	
 	
 }

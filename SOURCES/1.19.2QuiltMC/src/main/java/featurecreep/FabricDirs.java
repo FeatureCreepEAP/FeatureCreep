@@ -3,15 +3,15 @@ package featurecreep;
 import java.io.File;
 import java.nio.file.Path;
 
-import net.fabricmc.loader.impl.FabricLoaderImpl;
-import net.fabricmc.loader.impl.util.Arguments;
-import net.minecraft.client.MinecraftClient;
+import org.quiltmc.loader.impl.QuiltLoaderImpl;
+
+import game.Client;
 
 @Deprecated
 public class FabricDirs {
 
-static Path cachedir = FeatureCreep.gamepath.resolve(FabricLoaderImpl.CACHE_DIR_NAME);
-static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
+static Path cachedir = FeatureCreep.gamepath.resolve(QuiltLoaderImpl.CACHE_DIR_NAME);
+static Path remappedjardir = cachedir.resolve(QuiltLoaderImpl.REMAPPED_JARS_DIR_NAME);
 //static File MCIntermediarydirfile = new File(MCIntermediarydir);
 
 @Deprecated
@@ -19,13 +19,13 @@ public static String getMCIntermediary()
 {
 	
 	
-	String MC_VERSION_TEST = MinecraftClient.getInstance().getGameVersion();
+	String MC_VERSION_TEST = Client.getInstance().getVersion();
 	String MC_VERSION;
 
-	System.out.println(		MC_VERSION = MinecraftClient.getInstance().getGameVersion());
+	System.out.println(		MC_VERSION = Client.getInstance().getVersion());
 	if (!MC_VERSION_TEST.contains("Fabric"))
 	{
-		MC_VERSION = MinecraftClient.getInstance().getGameVersion();
+		MC_VERSION = Client.getInstance().getVersion();
 	}else if (MC_VERSION_TEST.contains("FabricClient")){
 		MC_VERSION = "";
 
@@ -39,12 +39,12 @@ public static String getMCIntermediary()
 	}	
 	else
 	{
-		MC_VERSION = MinecraftClient.getInstance().getGameVersion().substring(7);
+		MC_VERSION = Client.getInstance().getVersion().substring(7);
 
 	}
 	
 	System.out.print(MC_VERSION);
-			String MCIntermediarydir =  remappedjardir.toString() + "/minecraft-" + MC_VERSION + "-"+ FabricLoaderImpl.VERSION.toString();
+			String MCIntermediarydir =  remappedjardir.toString() + "/minecraft-" + MC_VERSION + "-"+ QuiltLoaderImpl.VERSION.toString();
 
 
 	

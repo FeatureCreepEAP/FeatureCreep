@@ -8,7 +8,7 @@ import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
 import featurecreep.api.parsers.ParseDMRItem;
-import net.minecraft.item.Item;
+import game.Item;
 
 public class FCItemAsDMR<FCItemAsDMR> implements DMRItem<FCItemAsDMR>
 
