@@ -13,19 +13,20 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -34,5 +35,143 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/unsafe-0.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/typetools-0.6.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/toml-3.6.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/text2speech-1.17.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/terminalconsoleappender-1.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/srgutils-0.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/srgutils-0.4.15.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/srgutils-0.4.11.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/slf4j-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/server.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/securejarhandler-2.1.10.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/patchy-2.2.10.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/oshi-core-6.2.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-transport-native-unix-common-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-transport-native-epoll-4.1.82.Final-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-transport-native-epoll-4.1.82.Final-linux-aarch_64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-transport-classes-epoll-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-transport-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-resolver-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-handler-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-common-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-codec-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/netty-buffer-4.1.82.Final.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/neoforgespi-8.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/neoforge-20.2.59-beta-userdev.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/neoforge-20.2.59-beta-universal.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/neoforge-20.2.59-beta-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/neoforge-20.2.59-beta.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/nashorn-core-15.3.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/modlauncher-10.0.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mixin-0.8.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/minecraft-merged-intermediary1.20.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mergetool-1.1.7-api.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mergetool-1.1.5-api.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mclanguage-1.20.1-47.1.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/maven-artifact-3.8.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-stb-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-opengl-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-openal-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-jemalloc-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-glfw-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1-natives-windows-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1-natives-macos-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-3.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lowcodelanguage-1.20.1-47.1.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/log4j-slf4j2-impl-2.19.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/log4j-core-2.19.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/log4j-api-2.19.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/jopt-simple-5.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/joml-1.10.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/jna-platform-5.12.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/jna-5.12.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/jline-terminal-3.12.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/jline-reader-3.12.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/java-objc-bridge-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/javafmllanguage-1.20.1-47.1.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/JarJarSelector-0.3.19.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/JarJarMetadata-0.3.19.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/JarJarFileSystems-0.3.19.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/icu4j-71.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/httpcore-4.4.15.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/httpclient-4.5.13.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/guava-31.1-jre.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/gson-2.10.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/forge-1.20.2-48.0.20-minecraft-merged-fci.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/fmlloader-1.20.1-47.1.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/fmlloader-1.20.1-47.0.45.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/fmlearlydisplay-1.20.1-47.1.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/fmlearlydisplay-1.20.1-47.0.45.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/fmlcore-1.20.1-47.1.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/fastutil-8.5.9.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/failureaccess-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/eventbus-6.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/DiffPatch-2.0.12-all.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/datafixerupper-6.0.8.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/coremods-5.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/core-3.6.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/commons-compress-1.21.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/client.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/brigadier-1.1.8.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/bootstraplauncher-1.1.2.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/blocklist-1.0.10.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/authlib-4.0.43.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/asm-util-9.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/asm-tree-9.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/asm-commons-9.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/asm-analysis-9.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/asm-9.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/artifactural-3.0.14.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/antlr4-runtime-4.9.1.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/accesstransformers-8.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/1.20.2fcineo.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
