@@ -43,7 +43,7 @@ public class FCPackLoad implements ResourcePackProvider {
 
 
 		@Override
-		public IResourcePack m_247679_(String string) {
+		public IResourcePack open(String string) {
 			// TODO Auto-generated method stub
 			return new DirectoryResourcePack(string, loc.toPath(), false);
 		}
@@ -76,9 +76,9 @@ public class FCPackLoad implements ResourcePackProvider {
 	       // ResourcePackInfo.Loader packFactory = new DirPackLoader();
 	        ResourcePackInfo.Loader packFactory = name -> new DirectoryResourcePack(name, loc.toPath(), false);
 
-	        ResourcePackInfo.PackMcMeta metadata = ResourcePackInfo.def_unknown_20936("datapack", packFactory);
+	        ResourcePackInfo.PackMcMeta metadata = ResourcePackInfo.getPackMcMeta("datapack", packFactory);
 	       // instantTextBoxType mutable_builder = instantTextBoxType.empty();//instantTextBoxType.translate("fcpack");
-	        ResourcePackInfo pack = ResourcePackInfo.def_unknown_20932("datapack", null, true, packFactory, metadata,ResourceType.CLIENT_RESOURCES, ResourcePackInfo.InsertionPosition.TOP, true, PackSources.BUILTIN);
+	        ResourcePackInfo pack = ResourcePackInfo.createResourcePack("datapack", null, true, packFactory, metadata,ResourceType.CLIENT_RESOURCES, ResourcePackInfo.InsertionPosition.TOP, true, PackSources.BUILTIN);
 	        if (pack != null) {
 	            System.out.println("Adding FCDatapack");
 	            consumer.accept(pack);

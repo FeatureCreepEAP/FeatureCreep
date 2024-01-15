@@ -1,25 +1,18 @@
 package featurecreep;
 
-import java.io.File;
-import java.nio.file.Path;
-
-import net.fabricmc.loader.impl.FabricLoaderImpl;
-import net.fabricmc.loader.impl.util.Arguments;
-import net.minecraft.client.MinecraftClient;
-
 @Deprecated
 public class FabricDirs {
 
-static Path cachedir = FeatureCreep.gamepath.resolve(FabricLoaderImpl.CACHE_DIR_NAME);
-static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
+//static Path cachedir = FeatureCreep.gamepath.resolve(FabricLoaderImpl.CACHE_DIR_NAME);
+//static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
 //static File MCIntermediarydirfile = new File(MCIntermediarydir);
 
 @Deprecated
 public static String getMCIntermediary()
 {
+	/*
 	
-	
-	String MC_VERSION_TEST = MinecraftClient.getInstance().getGameVersion();
+	String MC_VERSION_TEST = MinClient.getInstance().getGameVersion();
 	String MC_VERSION;
 
 	System.out.println(		MC_VERSION = MinecraftClient.getInstance().getGameVersion());
@@ -80,7 +73,8 @@ return ClientJar;
 		}
 	
 	}
-	
+	*/
+	return "";
 	
 }
 

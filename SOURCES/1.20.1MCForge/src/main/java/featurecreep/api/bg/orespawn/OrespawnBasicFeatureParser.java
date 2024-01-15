@@ -217,7 +217,7 @@ private static List<PlacementModifier> modifiersWithCount(int count, PlacementMo
 		
 		for (int f = 0; f < placed.size(); f++) {
 
-	builder.def_unknown_11017(class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
+	builder.addFeature(class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
 	//(class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
 
 	}
