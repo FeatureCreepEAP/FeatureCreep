@@ -12,7 +12,6 @@ public class VanillaLivingEntity extends VanillaEntity implements AbstractLiving
 	entity = ent;
 	}
 	
-	
 	public VanillaLivingEntity(AbstractLivingEntity ent)
 	{
 		this(ent.get());

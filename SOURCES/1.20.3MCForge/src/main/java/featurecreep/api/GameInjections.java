@@ -65,15 +65,15 @@ public class GameInjections {
 	public static void GameOptionsInjection() throws NotFoundException, CannotCompileException, IOException
 	{
 		
+		/*
+		ClassPool pool = new ClassPool();
+		pool.insertClassPath(new ByteArrayClassPath("net.minecraft.client.gui.screen.TitleScreen",SerializationUtils.serialize(net.minecraft.client.gui.screen.TitleScreen.class)));
 
-		//ClassPool pool = new ClassPool();
-		//pool.insertClassPath(new ByteArrayClassPath("net.minecraft.client.gui.screen.TitleScreen",SerializationUtils.serialize(net.minecraft.client.gui.screen.TitleScreen.class)));
-
-//	    CtClass cc = pool.get("net.minecraft.client.gui.screen.TitleScreen");
-//cc.writeFile();
+	    CtClass cc = pool.get("net.minecraft.client.gui.screen.TitleScreen");
+cc.writeFile();
 		
 		
-	/*	
+		
 		
 		try {
 

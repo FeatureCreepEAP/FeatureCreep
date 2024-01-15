@@ -54,6 +54,9 @@ public interface BlockOrItem<T> {
 		return (getModId()+":"+getUnlocName());
 	}
 	
+	
+
+	
 	public Object get();
 
 	public	default ItemStack toStack(int amount) {
@@ -76,16 +79,13 @@ public interface BlockOrItem<T> {
 
 	public boolean appendAfterHit(AbstractEntity ent, AbstractEntity target,BlockOrItem ic, int holdcount);
 
-
 	public TextureInfo appendGetTextureInfo();
 
 	public void appendLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
 
-
 	public void appendOnFoodEaten(AbstractEntity e);
 
 	public void appendOnBlockBroken(AbstractEntity ent, FCBlockPos pos,FCBlockAPI block, int wasbid);
-
 
 
 	public void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl);
@@ -103,13 +103,49 @@ public interface BlockOrItem<T> {
 
 	public  void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
 
-
 	public  void executeOnFoodEaten(AbstractEntity e);
 
 	public  void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos,FCBlockAPI block, int wasbid);
 
 
+  
+  
+//public void inUseTick(Entity e, InventoryContainer ic, int invindex) {}
 
+  
+
+
+//public void renderMeHeld(WorldRenderer wr, Entity e, InventoryContainer ic, boolean isdisplay) {}
+
+
+//public void onLeftClick(Entity holder, Entity clickedon, InventoryContainer ic, int d, double px, double py, double pz, int fx, int fy, int fz, int bid) {
+
+// public boolean onSwingStop(Entity holder, Entity clickedon, InventoryContainer ic) {
+
+//public boolean singleshot(Entity ent, InventoryContainer ic, int holdcount) {
+
+
+//public boolean semiauto(Entity ent, InventoryContainer ic, int holdcount) {
+
+
+//public boolean fullauto(Entity ent, InventoryContainer ic, int holdcount) {
+
+
+//public float getfullholdcount() {
+
+//public boolean rightClickOnBlock(Player p, int dimension, int x, int y, int z, int side) {
+
+//public void onBlockBroken(Entity ent, FCBlockAPI block, int wasbid) {}
+
+
+// public void vr_hit_something(Entity e, int bid) {
+
+//public void vr_hit_EntityBlockItem(Entity e) {
+  
+  
+  
+	
+	
 	
 	
 }

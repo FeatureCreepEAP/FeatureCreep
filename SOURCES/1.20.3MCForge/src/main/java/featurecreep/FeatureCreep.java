@@ -7,8 +7,8 @@ import org.jboss.logging.Logger;
 import org.jboss.modules.ModuleLoader;
 
 import asbestosstar.fcdnf.FCDNF;
+import featurecreep.api.GameInjections;
 import featurecreep.api.bg.PackLoader;
-import featurecreep.api.bg.blocknitem.GameInjections;
 import featurecreep.api.bg.datapacks.DataPackLoader;
 import featurecreep.api.bg.items.vanilla.VanillaItems;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;

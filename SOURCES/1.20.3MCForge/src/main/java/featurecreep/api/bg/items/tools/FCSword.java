@@ -1,6 +1,5 @@
 package featurecreep.api.bg.items.tools;
 
-import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Item;
 import game.Sword;
@@ -17,8 +16,6 @@ public class FCSword extends Sword implements ToolsAPI<FCSword>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Info());
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
-	FCRegistries.registerItem(this);
-
 		}
 
 }

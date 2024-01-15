@@ -61,7 +61,6 @@ return 	vanilla_block; //BE VERY CAREFUL
 	//We'ss do all these later, they dont really matter for this right now
 
 	
-
 	@Override
 	public VanillaBlock isSingleSided(boolean answer) {
 		// TODO Auto-generated method stub

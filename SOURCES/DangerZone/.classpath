@@ -13,15 +13,15 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
@@ -34,5 +34,115 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/zipfs.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/US_export_policy.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/sunpkcs11.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/sunjce_provider.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/sunec.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/steamworks4j-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/steamworks4j-1.8.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/steamworks4j-1.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/rt.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/resources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/OreSpawn_for_dzvr2.7.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/nashorn.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/MassiveExplosives_for_dzvr2.7.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/management-agent.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-stb.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-ovr-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-ovr-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-ovr-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-ovr-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-ovr.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openvr.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengles.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opengl.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opencl-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opencl-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-opencl.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-openal.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-nfd.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-jawt-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-jawt-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-jawt.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-glfw.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-sources.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-natives-windows-x86.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-natives-windows.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-natives-macos.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-natives-linux-arm64.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-natives-linux.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl-assimp.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/lwjgl.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/local_policy.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/localedata.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/Launcher.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/jsse.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/jfr.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/jce.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/jaccess.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/ibxm.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/GameRunner.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/dnsns.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/DangerZone.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/cldrdata.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/charsets.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/log4j-api-2.19.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/DangerZone/log4j-core-2.19.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

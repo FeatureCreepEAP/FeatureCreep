@@ -2,9 +2,6 @@ package featurecreep.api.bg.items.armour;
 
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.items.armour.ArmourProtectionValuesArray;
-import featurecreep.api.bg.items.armour.FCArmourSlot;
-import featurecreep.api.bg.items.armour.FCArmourSlots;
 import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
 import game.Armour;

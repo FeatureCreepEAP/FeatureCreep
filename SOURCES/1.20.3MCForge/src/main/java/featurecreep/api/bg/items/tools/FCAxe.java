@@ -1,6 +1,5 @@
 package featurecreep.api.bg.items.tools;
 
-import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Axe;
 import game.Item;
@@ -16,8 +15,6 @@ public class FCAxe extends Axe implements ToolsAPI<FCAxe>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Info());
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
-	FCRegistries.registerItem(this);
-
 		}
 
 	
