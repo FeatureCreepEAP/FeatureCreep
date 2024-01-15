@@ -66,7 +66,7 @@ public class UniversalRegistryGettersAndSetters {
 	public static void registerItem(Item item, String registry_name, ItemGroup default_tab, int id)
 	{
 		Registry.register(Registries.ITEM, new Identifier(registry_name), item);
-		ItemGroupEvents.modifyEntriesEvent(default_tab).register((content) -> {
+		ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(default_tab).get()).register((content) -> {
 	        content.add(item);
 	});
     }
@@ -189,7 +189,7 @@ public class UniversalRegistryGettersAndSetters {
 	{
 		Registry.register(Registries.BLOCK, new Identifier(registry_name), block);
 		Registry.register(Registries.ITEM, new Identifier(registry_name), new BlockItem(block, new Item.Settings()));
-		ItemGroupEvents.modifyEntriesEvent(default_tab).register((content) -> {
+		ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(default_tab).get()).register((content) -> {
 	        content.add(block);
 	});
 	

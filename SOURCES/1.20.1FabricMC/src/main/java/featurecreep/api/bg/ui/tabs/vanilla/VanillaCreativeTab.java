@@ -3,6 +3,7 @@ package featurecreep.api.bg.ui.tabs.vanilla;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.registry.Registries;
 
 public class VanillaCreativeTab  implements UnifiedItemGroupGetter
 {
@@ -19,43 +20,43 @@ public static ItemGroup getVanillaGroupFromString(VanillaCreativeTab groupname)
 {
 if (groupname.tabname.equals("BUILDING_BLOCKS"))
 {
-return ItemGroups.BUILDING_BLOCKS;	
+return Registries.ITEM_GROUP.get(ItemGroups.BUILDING_BLOCKS);	
 }
 else if (groupname.tabname.equals("BREWING"))
 {
-	return ItemGroups.SPAWN_EGGS;	
+	return Registries.ITEM_GROUP.get(ItemGroups.SPAWN_EGGS);	
 }
 else if (groupname.tabname.equals("COMBAT"))
 {
-	return ItemGroups.COMBAT;
+	return Registries.ITEM_GROUP.get(ItemGroups.COMBAT);
 }
 else if (groupname.tabname.equals("DECORATIONS"))
 {
-	return ItemGroups.BUILDING_BLOCKS;
+	return Registries.ITEM_GROUP.get(ItemGroups.BUILDING_BLOCKS);
 }
 else if (groupname.tabname.equals("FOOD"))
 {
-	return ItemGroups.FOOD_AND_DRINK;
+	return Registries.ITEM_GROUP.get(ItemGroups.FOOD_AND_DRINK);
 }
 else if (groupname.tabname.equals("MATERIALS"))
 {
-	return ItemGroups.NATURAL;
+	return Registries.ITEM_GROUP.get(ItemGroups.NATURAL);
 }
 else if (groupname.tabname.equals("MISC"))
 {
-	return ItemGroups.SPAWN_EGGS;
+	return Registries.ITEM_GROUP.get(ItemGroups.SPAWN_EGGS);
 }
 else if (groupname.tabname.equals("REDSTONE"))
 {
-	return ItemGroups.REDSTONE;
+	return Registries.ITEM_GROUP.get(ItemGroups.REDSTONE);
 }
 else if (groupname.tabname.equals("TOOLS"))
 {
-	return ItemGroups.TOOLS;
+	return Registries.ITEM_GROUP.get(ItemGroups.TOOLS);
 }
 else if (groupname.tabname.equals("TRANSPORTATION"))
 {
-	return ItemGroups.FUNCTIONAL;
+	return Registries.ITEM_GROUP.get(ItemGroups.FUNCTIONAL);
 }else
 {
 	return null;

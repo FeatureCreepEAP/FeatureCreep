@@ -34,7 +34,7 @@ public class FCOre extends ExperienceDroppingBlock implements FCBlockAPI<FCOre> 
 
 
   public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops, Object ore_material) {
-    super(Block.Settings.of(material.get()).strength(strength / 10));
+    super(Block.Settings.create().strength(strength / 10));//Need to add material again soon
 initialise(id, modid, name,  group, material, strength, drops);
 resource = ore_material;
   }

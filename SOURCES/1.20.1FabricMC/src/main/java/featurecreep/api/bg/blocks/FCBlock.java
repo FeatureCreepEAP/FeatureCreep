@@ -29,7 +29,7 @@ public BlockFieldHolder holder = new BlockFieldHolder();
 	@Override public BlockFieldHolder holder() {	return holder;	}
 
   public FCBlock(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops) {
-    super(Block.Settings.of(material.get()).strength(strength / 10));
+	    super(Block.Settings.create().strength(strength / 10));//Need to add material again soon
     initialise(id, modid, name,  group, material, strength, drops);
 
   }

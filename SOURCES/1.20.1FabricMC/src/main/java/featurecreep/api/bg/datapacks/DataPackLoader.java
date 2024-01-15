@@ -12,7 +12,7 @@ import net.minecraft.resource.ResourcePackProvider;
 public class DataPackLoader {
 
 	public static String datapacklocation = new String(FeatureCreep.gamepath+"/tmp/datapack/");
-	public static int packnumber = 12;
+	public static int packnumber = 15;
 	
 	public static void onInitialise(){
 		File location = new File(datapacklocation);
