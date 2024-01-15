@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import featurecreep.FeatureCreepMCInit;
-import net.minecraft.client.gui.screen.TitleScreen;
+import game.TitleScreen;
 
 @Mixin(TitleScreen.class)
 public class ExampleMixin {

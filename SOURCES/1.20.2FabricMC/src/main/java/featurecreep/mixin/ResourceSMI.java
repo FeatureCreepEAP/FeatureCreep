@@ -8,13 +8,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import featurecreep.api.bg.PackLoader;
-import net.minecraft.client.option.GameOptions;
+import game.GameConfig;
 
 //I gotta remove all the SpongeMixins eventually
 //From Fabric API
 
-@Mixin(GameOptions.class)
+@Mixin(GameConfig.class)
 public class ResourceSMI {
 	@Shadow
 	public List<String> resourcePacks;

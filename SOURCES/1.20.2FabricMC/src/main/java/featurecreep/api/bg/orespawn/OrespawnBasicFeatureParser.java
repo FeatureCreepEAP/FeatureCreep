@@ -9,19 +9,17 @@ import java.util.List;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
-import net.minecraft.block.Block;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.structure.rule.RuleTest;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.PlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import game.BiomeGenerationSettings;
+import game.BiomePlacementModifier;
+import game.Block;
+import game.BlockMatcher;
+import game.BuiltInRegistries;
+import game.CountGenerationAttribute;
+import game.GenerationPlacement;
+import game.PlacementModifier;
+import game.RegistryEntry;
+import game.ResourceLocation;
+import game.SquarePlacementModifier;
 
 public class OrespawnBasicFeatureParser {
 
@@ -29,7 +27,7 @@ public class OrespawnBasicFeatureParser {
 	public static List<OreSpawnBasicConfig> configs = new ArrayList<OreSpawnBasicConfig>();
 	
 	
-	  static List<RegistryEntry<PlacedFeature>> placed = new ArrayList<RegistryEntry<PlacedFeature>>();
+	  static List<RegistryEntry<GenerationPlacement>> placed = new ArrayList<RegistryEntry<GenerationPlacement>>();
 
 	
 	
@@ -124,7 +122,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = Registries.BLOCK.get(new Identifier(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = BuiltInRegistries.block.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -133,16 +131,14 @@ if (node.get("enabled").asBoolean() == true)
 	
 	System.out.println(getCorrectNameSpace(new_block));
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = Registries.BLOCK.get(new Identifier(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = BuiltInRegistries.block.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	
 	
 	System.out.println(replacedBlock.getName());
 	System.out.println(newBlock.getName());
-    final RuleTest RULE = new BlockMatchRuleTest(replacedBlock);
-
-	
+     BlockMatcher RULE = new BlockMatcher(replacedBlock);
     
     OreSpawnBasicConfig config = new OreSpawnBasicConfig(name, newBlock, node.get("parameters").get("size").asInt(), node.get("parameters").get("frequency").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt());
 
@@ -190,15 +186,15 @@ return new_string;
 }
 
 private static List<PlacementModifier> modifiers(PlacementModifier countModifier, PlacementModifier heightModifier) {
-    return List.of(countModifier, SquarePlacementModifier.of(), heightModifier, BiomePlacementModifier.of());
+    return List.of(countModifier, SquarePlacementModifier.basic(), heightModifier, BiomePlacementModifier.standard());
 }
 
 private static List<PlacementModifier> modifiersWithCount(int count, PlacementModifier heightModifier) {
-    return modifiers(CountPlacementModifier.of(count), heightModifier);
+    return modifiers(CountGenerationAttribute.count(count), heightModifier);
 
 }
 	
-	public static void spawnOre(GenerationSettings.Builder builder)
+	public static void spawnOre(BiomeGenerationSettings.class_unknown_9320 builder)
 	{
 		
 		
