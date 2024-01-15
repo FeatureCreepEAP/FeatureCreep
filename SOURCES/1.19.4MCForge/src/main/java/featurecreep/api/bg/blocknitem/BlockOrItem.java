@@ -6,8 +6,8 @@ import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import game.CreativeTab;
+import game.ItemStack;
 
 public interface BlockOrItem<T> {
 
@@ -31,7 +31,7 @@ public interface BlockOrItem<T> {
 	public default int getNumberID() {
 		return holder().number_id;
 	}
-	public default ItemGroup getDefaultCreativeTab() {
+	public default CreativeTab getDefaultCreativeTab() {
 		return holder().default_tab;
 	}
 	
@@ -45,7 +45,7 @@ public interface BlockOrItem<T> {
 	public default void setNumberID(int id) {
 		holder().number_id = id;
 	}
-	public default void setDefaultCreativeTab(ItemGroup group) {
+	public default void setDefaultCreativeTab(CreativeTab group) {
 		holder().default_tab = group;
 	}
 	

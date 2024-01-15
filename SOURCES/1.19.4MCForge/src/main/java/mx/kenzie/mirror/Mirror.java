@@ -1,7 +1,5 @@
 package mx.kenzie.mirror;
 
-import org.jetbrains.annotations.TestOnly;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -208,7 +206,7 @@ public class Mirror<Thing> {
         return glass.loadClass(target, name, bytecode);
     }
     
-    @TestOnly
+  //  @TestOnly
     protected byte[] retrieveCode(final Accessor object) {
         if (object instanceof FieldAccessor<?> accessor)
             return glass.writeFieldAccessor(accessor.getTargetType(), accessor.reflect(), accessor.getClass().getName()

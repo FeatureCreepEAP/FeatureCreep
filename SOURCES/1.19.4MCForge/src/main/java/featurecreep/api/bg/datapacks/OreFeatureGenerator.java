@@ -9,11 +9,11 @@ import org.jboss.dmr.ModelNode;
 
 import featurecreep.api.bg.orespawn.OreSpawnBasicConfig;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.feature.PlacedFeature;
+import game.BuiltInRegistries;
+import game.GenerationPlacement;
+import game.RegistryKey;
+import game.RegistryKeys;
+import game.ResourceLocation;
 
 public class OreFeatureGenerator {
 
@@ -30,7 +30,7 @@ public class OreFeatureGenerator {
 			configured.get("config").get("discard_chance_on_air_exposure").set(0.0);
 			configured.get("config").get("size").set(configs.get(i).size);
 			ModelNode targets = new ModelNode();//Gotta change this for when we do multiple blocks and biomes and replacements
-			targets.get("state").get("Name").set(Registries.BLOCK.getId(configs.get(i).block).toString());
+			targets.get("state").get("Name").set(BuiltInRegistries.block.getName(configs.get(i).block).toString());
 			targets.get("target").get("predicate_type").set("minecraft:tag_match");
 			targets.get("target").get("tag").set("minecraft:stone_ore_replaceables");
 			configured.get("config").get("targets").add(targets);
@@ -83,7 +83,7 @@ configedfile.deleteOnExit();
 placedfile.deleteOnExit();
 
 //https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
-RegistryKey<PlacedFeature> MY_ORE_PF = RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier("orespawn", configs.get(i).name));
+RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT, new ResourceLocation("orespawn", configs.get(i).name));
 OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 //BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, MY_ORE_PF);
 

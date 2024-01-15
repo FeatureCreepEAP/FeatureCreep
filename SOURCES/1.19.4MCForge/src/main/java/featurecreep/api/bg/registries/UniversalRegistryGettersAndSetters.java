@@ -6,12 +6,12 @@ import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import game.Block;
+import game.BlockAsItem;
+import game.BuiltInRegistries;
+import game.CreativeTab;
+import game.Item;
+import game.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class UniversalRegistryGettersAndSetters {
@@ -57,15 +57,15 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getItemByID(id);
 		}else {
-			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), Registries.ITEM.getId(GameRegistries.getItemFromGameRegistries(id)).toString());
+			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), BuiltInRegistries.ITEMS.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
 		}
 				
 	}
 
-	public static void registerItem(Item item, String registry_name, ItemGroup default_tab, int id)
+	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id)
 	{
 		
-	    ForgeRegistries.ITEMS.register(new Identifier(registry_name), item);
+	    ForgeRegistries.ITEMS.register(new ResourceLocation(registry_name), item);
     }
 	
 	public static void registerItem(FCItemAPI item)
@@ -73,7 +73,7 @@ public class UniversalRegistryGettersAndSetters {
 		registerItem(item.get(),item.getFCRegistryName(), item.getDefaultCreativeTab(), item.getNumberID());
 	}
 	
-	public static ItemGroup getItemGroupByName(String registry_name)
+	public static CreativeTab getItemGroupByName(String registry_name)
 	{
 		if (GlobalRegistries.getItemGroupByName(registry_name) != null)
 		{
@@ -84,7 +84,7 @@ public class UniversalRegistryGettersAndSetters {
 				
 	}
 	
-	public static ItemGroup getItemGroupbyID(int id)
+	public static CreativeTab getItemGroupbyID(int id)
 	{
 		if (GlobalRegistries.getItemGroupByID(id) != null)
 		{
@@ -113,12 +113,12 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getItemGroupByID(id);
 		}else {
-			return new VanillaCreativeTab(getItemGroupbyID(id).getDisplayName().getString());
+			return new VanillaCreativeTab(getItemGroupbyID(id).getUnlocalisedName().getString());
 		}
 				
 	}
 
-	public static void registerItemGroup(ItemGroup tab, String registry_name, int id)
+	public static void registerItemGroup(CreativeTab tab, String registry_name, int id)
 	{
 		
 	}
@@ -177,15 +177,15 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getBlockByID(id);
 		}else {
-			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), Registries.BLOCK.getId(GameRegistries.getBlockFromGameRegistries(id)).toString() );
+			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), BuiltInRegistries.block.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
 		}
 				
 	}
 
-	public static void registerBlock(Block block, String registry_name, ItemGroup default_tab, int id)
+	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id)
 	{
-		ForgeRegistries.BLOCKS.register(new Identifier(registry_name), block);	
-	    ForgeRegistries.ITEMS.register(registry_name, new BlockItem(block, new Item.Settings()));
+		ForgeRegistries.BLOCKS.register(new ResourceLocation(registry_name), block);	
+	    ForgeRegistries.ITEMS.register(registry_name, new BlockAsItem(block, new Item.Info()));
 
 	}
 	

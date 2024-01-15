@@ -2,7 +2,7 @@ package featurecreep.api.bg.items;
 
 import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import net.minecraft.item.Item;
+import game.Item;
 
 public class FCItem extends Item implements FCItemAPI<FCItem>
 {
@@ -12,7 +12,7 @@ public class FCItem extends Item implements FCItemAPI<FCItem>
 	
 	public FCItem(int id, String modid, String name, UnifiedItemGroupGetter group)
 	{
-		super(new Item.Settings());
+		super(new Item.Info());
 initialise(id, modid, name, group);
 	FCRegistries.registerItem(this);
 	

@@ -27,7 +27,7 @@ import featurecreep.api.bg.registries.FCRegistries;
 
 public class PackLoader {
 
-  public static int pack_version = 12;
+  public static int pack_version = 13;
   public static String pack_name = "fcpack_" + pack_version;
   public static String fc_pack_location = new String(FeatureCreep.gamepath + "/resourcepacks/" + pack_name);
 

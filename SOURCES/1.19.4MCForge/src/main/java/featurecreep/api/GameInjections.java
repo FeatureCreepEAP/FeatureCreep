@@ -1,16 +1,8 @@
 package featurecreep.api;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.ClassNode;
-import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
-import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
-import org.spongepowered.asm.transformers.MixinClassReader;
 
 import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
@@ -72,7 +64,7 @@ public class GameInjections {
 
 	public static void GameOptionsInjection() throws NotFoundException, CannotCompileException, IOException
 	{
-		
+		/*
 
 		ClassPool pool = new ClassPool();
 		pool.insertClassPath(new ByteArrayClassPath("net.minecraft.client.gui.screen.TitleScreen",SerializationUtils.serialize(net.minecraft.client.gui.screen.TitleScreen.class)));
@@ -81,7 +73,7 @@ public class GameInjections {
 cc.writeFile();
 		
 		
-	/*	
+		
 		
 		try {
 

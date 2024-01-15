@@ -2,8 +2,8 @@ package featurecreep.api.bg.registries;
 
 import com.mojang.serialization.Codec;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import game.Item;
+import game.ItemStack;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.registries.DeferredRegister;
