@@ -12,7 +12,7 @@
       <configuration>
         <archive>
           <manifestEntries>
-            <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
+            
           </manifestEntries>
         </archive>
       </configuration> 
@@ -23,4 +23,11 @@
  	<maven.compiler.target>1.8</maven.compiler.target>
  	 	<maven.compiler.source>1.8</maven.compiler.source>
  </properties>
+  <dependencies>
+ 	<dependency>
+ 		<groupId>org.javassist</groupId>
+ 		<artifactId>javassist</artifactId>
+ 		<version>3.30.2-GA</version>
+ 	</dependency>
+ </dependencies>
 </project>

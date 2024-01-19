@@ -2,8 +2,6 @@ package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Axe;
-import game.Item;
-import game.Item.Info;
 
 public class FCAxe extends Axe implements ToolsAPI<FCAxe>
 {

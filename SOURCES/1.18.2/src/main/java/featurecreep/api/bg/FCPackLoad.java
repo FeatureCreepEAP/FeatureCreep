@@ -12,8 +12,6 @@ import featurecreep.api.bg.datapacks.DataPackLoader;
 import game.DirectoryResourcePack;
 import game.PackSources;
 import game.ResourcePackInfo;
-import game.ResourcePackInfo.IFactory;
-import game.ResourcePackInfo.InsertionPosition;
 import game.ResourcePackProvider;
 
 
@@ -49,7 +47,7 @@ public FCPackLoad(File location) {
 
 
 	@Override
-	public void register(Consumer<ResourcePackInfo> var1, IFactory var2) {
+	public void register(Consumer<ResourcePackInfo> var1, ResourcePackInfo.IFactory var2) {
 		// TODO Auto-generated method stub
 		
 		
@@ -92,7 +90,7 @@ public FCPackLoad(File location) {
 	
 	
 	      
-	      ResourcePackInfo pack =     ResourcePackInfo.createResourcePack("data"+PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), var2, InsertionPosition.TOP, PackSources.BUILTIN);
+	      ResourcePackInfo pack =     ResourcePackInfo.createResourcePack("data"+PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), var2, ResourcePackInfo.InsertionPosition.TOP, PackSources.BUILTIN);
 			
 			 if (pack != null) {
 	            
