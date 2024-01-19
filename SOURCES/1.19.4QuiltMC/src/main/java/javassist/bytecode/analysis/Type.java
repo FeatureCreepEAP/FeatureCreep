@@ -15,7 +15,13 @@
  */
 package javassist.bytecode.analysis;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javassist.ClassPool;
 import javassist.CtClass;

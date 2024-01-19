@@ -54,7 +54,6 @@ import org.jboss.modules.filter.PathFilter;
 import org.jboss.modules.filter.PathFilters;
 import org.jboss.modules.log.ModuleLogger;
 import org.jboss.modules.log.NoopModuleLogger;
-
 import org.jboss.modules.security.ModularPermissionFactory;
 
 /**

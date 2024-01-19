@@ -19,13 +19,13 @@
 
 package org.jboss.logmanager;
 
-import java.security.Permission;
-import java.security.PrivilegedAction;
-import java.util.concurrent.ConcurrentMap;
-
 import static java.lang.System.getSecurityManager;
 import static java.lang.Thread.currentThread;
 import static java.security.AccessController.doPrivileged;
+
+import java.security.Permission;
+import java.security.PrivilegedAction;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * A log context selector which chooses a log context based on the thread context classloader.

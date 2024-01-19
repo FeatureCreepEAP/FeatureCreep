@@ -19,6 +19,7 @@
 package org.jboss.modules;
 
 import java.io.File;
+
 import org.jboss.modules.filter.PathFilter;
 import org.jboss.modules.filter.PathFilters;
 

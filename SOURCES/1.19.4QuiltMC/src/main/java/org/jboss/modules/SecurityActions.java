@@ -18,11 +18,11 @@
 
 package org.jboss.modules;
 
-import java.security.PrivilegedAction;
-
 import static java.lang.System.getSecurityManager;
 import static java.lang.Thread.currentThread;
 import static java.security.AccessController.doPrivileged;
+
+import java.security.PrivilegedAction;
 
 /**
  * This class must not be public.

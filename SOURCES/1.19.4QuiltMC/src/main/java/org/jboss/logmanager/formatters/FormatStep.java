@@ -1,8 +1,8 @@
 package org.jboss.logmanager.formatters;
 
-import org.jboss.logmanager.ExtLogRecord;
-
 import java.util.logging.Formatter;
+
+import org.jboss.logmanager.ExtLogRecord;
 
 /**
  * A single format step which handles some part of rendering a log record.

@@ -19,12 +19,12 @@
 
 package org.jboss.logmanager.handlers;
 
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.interrupted;
+
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.OutputStream;
-
-import static java.lang.Thread.currentThread;
-import static java.lang.Thread.interrupted;
 
 /**
  * An output stream which is not interruptible.

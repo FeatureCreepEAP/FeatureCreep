@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import featurecreep.pizzamixin.PizzaMixer;
 import featurecreep.pizzamixin.TitleScreenMixin;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
 //import featurecreep.legacy.FeatureCreepMC;
@@ -25,6 +26,11 @@ LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
   // FeatureCreepMC.onInitialize();
+     	
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            FeatureCreep.registerFCDNF(dispatcher);
+         });
+     	
 }
 
 

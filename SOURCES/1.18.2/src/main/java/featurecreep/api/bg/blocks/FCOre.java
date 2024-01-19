@@ -9,7 +9,7 @@ import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
-import game.Block;
+import game.AbstractBlock;
 import game.BlockPos;
 import game.BlockState;
 import game.GameRegistries;
@@ -29,7 +29,7 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 
 
 	  public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops, Object ore_material) {
-    super(Block.Info.fromMaterial(material.get()).hardnessAndResistance(strength / 10));
+    super(AbstractBlock.Info.fromMaterial(material.get()).hardnessAndResistance(strength / 10));
 initialise(id, modid, name,  group, material, strength, drops);
 resource = ore_material;
   }

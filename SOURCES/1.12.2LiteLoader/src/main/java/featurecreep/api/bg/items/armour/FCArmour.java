@@ -4,6 +4,7 @@ import featurecreep.api.EnumModder;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Armour;
+import game.Armour.class_unknown_18329;
 
 public class FCArmour extends Armour implements FCItemAPI<FCArmour>{
 

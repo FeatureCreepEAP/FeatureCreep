@@ -1,6 +1,11 @@
 package net.pizzacrust.mixin;
 
-import javassist.*;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtConstructor;
+import javassist.CtField;
+import javassist.CtMethod;
+import javassist.CtNewMethod;
 
 /**
  * Transforms target class of a specified Mixin.

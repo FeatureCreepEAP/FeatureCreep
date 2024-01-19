@@ -18,11 +18,11 @@
 
 package org.jboss.modules;
 
+import static java.security.AccessController.doPrivileged;
+
 import java.nio.ByteBuffer;
 import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
-
-import static java.security.AccessController.doPrivileged;
 
 /**
  * A hook for frameworks which need to define additional classes to a module's class loader.

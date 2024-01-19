@@ -1,9 +1,9 @@
 package co.phoenixlab.dds.decoder;
 
+import static java.lang.Integer.numberOfTrailingZeros;
+
 import co.phoenixlab.dds.Dds;
 import co.phoenixlab.dds.DdsPixelFormat;
-
-import static java.lang.Integer.numberOfTrailingZeros;
 
 public class RGBDecoder extends AbstractBasicDecoder {
 

@@ -20,7 +20,6 @@
 package org.jboss.logmanager.filters;
 
 import java.util.Iterator;
-
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 

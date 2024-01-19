@@ -1,16 +1,16 @@
 package net.pizzacrust.mixin.agent;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import net.pizzacrust.mixin.Mixin;
-import net.pizzacrust.mixin.MixinTransformer;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+
+import javassist.ClassPool;
+import javassist.CtClass;
+import net.pizzacrust.mixin.Mixin;
+import net.pizzacrust.mixin.MixinTransformer;
 
 /**
  * Allows for Mixins to be processed before the application starts.

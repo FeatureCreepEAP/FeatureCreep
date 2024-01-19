@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 
+import featurecreep.loader.ExecutionSide;
 import game.Chunk;
 import game.ChunkGenerator;
+import game.CommandDispatcher;
 import game.NudgerBuildings;
 import game.NudgerBuildings;
 import game.NudgerBuildings;
@@ -38,6 +40,7 @@ import javassist.util.HotSwapper;
 //I need to eventually make a JBoss Modules wrapper around this
 public class FeatureCreepMCInit {
 
+	public static ExecutionSide launch_side = ExecutionSide.CLIENT; //On Server do SERVER, this must be on both GameProviders when the Server one is made, this is only for CLIENT or SERVER, not CLIENT_ONLY or SERVER_ONLY, This should not be called, instead use @BGSide.getExecutionSide()
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 public ModuleLoader modloader;
@@ -183,7 +186,20 @@ try {
 	e.printStackTrace();
 }
 		
-		
+try {CommandDispatcher.def_unknown_26289();}catch(Exception e) {}// Do nothing
+try {
+	
+	  CtClass cc = pool.get(CommandDispatcher.class.getCanonicalName());
+	  CtConstructor cons = cc.getDeclaredConstructors()[0];
+	  cons.insertAfter("a = featurecreep.FeatureCreep.registerFCDNF(dispatcher);");//No remap needed :)
+	  System.out.println("Reloading CommandDispatcher Class");
+	  hs.reload(CommandDispatcher.class.getCanonicalName(), cc.toBytecode());
+	  
+
+} catch (NotFoundException | CannotCompileException | IOException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
 		
 		System.out.println("Starting Game");
 		net.minecraft.client.main.Main.main(args);

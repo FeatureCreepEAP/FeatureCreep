@@ -1,11 +1,15 @@
 package mx.kenzie.mimic;
 
-import sun.misc.Unsafe;
-
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.*;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
+
+import sun.misc.Unsafe;
 
 @SuppressWarnings("removal")
 public class InternalAccess implements ClassDefiner {

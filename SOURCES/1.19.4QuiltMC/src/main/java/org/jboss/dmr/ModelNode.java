@@ -22,10 +22,6 @@
 
 package org.jboss.dmr;
 
-import org.jboss.dmr.stream.ModelException;
-import org.jboss.dmr.stream.ModelStreamFactory;
-import org.jboss.dmr.stream.ModelWriter;
-
 import java.io.ByteArrayInputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
@@ -47,6 +43,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
+import org.jboss.dmr.stream.ModelException;
+import org.jboss.dmr.stream.ModelStreamFactory;
+import org.jboss.dmr.stream.ModelWriter;
 
 
 

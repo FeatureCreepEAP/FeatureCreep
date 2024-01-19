@@ -20,15 +20,14 @@
 package org.jboss.logmanager.handlers;
 
 import java.io.BufferedWriter;
-import java.io.Writer;
 import java.io.Closeable;
 import java.io.Flushable;
-
+import java.io.Writer;
 import java.util.logging.ErrorManager;
 import java.util.logging.Formatter;
 
-import org.jboss.logmanager.ExtLogRecord;
 import org.jboss.logmanager.ExtHandler;
+import org.jboss.logmanager.ExtLogRecord;
 
 /**
  * A handler which writes to any {@code Writer}.

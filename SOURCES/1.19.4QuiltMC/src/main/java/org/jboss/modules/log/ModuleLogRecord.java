@@ -18,8 +18,8 @@
 
 package org.jboss.modules.log;
 
-import java.util.logging.LogRecord;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 /**
  * A log record class which knows how to divine the proper class and method name.

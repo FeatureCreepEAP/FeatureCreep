@@ -20,6 +20,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.security.ProtectionDomain;
 import java.util.Map;
+
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;

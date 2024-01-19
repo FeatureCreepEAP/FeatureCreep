@@ -19,6 +19,7 @@
 package org.jboss.modules.security;
 
 import java.security.Permission;
+
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoader;

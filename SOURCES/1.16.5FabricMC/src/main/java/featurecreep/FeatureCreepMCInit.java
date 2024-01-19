@@ -3,6 +3,7 @@ package featurecreep;
 import java.util.logging.Logger;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 
 
 public class FeatureCreepMCInit implements ModInitializer {
@@ -20,6 +21,11 @@ LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
 //   FeatureCreepMC.onInitialize();
+     	
+   	 CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+         FeatureCreep.registerFCDNF(dispatcher);
+      });
+     	
 }
 
 

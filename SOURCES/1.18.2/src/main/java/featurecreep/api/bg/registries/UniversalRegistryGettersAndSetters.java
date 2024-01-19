@@ -10,6 +10,7 @@ import game.Block;
 import game.BlockAsItem;
 import game.CreativeTab;
 import game.Item;
+import game.Item.Info;
 import game.ResourceLocation;
 
 public class UniversalRegistryGettersAndSetters {
@@ -182,7 +183,7 @@ public class UniversalRegistryGettersAndSetters {
 	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id)
 	{
 		game.GameRegistries.register(game.GameRegistries.BLOCK, new ResourceLocation(registry_name), block);
-		game.GameRegistries.register(game.GameRegistries.ITEM, new ResourceLocation(registry_name), new BlockAsItem(block, new Item.Info().setCreativeTab(default_tab)));
+		game.GameRegistries.register(game.GameRegistries.ITEM, new ResourceLocation(registry_name), new BlockAsItem(block, new Info().setCreativeTab(default_tab)));
 	}
 	
 	public static void registerBlock(FCBlockAPI block)

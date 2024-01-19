@@ -5,6 +5,8 @@ import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+
 
 
 public class FeatureCreepMCInit implements ModInitializer {
@@ -22,7 +24,12 @@ LOGGER.info("Loading FeatureCreep Initialisation Class");
 
      	FeatureCreep.onInitialise();
  //  FeatureCreepMC.onInitialize(mod);
-}
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            FeatureCreep.registerFCDNF(dispatcher);
+         });
+	
+	}
 
 
 }

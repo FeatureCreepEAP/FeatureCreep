@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.jboss.modules.filter.PathFilter;
 import org.jboss.modules.filter.PathFilters;
 

@@ -148,8 +148,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/httpclient-4.3.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/guava-21.0.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/forgespi-4.0.10.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/fmlloader-1.17.1-37.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/fastutil-8.2.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/eventbus-5.0.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/datafixerupper-4.0.26.jar"/>
@@ -173,6 +171,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/asm-9.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/antlr4-runtime-4.9.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/accesstransformers-8.0.4.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/1.18.2minecraft-fci.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2/1.18.2minecraft-fci.jar" sourcepath="/home/rhel/fcdependencies/1.18.2/1.18.2fcisrc.zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

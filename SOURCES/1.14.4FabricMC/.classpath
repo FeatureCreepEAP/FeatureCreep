@@ -119,5 +119,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.14.4FabricMC/asm-6.2.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.14.4FabricMC/asm-6.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.14.4FabricMC/1.14.4minecraft-fci.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.14.4FabricMC/1.14.4fabricapifci.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

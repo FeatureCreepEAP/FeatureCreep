@@ -16,6 +16,7 @@
 
 package javassist.util.proxy;
 
+import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
@@ -35,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
-import java.lang.invoke.MethodHandles.Lookup;
 
 import javassist.CannotCompileException;
 import javassist.bytecode.AccessFlag;

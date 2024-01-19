@@ -6,14 +6,17 @@ import java.io.File;
 import org.jboss.logging.Logger;
 
 import com.mumfrey.liteloader.Configurable;
+import com.mumfrey.liteloader.ServerCommandProvider;
 import com.mumfrey.liteloader.Tickable;
+import com.mumfrey.liteloader.core.LiteLoaderEventBroker;
 import com.mumfrey.liteloader.modconfig.ConfigPanel;
 
 import game.Client;
+import game.CommandDispatcher;
 
 
 //@ExposableOptions(strategy = ConfigStrategy.Versioned, filename="featurecreep.json")
-public class LiteModFeatureCreepMC implements Tickable , Configurable{	// This logger is used to write text to the console and the log file.
+public class LiteModFeatureCreepMC implements Tickable , Configurable, ServerCommandProvider{	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = Logger.getLogger("modid");
@@ -66,6 +69,12 @@ public class LiteModFeatureCreepMC implements Tickable , Configurable{	// This l
       //  return ExampleModConfigPanel.class; 
     	return null;
     }
+
+	@Override
+	public void provideCommands(CommandDispatcher var1) {
+		// TODO Auto-generated method stub
+		var1.def_unknown_80160(new FeatureCreep.registerFCDNF());
+	}
 
 
 }

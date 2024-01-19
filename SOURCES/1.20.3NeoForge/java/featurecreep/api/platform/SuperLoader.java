@@ -4,6 +4,7 @@ public class SuperLoader {
 
 	public static SuperLoader RISUGAMIS_MODLOADER = new SuperLoader("Risugami's ModLoader", LoaderFamily.RISUGAMI, Software.MINECRAFT);
 	public static SuperLoader MINECRAFTFORGE = new SuperLoader("MinecraftForge", LoaderFamily.RISUGAMI, Software.MINECRAFT);
+	public static SuperLoader NEOFORGE = new SuperLoader("NeoForge", LoaderFamily.RISUGAMI, Software.MINECRAFT);
 	public static SuperLoader LITELOADER = new SuperLoader("LiteLoader", LoaderFamily.CLIENT, Software.MINECRAFT);
 	public static SuperLoader RIFT = new SuperLoader("Rift", LoaderFamily.OTHER, Software.MINECRAFT);
 	public static SuperLoader FABRICMC = new SuperLoader("FabricMC", LoaderFamily.FABRICMC, Software.MINECRAFT);

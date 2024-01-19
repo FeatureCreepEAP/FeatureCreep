@@ -1,11 +1,11 @@
 package mx.kenzie.mirror;
 
-import mx.kenzie.mimic.MethodErasure;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import mx.kenzie.mimic.MethodErasure;
 
 public class MethodCache {
     

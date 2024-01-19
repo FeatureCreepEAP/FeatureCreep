@@ -1,5 +1,12 @@
 package co.phoenixlab.dds;
 
+import static co.phoenixlab.dds.InternalUtils.bitsToSet;
+import static co.phoenixlab.dds.InternalUtils.bitsToUnmodifiableSet;
+import static co.phoenixlab.dds.InternalUtils.verifyThat;
+import static co.phoenixlab.dds.InternalUtils.verifyThatNot;
+import static java.lang.Integer.reverseBytes;
+import static java.lang.Integer.toHexString;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -7,10 +14,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.IntSupplier;
-
-import static co.phoenixlab.dds.InternalUtils.*;
-import static java.lang.Integer.reverseBytes;
-import static java.lang.Integer.toHexString;
 
 /**
  * Represents a DdsPixelFormat<br/>

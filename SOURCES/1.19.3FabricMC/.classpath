@@ -152,9 +152,7 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/httpclient-4.3.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/guava-21.0.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/forgespi-4.0.10.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/forge-1.19.3-44.0.18-minecraft-merged-fci.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/fmlloader-1.17.1-37.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/fastutil-8.2.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/fabric-loader-0.14.17.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.19.3FabricMC/eventbus-5.0.3.jar"/>

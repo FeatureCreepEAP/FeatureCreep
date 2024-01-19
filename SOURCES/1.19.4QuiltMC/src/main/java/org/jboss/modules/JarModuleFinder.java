@@ -18,6 +18,12 @@
 
 package org.jboss.modules;
 
+import static org.jboss.modules.Utils.DEPENDENCIES;
+import static org.jboss.modules.Utils.EXPORT;
+import static org.jboss.modules.Utils.MODULES_DIR;
+import static org.jboss.modules.Utils.MODULE_FILE;
+import static org.jboss.modules.Utils.OPTIONAL;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,15 +35,10 @@ import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+
 import org.jboss.modules.filter.MultiplePathFilterBuilder;
 import org.jboss.modules.filter.PathFilters;
 import org.jboss.modules.xml.ModuleXmlParser;
-
-import static org.jboss.modules.Utils.DEPENDENCIES;
-import static org.jboss.modules.Utils.EXPORT;
-import static org.jboss.modules.Utils.OPTIONAL;
-import static org.jboss.modules.Utils.MODULES_DIR;
-import static org.jboss.modules.Utils.MODULE_FILE;
 
 /**
  * A module finder which uses a JAR file as a module repository.

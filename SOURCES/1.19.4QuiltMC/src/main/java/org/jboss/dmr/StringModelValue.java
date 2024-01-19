@@ -22,9 +22,6 @@
 
 package org.jboss.dmr;
 
-import org.jboss.dmr.stream.ModelException;
-import org.jboss.dmr.stream.ModelWriter;
-
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -33,6 +30,9 @@ import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import org.jboss.dmr.stream.ModelException;
+import org.jboss.dmr.stream.ModelWriter;
 
 /**
  * @author <a href="mailto:david.lloyd@redhat.com">David M. Lloyd</a>

@@ -21,6 +21,7 @@ package org.jboss.modules;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
+
 import org.jboss.modules.filter.PathFilter;
 
 /**

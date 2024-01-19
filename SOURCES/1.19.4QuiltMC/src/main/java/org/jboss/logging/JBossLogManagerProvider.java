@@ -25,10 +25,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.jboss.logmanager.LogContext;
+import org.jboss.logmanager.Logger.AttachmentKey;
 import org.jboss.logmanager.MDC;
 import org.jboss.logmanager.NDC;
-
-import static org.jboss.logmanager.Logger.AttachmentKey;
 
 final class JBossLogManagerProvider implements LoggerProvider {
 

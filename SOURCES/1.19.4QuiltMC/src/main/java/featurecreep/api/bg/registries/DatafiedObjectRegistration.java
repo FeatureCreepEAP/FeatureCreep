@@ -10,11 +10,6 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.items.datafied.dmr.DMRItem;
 import featurecreep.api.bg.items.datafied.dmr.FCItemAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCAxeAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCHoeAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCPickaxeAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCShovelAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCSwordAsDMR;
 
 public class DatafiedObjectRegistration {
 

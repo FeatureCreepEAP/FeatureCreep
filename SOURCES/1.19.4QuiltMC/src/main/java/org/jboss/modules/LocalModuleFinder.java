@@ -18,6 +18,9 @@
 
 package org.jboss.modules;
 
+import static java.security.AccessController.doPrivileged;
+import static org.jboss.modules.Utils.MODULE_FILE;
+
 import java.io.File;
 import java.io.FilePermission;
 import java.io.IOException;
@@ -42,9 +45,6 @@ import java.util.function.Predicate;
 import org.jboss.modules.filter.PathFilter;
 import org.jboss.modules.filter.PathFilters;
 import org.jboss.modules.xml.ModuleXmlParser;
-
-import static java.security.AccessController.doPrivileged;
-import static org.jboss.modules.Utils.MODULE_FILE;
 
 /**
  * A module finder which locates module specifications which are stored in a local module

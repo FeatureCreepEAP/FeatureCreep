@@ -1,7 +1,6 @@
 package featurecreep.api.soundeffects;
 
 import game.SoundEffect;
-import net.minecraftforge.client.event.sound.SoundEvent;
 
 public class VanillaSoundEffect implements AbstractSoundEffect{
 

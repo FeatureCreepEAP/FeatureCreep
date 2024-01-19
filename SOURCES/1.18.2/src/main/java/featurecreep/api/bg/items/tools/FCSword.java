@@ -2,6 +2,7 @@ package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Item;
+import game.Item.Info;
 import game.Sword;
 
 public class FCSword extends Sword implements ToolsAPI<FCSword>
@@ -14,7 +15,7 @@ public class FCSword extends Sword implements ToolsAPI<FCSword>
 	
 	public FCSword(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material, int attackDamage, int attackSpeed)
 	{
-		super(material, attackDamage, attackSpeed, new Item.Info().setCreativeTab(group.get()));
+		super(material, attackDamage, attackSpeed, new Info().setCreativeTab(group.get()));
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
 		}
 

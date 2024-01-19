@@ -25,13 +25,12 @@ package org.jboss.dmr.stream;
 import static org.jboss.dmr.stream.ModelConstants.BACKSLASH;
 import static org.jboss.dmr.stream.ModelConstants.BACKSPACE;
 import static org.jboss.dmr.stream.ModelConstants.BYTES_VALUE;
-import static org.jboss.dmr.stream.ModelConstants.CR;
 import static org.jboss.dmr.stream.ModelConstants.COLON;
 import static org.jboss.dmr.stream.ModelConstants.COMMA;
+import static org.jboss.dmr.stream.ModelConstants.CR;
 import static org.jboss.dmr.stream.ModelConstants.EQUAL;
 import static org.jboss.dmr.stream.ModelConstants.EXPRESSION_VALUE;
 import static org.jboss.dmr.stream.ModelConstants.FORMFEED;
-import static org.jboss.dmr.stream.ModelConstants.QUOTE;
 import static org.jboss.dmr.stream.ModelConstants.LIST_END;
 import static org.jboss.dmr.stream.ModelConstants.LIST_START;
 import static org.jboss.dmr.stream.ModelConstants.MINUS;
@@ -39,6 +38,7 @@ import static org.jboss.dmr.stream.ModelConstants.NL;
 import static org.jboss.dmr.stream.ModelConstants.OBJECT_END;
 import static org.jboss.dmr.stream.ModelConstants.OBJECT_START;
 import static org.jboss.dmr.stream.ModelConstants.PLUS;
+import static org.jboss.dmr.stream.ModelConstants.QUOTE;
 import static org.jboss.dmr.stream.ModelConstants.TAB;
 import static org.jboss.dmr.stream.ModelConstants.TYPE_MODEL_VALUE;
 import static org.jboss.dmr.stream.Utils.BASE64_DEC_TABLE;
@@ -53,7 +53,6 @@ import static org.jboss.dmr.stream.Utils.isWhitespace;
 
 import java.io.IOException;
 import java.io.Reader;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 

@@ -18,6 +18,9 @@
 
 package org.jboss.modules;
 
+import static java.security.AccessController.doPrivileged;
+import static org.jboss.modules.SecurityActions.setContextClassLoader;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -45,19 +48,15 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
-import java.util.logging.LogManager;
-
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.logging.LogManager;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jboss.modules.log.JDKModuleLogger;
 import org.jboss.modules.log.StreamModuleLogger;
-
-import static java.security.AccessController.doPrivileged;
-import static org.jboss.modules.SecurityActions.setContextClassLoader;
 
 /**
  * The main entry point of JBoss Modules when run as a JAR on the command line.

@@ -63,8 +63,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/nashorn-core-15.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/modlauncher-10.0.9.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/mixin-0.8.5.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/mergetool-1.1.7-api.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/mergetool-1.1.5-api.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/mclanguage-1.20.1-47.1.43.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/maven-artifact-3.8.5.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/lwjgl-tinyfd-3.3.1-natives-windows-x86.jar"/>
@@ -128,7 +126,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/jline-terminal-3.12.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/jline-reader-3.12.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/java-objc-bridge-1.1.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/javafmllanguage-1.20.1-47.1.43.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/JarJarSelector-0.3.19.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/JarJarMetadata-0.3.19.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/JarJarFileSystems-0.3.19.jar"/>
@@ -138,11 +135,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/guava-31.1-jre.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/gson-2.10.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/forge-1.20.2-48.0.20-minecraft-merged-fci.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fmlloader-1.20.1-47.1.43.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fmlloader-1.20.1-47.0.45.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fmlearlydisplay-1.20.1-47.1.43.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fmlearlydisplay-1.20.1-47.0.45.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fmlcore-1.20.1-47.1.43.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fastutil-8.5.9.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/failureaccess-1.0.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2FabricMC/fabric-loader-0.14.17.jar"/>

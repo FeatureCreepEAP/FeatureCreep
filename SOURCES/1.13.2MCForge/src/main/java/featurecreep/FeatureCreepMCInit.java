@@ -8,7 +8,9 @@ import featurecreep.api.bg.PackLoader;
 import game.Client;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -92,6 +94,13 @@ import net.minecraftforge.fml.loading.FMLPaths;
 //	    public void loadcomplete(FMLLoadCompleteEvent event) {
 
 //	    }
+	    
+	    //From Fly Command
+	    @SubscribeEvent
+	    public static void onServerStarting(FMLServerStartingEvent event) {
+	    	FeatureCreep.registerFCDNF(event.getCommandDispatcher());
+	    }
+	    
 	    
 	    
 	}

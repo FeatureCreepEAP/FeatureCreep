@@ -82,7 +82,7 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/codecjorbis-20101023.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/authlib-1.5.22.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/akka-actor_2.11-2.3.3.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/forge-1.12.2-14.23.5.2859-injectedfci.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/forge-1.12.2-14.23.5.2859-injectedfci.jar" sourcepath="/home/rhel/fcdependencies/1.12.2LiteLoader/1.12.2srd"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/gson-2.8.0.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/log4j-core-2.8.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.12.2LiteLoader/log4j-api-2.8.1.jar"/>

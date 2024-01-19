@@ -19,8 +19,6 @@
 
 package org.jboss.logmanager;
 
-import io.smallrye.common.constraint.Assert;
-
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -31,6 +29,8 @@ import java.util.logging.Filter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
+
+import io.smallrye.common.constraint.Assert;
 
 /**
  * An actual logger instance.  This is the end-user interface into the logging system.

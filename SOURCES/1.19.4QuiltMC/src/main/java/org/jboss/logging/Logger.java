@@ -18,13 +18,13 @@
 
 package org.jboss.logging;
 
+import static java.security.AccessController.doPrivileged;
+
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.security.PrivilegedAction;
 import java.util.Locale;
-
-import static java.security.AccessController.doPrivileged;
 
 /**
  * An abstracted logging entry point.

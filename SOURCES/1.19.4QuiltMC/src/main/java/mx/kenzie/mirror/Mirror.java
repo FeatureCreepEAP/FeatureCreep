@@ -1,11 +1,11 @@
 package mx.kenzie.mirror;
 
-import org.jetbrains.annotations.TestOnly;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+
+import org.jetbrains.annotations.TestOnly;
 
 /**
  * Mirrors a type for accessing its members.

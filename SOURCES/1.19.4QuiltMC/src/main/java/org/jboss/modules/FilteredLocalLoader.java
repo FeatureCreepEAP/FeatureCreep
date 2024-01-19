@@ -20,6 +20,7 @@ package org.jboss.modules;
 
 import java.util.Collections;
 import java.util.List;
+
 import org.jboss.modules.filter.ClassFilter;
 import org.jboss.modules.filter.PathFilter;
 

@@ -16,7 +16,7 @@ import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.bg.ui.FCCreativeTabs;
 import featurecreep.api.parsers.DataParseContent;
-import featurecreep.api.platform.SuperLoader;
+import featurecreep.loader.SuperLoader;
 import featurecreep.content.FCBlocks;
 import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
@@ -32,7 +32,7 @@ public class FeatureCreep {
 	public static Path gamepath = FeatureCreepMCInit.gamepath;
 	public static String modpath = FeatureCreepMCInit.modpath;
 		public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
-	public static FCLoaderBasic loader = new FCLoaderBasicR8(new Path[] {new File(modpath).toPath()}, new Path[] {}, packages_needed, 4, true);
+public static FCLoaderBasic loader = new FCLoaderBasicR8(new Path[] {new File(modpath).toPath()}, new Path[] {}, packages_needed, 4, true, BGSide.getExecutionSide());
 	public static ModuleLoader modloader = loader.getLoader();	
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");

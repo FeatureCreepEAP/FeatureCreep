@@ -19,10 +19,10 @@
 
 package org.jboss.logmanager.formatters;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.ArrayList;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A parser which can translate a log4j-style format string into a series of {@code FormatStep} instances.

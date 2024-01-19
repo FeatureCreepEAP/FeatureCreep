@@ -151,8 +151,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/httpclient-4.3.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/guava-21.0.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/forgespi-4.0.10.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/fmlloader-1.17.1-37.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/fastutil-8.2.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/eventbus-5.0.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.18.2FabricMC/datafixerupper-4.0.26.jar"/>

@@ -17,14 +17,14 @@
  */
 package org.jboss.modules;
 
+import static org.jboss.modules.PathResourceLoader.doPrivilegedIfNeeded;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.AccessControlContext;
-
-import static org.jboss.modules.PathResourceLoader.doPrivilegedIfNeeded;
 
 /**
  * Java NIO Path-based Resource

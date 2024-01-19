@@ -19,8 +19,6 @@
 
 package org.jboss.logmanager;
 
-import io.smallrye.common.net.HostName;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,8 +26,9 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
 import java.util.logging.LogRecord;
+
+import io.smallrye.common.net.HostName;
 
 /**
  * An extended log record, which includes additional information including MDC/NDC and correct

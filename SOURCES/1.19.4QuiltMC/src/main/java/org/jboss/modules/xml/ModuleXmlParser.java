@@ -18,6 +18,19 @@
 
 package org.jboss.modules.xml;
 
+import static org.jboss.modules.xml.XmlPullParser.CDSECT;
+import static org.jboss.modules.xml.XmlPullParser.COMMENT;
+import static org.jboss.modules.xml.XmlPullParser.DOCDECL;
+import static org.jboss.modules.xml.XmlPullParser.END_DOCUMENT;
+import static org.jboss.modules.xml.XmlPullParser.END_TAG;
+import static org.jboss.modules.xml.XmlPullParser.ENTITY_REF;
+import static org.jboss.modules.xml.XmlPullParser.FEATURE_PROCESS_NAMESPACES;
+import static org.jboss.modules.xml.XmlPullParser.IGNORABLE_WHITESPACE;
+import static org.jboss.modules.xml.XmlPullParser.PROCESSING_INSTRUCTION;
+import static org.jboss.modules.xml.XmlPullParser.START_DOCUMENT;
+import static org.jboss.modules.xml.XmlPullParser.START_TAG;
+import static org.jboss.modules.xml.XmlPullParser.TEXT;
+
 import java.io.BufferedInputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -45,9 +58,6 @@ import org.jboss.modules.DependencySpec;
 import org.jboss.modules.LocalDependencySpecBuilder;
 import org.jboss.modules.ModuleDependencySpec;
 import org.jboss.modules.ModuleDependencySpecBuilder;
-import org.jboss.modules.Version;
-import org.jboss.modules.VersionDetection;
-import org.jboss.modules.maven.ArtifactCoordinates;
 import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoadException;
 import org.jboss.modules.ModuleLoader;
@@ -57,26 +67,16 @@ import org.jboss.modules.PathUtils;
 import org.jboss.modules.ResourceLoader;
 import org.jboss.modules.ResourceLoaderSpec;
 import org.jboss.modules.ResourceLoaders;
+import org.jboss.modules.Version;
+import org.jboss.modules.VersionDetection;
 import org.jboss.modules.filter.MultiplePathFilterBuilder;
 import org.jboss.modules.filter.PathFilter;
 import org.jboss.modules.filter.PathFilters;
+import org.jboss.modules.maven.ArtifactCoordinates;
 import org.jboss.modules.maven.MavenResolver;
 import org.jboss.modules.security.FactoryPermissionCollection;
 import org.jboss.modules.security.ModularPermissionFactory;
 import org.jboss.modules.security.PermissionFactory;
-
-import static org.jboss.modules.xml.XmlPullParser.CDSECT;
-import static org.jboss.modules.xml.XmlPullParser.COMMENT;
-import static org.jboss.modules.xml.XmlPullParser.DOCDECL;
-import static org.jboss.modules.xml.XmlPullParser.END_DOCUMENT;
-import static org.jboss.modules.xml.XmlPullParser.END_TAG;
-import static org.jboss.modules.xml.XmlPullParser.ENTITY_REF;
-import static org.jboss.modules.xml.XmlPullParser.FEATURE_PROCESS_NAMESPACES;
-import static org.jboss.modules.xml.XmlPullParser.IGNORABLE_WHITESPACE;
-import static org.jboss.modules.xml.XmlPullParser.PROCESSING_INSTRUCTION;
-import static org.jboss.modules.xml.XmlPullParser.START_DOCUMENT;
-import static org.jboss.modules.xml.XmlPullParser.START_TAG;
-import static org.jboss.modules.xml.XmlPullParser.TEXT;
 
 /**
  * A fast, validating {@code module.xml} parser.

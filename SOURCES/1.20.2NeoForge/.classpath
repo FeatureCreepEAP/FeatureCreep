@@ -64,8 +64,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/nashorn-core-15.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/modlauncher-10.0.9.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mixin-0.8.5.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mergetool-1.1.7-api.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mergetool-1.1.5-api.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/mclanguage-1.20.1-47.1.43.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/maven-artifact-3.8.5.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/lwjgl-tinyfd-3.3.1-natives-windows-x86.jar"/>
@@ -178,5 +176,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/antlr4-runtime-4.9.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/accesstransformers-8.0.4.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2NeoForge/1.20.2fcineo.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3NeoForge/mergetool-2.0.2-api.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

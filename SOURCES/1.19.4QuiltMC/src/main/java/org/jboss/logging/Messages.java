@@ -19,11 +19,11 @@
 
 package org.jboss.logging;
 
+import static java.security.AccessController.doPrivileged;
+
 import java.lang.reflect.Field;
 import java.security.PrivilegedAction;
 import java.util.Locale;
-
-import static java.security.AccessController.doPrivileged;
 
 /**
  * A factory class to produce message bundle implementations.

@@ -19,14 +19,14 @@
 
 package org.jboss.logmanager.handlers;
 
-import org.jboss.logmanager.formatters.Formatters;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import java.nio.charset.Charset;
 import java.util.logging.ErrorManager;
 import java.util.logging.Formatter;
+
+import org.jboss.logmanager.formatters.Formatters;
 
 /**
  * An output stream handler which supports any {@code OutputStream}, using the specified encoding.  If no encoding is

@@ -1,12 +1,21 @@
 package mx.kenzie.mirror;
 
-import org.objectweb.asm.Type;
-import sun.misc.Unsafe;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.*;
-import java.security.*;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+import java.security.ProtectionDomain;
+
+import org.objectweb.asm.Type;
+
+import sun.misc.Unsafe;
 
 @SuppressWarnings({"removal", "deprecated", "unchecked", "Duplicates", "TypeParameterHidesVisibleType"})
 class InternalAccessProvider implements ClassProvider {

@@ -1,5 +1,9 @@
 package co.phoenixlab.dds;
 
+import static co.phoenixlab.dds.InternalUtils.bitsToUnmodifiableSet;
+import static co.phoenixlab.dds.InternalUtils.verifyThat;
+import static java.lang.Integer.reverseBytes;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -8,10 +12,6 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.IntSupplier;
-
-import static co.phoenixlab.dds.InternalUtils.bitsToUnmodifiableSet;
-import static co.phoenixlab.dds.InternalUtils.verifyThat;
-import static java.lang.Integer.reverseBytes;
 
 /**
  * Represents a DdsHeader<br/>

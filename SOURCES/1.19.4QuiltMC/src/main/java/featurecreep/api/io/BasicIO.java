@@ -2,7 +2,6 @@ package featurecreep.api.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

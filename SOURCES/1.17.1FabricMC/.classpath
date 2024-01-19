@@ -600,16 +600,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/forgespi-4.0.10.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/fmlloader-1.17.1-37.1.1.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.17.1FabricMC/fastutil-8.2.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>

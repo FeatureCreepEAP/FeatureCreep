@@ -19,8 +19,6 @@
 
 package org.jboss.logmanager;
 
-import io.smallrye.common.constraint.Assert;
-
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +34,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.logging.Filter;
+
+import io.smallrye.common.constraint.Assert;
 
 /**
  * Simplified log manager.  Designed to work around the (many) design flaws of the JDK platform log manager.

@@ -20,10 +20,9 @@
 package org.jboss.logmanager.filters;
 
 import java.text.MessageFormat;
+import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.util.regex.Pattern;
-
-import java.util.logging.Filter;
 
 import org.jboss.logmanager.ExtLogRecord;
 

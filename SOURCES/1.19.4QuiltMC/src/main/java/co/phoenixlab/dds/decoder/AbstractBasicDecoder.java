@@ -1,8 +1,5 @@
 package co.phoenixlab.dds.decoder;
 
-import co.phoenixlab.dds.Dds;
-import co.phoenixlab.dds.DdsHeader;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -11,6 +8,9 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import co.phoenixlab.dds.Dds;
+import co.phoenixlab.dds.DdsHeader;
 
 public abstract class AbstractBasicDecoder implements FormatDecoder {
 

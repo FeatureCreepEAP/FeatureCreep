@@ -1,10 +1,10 @@
 package net.pizzacrust.mixin.test;
 
+import java.lang.reflect.Field;
+
 import net.pizzacrust.mixin.FieldInitalizer;
 import net.pizzacrust.mixin.IgnoreMethod;
 import net.pizzacrust.mixin.Mixin;
-
-import java.lang.reflect.Field;
 
 /**
  * A test of the Mixin framework.

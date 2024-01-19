@@ -1,13 +1,41 @@
 package mx.kenzie.mimic;
 
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Type;
+import static org.objectweb.asm.Opcodes.AALOAD;
+import static org.objectweb.asm.Opcodes.AASTORE;
+import static org.objectweb.asm.Opcodes.ACONST_NULL;
+import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.ANEWARRAY;
+import static org.objectweb.asm.Opcodes.BIPUSH;
+import static org.objectweb.asm.Opcodes.CHECKCAST;
+import static org.objectweb.asm.Opcodes.D2F;
+import static org.objectweb.asm.Opcodes.D2I;
+import static org.objectweb.asm.Opcodes.D2L;
+import static org.objectweb.asm.Opcodes.DUP;
+import static org.objectweb.asm.Opcodes.F2D;
+import static org.objectweb.asm.Opcodes.F2I;
+import static org.objectweb.asm.Opcodes.F2L;
+import static org.objectweb.asm.Opcodes.GETFIELD;
+import static org.objectweb.asm.Opcodes.I2B;
+import static org.objectweb.asm.Opcodes.I2C;
+import static org.objectweb.asm.Opcodes.I2D;
+import static org.objectweb.asm.Opcodes.I2F;
+import static org.objectweb.asm.Opcodes.I2L;
+import static org.objectweb.asm.Opcodes.I2S;
+import static org.objectweb.asm.Opcodes.INVOKEINTERFACE;
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
+import static org.objectweb.asm.Opcodes.L2D;
+import static org.objectweb.asm.Opcodes.L2F;
+import static org.objectweb.asm.Opcodes.L2I;
+import static org.objectweb.asm.Opcodes.POP;
+import static org.objectweb.asm.Opcodes.RETURN;
 
 import java.lang.reflect.Method;
 import java.util.function.Supplier;
 
-import static org.objectweb.asm.Opcodes.*;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Type;
 
 class AcquireForwardingWriter extends ForwardingWriter {
     

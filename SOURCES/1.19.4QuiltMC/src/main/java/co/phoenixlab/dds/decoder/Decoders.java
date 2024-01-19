@@ -1,12 +1,12 @@
 package co.phoenixlab.dds.decoder;
 
+import java.util.Set;
+
 import co.phoenixlab.dds.Dds;
 import co.phoenixlab.dds.DdsPixelFormat;
 import co.phoenixlab.dds.decoder.dxt.Dxt1Decoder;
 import co.phoenixlab.dds.decoder.dxt.Dxt3Decoder;
 import co.phoenixlab.dds.decoder.dxt.Dxt5Decoder;
-
-import java.util.Set;
 
 public class Decoders {
 

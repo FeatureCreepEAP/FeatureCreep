@@ -18,6 +18,9 @@
 
 package org.jboss.modules;
 
+import static java.security.AccessController.doPrivileged;
+import static java.security.AccessController.getContext;
+
 import java.io.IOException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URL;
@@ -28,9 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-
-import static java.security.AccessController.doPrivileged;
-import static java.security.AccessController.getContext;
 
 /**
  * @author <a href="mailto:david.lloyd@redhat.com">David M. Lloyd</a>

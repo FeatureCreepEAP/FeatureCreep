@@ -21,7 +21,6 @@ package org.jboss.logmanager;
 
 import java.time.Instant;
 import java.util.ResourceBundle;
-
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 

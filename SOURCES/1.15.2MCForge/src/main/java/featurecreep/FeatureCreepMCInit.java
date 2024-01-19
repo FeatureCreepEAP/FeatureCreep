@@ -4,7 +4,9 @@ import java.nio.file.Path;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -57,8 +59,11 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	    
 	    
 	    
-	    
-	    
+	    //From Fly Command
+	    @SubscribeEvent
+	    public static void onServerStarting(FMLServerStartingEvent event) {
+	    	FeatureCreep.registerFCDNF(event.getCommandDispatcher());
+	    }
 	    
 
 //	    private void commonSetup(final FMLCommonSetupEvent event) {	    	
@@ -73,7 +78,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	        
 	    	
 	    	
-	    //}
+	  //  }
 
 //	    private void clientSetup(final FMLClientSetupEvent event) {
 //	        LOGGER.info("Hey, we're on Minecraft version {}!", MinecraftClient.getInstance().getGameVersion());
@@ -89,6 +94,11 @@ import net.minecraftforge.fml.loading.FMLPaths;
 
 //	    }
 	    
+	    //Thank you enchanting commands
+	//    @SubscribeEvent
+	 //   public void registerCommands(RegisterCommandsEvent e) {
+//FeatureCreep.registerFCDNF(e.getDispatcher());
+	//    }
 	    
 	}
 	

@@ -4,6 +4,7 @@ import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Armour;
 import game.Item;
+import game.Item.Info;
 
 public class FCArmour extends Armour implements FCItemAPI<FCArmour>{
 
@@ -16,7 +17,7 @@ public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.b
 	public FCArmourSlot slot;
 	
 	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material, FCArmourSlot slot) {
-		super(material, slot.getSlot(), new Item.Info().setCreativeTab(group.get()));
+		super(material, slot.getSlot(), new Info().setCreativeTab(group.get()));
 		// TODO Auto-generated constructor stub
 initialise( id,  modid,  name, group);
 		setSlot(slot);

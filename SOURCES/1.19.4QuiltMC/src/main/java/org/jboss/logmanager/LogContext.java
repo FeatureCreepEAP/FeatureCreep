@@ -19,9 +19,7 @@
 
 package org.jboss.logmanager;
 
-import io.smallrye.common.constraint.Assert;
-import io.smallrye.common.ref.Reference;
-import io.smallrye.common.ref.References;
+import static org.jboss.logmanager.LoggerNode.attachmentsFull;
 
 import java.security.AccessController;
 import java.security.Permission;
@@ -39,7 +37,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.LoggingPermission;
 
-import static org.jboss.logmanager.LoggerNode.attachmentsFull;
+import io.smallrye.common.constraint.Assert;
+import io.smallrye.common.ref.Reference;
+import io.smallrye.common.ref.References;
 
 /**
  * A logging context, for producing isolated logging environments.

@@ -18,6 +18,8 @@
 
 package org.jboss.modules;
 
+import static java.security.AccessController.doPrivileged;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +45,6 @@ import java.util.NoSuchElementException;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-
-import static java.security.AccessController.doPrivileged;
 
 /**
  *

@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 
 
@@ -42,7 +43,10 @@ public class FeatureCreepMCInit
 
     }
     
-    
+    @EventHandler
+    public static void serverInit(FMLServerStartingEvent event) {
+    	event.registerServerCommand(new FeatureCreep.registerFCDNF());
+    }
     
     
 	//@SubscribeEvent    
