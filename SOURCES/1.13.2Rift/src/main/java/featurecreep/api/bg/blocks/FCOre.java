@@ -43,7 +43,7 @@ resource = ore_material;
 		  player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
 		    player.addExhaustion(0.005f);
 
-		    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), GameRegistries.var_unknown_73807.getName(stack.getItem()).toString()));
+		    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), GameRegistries.ITEMS.getName(stack.getItem()).toString()));
 		  System.out.println("Block Broken");
 		    for (int i = 0; i < arr.size(); i++) {
 		    	  System.out.println("Scanning Drops");

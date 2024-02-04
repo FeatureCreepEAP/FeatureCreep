@@ -12,7 +12,8 @@
       <configuration>
         <archive>
           <manifestEntries>
-            <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
+            <FMLCorePluginContainsFMLMod>true</FMLCorePluginContainsFMLMod>
+            <FMLCorePlugin>featurecreep.FCCoreMod</FMLCorePlugin>
           </manifestEntries>
         </archive>
       </configuration> 

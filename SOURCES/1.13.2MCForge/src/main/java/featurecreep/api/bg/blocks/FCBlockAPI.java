@@ -259,7 +259,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		}
 		@Override
 		public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-			get().asItem().onBlockLeftClick(toStack(1),worl.get(), block.get().defaultBlockstate(), pos, p.get());
+			get().asItem().onBlockLeftClick(toStack(1),worl.get(), block.get().getDefaultState(), pos, p.get());
 		}
 		
 		@Override
@@ -268,7 +268,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		}
 
 		@Override
-		public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().asItem().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().defaultBlockstate(), pos, (LivingEntity)ent.get());};
+		public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().asItem().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
 
 
 		
@@ -279,13 +279,13 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		//We really soon gotta change these for prefered state
 			public default FCBlockAPI isSolid(boolean result) {holder().solid = result; return this;}
 			public default boolean getSolid() {return holder().solid;}
-			public default void executeBumpedBlock(AbstractEntity e, FCWorld w, FCBlockPos pos) {get().onTouchBlock(get().defaultBlockstate(), w.get(), pos, e.get());}
+			public default void executeBumpedBlock(AbstractEntity e, FCWorld w, FCBlockPos pos) {get().onTouchBlock(get().getDefaultState(), w.get(), pos, e.get());}
 			public default void bumpedBlock(AbstractEntity e, FCWorld w, FCBlockPos pos) {}
-			public default void executeOnBroken(AbstractPlayer player, int dimension, FCBlockPos pos) {get().onBroke(player.getWorld().get(), pos, get().defaultBlockstate());}
+			public default void executeOnBroken(AbstractPlayer player, int dimension, FCBlockPos pos) {get().onBroke(player.getWorld().get(), pos, get().getDefaultState());}
 
 			public default void onBroken(AbstractPlayer player, int dimension, FCBlockPos pos) {}
 			public default void executeOnPlaced(FCWorld w,FCBlockPos pos) {}
-			public default void onPlaced(FCWorld w,FCBlockPos pos) {get().onPlace(w.get(), pos, get().defaultBlockstate(), (LivingEntity)w.get().getEntityById(0), this.toStack(1));}//Gotta update the last 2 args later
+			public default void onPlaced(FCWorld w,FCBlockPos pos) {get().onPlace(w.get(), pos, get().getDefaultState(), (LivingEntity)w.get().getEntityById(0), this.toStack(1));}//Gotta update the last 2 args later
 			public default ArrayList<BlockDropArrayObject> getDrops(FCItemAPI tool) {
 				
 				ArrayList<BlockDropArrayObject> result = new ArrayList<BlockDropArrayObject>();

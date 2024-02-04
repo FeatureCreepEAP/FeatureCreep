@@ -24,7 +24,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 		setUnlocName(registry_name.split(":")[1]);
 		//registerModels(); We do not need this at this time, maybe in the future we can do something with it
 		setDefaultCreativeTab(FCCreativeTabs.TOOLS.get()); //May not work on all versions, we may need to remove this. Yay it works on 1.13 and newer, we will need to check about 1.19.3 though, 1.19.3 does not work but i can put a generic tab. Soon I will make a porting tab though
-		setNumberID(block.def_unknown_79182(state));//Will just be 0 in some versions most likely. Getting from States will be weird though Gotta Maybe find a way to incorperate those
+		setNumberID(block.getIdFromBlockState(state));//Will just be 0 in some versions most likely. Getting from States will be weird though Gotta Maybe find a way to incorperate those
 	this.state = state;
 	}
 	
@@ -32,7 +32,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 	
 	public VanillaBlock(Block block, String registry_name)
 	{
-	this(block, block.defaultBlockstate(), registry_name);	
+	this(block, block.getDefaultState(), registry_name);	
 	}
 	
 	public VanillaBlock(FCBlockAPI block, IBlockstate state, String registry_name) //As a backup or for ported items
@@ -42,7 +42,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 	
 	public VanillaBlock(FCBlockAPI block, String registry_name) //As a backup or for ported items
 	{
-		this (block.get(), block.get().defaultBlockstate(),  registry_name);
+		this (block.get(), block.get().getDefaultState(),  registry_name);
 	}
 	
 	

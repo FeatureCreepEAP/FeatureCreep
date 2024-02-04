@@ -2,7 +2,6 @@ package featurecreep.api;
 
 import java.io.IOException;
 
-import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;

@@ -73,8 +73,8 @@ public class FCPackLoad implements ResourcePackProvider {
 	        catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	       // ResourcePackInfo.Loader packFactory = new DirPackLoader();
-	        ResourcePackInfo.Loader packFactory = name -> new DirectoryResourcePack(name, loc.toPath(), false);
+	        ResourcePackInfo.Loader packFactory = new DirPackLoader();
+	        //ResourcePackInfo.Loader packFactory = name -> new DirectoryResourcePack(name, loc.toPath(), false);
 
 	        ResourcePackInfo.PackMcMeta metadata = ResourcePackInfo.getPackMcMeta("datapack", packFactory);
 	       // instantTextBoxType mutable_builder = instantTextBoxType.empty();//instantTextBoxType.translate("fcpack");

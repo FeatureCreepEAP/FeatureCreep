@@ -12,13 +12,13 @@ import game.Biome;
 import game.Biomes;
 import game.Block;
 import game.GameRegistries;
+import game.RangeDecoratorConfiguration;
 import game.ResourceLocation;
+import game.TerrainPlacementMod;
+import game.TerrainPlacementMod.Target;
 import game.WorldGenFeature;
 import game.WorldGenerationObjectConfiguration;
 import obf.class_unknown_1069.Feature;
-import obf.class_unknown_1566;
-import obf.class_unknown_672;
-import obf.class_unknown_672.Target;
 import obf.class_unknown_1210;
 
 public class OrespawnBasicFeatureParser {
@@ -145,7 +145,7 @@ if (node.get("enabled").asBoolean() == true)
 
     WorldGenerationObjectConfiguration ORE_CONFIG = Biome.configureFeature(WorldGenFeature.ORE,
 			
-			new class_unknown_672(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), class_unknown_1210.COUNT_RANGE, new class_unknown_1566(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
+			new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), class_unknown_1210.COUNT_RANGE, new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
 
 			
 			

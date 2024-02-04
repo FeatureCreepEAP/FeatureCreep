@@ -16,8 +16,6 @@ public class FCAxe extends Axe implements ToolsAPI<FCAxe>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Info());
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
-	FCRegistries.registerItem(this);
-
 		}
 
 	

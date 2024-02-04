@@ -37,9 +37,6 @@ public static boolean determained=false;//should be nonstatic but call is static
 
 
 
-
-
-
 	
 public 	static ActiveMapping fromTransformer(byte[] bytes, String class_name) {
 	String classname=class_name.replace("/", ".");

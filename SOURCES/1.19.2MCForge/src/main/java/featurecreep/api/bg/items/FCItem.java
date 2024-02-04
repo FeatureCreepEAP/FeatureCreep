@@ -15,10 +15,6 @@ public class FCItem extends Item implements FCItemAPI<FCItem>
 	{
 		super(new Item.Info().setCreativeTab(group.get()));
 initialise(id, modid, name, group);
-	
-	
-	
-	 FCRegistries.registerItem(this);
 	}
 
 	

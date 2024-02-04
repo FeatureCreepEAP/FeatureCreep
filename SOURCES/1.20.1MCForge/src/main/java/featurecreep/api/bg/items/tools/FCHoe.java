@@ -16,8 +16,6 @@ public class FCHoe extends Hoe implements ToolsAPI<FCHoe>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Info());
 	initialise(id,modid,name, group,material,attackDamage,attackSpeed);
-	FCRegistries.registerItem(this);
-
 		}
 
 		

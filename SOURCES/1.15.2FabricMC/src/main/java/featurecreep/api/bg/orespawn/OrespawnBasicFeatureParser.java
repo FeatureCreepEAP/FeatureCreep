@@ -11,14 +11,14 @@ import featurecreep.FeatureCreep;
 import game.Biomes;
 import game.Block;
 import game.GameRegistries;
+import game.RangeDecoratorConfiguration;
 import game.ResourceLocation;
+import game.TerrainPlacementMod;
+import game.TerrainPlacementMod.Target;
 import game.WorldGenFeature;
 import game.WorldGenerationObjectConfiguration;
 import obf.class_unknown_1069.Feature;
 import obf.class_unknown_1210;
-import obf.class_unknown_1566;
-import obf.class_unknown_672;
-import obf.class_unknown_672.Target;
 
 public class OrespawnBasicFeatureParser {
 
@@ -142,8 +142,8 @@ if (node.get("enabled").asBoolean() == true)
 	// final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
 
-    WorldGenerationObjectConfiguration<?, ?> ORE_CONFIG = WorldGenFeature.ORE.config(new class_unknown_672(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())) // Vein size						
-						.createDecoratedFeature(class_unknown_1210.COUNT_RANGE.config(new class_unknown_1566(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()))); // Number of veins per chunk
+    WorldGenerationObjectConfiguration<?, ?> ORE_CONFIG = WorldGenFeature.ORE.config(new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())) // Vein size						
+						.createDecoratedFeature(class_unknown_1210.COUNT_RANGE.config(new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()))); // Number of veins per chunk
 				
 		
 			Biomes.OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);

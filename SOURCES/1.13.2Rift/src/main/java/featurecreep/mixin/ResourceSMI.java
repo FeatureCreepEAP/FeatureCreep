@@ -16,12 +16,12 @@ import game.GameConfig;
 @Mixin(GameConfig.class)
 public class ResourceSMI {
 	@Shadow
-	public List<String> resourcePacks;
+	public List<String> l;
 
-	@Inject(method = "load", at = @At("RETURN"))
+	@Inject(method = "a", at = @At("RETURN"))
 	private void onLoad(CallbackInfo ci) {
 
-		this.resourcePacks.add("fcpack_4");		
+		this.l.add("fcpack_4");		
 		System.out.println("Adding FCPack");
 	}
 	

@@ -33,7 +33,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 	
 	public VanillaBlock(Block block, String registry_name)
 	{
-	this(block, block.defaultBlockstate(), registry_name);	
+	this(block, block.getDefaultState(), registry_name);	
 	}
 	
 	public VanillaBlock(FCBlockAPI block, IBlockstate state, String registry_name) //As a backup or for ported items
@@ -43,7 +43,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 	
 	public VanillaBlock(FCBlockAPI block, String registry_name) //As a backup or for ported items
 	{
-		this (block.get(), block.get().defaultBlockstate(),  registry_name);
+		this (block.get(), block.get().getDefaultState(),  registry_name);
 	}
 	
 	

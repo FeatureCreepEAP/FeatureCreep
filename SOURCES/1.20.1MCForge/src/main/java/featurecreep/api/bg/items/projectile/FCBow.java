@@ -18,9 +18,6 @@ public FCBow(int id, String modid, String name, UnifiedItemGroupGetter group)
 {
 	super(new Item.Info());
 initialise(id, modid, name, group);
-	FCRegistries.registerItem(this);
-
-
 }
 
 

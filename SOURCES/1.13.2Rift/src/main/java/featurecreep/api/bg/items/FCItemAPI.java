@@ -112,7 +112,7 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 	}
 	@Override
 	public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-		get().onBlockLeftClick(toStack(1),worl.get(), block.get().defaultBlockstate(), pos, p.get());
+		get().onBlockLeftClick(toStack(1),worl.get(), block.get().getDefaultState(), pos, p.get());
 	}
 	
 	@Override
@@ -121,7 +121,7 @@ get().onItemUseFinish(toStack(1), e.getWorld().get(), (LivingEntity)e.get());
 	}
 
 	@Override
-	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().defaultBlockstate(), pos, (LivingEntity)ent.get());};
+	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
 
 
   

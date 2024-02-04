@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.spongepowered.asm.lib.ClassReader;
-import org.spongepowered.asm.lib.ClassWriter;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -123,7 +124,7 @@ private byte[] itemtransformer(String name, byte[] basicClass) {
 
 
 	@Override
-	public void postApply(String targetClassName, org.spongepowered.asm.lib.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -136,7 +137,7 @@ private byte[] itemtransformer(String name, byte[] basicClass) {
 
 
 	@Override
-	public void preApply(String targetClassName, org.spongepowered.asm.lib.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
 	    System.out.println(targetClassName);
 	    ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);

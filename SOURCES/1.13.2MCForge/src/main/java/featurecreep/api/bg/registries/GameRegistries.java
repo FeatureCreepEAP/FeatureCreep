@@ -19,7 +19,7 @@ public class GameRegistries {
 	
 	public static Item getItemFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return game.GameRegistries.var_unknown_73807.get(new ResourceLocation(registry_name));
+		return game.GameRegistries.ITEMS.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Item getItemFromGameRegistries(int id)
@@ -29,7 +29,7 @@ public class GameRegistries {
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name)
 	{
-		return game.GameRegistries.var_unknown_73807.containsRL(new ResourceLocation(registry_name));
+		return game.GameRegistries.ITEMS.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(String registry_name)//We also need a Number ID version of this
@@ -39,7 +39,7 @@ public class GameRegistries {
 	
 	public static Block getBlockFromGameRegistries(int id)
 	{
-		return game.GameRegistries.BLOCKS.def_unknown_84722(id);//May not work
+		return game.GameRegistries.BLOCKS.byID(id);//May not work
 	}
 	
 	public static boolean BlockKeyExistsInRegistry(String registry_name)
@@ -50,11 +50,11 @@ public class GameRegistries {
 	
 	public static CreativeTab getItemGroupByName(String name)
 	{
-		for (int t = 0; t < CreativeTab.field_78032_a.length; t++) {
+		for (int t = 0; t < CreativeTab.GROUPS.length; t++) {
 	
 			
-			if (CreativeTab.field_78032_a[t].getId().equals(name)) {
-				return CreativeTab.field_78032_a[t];
+			if (CreativeTab.GROUPS[t].getId().equals(name)) {
+				return CreativeTab.GROUPS[t];
 			}
 	
 	
@@ -65,11 +65,11 @@ public class GameRegistries {
 	
 	public static CreativeTab getItemGroupByID(int id)
 	{
-		for (int t = 0; t < CreativeTab.field_78032_a.length; t++) {
+		for (int t = 0; t < CreativeTab.GROUPS.length; t++) {
 	
 			
-			if (CreativeTab.field_78032_a[t].getIndex() == id) {
-				return CreativeTab.field_78032_a[t];
+			if (CreativeTab.GROUPS[t].getIndex() == id) {
+				return CreativeTab.GROUPS[t];
 			}
 	
 	
@@ -88,7 +88,7 @@ public class GameRegistries {
 	
 	public static Biome getBiomeFromGameRegistries(int id)
 	{
-		return game.GameRegistries.BIOME.def_unknown_84722(id);
+		return game.GameRegistries.BIOME.byID(id);
 	}
 	
 	public static boolean BiomeKeyExistsInRegistry(String registry_name)

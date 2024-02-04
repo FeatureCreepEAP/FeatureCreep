@@ -16,7 +16,7 @@ public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.b
 	public FCArmourSlot slot;
 	
 	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material, FCArmourSlot slot) {
-		super((class_unknown_18329)EnumModder.newEnumInstance(class_unknown_18329.class, name, material.getFCName(), material.getFCDurability(), new int[] {material.getFCProtection(slot), material.getFCProtection(slot),material.getFCProtection(slot) ,material.getFCProtection(slot)}, material.getFCEnchantability(), material.getEquipSound(), material.getFCToughness()), material.getFCTextureNumber(slot), slot.getSlot());
+		super((class_unknown_26966)EnumModder.newEnumInstance(class_unknown_26966.class, name, material.getFCName(), material.getFCDurability(), new int[] {material.getFCProtection(slot), material.getFCProtection(slot),material.getFCProtection(slot) ,material.getFCProtection(slot)}, material.getFCEnchantability(), material.getEquipSound(), material.getFCToughness()), material.getFCTextureNumber(slot), slot.getSlot());
 		// TODO Auto-generated constructor stub
 		initialise( id,  modid,  name, group);
 		setSlot(slot);

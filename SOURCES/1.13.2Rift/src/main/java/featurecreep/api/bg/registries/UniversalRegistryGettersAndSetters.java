@@ -62,7 +62,7 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id)
 	{
-		game.GameRegistries.var_unknown_73807.def_unknown_84728(new ResourceLocation(registry_name), item);		
+		game.GameRegistries.ITEMS.def_unknown_138836(new ResourceLocation(registry_name), item);		
     }
 	
 	public static void registerItem(FCItemAPI item)
@@ -181,11 +181,11 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id)
 	{
-		game.GameRegistries.BLOCKS.def_unknown_84728(new ResourceLocation(registry_name), block);
+		game.GameRegistries.BLOCKS.def_unknown_138836(new ResourceLocation(registry_name), block);
 		BlockAsItem item = new BlockAsItem(block, new Item.Info().setCreativeTab(default_tab));
-		game.GameRegistries.var_unknown_73807.def_unknown_84728(new ResourceLocation(registry_name), item);
+		game.GameRegistries.ITEMS.def_unknown_138836(new ResourceLocation(registry_name), item);
 	Item.BLOCK_ITEMS.put(block, item);
-	Block.BLOCKSTATE_IDS.add(block.defaultBlockstate());
+	Block.BLOCKSTATE_IDS.add(block.getDefaultState());
 	}
 	
 	public static void registerBlock(FCBlockAPI block)

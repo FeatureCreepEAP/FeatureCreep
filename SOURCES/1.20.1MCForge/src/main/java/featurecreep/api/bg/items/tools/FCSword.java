@@ -17,8 +17,6 @@ public class FCSword extends Sword implements ToolsAPI<FCSword>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Info());
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
-	FCRegistries.registerItem(this);
-
 		}
 
 }

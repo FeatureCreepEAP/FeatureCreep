@@ -1,11 +1,15 @@
 package featurecreep.api.bg.blocknitem;
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.items.FCItemAPI;
+import featurecreep.api.bg.items.datafied.DatafiedItem;
+import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
+import featurecreep.api.platform.super_.SuperLoader;
 import game.CreativeTab;
 import game.ItemStack;
 
@@ -18,6 +22,15 @@ public interface BlockOrItem<T> {
 	setDefaultCreativeTab(group.get());
 	setNumberID(id);
 			System.out.println("Initalising "+getFCRegistryName());
+			if(this instanceof DatafiedItem) {}else {//Need to rewrite Datafiedto allow for ItemGroups and Ingredients and preregister
+			if(FeatureCreep.super_loader.equals(SuperLoader.MINECRAFTFORGE)) {
+			if(this instanceof FCItemAPI item) {
+			FCRegistries.registerItem(item);
+			}else {
+				FCRegistries.registerBlock((FCBlockAPI)this);
+			}	
+			}
+			}
 	}
 		public void registerModels();
 	public BlocknItemFieldHolder holder();

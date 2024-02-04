@@ -10,7 +10,7 @@ import game.TitleScreen;
 
 @Mixin(TitleScreen.class)
 public class ExampleMixin {
-	@Inject(at = @At("HEAD"), method = "init()V")
+	@Inject(at = @At("HEAD"), method = "c()V")
 	private void init(CallbackInfo info) {
 		FeatureCreepMCInit.LOGGER.info("This line is printed by an example mod mixin!");
 		FeatureCreepMCInit.LOGGER.info("Boycott Modrinth");

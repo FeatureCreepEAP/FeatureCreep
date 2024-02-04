@@ -30,7 +30,7 @@ public class GameRegistries {
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name)
 	{
-		return Item.registry.has(new ResourceLocation(registry_name));
+		return Item.registry.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(String registry_name)//We also need a Number ID version of this
@@ -45,17 +45,17 @@ public class GameRegistries {
 	
 	public static boolean BlockKeyExistsInRegistry(String registry_name)
 	{
-		return Block.registry.has(new ResourceLocation(registry_name));
+		return Block.registry.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	
 	public static CreativeTab getItemGroupByName(String name)
 	{
-		for (int t = 0; t < CreativeTab.field_78032_a.length; t++) {
+		for (int t = 0; t < CreativeTab.GROUPS.length; t++) {
 	
 			
-			if (CreativeTab.field_78032_a[t].createIcon().equals(name)) {
-				return CreativeTab.field_78032_a[t];
+			if (CreativeTab.GROUPS[t].createIcon().equals(name)) {
+				return CreativeTab.GROUPS[t];
 			}
 	
 	
@@ -66,11 +66,11 @@ public class GameRegistries {
 	
 	public static CreativeTab getItemGroupByID(int id)
 	{
-		for (int t = 0; t < CreativeTab.field_78032_a.length; t++) {
+		for (int t = 0; t < CreativeTab.GROUPS.length; t++) {
 	
 			
-			if (CreativeTab.field_78032_a[t].getIndex() == id) {
-				return CreativeTab.field_78032_a[t];
+			if (CreativeTab.GROUPS[t].getIndex() == id) {
+				return CreativeTab.GROUPS[t];
 			}
 	
 	
@@ -95,7 +95,7 @@ public class GameRegistries {
 	
 	public static boolean BiomeKeyExistsInRegistry(String registry_name)
 	{
-		return Biome.registry.has(new ResourceLocation(registry_name));
+		return Biome.registry.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	

@@ -23,11 +23,11 @@ import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
+import game.BasicCommand;
+import game.CommandException;
+import game.ICommandSender;
 import game.Server;
 import net.minecraft.launchwrapper.Launch;
-import obf.class_unknown_1682;
-import obf.class_unknown_18521;
-import obf.class_unknown_18549;
 
 public class FeatureCreep {
 
@@ -67,27 +67,24 @@ loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClas
 			
 		}
 	
-		public static class registerFCDNF extends class_unknown_18521 {
+		public static class registerFCDNF extends BasicCommand {
+
 			@Override
-			public String def_unknown_80167() {
-				// TODO Auto-generated method stub
-				return "fcdnf";
-			}
-			@Override
-			public String def_unknown_80169(class_unknown_1682 iCommandSender) {
+			public String def_unknown_140233(ICommandSender iCommandSender) {
 				// TODO Auto-generated method stub
 				return "fcdnf install <Package>"
 						+ "Its pretty similar to DNF";
 			}
-
 			@Override
-			public void def_unknown_80172(Server minecraftServer, class_unknown_1682 iCommandSender, String[] arr)
-					throws class_unknown_18549 {
+			public String def_unknown_140235() {
 				// TODO Auto-generated method stub
-		          // fcdnf.parseArgs(context.getInput().replace("/", "").split(" "))   ;                 
-
+				return "fcdnf";
+			}
+			@Override
+			public void def_unknown_143370(Server minecraftServer, ICommandSender iCommandSender, String[] arr)
+					throws CommandException {
+				// TODO Auto-generated method stub
 	            fcdnf.parseArgs(new String[] {"dnf","install","modrinth-downloader"})   ;                 
-
 			}
 			
 		}

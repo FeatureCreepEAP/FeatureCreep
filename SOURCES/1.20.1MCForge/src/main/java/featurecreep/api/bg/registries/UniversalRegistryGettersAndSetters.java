@@ -69,7 +69,7 @@ public class UniversalRegistryGettersAndSetters {
     }
 	
 	public static void registerItem(FCItemAPI item)
-	{
+	{System.out.println("Registering "+item.getFCRegistryName());
 		registerItem(item.get(),item.getFCRegistryName(), item.getDefaultCreativeTab(), item.getNumberID());
 	}
 	

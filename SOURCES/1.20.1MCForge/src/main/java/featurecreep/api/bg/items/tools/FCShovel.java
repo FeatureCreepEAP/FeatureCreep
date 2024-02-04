@@ -17,8 +17,6 @@ public class FCShovel extends Spade implements ToolsAPI<FCShovel>
 	{
 		super(material, attackDamage, attackSpeed, new Item.Info());
 initialise(id,modid,name, group,material,attackDamage,attackSpeed);
-	FCRegistries.registerItem(this);
-
 	}
 
 }

@@ -42,8 +42,8 @@ private static String[] dependancies = {""};
 	public static String[] modpaths = {modpath};
 	public static FCDNF fcdnf = new FCDNF();
 	public static MappingConverter mappings_converter = new MappingConverter();
-	public static ActiveMapping mappings = ActiveMapping.PARCHSRG;//This is the default active mappings
-	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;//Need to detect this eventually
+	public static ActiveMapping mappings = ActiveMapping.PARCHMENT;//This is the default active mappings
+	public static SuperLoader super_loader = SuperLoader.NEOFORGE;//Need to detect this eventually
 	
 //TODO Make Packages Needed list all forge packages as its not linear like Fabric
 	

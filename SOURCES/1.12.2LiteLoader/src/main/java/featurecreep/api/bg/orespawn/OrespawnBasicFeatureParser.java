@@ -172,7 +172,7 @@ public static void applyOres(World world, Random rand, WorldBuilder dec)
 		try {
 		Method meth	= dec.getClass().getDeclaredMethod("a", World.class, Random.class, int.class, WorldDecorationGenerator.class, int.class, int.class);
 	 meth.setAccessible(true);
-	 meth.invoke(dec, world, rand, configs.get(j).frequency, new OreGen(configs.get(j).block.defaultBlockstate(), configs.get(j).size), configs.get(j).minY, configs.get(j).maxY);
+	 meth.invoke(dec, world, rand, configs.get(j).frequency, new OreGen(configs.get(j).block.getDefaultState(), configs.get(j).size), configs.get(j).minY, configs.get(j).maxY);
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

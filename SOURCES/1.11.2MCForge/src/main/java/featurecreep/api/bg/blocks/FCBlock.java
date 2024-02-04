@@ -44,7 +44,7 @@ public BlockFieldHolder holder = new BlockFieldHolder();
       player.addExhaustion(0.005F);
       
 
-	    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.toItem(), Item.registry.getName(stack.toItem()).toString()));
+	    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), Item.registry.getName(stack.getItem()).toString()));
 	  System.out.println("Block Broken");
 	    for (int i = 0; i < arr.size(); i++) {
 	    	  System.out.println("Scanning Drops");

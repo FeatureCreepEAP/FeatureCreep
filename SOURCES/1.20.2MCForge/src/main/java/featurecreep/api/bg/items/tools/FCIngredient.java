@@ -8,6 +8,7 @@ public class FCIngredient {
 
 	public static ToolRepairIngredient ingredientFromItem(Item item)
 	{
+		System.out.println(item.getUnlocalisedName());
 		return ToolRepairIngredient.ofItems(item);
 
 	}
