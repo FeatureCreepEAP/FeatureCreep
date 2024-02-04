@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>featurecreep</groupId>
+  <artifactId>featurecreep</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>FeatureCreep UserDev</name>
+  <description>The User Development API for FeatureCreep</description>
+  <repositories>
+  <repository>
+    <id>kenzie</id>
+    <name>Kenzie's Repository</name>
+    <url>https://repo.kenzie.mx/releases</url>
+</repository>
+<repository>
+    <id>divinitor</id>
+    <url>https://nexus.divin.io/repository/maven-public/</url>
+</repository>
+</repositories>
+
+  <dependencies>
+
+  	<dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j-core</artifactId>
+  		<version>2.22.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j-api</artifactId>
+  		<version>2.22.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.javassist</groupId>
+  		<artifactId>javassist</artifactId>
+  		<version>3.30.2-GA</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.slf4j</groupId>
+  		<artifactId>slf4j-api</artifactId>
+  		<version>2.0.11</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>mx.kenzie</groupId>
+  		<artifactId>mirror</artifactId>
+  		<version>5.0.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>mx.kenzie</groupId>
+  		<artifactId>mimic</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+  	<dependency>
+    <groupId>ar.com.hjg</groupId>
+    <artifactId>pngj</artifactId>
+    <version>2.1.0</version>
+</dependency>
+<dependency>
+    <groupId>io.kaitai</groupId>
+    <artifactId>kaitai-struct-runtime</artifactId>
+    <version>0.10</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.jboss/jdk-misc -->
+<dependency>
+    <groupId>org.jboss</groupId>
+    <artifactId>jdk-misc</artifactId>
+    <version>3.Final</version>
+    <scope>provided</scope>
+</dependency>
+  </dependencies>
+   <properties>
+ 	<maven.compiler.target>11</maven.compiler.target>
+ 	 	<maven.compiler.source>11</maven.compiler.source>
+ </properties>
+  
+</project>
