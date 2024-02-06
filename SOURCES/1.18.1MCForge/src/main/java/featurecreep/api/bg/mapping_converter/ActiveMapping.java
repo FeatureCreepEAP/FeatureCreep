@@ -109,8 +109,15 @@ public Mappings setMappings(Mappings mappings) {
 }
 
 public Mappings getMappings() {
+	if(hasMappings()) {
 	return mappings;
+	}else{
+		return new Mappings();
+	}
 }	
+
+
 	
 }
+
 
