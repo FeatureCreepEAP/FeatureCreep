@@ -12,25 +12,26 @@ public class ActiveMapping {
 	
 	
 	
-public static ActiveMapping YARN = new ActiveMapping();	
-public static ActiveMapping QUILT = new ActiveMapping();	
-public static ActiveMapping HASHED_MOJMAP = new ActiveMapping();	
-public static ActiveMapping PARCHMENT = new ActiveMapping();	
-public static ActiveMapping PIDGEN = new ActiveMapping();	
-public static ActiveMapping SPIGOT = new ActiveMapping();	
-public static ActiveMapping FABRICMC_INTERMEDIARY = new ActiveMapping();	
-public static ActiveMapping LEGACY_FABRICMC_INTERMEDIARY = new ActiveMapping();	
-public static ActiveMapping SRG = new ActiveMapping();	
-public static ActiveMapping PARCHSRG = new ActiveMapping();	//SRG But with Moj/Parch classnames instead of the c_123 class names
-public static ActiveMapping FEATURECREEP_INTERMEDIARY = new ActiveMapping();
-public static ActiveMapping OBF = new ActiveMapping();
-public static ActiveMapping MCP = new ActiveMapping();
-public static ActiveMapping DYNAMIC_MAPPINGS = new ActiveMapping();
-public static ActiveMapping DANGERZONE = new ActiveMapping();
+public static ActiveMapping YARN = new ActiveMapping("yarn");	
+public static ActiveMapping QUILT = new ActiveMapping("quilt");	
+public static ActiveMapping HASHED_MOJMAP = new ActiveMapping("hashed");	
+public static ActiveMapping PARCHMENT = new ActiveMapping("sugarcane");	
+public static ActiveMapping PIDGEN = new ActiveMapping("pidgen");	
+public static ActiveMapping SPIGOT = new ActiveMapping("spigot");	
+public static ActiveMapping FABRICMC_INTERMEDIARY = new ActiveMapping("fain");	
+public static ActiveMapping LEGACY_FABRICMC_INTERMEDIARY = new ActiveMapping("li");	
+public static ActiveMapping SRG = new ActiveMapping("srg");	
+public static ActiveMapping PARCHSRG = new ActiveMapping("parchsrg");	//SRG But with Moj/Parch classnames instead of the c_123 class names
+public static ActiveMapping FEATURECREEP_INTERMEDIARY = new ActiveMapping("fci");
+public static ActiveMapping OBF = new ActiveMapping("obf");
+public static ActiveMapping MCP = new ActiveMapping("mcp");
+public static ActiveMapping DYNAMIC_MAPPINGS = new ActiveMapping("dynamic");
+public static ActiveMapping DANGERZONE = new ActiveMapping("dangerzone");
 
 
 
 public Mappings mappings;
+public String name;
 public static boolean determained=false;//should be nonstatic but call is static
 
 
@@ -41,6 +42,12 @@ public static boolean determained=false;//should be nonstatic but call is static
 
 
 	
+public ActiveMapping(String string) {
+	// TODO Auto-generated constructor stub
+	this.name=string;
+}
+
+
 public 	static ActiveMapping fromTransformer(byte[] bytes, String class_name) {
 	String classname=class_name.replace("/", ".");
 	if(classname.startsWith("game.")||classname.startsWith("obf.")) {
@@ -96,12 +103,16 @@ public boolean hasMappings() {
 	return false;
 }
 
-public void setMappings(Mappings mappings) {
+public Mappings setMappings(Mappings mappings) {
 	this.mappings=mappings;
+	return mappings;
 }
 
 public Mappings getMappings() {
 	return mappings;
 }	
+
+
 	
 }
+

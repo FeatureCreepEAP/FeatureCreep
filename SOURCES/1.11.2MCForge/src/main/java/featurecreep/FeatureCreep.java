@@ -27,6 +27,7 @@ import game.BasicCommand;
 import game.CommandException;
 import game.ICommandSender;
 import game.Server;
+import javassist.ClassPool;
 import net.minecraft.launchwrapper.Launch;
 
 public class FeatureCreep {
@@ -35,19 +36,23 @@ public class FeatureCreep {
 public static Path gamepath = Launch.minecraftHome.toPath();
 public static String modpath = gamepath + ("/mods/");	
 	public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
-public static FCLoaderBasic loader = new FCLoaderBasicR8(new Path[] {new File(modpath).toPath()}, new Path[] {}, packages_needed, 4, true, BGSide.getExecutionSide());
-	public static ModuleLoader modloader = loader.getLoader();
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	
-private static String[] dependancies = {""};
-	public static String[] modpaths = {modpath};
-	public static FCDNF fcdnf = new FCDNF();
-	public static MappingConverter mappings_converter = new MappingConverter();
+	
 	public static ActiveMapping mappings = ActiveMapping.SRG;//This is the default active mappings
 	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;//Need to detect this eventually
 	
-
+	public static ClassPool classpool = ClassPool.getDefault();
+	public static String natively_mapped_mods_folder = gamepath+"/usr/share/natively_mapped_mods/"+mappings.name+"/";
+	private static Path[] dependancies = {};
+	public static Path[] modpaths = {new File(modpath).toPath(),new File(natively_mapped_mods_folder).toPath()};
+	public static FCLoaderBasic loader = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true, BGSide.getExecutionSide());
+	public static ModuleLoader modloader = loader.getLoader();
+	public static FCDNF fcdnf = new FCDNF();
+	public static MappingConverter mappings_converter = new MappingConverter();
+	public static RemapperInstance remapper = new RemapperInstance(mappings.getMappings(),classpool,natively_mapped_mods_folder);
+	
 		public static void onInitialise() {
 		// TODO Auto-generated method stub
 			System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID " + io.smallrye.common.os.Process.getProcessId());

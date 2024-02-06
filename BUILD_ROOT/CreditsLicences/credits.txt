@@ -82,3 +82,14 @@ ASM
 https://asm.ow2.io/
 Some versions only. Used for Mimic. BSD3 Clause
 
+JBoss Stackmapper
+https://github.com/jbossas/staxmapper
+LGPL2.1
+
+kaitai-struct
+https://github.com/kaitai-io/
+MIT
+
+
+A bunch of Asbestosstar stuff
+
