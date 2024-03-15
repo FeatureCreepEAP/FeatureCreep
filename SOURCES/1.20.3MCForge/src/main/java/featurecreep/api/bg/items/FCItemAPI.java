@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
 import featurecreep.api.bg.blocks.FCBlockAPI;
@@ -32,15 +33,18 @@ public  default void registerModels() {
     node.get("parent").set("minecraft:item/generated");
     node.get("textures").get("layer0").set(this.getModId() + ":item/" + this.getUnlocName());
 
+if(FeatureCreep.debug_mode) {    
     System.out.print(node.toJSONString(false));
-
+}
+    
     try {
 
       File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/models/item/" + this.getUnlocName() + ".json");
 
       if (!myObj.exists()) {
-
+    	  if(FeatureCreep.debug_mode) {
         System.out.println(myObj.toString());
+    	  }
         myObj.getParentFile().mkdirs();
 
         FileWriter myWriter = new FileWriter(myObj);

@@ -60,7 +60,7 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/netty-buffer-4.1.82.Final.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/nashorn-core-15.3.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/modlauncher-10.0.9.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/mixin-0.8.5.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/mixin-0.8.5.jar" sourcepath="/home/rhel/Descargas/Mixin-master(1).zip"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/mergetool-1.1.7-api.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/mergetool-1.1.5-api.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/mclanguage-1.20.1-47.1.43.jar"/>
@@ -136,8 +136,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/guava-31.1-jre.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/gson-2.10.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/forge-1.20.3-49.0.2-fci.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/fmlloader-1.20.1-47.1.43.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/fmlloader-1.20.1-47.0.45.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/fmlearlydisplay-1.20.1-47.1.43.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/fmlearlydisplay-1.20.1-47.0.45.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/fmlcore-1.20.1-47.1.43.jar"/>
@@ -167,5 +165,7 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/artifactural-3.0.14.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/antlr4-runtime-4.9.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/accesstransformers-8.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/forgespi-6.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.3MCForge/fmlloader-1.20.3-49.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

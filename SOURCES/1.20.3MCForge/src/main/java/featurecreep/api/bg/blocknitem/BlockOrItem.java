@@ -21,7 +21,9 @@ public interface BlockOrItem<T> {
 	setUnlocName(name);
 	setDefaultCreativeTab(group.get());
 	setNumberID(id);
-			System.out.println("Initalising "+getFCRegistryName());
+	if(FeatureCreep.debug_mode) {		
+	System.out.println("Initalising "+getFCRegistryName());
+	}
 			if(this instanceof DatafiedItem) {}else {//Need to rewrite Datafiedto allow for ItemGroups and Ingredients and preregister
 			if(FeatureCreep.super_loader.equals(SuperLoader.MINECRAFTFORGE)) {
 			if(this instanceof FCItemAPI item) {
