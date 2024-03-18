@@ -1,15 +1,14 @@
 // This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 package com.asbestosstar.rpmjava;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import io.kaitai.struct.ByteBufferKaitaiStream;
-import io.kaitai.struct.KaitaiStream;
 import io.kaitai.struct.KaitaiStruct;
+import io.kaitai.struct.KaitaiStream;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 
 
 /**

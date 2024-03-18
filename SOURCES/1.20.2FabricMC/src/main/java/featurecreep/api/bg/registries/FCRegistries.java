@@ -31,7 +31,9 @@ public class FCRegistries {
       }
 
     } else {
+    if(FeatureCreep.debug_mode) {
       System.out.println("The following block already exists in the Registry." + block.getFCRegistryName() );
+    }
     }
 return block;
   }
@@ -55,7 +57,9 @@ return block;
 	        }
 
 	      } else {
+	      if(FeatureCreep.debug_mode) {
 	        System.out.println("The following item already exists in the Registry." + item.getFCRegistryName());
+	      }
 	      }
 	  	  return item;
   }

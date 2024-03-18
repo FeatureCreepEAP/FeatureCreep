@@ -32,7 +32,10 @@ public  default void registerModels() {
     node.get("parent").set("minecraft:item/generated");
     node.get("textures").get("layer0").set(this.getModId() + ":item/" + this.getUnlocName());
 
+if(FeatureCreep.debug_mode) {
     System.out.print(node.toJSONString(false));
+}
+
 
     try {
 
@@ -40,7 +43,9 @@ public  default void registerModels() {
 
       if (!myObj.exists()) {
 
+if(FeatureCreep.debug_mode) {
         System.out.println(myObj.toString());
+}
         myObj.getParentFile().mkdirs();
 
         FileWriter myWriter = new FileWriter(myObj);

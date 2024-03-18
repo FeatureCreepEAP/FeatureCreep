@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,216 +17,341 @@ import java.util.regex.Pattern;
  *
  */
 public class Mappings {
-	//We soon need to add comments/javadocs as well
-		public Map<String, String> classes = new HashMap<String, String>();
-		public Map<String, String> defs = new HashMap<String, String>();
-		public Map<String, String> vars = new HashMap<String, String>();
-		public Map<String, String> params = new HashMap<String, String>();
+	// We soon need to add comments/javadocs as well
+	public Map<String, String> classes = new HashMap<String, String>();
+	public Map<String, String> defs = new HashMap<String, String>();
+	public Map<String, String> vars = new HashMap<String, String>();
+	public Map<String, String> params = new HashMap<String, String>();
 
-		public Mappings reverse;
-		
-		public Mappings() {
-			
-		}
+	public Mappings reverse;
 
-		
-		public Mappings(InputStream pdme)
-		{
+	public Mappings() {
+
+	}
+
+	public Mappings(InputStream pdme) {
 		System.out.println("Parsing Mappings");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(pdme));
-            String line;
-            int num = 0;
-			try {
-				while ((line = reader.readLine()) != null) {
-				    // Perform your action for each line stripped here
-String[] row_array = line.split("¶");				
-if (num == 0) {}
-else if (row_array[0].equals("Class"))	{classes.put(row_array[1], row_array[2]);}			    
-else if (row_array[0].equals("Def"))	{defs.put(row_array[1], row_array[2]);}			    
-else if (row_array[0].equals("Var"))	{vars.put(row_array[1], row_array[2]);}			    
-else if (row_array[0].equals("Param"))	{params.put(row_array[3]+"_"+row_array[4], row_array[2]);}			    
-
-num++;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(pdme));
+		String line;
+		int num = 0;
+		try {
+			while ((line = reader.readLine()) != null) {
+				// Perform your action for each line stripped here
+				String[] row_array;
+				row_array = line.split("¶");
+				if (row_array.length < 2) {
+					row_array = line.split("\\u00B6");
 				}
-            // Close the BufferedReader
-            reader.close();	
-			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+				if (num == 0) {
+				} else if (row_array[0].equals("Class")) {
+					classes.put(row_array[1], row_array[2]);
+				} else if (row_array[0].equals("Def")) {
+					defs.put(row_array[1], row_array[2]);
+				} else if (row_array[0].equals("Var")) {
+					vars.put(row_array[1], row_array[2]);
+				} else if (row_array[0].equals("Param")) {
+					params.put(row_array[3] + "_" + row_array[4], row_array[2]);
+				}
+
+				num++;
 			}
-	          parseSubClasses();
-System.out.println("Getting reverse mappings");
-			reverse();
-			
+			// Close the BufferedReader
+			reader.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+		parseSubClasses();
+		System.out.println("Getting reverse mappings");
+		reverse();
+
+	}
+
 //Does not yet support params		
-		public void reverse() {
-			// TODO Auto-generated method stub
-		
-			
-			Mappings rev = new Mappings();
+	public void reverse() {
+		// TODO Auto-generated method stub
+
+		Mappings rev = new Mappings();
 //for every entry in def
-			for(Map.Entry<String, String> def:defs.entrySet()) {
-			//	System.out.println(def.getKey());
-			String[] old_class_arr =	java.util.Arrays.copyOfRange(def.getKey().split("\\."), 0, def.getKey().split("\\.").length - 1);
-			String old_classname =   String.join(".",old_class_arr)   ;
-			
+		for (Map.Entry<String, String> def : defs.entrySet()) {
+			// System.out.println(def.getKey());
+			String[] old_class_arr = java.util.Arrays.copyOfRange(def.getKey().split("\\."), 0,
+					def.getKey().split("\\.").length - 1);
+			String old_classname = String.join(".", old_class_arr);
+
 			String new_classname = getClassMappedName(old_classname);
-			String des = renameClassesInMethodDescriptor("("+def.getKey().split("\\(")[1]);
-		
+			String des = renameClassesInMethodDescriptor("(" + def.getKey().split("\\(")[1]);
+
 			String[] divided = def.getKey().split("\\.");
-		
-                rev.defs.put(new_classname+"."+def.getValue()+des,divided[divided.length-1].split("\\(")[0]);
-          if(def.getValue().contains("RL")) {
-                System.out.println(new_classname+"."+def.getValue()+des+"¶"+divided[divided.length-1].split("\\(")[0]);
-          }
-		//	rev.defs.add()
-			
+
+			rev.defs.put(new_classname + "." + def.getValue() + des, divided[divided.length - 1].split("\\(")[0]);
+
+			// rev.defs.add()
+
+		}
+
+		for (Map.Entry<String, String> def : vars.entrySet()) {
+
+			String old_classname = String.join(".",
+					java.util.Arrays.copyOfRange(def.getKey().split("\\."), 0, def.getKey().split("\\.").length - 1));
+
+			String new_classname = getClassMappedName(old_classname);
+			String old_des = def.getKey().split(":")[1];
+			String des = this.renameClassesInFieldDescriptor(old_des);
+
+			String[] divided = def.getKey().split("\\.");
+
+			if (divided[divided.length - 1].startsWith("$")) {
+				// System.out.println(divided[divided.length-1]);
 			}
-			
-			
-			for(Map.Entry<String, String> def:vars.entrySet()) {
-				
-				String old_classname =   String.join(".",java.util.Arrays.copyOfRange(def.getKey().split("\\."), 0, def.getKey().split("\\.").length - 1))   ;
-				
-				String new_classname = getClassMappedName(old_classname);
-				String old_des=def.getKey().split(":")[1];
-				String des;
-				if(old_des.startsWith("L")) {
-				 des = "L"+this.getClassMappedName(old_des.substring(1).replace(";","").replace("/", ".")).replace(".", "/") + ";";
-				}else {
-					des=old_des;
-				}
-				
-				String[] divided = def.getKey().split("\\.");
-			
-				if(divided[divided.length-1].startsWith("$")) {
-				//	System.out.println(divided[divided.length-1]);
-				}
-				
-	                rev.vars.put(new_classname+"."+def.getValue()+":"+des,divided[divided.length-1].split(":")[0]);
-	           // System.out.println(new_classname+"."+def.getValue()+":"+des+"¶"+divided[divided.length-1].split(":")[0]);
-				
-			//	rev.defs.add()
-				
-				}
-			
-			for(Map.Entry<String, String> def:classes.entrySet()) {
+
+			rev.vars.put(new_classname + "." + def.getValue() + ":" + des, divided[divided.length - 1].split(":")[0]);
+			// System.out.println(new_classname+"."+def.getValue()+":"+des+"¶"+divided[divided.length-1].split(":")[0]);
+
+			// rev.defs.add()
+
+		}
+
+		for (Map.Entry<String, String> def : classes.entrySet()) {
 			rev.classes.put(def.getValue(), def.getKey());
-			}
-			
-		this.reverse=rev;	
 		}
 
-		
-		 public String renameClassesInMethodDescriptor(String methodDescriptor) {
-			 String updatedDescriptor = methodDescriptor;
-			    Pattern classPattern = Pattern.compile("L([^;]+);");
-			    Matcher classMatcher = classPattern.matcher(methodDescriptor);
-			    while (classMatcher.find()) {
-			        String className = classMatcher.group(1);
-			        String updatedClassName = updateClassName(className);
+		this.reverse = rev;
+	}
 
-			        updatedDescriptor = updatedDescriptor.replace(className, updatedClassName);
-			    }
-			    return updatedDescriptor;
-		    }
-		 
-		 
-		 private String updateClassName(String className) {
-			 
-			    return this.getClassMappedName(className.replace("/", ".")).replace(".", "/");
-			}
-		 
-		
+	public String renameClassesInMethodDescriptor(String methodDescriptor) {
+		String updatedDescriptor = methodDescriptor;
+		Pattern classPattern = Pattern.compile("L([^;]+);");
+		Matcher classMatcher = classPattern.matcher(methodDescriptor);
+		while (classMatcher.find()) {
+			String className = classMatcher.group(1);
+			String updatedClassName = updateClassName(className);
 
-		public String getClassMappedName(String original)
-		{
-			if (classes.get(original) != null) {
+			updatedDescriptor = updatedDescriptor.replace(className, updatedClassName);
+		}
+		return updatedDescriptor;
+	}
+
+	private String updateClassName(String className) {
+
+		return this.getClassMappedName(className.replace("/", ".")).replace(".", "/");
+	}
+
+	public String getClassMappedName(String original) {
+		if (classes.get(original) != null) {
 			return classes.get(original);
-			}else {return original;}
-			
+		} else {
+			return original;
 		}
 
-		public String getClassUnMappedName(String mapped)
-		{
-			 for (Map.Entry<String, String> entry : classes.entrySet()) {
-		            if (mapped.equals(entry.getValue())) {
-		                return entry.getKey();
-		            }
-		        }
-		        return mapped; // Value not found
-		 }
-		
-		
-		public String getDefMappedName(String original)
-		{
-			return defs.getOrDefault(original, original.split("\\.")[original.split("\\.").length-1].split("\\(")[0]);
-		}
+	}
 
-		public String getVarMappedName(String original)
-		{
-			return vars.getOrDefault(original, original.split("\\.")[original.split("\\.").length-1].split(":")[0]);
+	public String getClassUnMappedName(String mapped) {
+		for (Map.Entry<String, String> entry : classes.entrySet()) {
+			if (mapped.equals(entry.getValue())) {
+				return entry.getKey();
+			}
 		}
-		
-		
-		/**
-		 * @param method_with_descriptor Obfuscated Method Name with Descriptor using . instead of /
-		 * @param location starting from 1 where in the method the param is
-		 * @return name
-		 */
-		public String getParamMappedName(String method_with_descriptor, int location)
-		{
-			if (defs.get(method_with_descriptor+"_"+Integer.toString(location)) != null) {
-				return defs.get(method_with_descriptor+"_"+Integer.toString(location));
-			}else
-			{return method_with_descriptor;}
+		return mapped; // Value not found
+	}
+
+	public String getDefMappedName(String original) {
+		return defs.getOrDefault(original, original.split("\\.")[original.split("\\.").length - 1].split("\\(")[0]);
+	}
+
+	public String getVarMappedName(String original) {
+		return vars.getOrDefault(original, original.split("\\.")[original.split("\\.").length - 1].split(":")[0]);
+	}
+
+	/**
+	 * @param method_with_descriptor Obfuscated Method Name with Descriptor using .
+	 *                               instead of /
+	 * @param location               starting from 1 where in the method the param
+	 *                               is
+	 * @return name
+	 */
+	public String getParamMappedName(String method_with_descriptor, int location) {
+		if (defs.get(method_with_descriptor + "_" + Integer.toString(location)) != null) {
+			return defs.get(method_with_descriptor + "_" + Integer.toString(location));
+		} else {
+			return method_with_descriptor;
 		}
-		
-		
-		
-		  
-		  
-		  public void parseSubClasses() {
-			  for (Map.Entry<String, String> entry : this.classes.entrySet()) {
-			if(entry.getKey().contains("$"))
-				  entry.setValue(parseSubClass(entry.getKey()));
-			  }
-		  }
-		  
-		  
-		  
-		  public String parseSubClass(String original_classname) {
-			    String new_name = getClassMappedName(original_classname);
-				  if (new_name.contains("$")) {
-					  return new_name;
-				  }
-				  
+	}
+
+	public void parseSubClasses() {
+		for (Map.Entry<String, String> entry : this.classes.entrySet()) {
+			if (entry.getKey().contains("$"))
+				entry.setValue(parseSubClass(entry.getKey()));
+		}
+	}
+
+	public String parseSubClass(String original_classname) {
+		String new_name = getClassMappedName(original_classname);
+		if (classes.containsKey(original_classname)) {
+
+			if (new_name.contains("$")) {
+				return new_name;
+			} else {
+				if (original_classname.contains("CopyNbtFunction$MergeStrategy$1")) {
+					System.out.println(original_classname + ":" + new_name);
+				}
+
 				String[] sub_arr = original_classname.split("\\$");
 
-			    String[] subarray = Arrays.copyOfRange(sub_arr, 0, sub_arr.length - 1).clone();
-			    // Join the subarray elements with "$"
-			    String root_class = getClassMappedName(String.join("$", subarray));
-			   if(root_class.contains("$")) {
-				   root_class=(parseSubClass(root_class));
-			   }
-			    
-			    String sub_class = new_name;
-			    return root_class + "$" + sub_class;
+				String[] subarray = Arrays.copyOfRange(sub_arr, 0, sub_arr.length - 1).clone();
+				// Join the subarray elements with "$"
+				String subarrayjoin = String.join("$", subarray);
+				String root_class;
+				if (subarrayjoin.contains("$")) {
+					root_class = parseSubClass(subarrayjoin);
+				} else {
+					root_class = getClassMappedName(subarrayjoin);
+				}
 
-			  }
+				return root_class + "$" + new_name;
+				// return original_classname;
+			}
 
-			  public String parseSubClassUnmapped(String unmapped) {
-			    String[] sub_arr = unmapped.split("\\$");
+		}
 
-			    String[] subarray = Arrays.copyOfRange(sub_arr, 0, sub_arr.length - 1).clone();
-			    // Join the subarray elements with "$"
-			    String root_class = getClassMappedName(String.join("$", subarray));
-			    String sub_class = getClassMappedName(unmapped);
-			    return root_class + "$" + sub_class;
+		String[] sub_arr = original_classname.split("\\$");
 
-			  }
-		
+		String[] subarray = Arrays.copyOfRange(sub_arr, 0, sub_arr.length - 1).clone();
+		// Join the subarray elements with "$"
+		String root_class = getClassMappedName(String.join("$", subarray));
+		if (root_class.contains("$")) {
+			root_class = (parseSubClass(root_class));
+		}
+
+		String sub_class = sub_arr[sub_arr.length - 1];
+
+		return root_class + "$" + sub_class;
+		// return original_classname;
+
+	}
+
+	public String parseSubClassUnmapped(String unmapped) {
+		String[] sub_arr = unmapped.split("\\$");
+
+		String[] subarray = Arrays.copyOfRange(sub_arr, 0, sub_arr.length - 1).clone();
+		// Join the subarray elements with "$"
+		String root_class = getClassMappedName(String.join("$", subarray));
+		String sub_class = getClassMappedName(unmapped);
+		return root_class + "$" + sub_class;
+
+	}
+
+	public void addClass(String original, String mapped) {
+		this.classes.put(original, mapped);
+	}
+
+	public void addDef(String original, String mapped) {
+		this.defs.put(original, mapped);
+	}
+
+	public void addVar(String original, String mapped) {
+		this.vars.put(original, mapped);
+	}
+
+	public void addParam(String original, String mapped) {
+		this.params.put(original, mapped);
+	}
+
+	public String renameClassesInFieldDescriptor(String old_desc) {
+		if (!old_desc.startsWith("L") || !old_desc.endsWith(";")) {
+			// Not a valid field descriptor for a class
+			return old_desc;
+		}
+
+		String className = old_desc.substring(1, old_desc.length() - 1);
+		String old_clazz = className.replace('/', '.');
+		String clazz = getClassMappedName(old_clazz).replace('.', '/');
+
+		return "L" + clazz + ";";
+	}
+
+	public static Set<String> getClassNamesFromMethodDescriptor(String methodDescriptor) {
+		Set<String> classNames = new HashSet<>();
+		if (methodDescriptor != null && !methodDescriptor.isEmpty() && methodDescriptor.startsWith("(")
+				&& methodDescriptor.endsWith(")")) {
+			// Remove parentheses from the method descriptor
+			methodDescriptor = methodDescriptor.substring(1, methodDescriptor.length() - 1);
+			// Split the descriptor by ';' to separate argument types
+			String[] argumentTypes = methodDescriptor.split(";");
+			for (String argumentType : argumentTypes) {
+				if (argumentType.startsWith("L")) {
+					// Object type argument
+					classNames.add(argumentType.replace("/", "."));
+				} else if (argumentType.length() > 0) {
+					// Primitive type or array argument
+					classNames.add(getPrimitiveClassName(argumentType));
+				}
+			}
+		}
+		return classNames;
+	}
+
+	public static Set<String> getClassNamesFromFieldDescriptor(String fieldDescriptor) {
+		Set<String> classNames = new HashSet<>();
+		if (fieldDescriptor != null && !fieldDescriptor.isEmpty()) {
+			char typeChar = fieldDescriptor.charAt(0);
+			if (typeChar == 'L') {
+				// Object type field
+				classNames.add(fieldDescriptor.substring(1, fieldDescriptor.length() - 1).replace("/", "."));
+			} else {
+				// Primitive type field
+				classNames.add(getPrimitiveClassName(typeChar));
+			}
+		}
+		return classNames;
+	}
+
+	public static String getPrimitiveClassName(char typeChar) {
+		switch (typeChar) {
+		case 'B':
+			return "byte";
+		case 'C':
+			return "char";
+		case 'D':
+			return "double";
+		case 'F':
+			return "float";
+		case 'I':
+			return "int";
+		case 'J':
+			return "long";
+		case 'S':
+			return "short";
+		case 'Z':
+			return "boolean";
+		default:
+			return null;
+		}
+	}
+
+	public static String getPrimitiveClassName(String typeChar) {
+		switch (typeChar) {
+		case "B":
+			return "byte";
+		case "C":
+			return "char";
+		case "D":
+			return "double";
+		case "F":
+			return "float";
+		case "I":
+			return "int";
+		case "J":
+			return "long";
+		case "S":
+			return "short";
+		case "Z":
+			return "boolean";
+		default:
+			return null;
+		}
+	}
+
 }

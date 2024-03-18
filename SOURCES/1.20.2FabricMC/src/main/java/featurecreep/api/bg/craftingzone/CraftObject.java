@@ -370,8 +370,9 @@ public class CraftObject {
 		node.get("result").get("count").set(quantity);
 		node.get("result").get(resulttype).set(result);
 		
-		
+		if(FeatureCreep.debug_mode) {
 		System.out.println(node.toString());
+		}
 		return node;
 	}
 	

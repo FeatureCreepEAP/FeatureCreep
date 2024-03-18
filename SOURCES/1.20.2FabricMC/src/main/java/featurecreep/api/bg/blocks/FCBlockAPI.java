@@ -121,7 +121,10 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		    node.get("parent").set(this.getModId() + ":block/" + this.getUnlocName());
 		    //node.get("textures").get("layer0").set(public_modid + ":items/" + public_name); Not needed in Blocks
 
+if(FeatureCreep.debug_mode) {
 		    System.out.print(node.toJSONString(false));
+}
+
 
 		    try {
 
@@ -155,8 +158,9 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		    block_node.get("textures").get("up").set(this.getUpTextureName());
 		    block_node.get("textures").get("west").set(this.getWestTextureName());
 
+if(FeatureCreep.debug_mode) {
 		    System.out.print(block_node.toJSONString(false));
-
+}
 		    try {
 
 		      File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/models/block/" + this.getUnlocName() + ".json");
@@ -181,16 +185,17 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 		    ModelNode blockstate = new ModelNode();
 		    blockstate.get("variants").get("").get("model").set(this.getModId() + ":block/" + this.getUnlocName());
-
+if(FeatureCreep.debug_mode) {
 		    System.out.print(blockstate.toJSONString(false));
-
+}
 		    try {
 
 		      File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/blockstates/" + this.getUnlocName() + ".json");
 
 		      if (!myObj.exists()) {
-
+if(FeatureCreep.debug_mode) {
 		        System.out.println(myObj.toString());
+		     }
 		        myObj.getParentFile().mkdirs();
 
 		        FileWriter myWriter = new FileWriter(myObj);

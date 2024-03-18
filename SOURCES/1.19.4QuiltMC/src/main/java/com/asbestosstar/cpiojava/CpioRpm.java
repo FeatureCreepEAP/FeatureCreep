@@ -1,13 +1,12 @@
 // This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 package com.asbestosstar.cpiojava;
+import io.kaitai.struct.ByteBufferKaitaiStream;
+import io.kaitai.struct.KaitaiStruct;
+import io.kaitai.struct.KaitaiStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import io.kaitai.struct.ByteBufferKaitaiStream;
-import io.kaitai.struct.KaitaiStream;
-import io.kaitai.struct.KaitaiStruct;
 
 public class CpioRpm extends KaitaiStruct {
     public static CpioRpm fromFile(String fileName) throws IOException {

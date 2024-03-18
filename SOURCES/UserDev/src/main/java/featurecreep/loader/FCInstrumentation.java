@@ -150,15 +150,13 @@ this.addTransformer(transformer);
 		//Soon TM
 	}
 
-	//DO NOT USE, JAVA 9+ ONLY
 	@Override
 	public void redefineModule(Module module, Set<Module> extraReads, Map<String, Set<Module>> extraExports,
 			Map<String, Set<Module>> extraOpens, Set<Class<?>> extraUses, Map<Class<?>, List<Class<?>>> extraProvides) {
 		// TODO Auto-generated method stub
 		//Soon TM
 	}
-	
-	//DO NOT USE, JAVA 9+ ONLY
+
 	@Override
 	public boolean isModifiableModule(Module module) {
 		// TODO Auto-generated method stub

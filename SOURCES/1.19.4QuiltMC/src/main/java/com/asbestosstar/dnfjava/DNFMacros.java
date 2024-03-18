@@ -1,5 +1,7 @@
 package com.asbestosstar.dnfjava;
 
+import java.util.Map;
+
 public class DNFMacros implements Macros{
 
 	public static void setDefaultMacros(DnfJava instance) {

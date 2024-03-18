@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.jar.JarFile;
 
 import org.jboss.modules.JLIClassTransformer;
-import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoadException;
 
 public class FCInstrumentation implements Instrumentation{
@@ -149,6 +148,19 @@ this.addTransformer(transformer);
 	public void setNativeMethodPrefix(ClassFileTransformer transformer, String prefix) {
 		// TODO Auto-generated method stub
 		//Soon TM
+	}
+
+	@Override
+	public void redefineModule(Module module, Set<Module> extraReads, Map<String, Set<Module>> extraExports,
+			Map<String, Set<Module>> extraOpens, Set<Class<?>> extraUses, Map<Class<?>, List<Class<?>>> extraProvides) {
+		// TODO Auto-generated method stub
+		//Soon TM
+	}
+
+	@Override
+	public boolean isModifiableModule(Module module) {
+		// TODO Auto-generated method stub
+		return false;//Soon TM
 	}
 
 }

@@ -23,7 +23,7 @@ public class MappingConverter {
 	try {
 		JarFile fcjar = new JarFile(FeatureCreep.loader.getFeatureCreepJar());
 		for (JarEntry entry : Collections.list(fcjar.entries())) {
-			if (entry.getName().startsWith("featurecreep.fci")&&entry.getName().endsWith(".gz")) {
+			if (entry.getName().startsWith("fci")&&entry.getName().endsWith(".gz")) {
 				InputStream mapstream = fcjar.getInputStream(entry);
 				 GZIPInputStream gzipInputStream = new GZIPInputStream(mapstream);
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

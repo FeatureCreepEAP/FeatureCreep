@@ -17,7 +17,9 @@ public interface BlockOrItem<T> {
 	setUnlocName(name);
 	setDefaultCreativeTab(group.get());
 	setNumberID(id);
+	if(FeatureCreep.debug_mode) {
 			System.out.println("Initalising "+getFCRegistryName());
+	}
 	}
 		public void registerModels();
 	public BlocknItemFieldHolder holder();

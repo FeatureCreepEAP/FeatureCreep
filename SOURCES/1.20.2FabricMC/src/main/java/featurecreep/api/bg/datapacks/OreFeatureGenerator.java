@@ -61,8 +61,10 @@ type.get("type").set("minecraft:biome");
 placed.get("placement").add(type);
 
 
+if(FeatureCreep.debug_mode) {
 System.out.println(configured.toJSONString(false));
 System.out.println(placed.toJSONString(false));
+}
 
 File configedfile = new File(DataPackLoader.datapacklocation + "/data/" + "orespawn" + "/worldgen/configured_feature/" + configs.get(i).name + ".json");
 File placedfile = new File(DataPackLoader.datapacklocation + "/data/" + "orespawn" + "/worldgen/placed_feature/" + configs.get(i).name + ".json");
