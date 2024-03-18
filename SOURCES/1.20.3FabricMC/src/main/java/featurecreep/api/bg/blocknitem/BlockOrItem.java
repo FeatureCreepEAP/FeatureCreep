@@ -1,4 +1,5 @@
 package featurecreep.api.bg.blocknitem;
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
@@ -17,7 +18,9 @@ public interface BlockOrItem<T> {
 	setUnlocName(name);
 	setDefaultCreativeTab(group.get());
 	setNumberID(id);
+    if(FeatureCreep.debug_mode) {
 			System.out.println("Initalising "+getFCRegistryName());
+	}
 	}
 		public void registerModels();
 	public BlocknItemFieldHolder holder();

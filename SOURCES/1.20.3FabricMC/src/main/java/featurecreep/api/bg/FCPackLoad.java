@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.datapacks.DataPackLoader;
 import game.DirectoryResourcePack;
 import game.IResourcePack;
@@ -42,7 +43,9 @@ public class FCPackLoad implements ResourcePackProvider {
 	        System.out.print(node.toJSONString(false));
 	        try {
 	            File myObj = new File(this.loc + "/pack.mcmeta");
+	            if(FeatureCreep.debug_mode) {
 	            System.out.println(myObj.toString());
+	            }
 	            myObj.getParentFile().mkdirs();
 	            if (this.loc.toString().contains((CharSequence)"datapack")) {
 	                FileWriter myWriter = new FileWriter(myObj);

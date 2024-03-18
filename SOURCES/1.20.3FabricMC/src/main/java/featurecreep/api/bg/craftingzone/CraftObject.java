@@ -2,6 +2,7 @@ package featurecreep.api.bg.craftingzone;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 
@@ -311,8 +312,10 @@ public class CraftObject {
 		node.get("result").get("count").set(quantity);
 		node.get("result").get(resulttype).set(result);
 		
-		
+	    if(FeatureCreep.debug_mode) {
 		System.out.println(node.toString());
+	    }
+	    
 		return node;
 	}
 	
@@ -370,8 +373,10 @@ public class CraftObject {
 		node.get("result").get("count").set(quantity);
 		node.get("result").get(resulttype).set(result);
 		
-		
+	    if(FeatureCreep.debug_mode) {
 		System.out.println(node.toString());
+	    }
+	    
 		return node;
 	}
 	

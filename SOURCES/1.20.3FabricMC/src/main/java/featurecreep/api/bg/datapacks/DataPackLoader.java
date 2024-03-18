@@ -7,7 +7,7 @@ import featurecreep.FeatureCreep;
 public class DataPackLoader {
 
 	public static String datapacklocation = new String(FeatureCreep.gamepath+"/tmp/datapack/");
-	public static int packnumber = 16;
+	public static int packnumber = 22;
 	
 	public static void onInitialise(){
 		File location = new File(datapacklocation);

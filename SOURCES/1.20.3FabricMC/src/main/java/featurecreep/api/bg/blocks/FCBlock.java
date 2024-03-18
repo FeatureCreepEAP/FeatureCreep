@@ -1,5 +1,6 @@
 package featurecreep.api.bg.blocks;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
@@ -41,11 +42,14 @@ public BlockFieldHolder holder = new BlockFieldHolder();
         getDrops(world, pos, getDropArrayObjects()[i]);
 
       } else {
+    	    if(FeatureCreep.debug_mode) {
         System.out.println(stack.getItem().toString()); // Took so damn long to realise i needed stack and not player.ActiveItem
 
         //System.out.println(stack.getItem().getClass().isAssignableFrom(getDropArrayObjects()[i].getTool.get));
         System.out.println(getDropArrayObjects()[i].getTool.get.isAssignableFrom(stack.getItem().getClass()));
-
+    	    }
+    	    
+    	    
         if (getDropArrayObjects()[i].getTool.get.isAssignableFrom(stack.getItem().getClass())) {
           System.out.println("You used the right tool");
           getDrops(world, pos, getDropArrayObjects()[i]);

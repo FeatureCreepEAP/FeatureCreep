@@ -18,10 +18,10 @@ public class ResourceSMI {
 	@Shadow
 	public List<String> field_1887;
 
-	@Inject(method = "method_25426", at = @At("RETURN"))
+	@Inject(method = "method_1636", at = @At("RETURN"))
 	private void onLoad(CallbackInfo ci) {
 
-		this.field_1887.add("fcpack_13");		
+		this.field_1887.add("fcpack_22");		
 		System.out.println("Adding FCPack");
 	}
 	
