@@ -5,10 +5,10 @@ import game.Entity;
 
 public interface AbstractEntity {
 
-	
 	public Entity get();
-	
-	public default FCWorld getWorld() {return new FCWorld(get().getWorld());}
-	
-}
 
+	public default FCWorld getWorld() {
+		return new FCWorld(get().getWorld());
+	}
+
+}

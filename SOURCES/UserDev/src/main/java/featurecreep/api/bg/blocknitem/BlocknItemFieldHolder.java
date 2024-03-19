@@ -7,6 +7,6 @@ public class BlocknItemFieldHolder {
 	public String public_modid;
 	public String public_name;
 	public int number_id;
-	public FCCreativeTab default_tab;	
-	
+	public FCCreativeTab default_tab;
+
 }

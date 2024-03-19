@@ -1,6 +1,6 @@
 package featurecreep.api.bg.entity;
 
-public class VanillaLivingEntity extends VanillaEntity implements AbstractLivingEntity{
+public class VanillaLivingEntity extends VanillaEntity implements AbstractLivingEntity {
 
 //	LivingEntity entity;	
 //	
@@ -10,8 +10,7 @@ public class VanillaLivingEntity extends VanillaEntity implements AbstractLiving
 //	entity = ent;
 //	}
 
-public VanillaLivingEntity(AbstractLivingEntity ent)
-	{
+	public VanillaLivingEntity(AbstractLivingEntity ent) {
 		super(ent);
 	}
 //	

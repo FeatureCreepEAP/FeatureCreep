@@ -6,11 +6,10 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
 public class FCSingleSidedOre extends FCOre {
 
-	  public FCSingleSidedOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops, Object ore_material) {
-		    super(id, modid, name, group, material, strength, drops, ore_material);
-isSingleSided(true);
-		  }
-
+	public FCSingleSidedOre(int id, String modid, String name, UnifiedItemGroupGetter group,
+			UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops, Object ore_material) {
+		super(id, modid, name, group, material, strength, drops, ore_material);
+		isSingleSided(true);
+	}
 
 }
-

@@ -6,13 +6,12 @@ import game.ToolRepairIngredient;
 
 public class FCIngredient {
 
-	public static ToolRepairIngredient ingredientFromItem(Item item)
-	{
+	public static ToolRepairIngredient ingredientFromItem(Item item) {
 		return ToolRepairIngredient.ofItems(item);
 
 	}
-	public static ToolRepairIngredient ingredientFromItem(Block item)
-	{
+
+	public static ToolRepairIngredient ingredientFromItem(Block item) {
 		return ToolRepairIngredient.ofItems(item);
 
 	}

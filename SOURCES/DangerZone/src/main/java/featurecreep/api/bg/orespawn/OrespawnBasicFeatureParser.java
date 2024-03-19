@@ -17,162 +17,151 @@ import dangerzone.world.WorldDecorators;
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 
-
 public class OrespawnBasicFeatureParser {
 
 	public static DemoWorldDecorator myworld;
 
 	public static List<OreSpawnBasicConfig> configs = new ArrayList<OreSpawnBasicConfig>();
-	
-	//I gotta rewrite all of the Orespawn Module including this part once I get more time
-	//Loads the contents from %GAMEDIR%/orespawn/config/
-	public static void spawnOresFromDefaultConfig()
-	{
-	String orespawn_dir = new String (FeatureCreep.gamepath.toString() +  ("/orespawn/config/"));
-	File file = new File(orespawn_dir);
-		
+
+	// I gotta rewrite all of the Orespawn Module including this part once I get
+	// more time
+	// Loads the contents from %GAMEDIR%/orespawn/config/
+	public static void spawnOresFromDefaultConfig() {
+		String orespawn_dir = new String(FeatureCreep.gamepath.toString() + ("/orespawn/config/"));
+		File file = new File(orespawn_dir);
+
 		String contents[] = file.list();
-		if(FeatureCreep.debug_mode) {
-		System.out.println("List of files and directories in the specified directory:");
+		if (FeatureCreep.debug_mode) {
+			System.out.println("List of files and directories in the specified directory:");
 		}
-		//I need to make this multicore
+		// I need to make this multicore
 		WorldDecorators.registerWorldDecorator(myworld);
 
-
 		if (contents != null) {
-		for(int i=0; i<contents.length; i++) {
-		   
-		   if(FeatureCreep.debug_mode) {
-			System.out.println("FeatureCreep is trying to load "+contents[i]);
+			for (int i = 0; i < contents.length; i++) {
 
-			System.out.println(orespawn_dir + contents[i] + "/");
+				if (FeatureCreep.debug_mode) {
+					System.out.println("FeatureCreep is trying to load " + contents[i]);
+
+					System.out.println(orespawn_dir + contents[i] + "/");
+				}
+				splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
+
 			}
-			splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
 
-		}
-		
-		}else {
+		} else {
 			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
 		}
-		
-		
+
 	}
-	
-	
-public static ModelNode	getModelNodesFromFile(String file)
-{
-	if (file.contains(".json")){
-try {
-	return ModelNode.fromJSONStream(new FileInputStream(file));
-} catch (IOException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-	return new ModelNode();
-}
-	}else
-	{
-		try {
-			return ModelNode.fromStream(new FileInputStream(file));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ModelNode();
+
+	public static ModelNode getModelNodesFromFile(String file) {
+		if (file.contains(".json")) {
+			try {
+				return ModelNode.fromJSONStream(new FileInputStream(file));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return new ModelNode();
+			}
+		} else {
+			try {
+				return ModelNode.fromStream(new FileInputStream(file));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return new ModelNode();
+			}
 		}
+
 	}
 
+	public static void splitOS3Basic(ModelNode node) {
+		List<ModelNode> list = node.get("spawns").asList();
+		for (ModelNode rowNode : list) {
+			if (FeatureCreep.debug_mode) {
+				System.out.println(rowNode.asString().split("\"")[1]);
+			}
+			parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
 
-}
-	
-
-public static void 	splitOS3Basic(ModelNode node)
-{
-	List<ModelNode> list = node.get("spawns").asList();
-	for(ModelNode rowNode : list) {
-	if(FeatureCreep.debug_mode) {
-		System.out.println(rowNode.asString().split("\"")[1]);
 		}
-		parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
-		
-	}
-	
-	
-	
-}
 
+	}
 
-	
-public static void 	parseOS3Basic(ModelNode node,String name)
-{
-	
-if (node.get("enabled").asBoolean() == true)
-{
-	//List<String> replace_registry_names = new ArrayList<String>(); We will do array list later
-	String replace_registry_names = new String();
-	if (node.get("replaces").asString().equals("default"))
-	{
-		replace_registry_names = "minecraft:stone";
-	}else
-	{
-		replace_registry_names = node.get("replaces").asString();
-	}
-	
-	replace_registry_names = getCorrectNameSpace(replace_registry_names);
-	
-	
-	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = UniversalRegistryGettersAndSetters.getBlockbyName(replace_registry_names);
-	
-	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
-	
-	
-	
-	if(FeatureCreep.debug_mode) {
-	System.out.println(getCorrectNameSpace(new_block));
-	}
-	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
+	public static void parseOS3Basic(ModelNode node, String name) {
+
+		if (node.get("enabled").asBoolean() == true) {
+			// List<String> replace_registry_names = new ArrayList<String>(); We will do
+			// array list later
+			String replace_registry_names = new String();
+			if (node.get("replaces").asString().equals("default")) {
+				replace_registry_names = "minecraft:stone";
+			} else {
+				replace_registry_names = node.get("replaces").asString();
+			}
+
+			replace_registry_names = getCorrectNameSpace(replace_registry_names);
+
+			String[] block_identifier = replace_registry_names.split(":");
+			Block replacedBlock = UniversalRegistryGettersAndSetters.getBlockbyName(replace_registry_names);
+
+			String new_block = node.get("blocks").get(0).get("name").asString();// I needa Do this as a List eventually
+																				// to handle the Array
+
+			if (FeatureCreep.debug_mode) {
+				System.out.println(getCorrectNameSpace(new_block));
+			}
+			String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
 //	Block newBlock = Block.REGISTRY.getObject(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
-	Block newBlock;
-	if (new_block.equals("default")) {newBlock = Blocks.stone;}else {
-	newBlock = UniversalRegistryGettersAndSetters.getBlockbyName(new_block);
+			Block newBlock;
+			if (new_block.equals("default")) {
+				newBlock = Blocks.stone;
+			} else {
+				newBlock = UniversalRegistryGettersAndSetters.getBlockbyName(new_block);
+			}
+
+			if (replacedBlock != null) {
+				if (FeatureCreep.debug_mode) {
+					System.out.println(replacedBlock.uniquename);
+					System.out.println(newBlock.uniquename);
+				}
+
+				OreSpawnBasicConfig config = new OreSpawnBasicConfig(name, newBlock,
+						node.get("parameters").get("size").asInt(), node.get("parameters").get("frequency").asInt(),
+						node.get("parameters").get("minHeight").asInt(),
+						node.get("parameters").get("maxHeight").asInt());
+				configs.add(config);
+				Ores.registerOre(newBlock, replacedBlock, Dimensions.overworlddimension, DangerZoneBase.overworldforest,
+						config.minY, config.maxY, config.frequency, config.size, 0); // Took some time to figure out and
+																						// it turns out FClegay oregen
+																						// was weird, but i got it, and
+																						// it is even closer to
+																						// MMD/DrCyano Orespawn than
+																						// even MC 1.12.2, gotta soon do
+																						// this for multiple dims and
+																						// biomes. We also gotta make
+																						// retrogren and other algos.
+																						// Using config was also eaisr
+																						// than using modelnode gets
+			}
+
+		}
+
 	}
-	
-	
-if ( replacedBlock != null) {	
-if(FeatureCreep.debug_mode) {
-	System.out.println(replacedBlock.uniquename);
-	System.out.println(newBlock.uniquename);
-}
 
-    OreSpawnBasicConfig config = new OreSpawnBasicConfig(name, newBlock, node.get("parameters").get("size").asInt(), node.get("parameters").get("frequency").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt());
-configs.add(config);
-Ores.registerOre(newBlock, replacedBlock, Dimensions.overworlddimension, DangerZoneBase.overworldforest, config.minY, config.maxY, config.frequency, config.size, 0); //Took some time to figure out and it turns out FClegay oregen was weird, but i got it, and it is even closer to MMD/DrCyano Orespawn than even MC 1.12.2, gotta soon do this for multiple dims and biomes. We also gotta make retrogren and other algos. Using config was also eaisr than using modelnode gets
-}
+	public static String getCorrectNameSpace(String old) {
+		String new_string = new String(old);
 
+		if (new_string.contains("vanilla:")) {
+			new_string = new_string.replace("vanilla:", "dangerzone:");
+		}
 
-}
-	
-	
-}
+		if (new_string.contains("minecraft:")) {
+			new_string = new_string.replace("minecraft:", "dangerzone:");
+		}
 
-
-public static String getCorrectNameSpace(String old)
-{
-String new_string = new String (old);	
-
-
-
-if (new_string.contains("vanilla:"))
-{
-	new_string = new_string.replace("vanilla:", "dangerzone:");
-}
-
-if (new_string.contains("minecraft:"))
-{
-	new_string = new_string.replace("minecraft:", "dangerzone:");
-}
-
-return new_string;
-}
+		return new_string;
+	}
 
 //
 //	
@@ -204,6 +193,3 @@ return new_string;
 //	}	
 //	
 }
-	
-	
-

@@ -13,22 +13,25 @@ import game.Item;
 public class FCItemAsDMR<FCItemAsDMR> implements DMRItem<FCItemAsDMR>
 
 {
-public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
-@Override public featurecreep.api.bg.items.ItemFieldHolder holder() {	return holder;	}
-	UnifiedItemGroupGetter gettab;// Gotta add this to BlockOrItemAPI Holder
-	
-	public FCItemAsDMR(int id, String modid, String name, UnifiedItemGroupGetter group)
-	{
+	public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
 
-	if (this instanceof ToolsAPI) {
-		
-	}else {
-		initialise(id, modid, name,group);
+	@Override
+	public featurecreep.api.bg.items.ItemFieldHolder holder() {
+		return holder;
 	}
-	
-	gettab = group;
-	
-	
+
+	UnifiedItemGroupGetter gettab;// Gotta add this to BlockOrItemAPI Holder
+
+	public FCItemAsDMR(int id, String modid, String name, UnifiedItemGroupGetter group) {
+
+		if (this instanceof ToolsAPI) {
+
+		} else {
+			initialise(id, modid, name, group);
+		}
+
+		gettab = group;
+
 	}
 
 	@Override
@@ -39,27 +42,22 @@ public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.b
 		node.get("modid").set(getModId());
 		node.get("item_name").set(getUnlocName());
 		node.get("id").set(getNumberID());
-        if(gettab instanceof VanillaCreativeTab) {
-        	VanillaCreativeTab van = (VanillaCreativeTab)gettab;
-        node.get("group").set(van.tabname);
-        }else {
-        	node.get("group").set(gettab.getTabName());	
-        }
-        
-        return node;
-        
+		if (gettab instanceof VanillaCreativeTab) {
+			VanillaCreativeTab van = (VanillaCreativeTab) gettab;
+			node.get("group").set(van.tabname);
+		} else {
+			node.get("group").set(gettab.getTabName());
+		}
+
+		return node;
+
 	}
 
-	
 	@Override
-	public Item get()
-	{
-ModelNode node = ParseDMRItem.getModelNodeFromDMRItem(this);
-return new FCItem(node.get("id").asInt(), node.get("modid").asString(), node.get("item_name").asString(), UniversalRegistryGettersAndSetters.getFCItemGroupbyName(node.get("group").asString()));	
+	public Item get() {
+		ModelNode node = ParseDMRItem.getModelNodeFromDMRItem(this);
+		return new FCItem(node.get("id").asInt(), node.get("modid").asString(), node.get("item_name").asString(),
+				UniversalRegistryGettersAndSetters.getFCItemGroupbyName(node.get("group").asString()));
 	}
-	
-	
-	
-	
-}
 
+}

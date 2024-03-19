@@ -2,18 +2,17 @@ package featurecreep.api.bg.entity;
 
 import dangerzone.Player;
 
-public class VanillaPlayer extends Player implements AbstractPlayer{
-	
+public class VanillaPlayer extends Player implements AbstractPlayer {
+
 	Player entity;
-	
+
 	public VanillaPlayer(Player ent) {
 		super(ent.world);
 		// TODO Auto-generated constructor stub
-	entity = ent;
+		entity = ent;
 	}
-	
-		public VanillaPlayer(AbstractPlayer ent)
-	{
+
+	public VanillaPlayer(AbstractPlayer ent) {
 		this(ent.get());
 	}
 

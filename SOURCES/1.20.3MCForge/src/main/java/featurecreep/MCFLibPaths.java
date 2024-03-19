@@ -7,22 +7,21 @@ import net.minecraftforge.fml.loading.LibraryFinder;
 
 class MCFLibPaths {
 
+	@Deprecated
+	public static Path MCForgeLib() {
+		return LibraryFinder.findPathForMaven(FMLLoader.versionInfo().forgeGroup(), "forge", "", "universal",
+				FMLLoader.versionInfo().mcAndForgeVersion());
+	}
 
 	@Deprecated
-	public static Path MCForgeLib()
-	{
-		return LibraryFinder.findPathForMaven(FMLLoader.versionInfo().forgeGroup(), "forge", "", "universal", FMLLoader.versionInfo().mcAndForgeVersion());
-	}	
-	@Deprecated
-	public static Path MCSRGLib()
-	{
-	//	return LibraryFinder.findPathForMaven(FMLLoader.versionInfo().forgeGroup(), "forge", "", "universal", FMLLoader.versionInfo().mcAndForgeVersion());
-		return LibraryFinder.findPathForMaven("net.minecraft", "client", "", "srg", FMLLoader.versionInfo().mcAndMCPVersion());
+	public static Path MCSRGLib() {
+		// return LibraryFinder.findPathForMaven(FMLLoader.versionInfo().forgeGroup(),
+		// "forge", "", "universal", FMLLoader.versionInfo().mcAndForgeVersion());
+		return LibraryFinder.findPathForMaven("net.minecraft", "client", "", "srg",
+				FMLLoader.versionInfo().mcAndMCPVersion());
 
 	}
-	
-	
-	/* 40 */     
-	
-	
+
+	/* 40 */
+
 }

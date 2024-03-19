@@ -18,80 +18,65 @@ import featurecreep.api.bg.items.tools.datafied.dmr.FCSwordAsDMR;
 
 public class DatafiedObjectRegistration {
 
-		
-	
-	public static void registerDMRItem(DMRItem item)
-	{
-		
-		if(FeatureCreep.debug_mode) {
-		System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
-		}
-		ModelNode node = item.toModelNode();
-		
-				
-		  try {
-				 
-	  		File myObj = new File(FeatureCreep.gamepath.toString() +  ("/datafiedcontents/items/") + item.getModId() + "/" + item.getUnlocName() + ".dmr");
-	  	 
-	  	if (!myObj.exists()) {
-	  		System.out.println(myObj.toString());
-	  		myObj.getParentFile().mkdirs();
-	  		
-	  		
-	  		FileWriter myWriter = new FileWriter(myObj);
-	        myWriter.write(node.asString());
-			myWriter.close();
-	  	}
-			
-			
-	  		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	
+	public static void registerDMRItem(DMRItem item) {
 
-
-	public static void registerDMRBinaryItem(FCItemAsDMR item)
-	{
-		
-		if(FeatureCreep.debug_mode) {
-		System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
+		if (FeatureCreep.debug_mode) {
+			System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
 		}
 		ModelNode node = item.toModelNode();
 
+		try {
 
-		
-		  try {
-				 
-	  		File myObj = new File(FeatureCreep.gamepath.toString() +  ("/datafiedcontents/items/") + item.getModId() + "/" + item.getUnlocName() + ".dmr");
-	  		if(FeatureCreep.debug_mode) {
-	  		System.out.println(myObj.toString());
-	  		}
-	  		myObj.getParentFile().mkdirs();
-	  		
-		  	if (!myObj.exists()) {
+			File myObj = new File(FeatureCreep.gamepath.toString() + ("/datafiedcontents/items/") + item.getModId()
+					+ "/" + item.getUnlocName() + ".dmr");
 
-	  	    FileOutputStream fout = new FileOutputStream(myObj);
-	  		//FileWriter myWriter = new FileWriter(myObj);
-	        //myWriter.write(node.toString());
-			//myWriter.close();
-		
-	  	    node.writeExternal(fout);
-		  	}
-	  	    
-	  	    
-	  		} catch (IOException e) {
+			if (!myObj.exists()) {
+				System.out.println(myObj.toString());
+				myObj.getParentFile().mkdirs();
+
+				FileWriter myWriter = new FileWriter(myObj);
+				myWriter.write(node.asString());
+				myWriter.close();
+			}
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
-	
-	
+
+	public static void registerDMRBinaryItem(FCItemAsDMR item) {
+
+		if (FeatureCreep.debug_mode) {
+			System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
+		}
+		ModelNode node = item.toModelNode();
+
+		try {
+
+			File myObj = new File(FeatureCreep.gamepath.toString() + ("/datafiedcontents/items/") + item.getModId()
+					+ "/" + item.getUnlocName() + ".dmr");
+			if (FeatureCreep.debug_mode) {
+				System.out.println(myObj.toString());
+			}
+			myObj.getParentFile().mkdirs();
+
+			if (!myObj.exists()) {
+
+				FileOutputStream fout = new FileOutputStream(myObj);
+				// FileWriter myWriter = new FileWriter(myObj);
+				// myWriter.write(node.toString());
+				// myWriter.close();
+
+				node.writeExternal(fout);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 }
-

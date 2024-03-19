@@ -4,44 +4,41 @@ import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.FCCreativeTab;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
-public class FCArmour implements FCItemAPI<FCArmour>{
+public class FCArmour implements FCItemAPI<FCArmour> {
 
-	
-	
-public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
-@Override public featurecreep.api.bg.items.ItemFieldHolder holder() {	return holder;	}
+	public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
 
-		public FCArmourMaterial fcmaterial;
-	public FCArmourSlot slot;
-	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material, FCArmourSlot slot) {
-		// TODO Auto-generated constructor stub
-initialise( id,  modid,  name, group);
-		setSlot(slot);
-		setFCMaterial(material);
-	
+	@Override
+	public featurecreep.api.bg.items.ItemFieldHolder holder() {
+		return holder;
 	}
 
+	public FCArmourMaterial fcmaterial;
+	public FCArmourSlot slot;
 
+	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material,
+			FCArmourSlot slot) {
+		// TODO Auto-generated constructor stub
+		initialise(id, modid, name, group);
+		setSlot(slot);
+		setFCMaterial(material);
 
-public void setSlot(FCArmourSlot slot)
-{
-this.slot = slot;	
-}
-	
-public FCArmourSlot getSlot()
-{
-	return slot;
-}
+	}
 
-public void setFCMaterial(FCArmourMaterial fcmaterial)
-{
-this.fcmaterial = fcmaterial;	
-}
-	
-public FCArmourMaterial getFCMaterial()
-{
-	return fcmaterial;
-}
+	public void setSlot(FCArmourSlot slot) {
+		this.slot = slot;
+	}
 
+	public FCArmourSlot getSlot() {
+		return slot;
+	}
+
+	public void setFCMaterial(FCArmourMaterial fcmaterial) {
+		this.fcmaterial = fcmaterial;
+	}
+
+	public FCArmourMaterial getFCMaterial() {
+		return fcmaterial;
+	}
 
 }

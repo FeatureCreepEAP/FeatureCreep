@@ -3,9 +3,8 @@ package featurecreep.api.bg.ui;
 import featurecreep.api.bg.registries.GlobalRegistries;
 import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
 
-public class FCCreativeTabs
-{
-	
+public class FCCreativeTabs {
+
 	public static VanillaCreativeTab BUILDING_BLOCKS = new VanillaCreativeTab("BUILDING_BLOCKS");
 	public static VanillaCreativeTab BREWING = new VanillaCreativeTab("BREWING");
 	public static VanillaCreativeTab COMBAT = new VanillaCreativeTab("COMBAT");
@@ -16,10 +15,10 @@ public class FCCreativeTabs
 	public static VanillaCreativeTab REDSTONE = new VanillaCreativeTab("REDSTONE");
 	public static VanillaCreativeTab TOOLS = new VanillaCreativeTab("TOOLS");
 	public static VanillaCreativeTab TRANSPORTATION = new VanillaCreativeTab("TRANSPORTATION");
-	
+
 	public static void onInitialise() {
-	// TODO Auto-generated method stub
-	
+		// TODO Auto-generated method stub
+
 		GlobalRegistries.ITEMGROUPS.add(BREWING);
 		GlobalRegistries.ITEMGROUPS.add(BUILDING_BLOCKS);
 		GlobalRegistries.ITEMGROUPS.add(COMBAT);
@@ -31,8 +30,6 @@ public class FCCreativeTabs
 		GlobalRegistries.ITEMGROUPS.add(TOOLS);
 		GlobalRegistries.ITEMGROUPS.add(TRANSPORTATION);
 
-		
-}
-	
-	
+	}
+
 }

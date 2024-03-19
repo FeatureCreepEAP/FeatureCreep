@@ -7,11 +7,7 @@ public class BGSuperLoader {
 	public static ExecutionSide getExecutionSide() {
 //Placeholder
 		return ExecutionSide.SERVER;
-		
-		
+
 	}
-	
-	
-	
-	
+
 }

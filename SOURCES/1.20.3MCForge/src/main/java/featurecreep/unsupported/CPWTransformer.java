@@ -9,13 +9,10 @@ import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 import featurecreep.mixin.CoreMod;
 
-public class CPWTransformer implements ITransformationService{
+public class CPWTransformer implements ITransformationService {
 
-	//String main = CoreMod.getMain();
-	
-	
-	
-	
+	// String main = CoreMod.getMain();
+
 	@Override
 	public void initialize(IEnvironment arg0) {
 		// TODO Auto-generated method stub
@@ -23,7 +20,7 @@ public class CPWTransformer implements ITransformationService{
 	}
 
 	@Override
-	public  String name() {
+	public String name() {
 		// TODO Auto-generated method stub
 		return "featurecreep";
 	}
@@ -31,7 +28,7 @@ public class CPWTransformer implements ITransformationService{
 	@Override
 	public void onLoad(IEnvironment arg0, Set<String> arg1) throws IncompatibleEnvironmentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

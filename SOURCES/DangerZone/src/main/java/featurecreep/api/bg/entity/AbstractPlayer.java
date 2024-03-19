@@ -7,5 +7,4 @@ public interface AbstractPlayer extends AbstractLivingEntity {
 	@Override
 	public Player get();
 
-	
 }

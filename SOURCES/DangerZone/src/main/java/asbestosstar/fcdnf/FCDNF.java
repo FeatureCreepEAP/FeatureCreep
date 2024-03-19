@@ -15,45 +15,41 @@ import com.asbestosstar.dnfjava.DnfJava;
 import featurecreep.FeatureCreep;
 import featurecreep.loader.FCLoaderBasic;
 
-public class FCDNF extends DnfJava{
+public class FCDNF extends DnfJava {
 
 	public FCDNF() {
 		super();
 		this.setBaseLocation(FeatureCreep.gamepath.toString(), true);
-for(File mod: FeatureCreep.loader.getCombinedFiles()) {
-	if(FCLoaderBasic.isFilePKZipCompatible(mod)) {
-		try {
-			JarFile jar = new JarFile(mod);
-			for (JarEntry entry : Collections.list(jar.entries())) {
-				if (entry.getName().endsWith(".repo") && entry.getName().startsWith("etc/yum.repos.d/")) {
-					extractRepoFile(jar.getInputStream(entry), entry.getName());
-			    }
+		for (File mod : FeatureCreep.loader.getCombinedFiles()) {
+			if (FCLoaderBasic.isFilePKZipCompatible(mod)) {
+				try {
+					JarFile jar = new JarFile(mod);
+					for (JarEntry entry : Collections.list(jar.entries())) {
+						if (entry.getName().endsWith(".repo") && entry.getName().startsWith("etc/yum.repos.d/")) {
+							extractRepoFile(jar.getInputStream(entry), entry.getName());
+						}
+					}
+					jar.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
-			jar.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.addRepos();
 		}
-		
+
 	}
-	this.addRepos();
-}
 
-
-}
-	
-	
-public void extractRepoFile(InputStream stream,String name)	{
-	Path rep = new File(FeatureCreep.gamepath.toString()+"/"+name).toPath();
-	rep.toFile().mkdirs();
-        try {
+	public void extractRepoFile(InputStream stream, String name) {
+		Path rep = new File(FeatureCreep.gamepath.toString() + "/" + name).toPath();
+		rep.toFile().mkdirs();
+		try {
 			Files.copy(stream, rep, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-}
-	
-	
-	
+		}
+	}
+
 }

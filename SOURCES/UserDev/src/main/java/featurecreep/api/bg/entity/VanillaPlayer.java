@@ -1,7 +1,7 @@
 package featurecreep.api.bg.entity;
 
-public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer{
-	
+public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer {
+
 //	PlayerEntity entity;
 //	
 //	public VanillaPlayer(PlayerEntity ent) {
@@ -10,8 +10,7 @@ public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer
 //	entity = ent;
 //	}
 
-	public VanillaPlayer(AbstractPlayer ent)
-	{
+	public VanillaPlayer(AbstractPlayer ent) {
 		super(ent);
 	}
 //

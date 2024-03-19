@@ -14,7 +14,5 @@ import featurecreep.api.bg.items.datafied.DatafiedItem;
 public interface DMRItem<T> extends DatafiedItem<T> {
 
 	public ModelNode toModelNode();
-		
+
 }
-
-

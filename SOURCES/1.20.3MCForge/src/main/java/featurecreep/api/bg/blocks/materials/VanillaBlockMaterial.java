@@ -1,7 +1,6 @@
 package featurecreep.api.bg.blocks.materials;
 
-
-public class VanillaBlockMaterial implements UnifiedBlockMaterial{
+public class VanillaBlockMaterial implements UnifiedBlockMaterial {
 
 //	public Material get;
 //	
@@ -10,9 +9,8 @@ public class VanillaBlockMaterial implements UnifiedBlockMaterial{
 //	get = material;	
 //	}
 //	
-	protected VanillaBlockMaterial ()
-	{
-		
+	protected VanillaBlockMaterial() {
+
 	}
 //
 //	@Override
@@ -20,5 +18,5 @@ public class VanillaBlockMaterial implements UnifiedBlockMaterial{
 //		// TODO Auto-generated method stub
 //		return get;
 //	}
-	
+
 }

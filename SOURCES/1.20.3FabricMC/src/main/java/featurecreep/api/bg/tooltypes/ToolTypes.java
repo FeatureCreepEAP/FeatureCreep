@@ -16,7 +16,6 @@ public class ToolTypes {
 	public static ToolType AXE = new ToolType(Axe.class);
 	public static ToolType SWORD = new ToolType(Sword.class);
 	public static ToolType BLANK = new ToolType(ModelNode.class);
-	//public static ToolType HAND = new ToolType(AirItem.class);
+	// public static ToolType HAND = new ToolType(AirItem.class);
 
-	
 }

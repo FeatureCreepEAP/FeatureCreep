@@ -7,43 +7,40 @@ import featurecreep.api.bg.blocks.FCOre;
 import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.items.FCItemAPI;
 
-public class FCToolMaterial 
-{
+public class FCToolMaterial {
 
-	public  int harvest;
-	public  int durability;
-	public  int speed;
-	public  int attack;
-	public  int enchantness;
-	public  FCIngredient repair;
-	public  BlockOrItem repair_item; //DO NOT USE
-	
-	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCIngredient repairMaterial)
-	{
+	public int harvest;
+	public int durability;
+	public int speed;
+	public int attack;
+	public int enchantness;
+	public FCIngredient repair;
+	public BlockOrItem repair_item; // DO NOT USE
+
+	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability,
+			FCIngredient repairMaterial) {
 		harvest = harvestLevel;
 		durability = maxUses;
-		speed = (int)efficiency;
-		attack = (int)damage;
+		speed = (int) efficiency;
+		attack = (int) damage;
 		enchantness = enchantability;
 		repair = repairMaterial;
-		//repair = new Lazy<Ingredient>(repairMaterial);
-		
+		// repair = new Lazy<Ingredient>(repairMaterial);
+
 	}
 
-	
-	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCItemAPI repairItem)
-	{
-		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem((FCItem)repairItem));
+	public FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability,
+			FCItemAPI repairItem) {
+		this(harvestLevel, maxUses, efficiency, damage, enchantability,
+				FCIngredient.ingredientFromItem((FCItem) repairItem));
 	}
 
-	public FCToolMaterial (int harvestLevel, int maxUses, int efficiency, int damage, int enchantability, FCBlockAPI repairItem)
-	{
-		this(harvestLevel, maxUses, efficiency, damage, enchantability, FCIngredient.ingredientFromItem((FCBlock)repairItem));
+	public FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability,
+			FCBlockAPI repairItem) {
+		this(harvestLevel, maxUses, efficiency, damage, enchantability,
+				FCIngredient.ingredientFromItem((FCBlock) repairItem));
 	}
-	
-	
-	
-	
+
 	public int getToolMaxUses() {
 		// TODO Auto-generated method stub
 		return durability;
@@ -64,7 +61,6 @@ public class FCToolMaterial
 		return harvest;
 	}
 
-	
 	public int getToolEnchantability() {
 		// TODO Auto-generated method stub
 		return enchantness;
@@ -74,13 +70,10 @@ public class FCToolMaterial
 		// TODO Auto-generated method stub
 		return repair;
 	}
-	
+
 //	public BlockOrItem getToolRepairItem() {//DO NOT USE
 //		// TODO Auto-generated method stub
 //		return repair_item;
 //	}
 
-	
-	
-	
 }

@@ -39,383 +39,351 @@ import javassist.NotFoundException;
 
 public class CoreMod implements IMixinConfigPlugin {
 
+	public boolean transformers_activated = false;
 
-public boolean transformers_activated = false;
+	public String main = getMain();
 
-  public String main = getMain();
+	public static FCLoaderBasic loader = new FCLoaderBasicR8(FeatureCreep.modpaths, FeatureCreep.dependancies,
+			FeatureCreep.packages_needed, 4, true, BGSide.getExecutionSide());
 
-	public static FCLoaderBasic loader = new FCLoaderBasicR8(FeatureCreep.modpaths, FeatureCreep.dependancies, FeatureCreep.packages_needed, 4, true, BGSide.getExecutionSide());
+	public byte[] titlescreenja(byte[] arr) {
 
+		try {
+			ClassPool pool = ClassPool.getDefault();
+			pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_442", arr));
 
+			pool.appendSystemPath();
+			CtClass cc = pool.get("net.minecraft.class_442");
+			CtMethod m = cc.getDeclaredMethod("method_25426");
 
-  public byte[] titlescreenja(byte[] arr) {
+			m.insertBefore("System.out.println(\"Testin JA\");");
 
-    try {
-      ClassPool pool = ClassPool.getDefault();
-      pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_442", arr));
+			arr = cc.toBytecode();
 
-      pool.appendSystemPath();
-      CtClass cc = pool.get("net.minecraft.class_442");
-      CtMethod m = cc.getDeclaredMethod("method_25426");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 
-      m.insertBefore("System.out.println(\"Testin JA\");");
+		System.out.println("Yay Javaassist Worked!, though its capability is limted");
 
-      arr = cc.toBytecode();
+		return arr;
 
-      
-    } catch (Throwable e) {
-      e.printStackTrace();
-    }
-
-    System.out.println("Yay Javaassist Worked!, though its capability is limted");
-
-    
-    
-    return arr;
-
-  }
-
-
-  public String getMain() {
-    // TODO Auto-generated method stub
-
-	  
-	  String debugpath = FeatureCreep.gamepath+"/etc/fcdebug";  
-	  if(new File (debugpath).exists()) {
-		  FeatureCreep.debug_mode=true;
-	  }
-	  
-	  
-	  
-	    File temp_mapping_dir = new File(FeatureCreep.temp_mapping_location);
-if(temp_mapping_dir.exists()) {
-	try {
-		FileUtils.deleteFolderWithFiles(temp_mapping_dir);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-}
-	  
-
-if(FeatureCreep.debug_mode) {
-	MixerLoggerMain.doit();	  
-}
-	  
-    List<File> fci_jars = new ArrayList<File>();
-
-    for (File file : loader.getCombinedFiles()) {
-
-      try (JarFile jar = new JarFile(file)) {
-        // Get the manifest from the JAR file
-        Manifest manifest = jar.getManifest();
-
-        if (manifest != null) {
-          // Get the main attributes from the manifest
-          Attributes mainAttributes = manifest.getMainAttributes();
-
-          // Check if the "Mappings" attribute exists and has the value "fci"
-          String mappings = mainAttributes.getValue("Mappings");
-          if (mappings != null && "fci".equals(mappings)) {
-            //    System.out.println("The JAR file has the 'Mappings' attribute
-            //    set to 'fci'.");
-            fci_jars.add(file);
-            loader.known_nils().add(file.getName());
-            FeatureCreep.loader.known_nils().add(file.getName());
-          } else {
-            //   System.out.println("The JAR file does not have the 'Mappings'
-            //   attribute set to 'fci'.");
-          }
-        } else {
-          System.out.println("The JAR file does not contain a manifest.");
-        }
-      } catch (IOException e) {
-     //   e.printStackTrace();
-      }
-    }
-
-    List<String> hashes = new ArrayList<String>();
-    FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
-
-    for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
-
-      try {
-   if(new File(cp).isFile()) {
-    	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
-   }
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-
-    File native_mods_folder =
-        new File(FeatureCreep.natively_mapped_mods_folder);
-
-    native_mods_folder.mkdirs();
-    temp_mapping_dir.mkdirs();
-
-    for (File fci_jar : fci_jars) {
-      try {
-        String hash = Sha256.getHashFromFileAsString(fci_jar);
-        File mapped_jar = new File(FeatureCreep.natively_mapped_mods_folder +
-        		File.pathSeparator + hash + ".jar");
-        List<File> to_map = new ArrayList<File>();
-        if (!mapped_jar.exists()) {
-          System.out.println("remapping " + fci_jar +
-                             ". Subsequent runs will be faster");
-          to_map.add(mapped_jar);
-          FeatureCreep.remapper.remapJar(
-              new JarFile(fci_jar)); // I soon need to account for Jar in Jar
-          PKZipUtils.zipDirectory(temp_mapping_dir, mapped_jar.getName());
-          FileUtils.deleteFolderWithFiles(temp_mapping_dir);
-        }
-      } catch (NoSuchAlgorithmException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-    }
-    
-    for(File to_delete:new File(FeatureCreep.natively_mapped_mods_folder).listFiles())
-    {
-    	boolean verdict=true;
-    	for(String hash:hashes) {
-    	 if (new String(FeatureCreep.natively_mapped_mods_folder + File.pathSeparator + hash + ".jar").equals("hash")) {
-    		 verdict=false;
-    	 }else {
-    		 to_delete.delete();
-    	 }
-
-    	}
-    	
-    }
-
-    try {
-		FileUtils.deleteFolderWithFiles(temp_mapping_dir);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
 	}
 
-    
-    System.out.println("Done remapping");
+	public String getMain() {
+		// TODO Auto-generated method stub
 
-    loader.addNeededPackages(
-        GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
-    loader.loadMods();
-    loader.runAgents();
-    //		CtClass sm =
-    //FeatureCreep.classpool.makeClass("featurecreep.mixin.OverWorldBiomeCreator");
-    //		ClassFile clazz = sm.getClassFile();
-    //
-    //		  AnnotationsAttribute annotationsAttribute = new
-    //AnnotationsAttribute(clazz.getConstPool(),
-    //AnnotationsAttribute.visibleTag); 	    Annotation annotation = new
-    //Annotation("org.spongepowered.asm.mixin.Mixin", clazz.getConstPool());
-    //
-    //	    List<StringMemberValue> strings = new
-    //ArrayList<StringMemberValue>(); 	    for(String string:
-    //SpongeMixinUtils.getSpongeMixinClassTargets()) { 		    strings.add(new
-    //StringMemberValue(string,clazz.getConstPool()));
-    //	    }
-    //	    ArrayMemberValue arr =  new ArrayMemberValue(clazz.getConstPool());
-    //	    arr.setValue(strings.toArray(new StringMemberValue[0]));
-    //	    annotation.addMemberValue("target", arr);
-    //	    annotationsAttribute.setAnnotation(annotation);
-    //
-    //	  clazz.addAttribute(annotationsAttribute);
-    //
-    // try {
-    // Class output_clazz =	sm.toClass(this.getClass());
-    //} catch (CannotCompileException  e) {
-    //	// TODO Auto-generated catch block
-    //	e.printStackTrace();
-    //}
-    //
-    //
-    //
-    return "OverWorldBiomeCreator";
-  }
+		String debugpath = FeatureCreep.gamepath + "/etc/fcdebug";
+		if (new File(debugpath).exists()) {
+			FeatureCreep.debug_mode = true;
+		}
 
+		File temp_mapping_dir = new File(FeatureCreep.temp_mapping_location);
+		if (temp_mapping_dir.exists()) {
+			try {
+				FileUtils.deleteFolderWithFiles(temp_mapping_dir);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
+		if (FeatureCreep.debug_mode) {
+			MixerLoggerMain.doit();
+		}
 
+		List<File> fci_jars = new ArrayList<File>();
 
-  public byte[] overworldbiomecreation(byte[] basicClass) {
-    // TODO Auto-generated method stub
-/*
-    try {
-      ClassPool pool = ClassPool.getDefault();
-      pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_5478", basicClass));
+		for (File file : loader.getCombinedFiles()) {
 
-      pool.appendSystemPath();
-      CtClass cc = pool.get("net.minecraft.class_5478");
-      CtMethod m = cc.getDeclaredMethod("method_39151");
+			try (JarFile jar = new JarFile(file)) {
+				// Get the manifest from the JAR file
+				Manifest manifest = jar.getManifest();
 
-      m.insertBefore("featurecreep.api.orespawn.OrespawnBasicFeatureParser.spawnOre($7);");
+				if (manifest != null) {
+					// Get the main attributes from the manifest
+					Attributes mainAttributes = manifest.getMainAttributes();
 
-      m.insertBefore("System.out.println(\"Adding FCOres\");");
+					// Check if the "Mappings" attribute exists and has the value "fci"
+					String mappings = mainAttributes.getValue("Mappings");
+					if (mappings != null && "fci".equals(mappings)) {
+						// System.out.println("The JAR file has the 'Mappings' attribute
+						// set to 'fci'.");
+						fci_jars.add(file);
+						loader.known_nils().add(file.getName());
+						FeatureCreep.loader.known_nils().add(file.getName());
+					} else {
+						// System.out.println("The JAR file does not have the 'Mappings'
+						// attribute set to 'fci'.");
+					}
+				} else {
+					System.out.println("The JAR file does not contain a manifest.");
+				}
+			} catch (IOException e) {
+				// e.printStackTrace();
+			}
+		}
 
-      basicClass = cc.toBytecode();
-      cc.writeFile();
+		List<String> hashes = new ArrayList<String>();
+		FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
 
-    } catch (Throwable e) {
-      e.printStackTrace();
-    }
+		for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
 
-    System.out.println("Yay Javaassist Worked!, though its capability is limted"); we dont need to do anything
-*/
-    return basicClass;
+			try {
+				if (new File(cp).isFile()) {
+					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
-  }
+		File native_mods_folder = new File(FeatureCreep.natively_mapped_mods_folder);
 
-  public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		native_mods_folder.mkdirs();
+		temp_mapping_dir.mkdirs();
 
-	  
-	  
-	  
-    if (transformedName.equals("net.minecraft.class_442")) {
-      return titlescreenja(basicClass);
-    } else if (transformedName.equals("net.minecraft.class_5478")) {
-      return overworldbiomecreation(basicClass);
-    }else if (transformedName.equals("net.minecraft.class_3283"))
-    {
-    	return transformresourcemanager(basicClass);
-    }
+		for (File fci_jar : fci_jars) {
+			try {
+				String hash = Sha256.getHashFromFileAsString(fci_jar);
+				File mapped_jar = new File(
+						FeatureCreep.natively_mapped_mods_folder + File.pathSeparator + hash + ".jar");
+				List<File> to_map = new ArrayList<File>();
+				if (!mapped_jar.exists()) {
+					System.out.println("remapping " + fci_jar + ". Subsequent runs will be faster");
+					to_map.add(mapped_jar);
+					FeatureCreep.remapper.remapJar(new JarFile(fci_jar)); // I soon need to account for Jar in Jar
+					PKZipUtils.zipDirectory(temp_mapping_dir, mapped_jar.getName());
+					FileUtils.deleteFolderWithFiles(temp_mapping_dir);
+				}
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
-    return basicClass;
+		for (File to_delete : new File(FeatureCreep.natively_mapped_mods_folder).listFiles()) {
+			boolean verdict = true;
+			for (String hash : hashes) {
+				if (new String(FeatureCreep.natively_mapped_mods_folder + File.pathSeparator + hash + ".jar")
+						.equals("hash")) {
+					verdict = false;
+				} else {
+					to_delete.delete();
+				}
 
-  }
+			}
 
-  public byte[] transformresourcemanager(byte[] basicClass) {
-	// TODO Auto-generated method stub
-	  
-	  
-      try {
-		ClassPool pool = ClassPool.getDefault();
-		  pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_3283", basicClass));
+		}
 
-		  pool.appendSystemPath();
-		  CtClass cc = pool.get("net.minecraft.class_3283");
-		//  CtMethod m = CtNewMethod.make(
-		 //         "public void registerFCPack() { field_14227.add(new featurecreep.api.FCPackLoad(new java.io.File(featurecreep.api.datapacks.DataPackLoader.datapacklocation))); }",
-		  //        cc);
+		try {
+			FileUtils.deleteFolderWithFiles(temp_mapping_dir);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		  CtMethod m = cc.getDeclaredMethod("method_14445");
-		  
-		  m.insertBefore("System.out.println(\"Testin JA\");");
-		  m.insertBefore("field_14227.add(new featurecreep.api.bg.FCPackLoad(new java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));");
-		  //cc.addMethod(m);
-		  CtConstructor cons = cc.getDeclaredConstructors()[0];
-	  cons.insertAfter("field_14227 = featurecreep.api.io.BasicIO.setFromArray($1);");
-		  return cc.toBytecode();//SHould maybe also be redefining the providers in the constructor, but it works on TLauncher so maybe it works everywhere on fabric without it, ill still include it anyhow, may remove it if iknow it conflicts with some mods
-	} catch (NotFoundException | CannotCompileException | IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.out.println("Done remapping");
+
+		loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
+		loader.loadMods();
+		loader.runAgents();
+		// CtClass sm =
+		// FeatureCreep.classpool.makeClass("featurecreep.mixin.OverWorldBiomeCreator");
+		// ClassFile clazz = sm.getClassFile();
+		//
+		// AnnotationsAttribute annotationsAttribute = new
+		// AnnotationsAttribute(clazz.getConstPool(),
+		// AnnotationsAttribute.visibleTag); Annotation annotation = new
+		// Annotation("org.spongepowered.asm.mixin.Mixin", clazz.getConstPool());
+		//
+		// List<StringMemberValue> strings = new
+		// ArrayList<StringMemberValue>(); for(String string:
+		// SpongeMixinUtils.getSpongeMixinClassTargets()) { strings.add(new
+		// StringMemberValue(string,clazz.getConstPool()));
+		// }
+		// ArrayMemberValue arr = new ArrayMemberValue(clazz.getConstPool());
+		// arr.setValue(strings.toArray(new StringMemberValue[0]));
+		// annotation.addMemberValue("target", arr);
+		// annotationsAttribute.setAnnotation(annotation);
+		//
+		// clazz.addAttribute(annotationsAttribute);
+		//
+		// try {
+		// Class output_clazz = sm.toClass(this.getClass());
+		// } catch (CannotCompileException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		//
+		//
+		//
+		return "OverWorldBiomeCreator";
 	}
-	  
-	  
-	  
-      
-	  
-	  return null;
-}
 
-@Override
-  public void onLoad(String mixinPackage) {
-    // TODO Auto-generated method stub
+	public byte[] overworldbiomecreation(byte[] basicClass) {
+		// TODO Auto-generated method stub
+		/*
+		 * try { ClassPool pool = ClassPool.getDefault(); pool.insertClassPath(new
+		 * ByteArrayClassPath("net.minecraft.class_5478", basicClass));
+		 * 
+		 * pool.appendSystemPath(); CtClass cc = pool.get("net.minecraft.class_5478");
+		 * CtMethod m = cc.getDeclaredMethod("method_39151");
+		 * 
+		 * m.insertBefore(
+		 * "featurecreep.api.orespawn.OrespawnBasicFeatureParser.spawnOre($7);");
+		 * 
+		 * m.insertBefore("System.out.println(\"Adding FCOres\");");
+		 * 
+		 * basicClass = cc.toBytecode(); cc.writeFile();
+		 * 
+		 * } catch (Throwable e) { e.printStackTrace(); }
+		 * 
+		 * System.out.println("Yay Javaassist Worked!, though its capability is limted"
+		 * ); we dont need to do anything
+		 */
+		return basicClass;
 
-  }
+	}
 
-  @Override
-  public String getRefMapperConfig() {
-    // TODO Auto-generated method stub
-    return null;
-  }
+	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 
-  @Override
-  public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-    // TODO Auto-generated method stub
-    return true;
-  }
+		if (transformedName.equals("net.minecraft.class_442")) {
+			return titlescreenja(basicClass);
+		} else if (transformedName.equals("net.minecraft.class_5478")) {
+			return overworldbiomecreation(basicClass);
+		} else if (transformedName.equals("net.minecraft.class_3283")) {
+			return transformresourcemanager(basicClass);
+		}
 
-  @Override
-  public void acceptTargets(Set < String > myTargets, Set < String > otherTargets) {
-    // TODO Auto-generated method stub
+		return basicClass;
 
-  }
+	}
 
-  @Override
-  public List < String > getMixins() {
-    // TODO Auto-generated method stub
+	public byte[] transformresourcemanager(byte[] basicClass) {
+		// TODO Auto-generated method stub
 
-    List < String > fakemixins = new ArrayList < String > ();
+		try {
+			ClassPool pool = ClassPool.getDefault();
+			pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_3283", basicClass));
 
-    
-    return fakemixins;
-  }
+			pool.appendSystemPath();
+			CtClass cc = pool.get("net.minecraft.class_3283");
+			// CtMethod m = CtNewMethod.make(
+			// "public void registerFCPack() { field_14227.add(new
+			// featurecreep.api.FCPackLoad(new
+			// java.io.File(featurecreep.api.datapacks.DataPackLoader.datapacklocation)));
+			// }",
+			// cc);
 
-  @Override
-  public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    // TODO Auto-generated method stub
+			CtMethod m = cc.getDeclaredMethod("method_14445");
 
- System.out.println(CtClass.class.getCanonicalName());
+			m.insertBefore("System.out.println(\"Testin JA\");");
+			m.insertBefore(
+					"field_14227.add(new featurecreep.api.bg.FCPackLoad(new java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));");
+			// cc.addMethod(m);
+			CtConstructor cons = cc.getDeclaredConstructors()[0];
+			cons.insertAfter("field_14227 = featurecreep.api.io.BasicIO.setFromArray($1);");
+			return cc.toBytecode();// SHould maybe also be redefining the providers in the constructor, but it
+									// works on TLauncher so maybe it works everywhere on fabric without it, ill
+									// still include it anyhow, may remove it if iknow it conflicts with some mods
+		} catch (NotFoundException | CannotCompileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-    System.out.println(targetClassName);
-    ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-    targetClass.accept(cw);
-    ClassReader classReader = new MixinClassReader(transform(targetClassName, targetClassName, cw.toByteArray()), targetClassName);
+		return null;
+	}
 
-    targetClass.fields.removeAll(targetClass.fields);
-    targetClass.methods.removeAll(targetClass.methods);
+	@Override
+	public void onLoad(String mixinPackage) {
+		// TODO Auto-generated method stub
 
-    classReader.accept(targetClass, 0);
+	}
 
-  }
+	@Override
+	public String getRefMapperConfig() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-  @Override
-  public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    // TODO Auto-generated method stub
+	@Override
+	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
-  }
+	@Override
+	public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+		// TODO Auto-generated method stub
 
+	}
 
+	@Override
+	public List<String> getMixins() {
+		// TODO Auto-generated method stub
 
+		List<String> fakemixins = new ArrayList<String>();
 
+		return fakemixins;
+	}
 
+	@Override
+	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+		// TODO Auto-generated method stub
 
- class Loader extends ClassLoader {
+		System.out.println(CtClass.class.getCanonicalName());
 
-    public byte[] catchall;
+		System.out.println(targetClassName);
+		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		targetClass.accept(cw);
+		ClassReader classReader = new MixinClassReader(transform(targetClassName, targetClassName, cw.toByteArray()),
+				targetClassName);
 
-    public Loader(byte[] catchall) { this.catchall = catchall; }
+		targetClass.fields.removeAll(targetClass.fields);
+		targetClass.methods.removeAll(targetClass.methods);
 
-    @Override
-    public Class findClass(String classname) {
+		classReader.accept(targetClass, 0);
 
-      try {
-        return super.findClass(classname);
-      } catch (ClassNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+	}
 
-      
-      
-      
-      return this.defineClass(classname, catchall);
-    }
+	@Override
+	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+		// TODO Auto-generated method stub
 
-    Class defineClass(String name, byte[] bytes) {
-      return this.defineClass(name, bytes, 0, bytes.length);
-    }
-  }
+	}
 
+	class Loader extends ClassLoader {
 
+		public byte[] catchall;
+
+		public Loader(byte[] catchall) {
+			this.catchall = catchall;
+		}
+
+		@Override
+		public Class findClass(String classname) {
+
+			try {
+				return super.findClass(classname);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return this.defineClass(classname, catchall);
+		}
+
+		Class defineClass(String name, byte[] bytes) {
+			return this.defineClass(name, bytes, 0, bytes.length);
+		}
+	}
 
 }

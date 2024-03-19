@@ -21,11 +21,8 @@ public class ResourceSMI {
 	@Inject(method = "method_1636", at = @At("RETURN"))
 	private void onLoad(CallbackInfo ci) {
 
-		this.field_1887.add("fcpack_22");		
+		this.field_1887.add("fcpack_22");
 		System.out.println("Adding FCPack");
 	}
-	
-	
-	
-	
+
 }

@@ -2,25 +2,23 @@ package featurecreep.api.bg.entity;
 
 import game.LivingEntity;
 
-public class VanillaLivingEntity extends VanillaEntity implements AbstractLivingEntity{
+public class VanillaLivingEntity extends VanillaEntity implements AbstractLivingEntity {
 
-	LivingEntity entity;	
-	
+	LivingEntity entity;
+
 	public VanillaLivingEntity(LivingEntity ent) {
 		super(ent);
 		// TODO Auto-generated constructor stub
-	entity = ent;
+		entity = ent;
 	}
-	
-	public VanillaLivingEntity(AbstractLivingEntity ent)
-	{
+
+	public VanillaLivingEntity(AbstractLivingEntity ent) {
 		this(ent.get());
 	}
-	
+
 	@Override
-	public LivingEntity get()
-	{
+	public LivingEntity get() {
 		return entity;
-	}	
+	}
 
 }

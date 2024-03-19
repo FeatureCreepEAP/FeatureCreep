@@ -12,71 +12,50 @@ import java.util.stream.Stream;
 
 public class BasicIO {
 
-	
+	// https://www.javatpoint.com/new-line-in-java
+	public static String getNewLineSeperator() {
+		return System.getProperty("line.separator");
+	}
 
-	//https://www.javatpoint.com/new-line-in-java
-	public static String getNewLineSeperator()
-	{return System.getProperty("line.separator");  }
-	
-	
-	//https://howtodoinjava.com/java/io/java-read-file-to-string-examples/#2-using-fileslines-java-8
-	public static String getFileContents(File file)
-	{
-		
+	// https://howtodoinjava.com/java/io/java-read-file-to-string-examples/#2-using-fileslines-java-8
+	public static String getFileContents(File file) {
+
 		URI filePath = file.toURI();
 		StringBuilder contentBuilder = new StringBuilder();
 
-		try (Stream<String> stream 
-		  = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8))
-		{
-		  //Read the content with Stream
-		  stream.forEach(s -> contentBuilder.append(s).append(getNewLineSeperator()));
-		}
-		catch (IOException e)
-		{
-		  e.printStackTrace();
+		try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+			// Read the content with Stream
+			stream.forEach(s -> contentBuilder.append(s).append(getNewLineSeperator()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		String fileContent = contentBuilder.toString();
 
-	
-	return fileContent;
+		return fileContent;
 	}
-	
-	
-	
-	
-	//https://howtodoinjava.com/java/io/java-read-file-to-string-examples/#2-using-fileslines-java-8
-	public static String getFileContentsOneLine(File file)
-	{
-		
+
+	// https://howtodoinjava.com/java/io/java-read-file-to-string-examples/#2-using-fileslines-java-8
+	public static String getFileContentsOneLine(File file) {
+
 		URI filePath = file.toURI();
 		StringBuilder contentBuilder = new StringBuilder();
 
-		try (Stream<String> stream 
-		  = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8))
-		{
-		  //Read the content with Stream
-		  stream.forEach(s -> contentBuilder.append(s));
-		}
-		catch (IOException e)
-		{
-		  e.printStackTrace();
+		try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+			// Read the content with Stream
+			stream.forEach(s -> contentBuilder.append(s));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		String fileContent = contentBuilder.toString();
-		
-	
-	return fileContent;
+
+		return fileContent;
 	}
-	
-	
-	public static Set setFromArray(Object[] objects)
-	{
+
+	public static Set setFromArray(Object[] objects) {
 		return new java.util.HashSet<>(java.util.Arrays.asList(objects));
-		
-	}
-	
-	
-}
 
+	}
+
+}

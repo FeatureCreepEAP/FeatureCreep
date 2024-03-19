@@ -5,5 +5,4 @@ public interface AbstractPlayer extends AbstractLivingEntity {
 //	@Override
 //	public PlayerEntity get();
 
-	
 }

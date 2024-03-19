@@ -5,23 +5,19 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Bow;
 import game.Item;
 
-public class FCBow extends Bow  implements FCItemAPI<FCBow>{
+public class FCBow extends Bow implements FCItemAPI<FCBow> {
 
-	
+	public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
 
-public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
-@Override public featurecreep.api.bg.items.ItemFieldHolder holder() {	return holder;	}
+	@Override
+	public featurecreep.api.bg.items.ItemFieldHolder holder() {
+		return holder;
+	}
 
-	
-public FCBow(int id, String modid, String name, UnifiedItemGroupGetter group)
-{
-	super(new Item.Info());
-initialise(id, modid, name, group);
+	public FCBow(int id, String modid, String name, UnifiedItemGroupGetter group) {
+		super(new Item.Info());
+		initialise(id, modid, name, group);
 
-
-}
-
-
-
+	}
 
 }

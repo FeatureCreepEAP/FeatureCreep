@@ -7,5 +7,4 @@ public class FCArmourSlots {
 	public static FCArmourSlot LEGGINGS = new FCArmourSlot("LEGGINGS");
 	public static FCArmourSlot BOOTS = new FCArmourSlot("BOOTS");
 
-	
 }

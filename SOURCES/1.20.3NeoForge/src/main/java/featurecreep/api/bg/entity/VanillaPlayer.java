@@ -2,18 +2,17 @@ package featurecreep.api.bg.entity;
 
 import game.Player;
 
-public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer{
-	
+public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer {
+
 	Player entity;
-	
+
 	public VanillaPlayer(Player ent) {
 		super(ent);
 		// TODO Auto-generated constructor stub
-	entity = ent;
+		entity = ent;
 	}
-	
-		public VanillaPlayer(AbstractPlayer ent)
-	{
+
+	public VanillaPlayer(AbstractPlayer ent) {
 		this(ent.get());
 	}
 
