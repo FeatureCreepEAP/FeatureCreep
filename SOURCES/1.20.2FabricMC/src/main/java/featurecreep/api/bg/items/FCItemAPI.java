@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
 import featurecreep.api.bg.blocks.FCBlockAPI;

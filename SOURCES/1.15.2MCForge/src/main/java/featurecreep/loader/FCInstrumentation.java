@@ -150,17 +150,6 @@ this.addTransformer(transformer);
 		//Soon TM
 	}
 
-	@Override
-	public void redefineModule(Module module, Set<Module> extraReads, Map<String, Set<Module>> extraExports,
-			Map<String, Set<Module>> extraOpens, Set<Class<?>> extraUses, Map<Class<?>, List<Class<?>>> extraProvides) {
-		// TODO Auto-generated method stub
-		//Soon TM
-	}
-
-	@Override
-	public boolean isModifiableModule(Module module) {
-		// TODO Auto-generated method stub
-		return false;//Soon TM
-	}
 
 }
+

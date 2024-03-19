@@ -2,6 +2,7 @@ package featurecreep.api.bg.registries;
 
 import java.util.ArrayList;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.blocks.vanilla.VanillaBlock;
 import featurecreep.api.bg.items.FCItemAPI;
@@ -55,7 +56,9 @@ return block;
 	        }
 
 	      } else {
+	      if(FeatureCreep.debug_mode) {
 	        System.out.println("The following item already exists in the Registry." + item.getFCRegistryName());
+	      }
 	      }
 	  	  return item;
   }

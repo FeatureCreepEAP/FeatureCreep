@@ -35,7 +35,11 @@ public class OrespawnBasicFeatureParser {
 	File file = new File(orespawn_dir);
 		
 		String contents[] = file.list();
+		
+		if(FeatureCreep.debug_mode) {
 		System.out.println("List of files and directories in the specified directory:");
+		}
+		
 		//I need to make this multicore
 
 
@@ -43,15 +47,18 @@ public class OrespawnBasicFeatureParser {
 		if (contents != null) {
 		for(int i=0; i<contents.length; i++) {
 		   
+			if(FeatureCreep.debug_mode) {
 			System.out.println("FeatureCreep is trying to load "+contents[i]);
 
 			System.out.println(orespawn_dir + contents[i] + "/");
+			}
+			
 			splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
 
 		}
 		
 		}else {
-			FeatureCreep.LOGGER.info("No DMR Items Found");
+			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
 		}
 		
 		
@@ -87,7 +94,11 @@ public static void 	splitOS3Basic(ModelNode node)
 {
 	List<ModelNode> list = node.get("spawns").asList();
 	for(ModelNode rowNode : list) {
+		
+		if(FeatureCreep.debug_mode) {
 		System.out.println(rowNode.asString().split("\"")[1]);
+		}
+		
 		parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
 		
 	}
@@ -123,8 +134,10 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	
-	
+	if(FeatureCreep.debug_mode) {
 	System.out.println(getCorrectNameSpace(new_block));
+	}
+	
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
 	Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	

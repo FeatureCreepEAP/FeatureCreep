@@ -2,6 +2,7 @@ package featurecreep.api.bg.registries;
 
 import java.util.ArrayList;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.blocks.vanilla.VanillaBlock;
 import featurecreep.api.bg.items.FCItemAPI;

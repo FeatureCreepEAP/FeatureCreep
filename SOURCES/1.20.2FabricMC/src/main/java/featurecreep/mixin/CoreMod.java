@@ -1,9 +1,14 @@
 package featurecreep.mixin;
 
+import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -12,18 +17,25 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.spongepowered.asm.transformers.MixinClassReader;
 
+import com.asbestosstar.mixerlogger.MixerLoggerMain;
+
+import featurecreep.FeatureCreep;
+import featurecreep.api.PKZipUtils;
+import featurecreep.api.bg.BGSide;
+import featurecreep.api.bg.GameJar;
+import featurecreep.api.hashing.Sha256;
+import featurecreep.loader.FCLoaderBasic;
+import featurecreep.loader.FCLoaderBasicR8;
+import featurecreep.loader.GetPackagesFromClassLoader;
+import featurecreep.loader.utils.ClassPathUtils;
+import featurecreep.loader.utils.FileUtils;
 import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtMethod;
-import javassist.CtNewMethod;
 import javassist.NotFoundException;
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.annotation.Annotation;
 
 public class CoreMod implements IMixinConfigPlugin {
 

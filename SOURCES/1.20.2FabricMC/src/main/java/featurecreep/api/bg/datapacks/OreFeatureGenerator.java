@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.orespawn.OreSpawnBasicConfig;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import game.BuiltInRegistries;

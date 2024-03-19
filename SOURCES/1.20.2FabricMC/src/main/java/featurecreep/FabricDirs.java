@@ -1,7 +1,7 @@
 package featurecreep;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.QuiltLoader;
 
 @Deprecated
 public class FabricDirs {
@@ -12,9 +12,9 @@ public class FabricDirs {
 
 	
 	public static String getMCVersion() {
-		for(ModContainer container:FabricLoader.getInstance().getAllMods()) {
-		if(container.getMetadata().getVersion().equals("minecraft")) {
-			return container.getMetadata().getVersion().getFriendlyString();
+		for(ModContainer container:QuiltLoader.getAllMods()) {
+		if(container.metadata().version().equals("minecraft")) {
+			return container.metadata().version().raw();
 		}
 			
 			

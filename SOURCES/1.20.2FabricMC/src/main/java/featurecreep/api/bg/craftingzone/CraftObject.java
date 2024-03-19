@@ -2,6 +2,7 @@ package featurecreep.api.bg.craftingzone;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 

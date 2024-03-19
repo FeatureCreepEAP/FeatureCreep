@@ -33,7 +33,9 @@ public class OrespawnBasicFeatureParser {
 	File file = new File(orespawn_dir);
 		
 		String contents[] = file.list();
+		if(FeatureCreep.debug_mode) {
 		System.out.println("List of files and directories in the specified directory:");
+		}
 		//I need to make this multicore
 
 
@@ -41,9 +43,11 @@ public class OrespawnBasicFeatureParser {
 		if (contents != null) {
 		for(int i=0; i<contents.length; i++) {
 		   
+		   if(FeatureCreep.debug_mode) {
 			System.out.println("FeatureCreep is trying to load "+contents[i]);
 
 			System.out.println(orespawn_dir + contents[i] + "/");
+			}
 			splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
 
 		}

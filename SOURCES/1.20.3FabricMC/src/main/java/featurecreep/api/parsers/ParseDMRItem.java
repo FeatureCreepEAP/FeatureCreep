@@ -73,27 +73,25 @@ return item.toModelNode(); //Initial ModelNode
 
     File file = new File(datafieditems);
 
-    if(FeatureCreep.debug_mode) {
+if(FeatureCreep.debug_mode) {
     System.out.println(file.toString());
-    }
-    
+}
     String contents[] = file.list();
-    if(FeatureCreep.debug_mode) {
+
+if(FeatureCreep.debug_mode) {
     System.out.println("List of files and directories in the specified directory:");
-    }
-    
+}
+
     //I need to make this multicore
 
     if (contents != null) {
       for (int i = 0; i < contents.length; i++) {
-
-    	  if(FeatureCreep.debug_mode) {
+if(FeatureCreep.debug_mode) {
         System.out.println("FeatureCreep is trying to load " + contents[i]);
 
         System.out.println(datafieditems + contents[i] + "/");
-    	  }
         parseDMRFiles(datafieditems + contents[i] + "/");
-
+}
       }
 
     } else {
@@ -149,15 +147,14 @@ return item.toModelNode(); //Initial ModelNode
 
   public static void DMRStringtoItemNode(String string) {
 
-	  if(FeatureCreep.debug_mode) {
+if(FeatureCreep.debug_mode) {
     System.out.println(string);
-	  }
+  }
     ModelNode node = new ModelNode();
     node = ModelNode.fromString(string);
-    if(FeatureCreep.debug_mode) {
+   if(FeatureCreep.debug_mode) {
     System.out.println(node);
-    }
-    
+}
     NodetoItem(node);
 
   }

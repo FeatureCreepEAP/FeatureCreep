@@ -1,11 +1,7 @@
 package featurecreep;
 
-import java.io.File;
-
-import com.mojang.authlib.minecraft.client.MinecraftClient;
-
-import game.Client;
-import net.fabricmc.loader.impl.FabricLoaderImpl;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 
 @Deprecated
 public class FabricDirs {
@@ -14,19 +10,33 @@ public class FabricDirs {
 //static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
 //static File MCIntermediarydirfile = new File(MCIntermediarydir);
 
+	
+	public static String getMCVersion() {
+		for(ModContainer container:FabricLoader.getInstance().getAllMods()) {
+		if(container.getMetadata().getVersion().equals("minecraft")) {
+			return container.getMetadata().getVersion().getFriendlyString();
+		}
+			
+			
+		}
+	return null;
+	
+	}
+	
+	
+	
 @Deprecated
 public static String getMCIntermediary()
 {
-	return "";
-	
 	/*
-	String MC_VERSION_TEST = Client.getInstance().getGameVersion();
+	
+	String MC_VERSION_TEST = MinClient.getInstance().getGameVersion();
 	String MC_VERSION;
 
-	System.out.println(		MC_VERSION = Client.getInstance().getGameVersion());
+	System.out.println(		MC_VERSION = MinecraftClient.getInstance().getGameVersion());
 	if (!MC_VERSION_TEST.contains("Fabric"))
 	{
-		MC_VERSION = Client.getInstance().getGameVersion();
+		MC_VERSION = MinecraftClient.getInstance().getGameVersion();
 	}else if (MC_VERSION_TEST.contains("FabricClient")){
 		MC_VERSION = "";
 
@@ -82,6 +92,7 @@ return ClientJar;
 	
 	}
 	*/
+	return "";
 	
 }
 

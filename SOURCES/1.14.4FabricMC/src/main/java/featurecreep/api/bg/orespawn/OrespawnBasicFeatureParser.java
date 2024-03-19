@@ -51,7 +51,7 @@ public class OrespawnBasicFeatureParser {
 		}
 		
 		}else {
-			FeatureCreep.LOGGER.info("No DMR Items Found");
+			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
 		}
 		
 		

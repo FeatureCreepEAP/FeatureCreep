@@ -37,23 +37,27 @@ public static List<CompositeFeature> configed = new ArrayList <CompositeFeature>
 	File file = new File(orespawn_dir);
 		
 		String contents[] = file.list();
+		if(FeatureCreep.debug_mode) {
 		System.out.println("List of files and directories in the specified directory:");
+		}
 		//I need to make this multicore
 
 
 
 		if (contents != null) {
 		for(int i=0; i<contents.length; i++) {
-		   
+		 
+		 if(FeatureCreep.debug_mode) {  
 			System.out.println("FeatureCreep is trying to load "+contents[i]);
 
 			System.out.println(orespawn_dir + contents[i] + "/");
+		}
 			splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
 
 		}
 		
 		}else {
-			FeatureCreep.LOGGER.info("No DMR Items Found");
+			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
 		}
 		
 		
@@ -200,8 +204,9 @@ public static void place(Biome biome) {
 
 	
 		biome.def_unknown_138511(Feature.UNDERGROUND_ORES, OrespawnBasicFeatureParser.configed.get(f));
+		if(FeatureCreep.debug_mode) {
 		System.out.println(OrespawnBasicFeatureParser.configed.get(f).toString());
-	
+	}
 	
 	
 	

@@ -8,11 +8,17 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
 import game.Block;
 import game.BlockAsItem;
+import game.ChunkStatus;
 import game.CreativeTab;
+import game.EntityActivity;
 import game.Item;
+import game.ResourceLocation;
+import game.TileEntites;
+import game.UnitModifier;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class UniversalRegistryGettersAndSetters {
 
@@ -198,5 +204,56 @@ public class UniversalRegistryGettersAndSetters {
 	}
 	
 	
+	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
+		//To complete
+			
+		ForgeRegistryEntry entr = (ForgeRegistryEntry)Entry;
+		entr.setRegistryName(rl);
+			
+	if(registry.equals(game.GameRegistries.ITEM)) {
+		ForgeRegistries.ITEMS.register((Item)Entry);
+	}else if(registry.equals(game.GameRegistries.BLOCK)){
+		ForgeRegistries.BLOCKS.register((Block)Entry);
+	}else if(registry.equals(game.GameRegistries.var_unknown_108770)){
+		ForgeRegistries.ATTRIBUTES.register((UnitModifier) Entry);
+	}else if(registry.equals(game.GameRegistries.ACTIVITY)){
+			ForgeRegistries.ACTIVITIES.register((EntityActivity) Entry);
+	}else if(registry.equals(game.GameRegistries.BLOCK_ENTITY)){
+			ForgeRegistries.BLOCK_ENTITIES.register((TileEntites<?>) Entry);
+	}else if(registry.equals(game.GameRegistries.CHUNK_STATUS)){
+		ForgeRegistries.CHUNK_STATUS.register((ChunkStatus) Entry);
+	}else {
+		game.GameRegistries.register(registry, rl, Entry);
+	}
+			//	ForgeRegistries.CONDITION_SERIALIZERS.register(rl, (Item)Entry);
+//		ForgeRegistries.DISPLAY_CONTEXTS.register(rl, (Item)Entry);
+
+		//	ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.register(rl, (Item)Entry);
+		//ForgeRegistries.BIOMES.register(rl, (Item)Entry);
+//		ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES.register(rl, (Item)Entry);
+
+		
+		
+	}
+		
+		//Converts NeoForge format to MCForge format
+		public static DeferredRegister deferredRegistryConverter(game.GameRegistries registry, String name) {
+			if(registry.equals(game.GameRegistries.ITEM)) {
+				return DeferredRegister.create(ForgeRegistries.ITEMS, name);
+			}else if(registry.equals(game.GameRegistries.BLOCK)){
+				return DeferredRegister.create(ForgeRegistries.BLOCKS, name);
+			}else if(registry.equals(game.GameRegistries.var_unknown_108770)){
+				return DeferredRegister.create(ForgeRegistries.ATTRIBUTES, name);
+			}else if(registry.equals(game.GameRegistries.ACTIVITY)){
+				return DeferredRegister.create(ForgeRegistries.ACTIVITIES, name);
+			}else if(registry.equals(game.GameRegistries.BLOCK_ENTITY)){
+				return DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, name);
+			}else if(registry.equals(game.GameRegistries.CHUNK_STATUS)){
+				return DeferredRegister.create(ForgeRegistries.CHUNK_STATUS, name);
+			}else {
+				return null; //At least this will let me debug thought it should be avoided
+			}
+			
+		}
 	
 }

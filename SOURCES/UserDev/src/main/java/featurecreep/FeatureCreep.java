@@ -6,7 +6,10 @@ import java.nio.file.Path;
 import org.jboss.logging.Logger;
 import org.jboss.modules.ModuleLoader;
 
+import com.asbestosstar.assistremapper.RemapperInstance;
+
 import asbestosstar.fcdnf.FCDNF;
+import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.GameInjections;
 import featurecreep.api.bg.BGSide;
 import featurecreep.api.bg.PackLoader;
@@ -24,26 +27,31 @@ import javassist.ClassPool;
 
 public class FeatureCreep {
 
-
+	
+	public static boolean debug_mode;
 	public static Path gamepath;	
 	public static String modpath;	
 		public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
 	public static String modid;
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
+	public static double version = 3.918;
+	public static String game_version;
 
 	
 	public static ActiveMapping mappings = ActiveMapping.DANGERZONE;//This is the default active mappings
 	public static SuperLoader super_loader = SuperLoader.DANGERZONE_BUILTIN_LOADER;//Need to detect this eventually
 	
-	public static ClassPool classpool = ClassPool.getDefault();
-	public static String natively_mapped_mods_folder = gamepath+"/usr/share/natively_mapped_mods/"+mappings.name+"/";
-	private static Path[] dependancies = {};
+	public static ClassPool classpool = new ClassPool(true);
+	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);//To make sure to prioritise our own classes 1st then and reuse
+	public static String natively_mapped_mods_folder = gamepath+"/usr/share/.natively_mapped_mods/"+mappings.name+"/";
+	public static String temp_mapping_location = gamepath+"/tmp/.remapping/";
+	public static Path[] dependancies = {};
 	public static Path[] modpaths = {new File(modpath).toPath(),new File(natively_mapped_mods_folder).toPath()};
 	public static FCLoaderBasic loader = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true, BGSide.getExecutionSide());
-	public static ModuleLoader modloader = loader.getLoader();
+	public static ModuleLoader modloader = loader.getLoader();	
 	public static FCDNF fcdnf = new FCDNF();
 	public static MappingConverter mappings_converter = new MappingConverter();
-	public static RemapperInstance remapper = new RemapperInstance(mappings.getMappings(),classpool,natively_mapped_mods_folder);
+	public static RemapperInstance remapper = new RemapperInstance(mappings.getMappings().reverse,classpool,temp_mapping_location);
 	
 	
 		public static void onInitialise() {

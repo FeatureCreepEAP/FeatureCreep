@@ -44,8 +44,8 @@ public static boolean debug_mode = false;
 	public static double version = 3.918;//GA will be 4.0 for now 3.9pre will work
 	public static String game_version = MCPVersion.getMCVersion();
 	
-	public static ActiveMapping mappings = ActiveMapping.PARCHSRG;//This is the default active mappings
-	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;//Need to detect this eventually
+	public static ActiveMapping mappings = ActiveMapping.DANGERZONE;//This is the default active mappings
+	public static SuperLoader super_loader = SuperLoader.DANGERZONE_BUILTIN_LOADER;//Need to detect this eventually
 	public static ClassPool classpool = new ClassPool(true);
 	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);//To make sure to prioritise our own classes 1st then and reuse
 	public static String natively_mapped_mods_folder = gamepath+"/usr/share/.natively_mapped_mods/"+mappings.name+"/";

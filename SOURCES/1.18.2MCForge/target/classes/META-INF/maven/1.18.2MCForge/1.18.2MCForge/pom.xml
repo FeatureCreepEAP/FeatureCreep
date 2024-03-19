@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>1.18.2MCForge</groupId>
+  <artifactId>1.18.2MCForge</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+ <build>
+  <plugins>
+    <!-- other plugins omitted -->
+    <plugin>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>2.4</version>
+      <configuration>
+        <archive>
+          <manifestEntries>
+            <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
+          </manifestEntries>
+        </archive>
+      </configuration> 
+    </plugin>
+  </plugins>
+</build>
+ <properties>
+ 	<maven.compiler.target>17</maven.compiler.target>
+ 	 	<maven.compiler.source>17</maven.compiler.source>
+ </properties>
+  <dependencies>
+ 	<dependency>
+ 		<groupId>org.javassist</groupId>
+ 		<artifactId>javassist</artifactId>
+ 		<version>3.30.2-GA</version>
+ 	</dependency>
+ </dependencies>
+</project>

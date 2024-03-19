@@ -1,31 +1,42 @@
 package featurecreep;
 
-import java.io.File;
-import java.nio.file.Path;
-
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
-
-import game.Client;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.QuiltLoader;
 
 @Deprecated
 public class FabricDirs {
 
-static Path cachedir = FeatureCreep.gamepath.resolve(QuiltLoaderImpl.CACHE_DIR_NAME);
-static Path remappedjardir = cachedir.resolve(QuiltLoaderImpl.REMAPPED_JARS_DIR_NAME);
+//static Path cachedir = FeatureCreep.gamepath.resolve(FabricLoaderImpl.CACHE_DIR_NAME);
+//static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
 //static File MCIntermediarydirfile = new File(MCIntermediarydir);
 
+	
+	public static String getMCVersion() {
+		for(ModContainer container:QuiltLoader.getAllMods()) {
+		if(container.metadata().version().equals("minecraft")) {
+			return container.metadata().version().raw();
+		}
+			
+			
+		}
+	return null;
+	
+	}
+	
+	
+	
 @Deprecated
 public static String getMCIntermediary()
 {
+	/*
 	
-	
-	String MC_VERSION_TEST = Client.getInstance().getVersion();
+	String MC_VERSION_TEST = MinClient.getInstance().getGameVersion();
 	String MC_VERSION;
 
-	System.out.println(		MC_VERSION = Client.getInstance().getVersion());
+	System.out.println(		MC_VERSION = MinecraftClient.getInstance().getGameVersion());
 	if (!MC_VERSION_TEST.contains("Fabric"))
 	{
-		MC_VERSION = Client.getInstance().getVersion();
+		MC_VERSION = MinecraftClient.getInstance().getGameVersion();
 	}else if (MC_VERSION_TEST.contains("FabricClient")){
 		MC_VERSION = "";
 
@@ -39,12 +50,12 @@ public static String getMCIntermediary()
 	}	
 	else
 	{
-		MC_VERSION = Client.getInstance().getVersion().substring(7);
+		MC_VERSION = MinecraftClient.getInstance().getGameVersion().substring(7);
 
 	}
 	
 	System.out.print(MC_VERSION);
-			String MCIntermediarydir =  remappedjardir.toString() + "/minecraft-" + MC_VERSION + "-"+ QuiltLoaderImpl.VERSION.toString();
+			String MCIntermediarydir =  remappedjardir.toString() + "/minecraft-" + MC_VERSION + "-"+ FabricLoaderImpl.VERSION.toString();
 
 
 	
@@ -80,15 +91,17 @@ return ClientJar;
 		}
 	
 	}
+	*/
+	return "";
+	
+}
+
+
+
+
+
+	
 	
 	
 }
 
-
-
-
-
-	
-	
-	
-}

@@ -1,0 +1,187 @@
+{
+    "version": "3.0",
+    "spawns": {
+        "coal_ore": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+		"size": 8,
+                "variation": 4,
+                "frequency": 5,
+                "minHeight": 0,
+                "maxHeight": 128
+            },
+	    "blocks": [ { "name": "vanilla:coal_ore", "chance": 100 } ]
+        },
+ "iron_ore": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 8,
+                "variation": 4,
+                "frequency": 5,
+                "minHeight": 0,
+                "maxHeight": 128
+            },
+            "blocks": [ { "name": "vanilla:iron_ore", "chance": 100 } ]
+        },
+ "test_ore": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 10,
+                "variation": 4,
+                "frequency": 5,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:test_ore", "chance": 100 } ]
+        },
+ "ore_amethyst": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 5,
+                "variation": 4,
+                "frequency": 3,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:amethyst_ore", "chance": 100 } ]
+        },
+ "ore_ruby": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 4,
+                "variation": 2,
+                "frequency": 2,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:ruby_ore", "chance": 100 } ]
+        },
+ "ore_tigers_eye": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 6,
+                "variation": 2,
+                "frequency": 7,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:tigers_eye_ore", "chance": 100 } ]
+        },
+ "ore_titanium": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 3,
+                "variation": 2,
+                "frequency": 2,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:titanium_ore", "chance": 100 } ]
+        },
+ "ore_uranium": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 2,
+                "variation": 2,
+                "frequency": 2,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:uranium_ore", "chance": 100 } ]
+        },
+ "ore_aluminium": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 5,
+                "variation": 2,
+                "frequency": 8,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:aluminium_ore", "chance": 100 } ]
+        },
+ "ore_oil": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 20,
+                "variation": 2,
+                "frequency": 2,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:unprocessed_oil_ore", "chance": 100 } ]
+        },
+ "ore_petrol": {
+            "retrogen": false,
+            "enabled": true,
+            "feature": "default",
+            "replaces": "default",
+            "dimensions": [],
+            "biomes": { "excludes": [] },
+            "parameters": {
+                "size": 4,
+                "variation": 2,
+                "frequency": 2,
+                "minHeight": 0,
+                "maxHeight": 256
+            },
+            "blocks": [ { "name": "featurecreep:gasoline_petrol_ore", "chance": 100 } ]
+        }
+
+
+
+
+
+
+    }
+}

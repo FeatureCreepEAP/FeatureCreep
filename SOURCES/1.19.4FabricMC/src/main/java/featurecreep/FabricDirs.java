@@ -1,5 +1,8 @@
 package featurecreep;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+
 @Deprecated
 public class FabricDirs {
 
@@ -7,6 +10,21 @@ public class FabricDirs {
 //static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
 //static File MCIntermediarydirfile = new File(MCIntermediarydir);
 
+	
+	public static String getMCVersion() {
+		for(ModContainer container:FabricLoader.getInstance().getAllMods()) {
+		if(container.getMetadata().getVersion().equals("minecraft")) {
+			return container.getMetadata().getVersion().getFriendlyString();
+		}
+			
+			
+		}
+	return null;
+	
+	}
+	
+	
+	
 @Deprecated
 public static String getMCIntermediary()
 {

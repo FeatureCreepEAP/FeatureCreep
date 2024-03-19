@@ -2,6 +2,7 @@ package featurecreep.api.bg.blocks;
 
 import org.jetbrains.annotations.Nullable;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;

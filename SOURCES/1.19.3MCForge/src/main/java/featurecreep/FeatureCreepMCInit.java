@@ -24,7 +24,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 //	    public static final Logger LOGGER = LogManager.getLogger();
 
 		public static Path gamepath = Paths.get(System.getProperty("user.dir"));
-		protected static String modpath = gamepath.toString() + "/mods/";
+		public static String modpath = gamepath.toString() + "/mods/";
 
                 
 	    public FeatureCreepMCInit() {

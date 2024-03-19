@@ -12,6 +12,7 @@ import game.BuiltInRegistries;
 import game.CreativeTab;
 import game.Item;
 import game.ResourceLocation;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class UniversalRegistryGettersAndSetters {
 
@@ -193,7 +194,14 @@ public class UniversalRegistryGettersAndSetters {
 	}
 	
 	
-	
+	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
+		game.GameRegistries.register(registry,rl,Entry);
+}
+		
+		//Converts NeoForge format to MCForge format
+		public static DeferredRegister deferredRegistryConverter(game.GameRegistries registry, String name) {
+			return DeferredRegister.create(registry, name) ;
+		}
 	
 	
 	

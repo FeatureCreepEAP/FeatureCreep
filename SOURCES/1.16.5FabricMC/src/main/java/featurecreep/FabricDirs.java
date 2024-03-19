@@ -1,18 +1,36 @@
 package featurecreep;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+
 @Deprecated
 public class FabricDirs {
 
 //static Path cachedir = FeatureCreep.gamepath.resolve(FabricLoaderImpl.CACHE_DIR_NAME);
 //static Path remappedjardir = cachedir.resolve(FabricLoaderImpl.REMAPPED_JARS_DIR_NAME);
 //static File MCIntermediarydirfile = new File(MCIntermediarydir);
-/*
+
+	
+	public static String getMCVersion() {
+		for(ModContainer container:FabricLoader.getInstance().getAllMods()) {
+		if(container.getMetadata().getVersion().equals("minecraft")) {
+			return container.getMetadata().getVersion().getFriendlyString();
+		}
+			
+			
+		}
+	return null;
+	
+	}
+	
+	
+	
 @Deprecated
 public static String getMCIntermediary()
 {
+	/*
 	
-	
-	String MC_VERSION_TEST = MinecraftClient.getInstance().getGameVersion();
+	String MC_VERSION_TEST = MinClient.getInstance().getGameVersion();
 	String MC_VERSION;
 
 	System.out.println(		MC_VERSION = MinecraftClient.getInstance().getGameVersion());
@@ -37,7 +55,7 @@ public static String getMCIntermediary()
 	}
 	
 	System.out.print(MC_VERSION);
-			//String MCIntermediarydir =  remappedjardir.toString() + "/minecraft-" + MC_VERSION + "-"+ FabricLoaderImpl.VERSION.toString();
+			String MCIntermediarydir =  remappedjardir.toString() + "/minecraft-" + MC_VERSION + "-"+ FabricLoaderImpl.VERSION.toString();
 
 
 	
@@ -73,13 +91,14 @@ return ClientJar;
 		}
 	
 	}
-	
+	*/
+	return "";
 	
 }
 
 
 
-*/
+
 
 	
 	

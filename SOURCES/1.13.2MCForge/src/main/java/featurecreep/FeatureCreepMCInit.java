@@ -22,8 +22,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	public class FeatureCreepMCInit {
 //	    public static final Logger LOGGER = LogManager.getLogger();
 
-		protected static Path gamepath = FMLPaths.GAMEDIR.get();
-		protected static String modpath = FMLPaths.MODSDIR.get().toString() + "/";
+		public static Path gamepath = FMLPaths.GAMEDIR.get();
+		public static String modpath = FMLPaths.MODSDIR.get().toString() + "/";
 
                 
 	    public FeatureCreepMCInit() {

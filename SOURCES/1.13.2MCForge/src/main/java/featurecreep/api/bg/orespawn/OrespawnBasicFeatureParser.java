@@ -28,16 +28,22 @@ public class OrespawnBasicFeatureParser {
         String string1 = new String(FeatureCreep.gamepath.toString() + "/orespawn/config/");
         File file2 = new File(string1);
         String[] contents = file2.list();
+       
+       if(FeatureCreep.debug_mode) {
         System.out.println("List of files and directories in the specified directory:");
+       }
+       
         if (contents != null) {
             for (int i = 0; i < contents.length; ++i) {
+            if(FeatureCreep.debug_mode) {
                 System.out.println("FeatureCreep is trying to load " + contents[i]);
                 System.out.println(string1 + contents[i] + "/");
+            }
                 splitOS3Basic(getModelNodesFromFile(string1 + contents[i] + "/"));
             }
         }
         else {
-            FeatureCreep.LOGGER.info("No DMR Items Found");
+            FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
         }
     }
     
@@ -63,7 +69,10 @@ public class OrespawnBasicFeatureParser {
     public static void splitOS3Basic(ModelNode modelNode) {
         List<ModelNode> list2 = modelNode.get("spawns").asList();
         for (final ModelNode rowNode : list2) {
+         if(FeatureCreep.debug_mode) {
             System.out.println(rowNode.asString().split("\"")[1]);
+         }
+         
             parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
         }
     }
@@ -81,11 +90,15 @@ public class OrespawnBasicFeatureParser {
             String[] block_identifier = string3.split(":");
             Block block5 = GameRegistries.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
             String string6 = modelNode.get("blocks").get(0).get("name").asString();
+          if(FeatureCreep.debug_mode) {
             System.out.println(getCorrectNameSpace(string6));
+          }
             String[] new_block_identifier = getCorrectNameSpace(string6).split(":");
             Block block8 = GameRegistries.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+           if(FeatureCreep.debug_mode) {
             System.out.println(block5.getLocalisedNameAsTextObject());
             System.out.println(block8.getLocalisedNameAsTextObject());
+           }
             Predicate<IBlockstate> predicate9 = ResourceConfig.var_unknown_117567;
             CompositeFeature compositeFeature10 = Biome.<ResourceConfig, RangeDecoratorConfiguration>def_unknown_138509(WorldGenFeature.var_unknown_117484, new ResourceConfig(predicate9, block8.getDefaultState(), modelNode.get("parameters").get("size").asInt()), Biome.var_unknown_116468, new RangeDecoratorConfiguration(modelNode.get("parameters").get("frequency").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("maxHeight").asInt()));
             Biomes.SMALL_END_ISLANDS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);

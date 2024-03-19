@@ -201,4 +201,10 @@ public class UniversalRegistryGettersAndSetters {
 	
 	
 	
+	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
+	game.GameRegistries.register(registry,rl,Entry);
+}
+	
+	
+	
 }

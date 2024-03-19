@@ -31,7 +31,6 @@ import game.CommandDispatcher;
 import game.CommandSourceStack;
 import javassist.ClassPool;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 
 public class FeatureCreep {
 
@@ -51,14 +50,14 @@ public class FeatureCreep {
 	public static SuperLoader super_loader = SuperLoader.FABRICMC;//Need to detect this eventually
 	
 	public static ClassPool classpool = new ClassPool(true);
-	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool,true);
-	public static String natively_mapped_mods_folder = gamepath+"/usr/share/natively_mapped_mods/"+mappings.name+"/";
+	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);//To make sure to prioritise our own classes 1st then and reuse
+	public static String natively_mapped_mods_folder = gamepath+"/usr/share/.natively_mapped_mods/"+mappings.name+"/";
 	public static String temp_mapping_location = gamepath+"/tmp/.remapping/";
 	public static Path[] dependancies = {};
 	public static Path[] modpaths = {new File(modpath).toPath(),new File(natively_mapped_mods_folder).toPath()};
 	public static FCLoaderBasic loader = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true, BGSide.getExecutionSide());
 	public static ModuleLoader modloader = loader.getLoader();	
-		public static FCDNF fcdnf = new FCDNF();
+	public static FCDNF fcdnf = new FCDNF();
 	public static MappingConverter mappings_converter = new MappingConverter();
 	public static RemapperInstance remapper = new RemapperInstance(mappings.getMappings().reverse,classpool,temp_mapping_location);
 	
@@ -73,6 +72,7 @@ public class FeatureCreep {
 		FCBlocks.onInitialise();
 loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
 		loader.getTransformers().addAll(CoreMod.loader.getTransformers());
+	loader.loadMods();
 		loader.runMods();//Soon I got to load before transforming and then run now
 		DataParseContent.parseContent();
 		PackLoader.loadPacks(loader.getModules());

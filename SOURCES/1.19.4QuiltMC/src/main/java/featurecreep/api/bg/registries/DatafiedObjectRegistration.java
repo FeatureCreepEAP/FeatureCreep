@@ -18,7 +18,9 @@ public class DatafiedObjectRegistration {
 	public static void registerDMRItem(DMRItem item)
 	{
 		
+	if(FeatureCreep.debug_mode) {
 		System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
+     }
         ModelNode node = item.toModelNode();
 		
 				
@@ -27,7 +29,9 @@ public class DatafiedObjectRegistration {
 	  		File myObj = new File(FeatureCreep.gamepath.toString() +  ("/datafiedcontents/items/") + item.getModId() + "/" + item.getUnlocName() + ".dmr");
 	  	 
 	  	if (!myObj.exists()) {
+	  		if(FeatureCreep.debug_mode) {
 	  		System.out.println(myObj.toString());
+	  		}
 	  		myObj.getParentFile().mkdirs();
 	  		
 	  		
@@ -50,7 +54,9 @@ public class DatafiedObjectRegistration {
 	public static void registerDMRBinaryItem(FCItemAsDMR item)
 	{
 		
+		if(FeatureCreep.debug_mode) {
 		System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
+        }
         ModelNode node = item.toModelNode();
 
 
@@ -58,7 +64,10 @@ public class DatafiedObjectRegistration {
 		  try {
 				 
 	  		File myObj = new File(FeatureCreep.gamepath.toString() +  ("/datafiedcontents/items/") + item.getModId() + "/" + item.getUnlocName() + ".dmr");
+	  	
+	  	if(FeatureCreep.debug_mode) {
 	  	  System.out.println(myObj.toString());
+	  	}
 	  		myObj.getParentFile().mkdirs();
 	  		
 		  	if (!myObj.exists()) {

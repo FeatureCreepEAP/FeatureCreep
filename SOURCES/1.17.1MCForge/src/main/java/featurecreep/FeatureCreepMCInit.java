@@ -24,7 +24,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 		//protected static Path gamepath = FMLPaths.GAMEDIR.get(); For some reason this is not working on MCF 1.17
 		public static Path gamepath = Paths.get(System.getProperty("user.dir"));
-		protected static String modpath = gamepath.toString() + "/mods/";
+		public static String modpath = gamepath.toString() + "/mods/";
 
                 
 	    public FeatureCreepMCInit() {

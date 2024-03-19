@@ -26,6 +26,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -135,8 +136,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/guava-31.1-jre.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/gson-2.10.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/forge-1.20.2-48.0.20-minecraft-merged-fci.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/fmlloader-1.20.1-47.1.43.jar"/>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/fmlloader-1.20.1-47.0.45.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/fmlearlydisplay-1.20.1-47.1.43.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/fmlearlydisplay-1.20.1-47.0.45.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/fmlcore-1.20.1-47.1.43.jar"/>
@@ -165,5 +164,6 @@
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/artifactural-3.0.14.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/antlr4-runtime-4.9.1.jar"/>
 	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/accesstransformers-8.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.2MCForge/fmlloader-1.20.3-49.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
