@@ -35,6 +35,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.5FabricMC/FCI1.20.5.jar" sourcepath="/home/rhel/fcdependencies/1.20.5FabricMC/fci1.20.5src"/>
+	<classpathentry kind="lib" path="/home/rhel/fcdependencies/1.20.5FabricMC/1.20.6mcf.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

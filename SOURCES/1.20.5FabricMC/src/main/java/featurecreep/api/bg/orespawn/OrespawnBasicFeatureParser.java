@@ -184,7 +184,7 @@ public class OrespawnBasicFeatureParser {
 
 	}
 
-	public static void spawnOre(BiomeGenerationSettings.class_unknown_9320 builder) {
+	public static void spawnOre(BiomeGenerationSettings.Builder builder) {
 
 //		for (int f = 0; f < placed.size(); f++) {
 

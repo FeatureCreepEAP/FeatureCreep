@@ -1,9 +1,12 @@
 package featurecreep.api.bg.ui.tabs.vanilla;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.BuiltInRegistries;
 import game.CreativeTab;
 import game.CreativeTabs;
+import game.RegistryKey;
+import mx.kenzie.mirror.Mirror;
 
 public class VanillaCreativeTab implements UnifiedItemGroupGetter {
 	public String tabname;
@@ -22,25 +25,25 @@ public class VanillaCreativeTab implements UnifiedItemGroupGetter {
 //Minecraft Only gotta change the mappings for these once i figure them out
 	public static CreativeTab getVanillaGroupFromString(VanillaCreativeTab groupname) {
 		if (groupname.tabname.equals("BUILDING_BLOCKS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.BUILDING_BLOCKS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.BUILDING_BLOCKS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("BREWING")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.MISULANIOUS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.MISULANIOUS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("COMBAT")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.COMBAT);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.COMBAT:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("DECORATIONS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.BUILDING_BLOCKS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.BUILDING_BLOCKS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("FOOD")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.FOODSTUFFS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.FOODSTUFFS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("MATERIALS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.PLANTS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.PLANTS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("MISC")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.MISULANIOUS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.MISULANIOUS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("REDSTONE")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.REDSTONE);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.REDSTONE:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("TOOLS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.TOOLS);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.TOOLS:Lgame/CreativeTabs")).get());
 		} else if (groupname.tabname.equals("TRANSPORTATION")) {
-			return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.FUNCTION);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().reverse.getVarMappedName("game.CreativeTabs.FUNCTION:Lgame/CreativeTabs")).get());
 		} else {
 			return null;
 		}

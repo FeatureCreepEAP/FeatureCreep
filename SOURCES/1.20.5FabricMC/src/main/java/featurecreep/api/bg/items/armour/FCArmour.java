@@ -3,8 +3,6 @@ package featurecreep.api.bg.items.armour;
 
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.ItemFieldHolder;
-import featurecreep.api.bg.items.armour.FCArmourMaterial;
-import featurecreep.api.bg.items.armour.FCArmourSlot;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Armour;
 import game.Item;

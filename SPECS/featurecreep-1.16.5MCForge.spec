@@ -22,8 +22,8 @@ Main-Class:
 %build
 #%configure
 #%make_build
-buildfpm_maven %{?sources_location}/1.16.5MCForge #This is the main command you need to look at as it is responsible for packaging your maven project and adding all the extra required files to fpm and sfpm files
-remap(/home/rhel/fcdependencies/featurecreep-intermediary-1.16.5-srg.pdme,/home/rhel/fcdependencies/1.16.5MCForge/)
+buildfpm_maven %{?sources_location}/1.16.4MCForge #This is the main command you need to look at as it is responsible for packaging your maven project and adding all the extra required files to fpm and sfpm files
+remap(/home/rhel/fcdependencies/featurecreep-intermediary-1.16.4-srg.pdme,/home/rhel/fcdependencies/1.16.4MCForge/)
 
 #Some stuff for installing, not yet implemented
 %install

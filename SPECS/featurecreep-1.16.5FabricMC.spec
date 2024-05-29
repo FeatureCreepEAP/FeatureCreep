@@ -22,8 +22,8 @@ Main-Class:
 %build
 #%configure
 #%make_build
-buildfpm_maven %{?sources_location}/1.16.5FabricMC #This is the main command you need to look at as it is responsible for packaging your maven project and adding all the extra required files to fpm and sfpm files
-remap(/home/rhel/fcdependencies/featurecreep-intermediary-fabric-intermediary.pdme,/home/rhel/fcdependencies/1.16.5FabricMC/)
+buildfpm_maven %{?sources_location}/1.16.4FabricMC #This is the main command you need to look at as it is responsible for packaging your maven project and adding all the extra required files to fpm and sfpm files
+remap(/home/rhel/fcdependencies/featurecreep-intermediary-1.16.4-fabric-intermediary.pdme,/home/rhel/fcdependencies/1.16.4FabricMC/)
 
 #Some stuff for installing, not yet implemented
 %install
