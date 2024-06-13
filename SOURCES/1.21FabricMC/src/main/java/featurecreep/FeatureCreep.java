@@ -40,7 +40,7 @@ public class FeatureCreep {
 	public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
-	public static double version = 3.918;// GA will be 4.0 for now 3.9pre will work
+	public static double version = 3.919;// GA will be 4.0 for now 3.9pre will work
 	public static String game_version = FabricDirs.getMCVersion();
 
 	public static ActiveMapping mappings = ActiveMapping.FABRICMC_INTERMEDIARY;// This is the default active mappings
