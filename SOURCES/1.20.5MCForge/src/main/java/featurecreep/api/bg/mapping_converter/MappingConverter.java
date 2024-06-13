@@ -10,6 +10,7 @@ import java.util.jar.JarFile;
 import java.util.zip.GZIPInputStream;
 
 import com.asbestosstar.assistremapper.Mappings;
+import com.asbestosstar.assistremapper.mappings.PDMEMappings;
 
 import featurecreep.FeatureCreep;
 
@@ -30,7 +31,7 @@ public class MappingConverter {
 					}
 					byte[] uncompressed = outputStream.toByteArray();
 
-					Mappings maps = new Mappings(new ByteArrayInputStream(uncompressed));
+					Mappings maps = new PDMEMappings(new ByteArrayInputStream(uncompressed));
 
 					if (entry.getName().contains("yarn")) {
 						ActiveMapping.YARN.setMappings(maps);
