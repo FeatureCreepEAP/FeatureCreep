@@ -1,9 +1,9 @@
 package featurecreep.api.soundeffects;
 
-import game.SoundEffect;
+import game.SoundPoolComponent;
 
 public interface AbstractSoundEffect {
-	
-	public SoundEffect get();
+
+	public SoundPoolComponent get();
 
 }

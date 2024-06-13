@@ -1,12 +1,14 @@
 package featurecreep.api.bg.blocks;
 
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Block;
 import game.BlockPos;
-import game.BlockState;
+import game.ConstantIntProvider;
+import game.IBlockstate;
 import game.Item;
 import game.ItemStack;
 import game.Ore;
@@ -14,7 +16,6 @@ import game.Player;
 import game.PlayerStatisticList;
 import game.TileEntity;
 import game.World;
-import game.ConstantIntProvider;
 import io.smallrye.common.constraint.Nullable;
 
 public class FCOre extends Ore implements FCBlockAPI<FCOre> {
@@ -30,17 +31,18 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 
 	public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops, Object ore_material) {
-		super(ConstantIntProvider.create(0), Block.Info.normal().hardness(strength / 10));// Need to add material again
+		super(ConstantIntProvider.of(0), Block.Info.of().destroyTime(strength / 10));// Need to add material again
 																							// soon
 		initialise(id, modid, name, group, material, strength, drops);
 		resource = ore_material;
 	}
 
+
 	@Override
-	public void onBroken(World world, Player player, BlockPos pos, BlockState state, @Nullable TileEntity blockEntity,
+	public void playerDestroy(World world, Player player, BlockPos pos, IBlockstate state, @Nullable TileEntity blockEntity,
 			ItemStack stack) {
-		player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
-		player.addExhaustion(0.005f);
+		player.awardStat(PlayerStatisticList.BLOCK_MINED.get(this));
+		player.causeFoodExhaustion(0.005f);
 
 		for (int i = 0; i < getDropArrayObjects().length; i++) {
 			if (getDropArrayObjects()[i].getTool.equals(ToolTypes.BLANK)) {
@@ -50,11 +52,14 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 				getDrops(world, pos, getDropArrayObjects()[i]);
 
 			} else {
-				System.out.println(stack.getItem().toString()); // Took so damn long to realise i needed stack and not
-																// player.ActiveItem
+				if (FeatureCreep.debug_mode) {
+					System.out.println(stack.getItem().toString()); // Took so damn long to realise i needed stack and
+																	// not player.ActiveItem
 
-				// System.out.println(stack.getItem().getClass().isAssignableFrom(getDropArrayObjects()[i].getTool.get));
-				System.out.println(getDropArrayObjects()[i].getTool.get.isAssignableFrom(stack.getItem().getClass()));
+					// System.out.println(stack.getItem().getClass().isAssignableFrom(getDropArrayObjects()[i].getTool.get));
+					System.out
+							.println(getDropArrayObjects()[i].getTool.get.isAssignableFrom(stack.getItem().getClass()));
+				}
 
 				if (getDropArrayObjects()[i].getTool.get.isAssignableFrom(stack.getItem().getClass())) {
 					System.out.println("You used the right tool");
@@ -62,7 +67,7 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 				} else {
 					System.out.print("Wrong Tool Used For This Array, you need an instance of"
 							+ getDropArrayObjects()[i].getTool.get.getCanonicalName() + "But instead got"
-							+ player.getActiveItem().getClass().getName());
+							+ player.getUseItem().getClass().getName());
 				}
 
 			}
@@ -75,16 +80,16 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 
 		if (loot instanceof featurecreep.api.bg.blocks.drop.SelfBlockDropArrayObject) {
 			System.out.println("Dropping Self");
-			Block.drop(world, pos, new ItemStack(this));
+			Block.popResource(world, pos, new ItemStack(this));
 		} else {
 			for (int t = 0; t < loot.drop.size(); t++) {
 				System.out.println("Right tool used");
 				if (loot.drop.get(t) instanceof Block) {
-					Block.drop(world, pos, new ItemStack((Block) loot.drop.get(t)));
+					Block.popResource(world, pos, new ItemStack((Block) loot.drop.get(t)));
 					// Block.dropStacks(state, world, pos, blockEntity, player, new
 					// ItemStack((Block) getDropArrayObjects()[i].drop.get(t)));
 				} else {
-					Block.drop(world, pos, new ItemStack((Item) loot.drop.get(t)));
+					Block.popResource(world, pos, new ItemStack((Item) loot.drop.get(t)));
 					// Block.dropStacks(state, world, pos, blockEntity, player, new ItemStack((Item)
 					// getDropArrayObjects()[i].drop.get(t)));
 				} // Gotta do entites soon
@@ -94,6 +99,10 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 
 	}
 
+	
+	
+	
+	
 	@Override
 	public FCOre isSingleSided(boolean answer) {
 		holder().single_sided = answer;

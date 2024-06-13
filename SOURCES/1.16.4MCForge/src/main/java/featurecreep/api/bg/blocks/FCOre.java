@@ -11,8 +11,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
 import game.BlockPos;
-import game.BlockState;
 import game.GameRegistries;
+import game.IBlockstate;
 import game.ItemStack;
 import game.Ore;
 import game.Player;
@@ -36,7 +36,7 @@ resource = ore_material;
   }
 
 @Override
-public void onBroken(World world, Player player, BlockPos pos, BlockState blockState, @Nullable TileEntity tileEntity, ItemStack stack) {
+public void onBroken(World world, Player player, BlockPos pos, IBlockstate blockState, @Nullable TileEntity tileEntity, ItemStack stack) {
     player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
     player.addExhaustion(0.005f);
 

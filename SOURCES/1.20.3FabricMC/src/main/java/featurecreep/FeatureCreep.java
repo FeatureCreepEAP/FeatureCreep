@@ -28,10 +28,9 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.mixin.CoreMod;
 import game.CommandDispatcher;
-import game.CommandSourceStack;
+import game.CommandOriginStack;
 import javassist.ClassPool;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 
 public class FeatureCreep {
 
@@ -86,7 +85,7 @@ public class FeatureCreep {
 	}
 
 	// TOCHANGE
-	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandSourceStack> dispatcher) {
+	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {
 		dispatcher.register(CommandDispatcher.literal("fcdnf").executes(context -> {
 			// Code to execute when the command is executed
 

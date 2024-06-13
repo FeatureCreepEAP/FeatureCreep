@@ -27,7 +27,7 @@ import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import game.CommandDispatcher;
-import game.CommandSourceStack;
+import game.CommandOriginStack;
 import javassist.ClassPool;
 import net.minecraft.launchwrapper.Launch;
 
@@ -82,7 +82,7 @@ loader.loadMods();
 		}
 	
 	   //TOCHANGE
-          public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandSourceStack> dispatcher) {
+          public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {
                  dispatcher.register(CommandDispatcher.literal("fcdnf")
                          .executes(context -> {
                              // Code to execute when the command is executed

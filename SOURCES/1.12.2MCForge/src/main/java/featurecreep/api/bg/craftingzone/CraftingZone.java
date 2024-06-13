@@ -198,7 +198,7 @@ objects.add( new CraftObject (result, quantity, ingredient0, ingredient1, ingred
 		  }else
 		  {
 			  FCItemAPI items = (FCItemAPI)item;
-			  inst.smelt_item(items.get(), stack, xp);
+			  inst.addRecipe(items.get(), stack, xp);
 		  }
 	  
 	  

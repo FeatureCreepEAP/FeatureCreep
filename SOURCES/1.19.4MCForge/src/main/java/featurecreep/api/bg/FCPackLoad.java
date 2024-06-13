@@ -1,4 +1,3 @@
-
 package featurecreep.api.bg;
 
 import java.io.File;
@@ -43,7 +42,7 @@ public class FCPackLoad implements ResourcePackProvider {
 
 
 		@Override
-		public IResourcePack open(String string) {
+		public IResourcePack def_unknown_7382_(String string) {
 			// TODO Auto-generated method stub
 			return new DirectoryResourcePack(string, loc.toPath(), false);
 		}

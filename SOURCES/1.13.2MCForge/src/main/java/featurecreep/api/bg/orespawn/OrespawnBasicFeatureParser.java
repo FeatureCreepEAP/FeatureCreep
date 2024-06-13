@@ -10,18 +10,19 @@ import java.util.function.Predicate;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.bg.registries.GameRegistries;
 import game.Biome;
 import game.Biomes;
 import game.Block;
-import game.CompositeFeature;
-import game.GameRegistries;
-import game.IBlockstate;
-import game.OreGen;
+import game.BlockPropertiesData;
+import game.CompositeMapFeature;
+import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
+import game.RegistryInterface;
 import game.ResourceConfig;
 import game.ResourceLocation;
-import game.WorldGenFeature;
-import obf.class_unknown_1069.Feature;
+import game.StageGeneration.Feature;
+import game.WorldDecorationGenerator;
 
 public class OrespawnBasicFeatureParser {
     public static void spawnOresFromDefaultConfig() {
@@ -88,52 +89,52 @@ public class OrespawnBasicFeatureParser {
             }
             string3 = getCorrectNameSpace(string3);
             String[] block_identifier = string3.split(":");
-            Block block5 = GameRegistries.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+            Block block5 = RegistryInterface.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
             String string6 = modelNode.get("blocks").get(0).get("name").asString();
           if(FeatureCreep.debug_mode) {
             System.out.println(getCorrectNameSpace(string6));
           }
             String[] new_block_identifier = getCorrectNameSpace(string6).split(":");
-            Block block8 = GameRegistries.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+            Block block8 = RegistryInterface.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
            if(FeatureCreep.debug_mode) {
             System.out.println(block5.getLocalisedNameAsTextObject());
             System.out.println(block8.getLocalisedNameAsTextObject());
            }
-            Predicate<IBlockstate> predicate9 = ResourceConfig.var_unknown_117567;
-            CompositeFeature compositeFeature10 = Biome.<ResourceConfig, RangeDecoratorConfiguration>def_unknown_138509(WorldGenFeature.var_unknown_117484, new ResourceConfig(predicate9, block8.getDefaultState(), modelNode.get("parameters").get("size").asInt()), Biome.var_unknown_116468, new RangeDecoratorConfiguration(modelNode.get("parameters").get("frequency").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("maxHeight").asInt()));
-            Biomes.SMALL_END_ISLANDS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.END_MIDLANDS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.END_HIGHLANDS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.END_BARRENS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.WARM_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.LUKEWARM_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.COLD_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.DEEP_WARM_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.DEEP_LUKEWARM_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.DEEP_COLD_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.DEEP_FROZEN_OCEAN.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.THE_VOID.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.SUNFLOWER_PLAINS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.DESERT_LAKES.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.GRAVELLY_MOUNTAINS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.FLOWER_FOREST.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.TAIGA_MOUNTAINS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.SWAMP_HILLS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.ICE_SPIKES.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.var_unknown_116534.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.var_unknown_116564.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.TALL_BIRCH_FOREST.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.TALL_BIRCH_HILLS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.DARK_FOREST_HILLS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.SNOWY_TAIGA_MOUNTAINS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.GIANT_SPRUCE_TAIGA.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.GIANT_SPRUCE_TAIGA_HILLS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.MODIFIED_GRAVELLY_MOUNTAINS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.SHATTERED_SAVANNA.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.SHATTERED_SAVANNA_PLATEAU.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.ERODED_BADLANDS.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
-            Biomes.MODIFIED_BADLANDS_PLATEAU.def_unknown_138511(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Predicate<BlockPropertiesData> predicate9 = MineralDepositFeatureGenerator.IS_ROCK;
+            CompositeMapFeature compositeFeature10 = Biome.<MineralDepositFeatureGenerator, RangeDecoratorConfiguration>createCompositeFeature(WorldDecorationGenerator.MINABLE, new MineralDepositFeatureGenerator(predicate9, block8.getDefaultState(), modelNode.get("parameters").get("size").asInt()), Biome.COUNT_RANGE_DECORATOR, new RangeDecoratorConfiguration(modelNode.get("parameters").get("frequency").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("maxHeight").asInt()));
+            Biomes.SMALL_END_ISLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.END_MIDLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.END_HIGHLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.END_BARRENS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_FROZEN_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.THE_VOID.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SUNFLOWER_PLAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DESERT_LAKES.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.FLOWER_FOREST.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SWAMP_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.ICE_SPIKES.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+          //  Biomes.var_unknown_116534.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+           // Biomes.var_unknown_116564.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.TALL_BIRCH_FOREST.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.TALL_BIRCH_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DARK_FOREST_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SNOWY_TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.GIANT_SPRUCE_TAIGA.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.GIANT_SPRUCE_TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.MODIFIED_GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SHATTERED_SAVANNA.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SHATTERED_SAVANNA_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.ERODED_BADLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.MODIFIED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
         }
     }
     

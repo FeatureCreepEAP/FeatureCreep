@@ -9,7 +9,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.apache.commons.lang3.SerializationUtils;
+//import org.apache.commons.lang3.SerializationUtils;
 
 import featurecreep.api.PKZipUtils;
 import featurecreep.api.bg.BGSide;
@@ -28,7 +28,7 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.NotFoundException;
 import net.minecraft.launchwrapper.IClassTransformer;
-import obf.class_unknown_1559;
+//import obf.class_unknown_1559;
 
 public class FCCoreMod implements IClassTransformer{
 
@@ -235,7 +235,7 @@ System.out.println("trying to inject");
 	    ClassPool pool = ClassPool.getDefault();
 	    pool.insertClassPath(new ByteArrayClassPath("bid", arr));
 
-    	pool.insertClassPath(new ByteArrayClassPath("aee",SerializationUtils.serialize(class_unknown_1559.class)));
+    	//pool.insertClassPath(new ByteArrayClassPath("aee",SerializationUtils.serialize(class_unknown_1559.class)));
 
 	    
 	    

@@ -27,7 +27,6 @@ import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import game.BasicCommand;
-import game.CommandException;
 import game.ICommandSender;
 import game.Server;
 import javassist.ClassPool;
@@ -85,19 +84,18 @@ loader.loadMods();
 		public static class registerFCDNF extends BasicCommand {
 
 			@Override
-			public String def_unknown_140233(ICommandSender iCommandSender) {
+			public String getUsage(ICommandSender iCommandSender) {
 				// TODO Auto-generated method stub
 				return "fcdnf install <Package>"
 						+ "Its pretty similar to DNF";
 			}
 			@Override
-			public String def_unknown_140235() {
+			public String getName() {
 				// TODO Auto-generated method stub
 				return "fcdnf";
 			}
 			@Override
-			public void def_unknown_143370(Server minecraftServer, ICommandSender iCommandSender, String[] arr)
-					throws CommandException {
+			public void run(Server minecraftServer, ICommandSender iCommandSender, String[] arr) {
 				// TODO Auto-generated method stub
 	            fcdnf.parseArgs(new String[] {"dnf","install","modrinth-downloader"})   ;                 
 			}

@@ -115,23 +115,23 @@ public class FCToolMaterial implements ToolMaterial {
 	}
 
 	@Override
-	public RegistryTagKey<Block> def_unknown_115191_() {
+	public RegistryTagKey<Block> getInverseTag() {
 		// TODO Auto-generated method stub
 	
 		if(getToolHarvestLevel() == 0) {
-			return BlockTags.var_unknown_38767_;//Prioritising butter as itll likely have more supported blocks
+			return BlockTags.INCORRECT_FOR_GOLD_TOOL;//Prioritising butter as itll likely have more supported blocks
 		} else if(getToolHarvestLevel() == 1) {
-			return BlockTags.var_unknown_38766_;
+			return BlockTags.INCORRECT_FOR_STONE_TOOL;
 		}else if(getToolHarvestLevel() == 2) {
-			return BlockTags.var_unknown_38765_;
+			return BlockTags.INCORRECT_FOR_IRON_TOOL;
 		}else if(getToolHarvestLevel() == 3) {
-			return BlockTags.var_unknown_38764_;
+			return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
 		}else if(getToolHarvestLevel() == 4) {
-			return BlockTags.var_unknown_38763_;
+			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
 		
 		
-			return BlockTags.var_unknown_38768_;//Mine everything else for now. FC Blocks still rely on harvest level to be mined for now
+			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;//Mine everything else for now. FC Blocks still rely on harvest level to be mined for now
 		
 				
 	}

@@ -273,7 +273,7 @@ extends BlockOrItem<T> {
 
     @Override
     default public void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-        this.get().asItem().onBlockDestroyed(this.toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
+        this.get().asItem().onBlockLeftClick(this.toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
     }
 
     @Override
@@ -293,7 +293,7 @@ extends BlockOrItem<T> {
 
     @Override
     default public void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {
-        this.get().asItem().onBlockDestroyed(this.toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());
+        this.get().asItem().onBlockLeftClick(this.toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());
     }
 
     default public FCBlockAPI isSolid(boolean result) {
@@ -313,7 +313,7 @@ extends BlockOrItem<T> {
     }
 
     default public void executeOnBroken(AbstractPlayer player, int dimension, FCBlockPos pos) {
-        this.get().onBroken(player.getWorld().get(), pos, this.get().getDefaultState());
+        this.get().onBroke(player.getWorld().get(), pos, this.get().getDefaultState());
     }
 
     default public void onBroken(AbstractPlayer player, int dimension, FCBlockPos pos) {

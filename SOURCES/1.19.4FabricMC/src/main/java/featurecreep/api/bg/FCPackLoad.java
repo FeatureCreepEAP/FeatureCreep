@@ -1,4 +1,3 @@
-
 package featurecreep.api.bg;
 
 import java.io.File;

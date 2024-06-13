@@ -38,7 +38,7 @@ public class GameRegistries {
 	
 	public static Block getBlockFromGameRegistries(int id)
 	{
-		return game.GameRegistries.BLOCK.get(id);//May not work
+		return game.GameRegistries.BLOCK.byId(id);//May not work
 	}
 	
 	public static boolean BlockKeyExistsInRegistry(String registry_name)
@@ -87,7 +87,7 @@ public class GameRegistries {
 	
 	public static Biome getBiomeFromGameRegistries(int id)
 	{
-		return MapWorldGenerationRegistries.BIOME.get(id);
+		return MapWorldGenerationRegistries.BIOME.byId(id);
 	}
 	
 	public static boolean BiomeKeyExistsInRegistry(String registry_name)

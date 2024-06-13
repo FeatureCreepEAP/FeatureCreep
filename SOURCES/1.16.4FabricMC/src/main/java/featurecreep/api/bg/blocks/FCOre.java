@@ -11,8 +11,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
 import game.BlockPos;
-import game.BlockState;
 import game.GameRegistries;
+import game.IBlockstate;
 import game.ItemStack;
 import game.Ore;
 import game.Player;
@@ -21,24 +21,26 @@ import game.TileEntity;
 import game.World;
 import io.smallrye.common.constraint.Nullable;
 
+
 public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 
-  
 	public BlockFieldHolder holder = new BlockFieldHolder();
 	@Override public BlockFieldHolder holder() {	return holder;	}
   public Object resource;
 
 
-public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops, Object ore_material) {
-    super(Block.Info.fromMaterial(material.get()).hardnessAndResistance(strength / 10));
+	  public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material, int strength, BlockDropArrayObject[] drops, Object ore_material) {
+		    super(Block.Info.fromMaterial(material.get()).hardnessAndResistance(strength / 10));
 initialise(id, modid, name,  group, material, strength, drops);
 resource = ore_material;
   }
 
-@Override
-public void onBroken(World world, Player player, BlockPos pos, BlockState blockState, @Nullable TileEntity tileEntity, ItemStack stack) {
-    player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
-    player.addExhaustion(0.005f);
+
+
+	  @Override
+	  public void onBroken(World world, Player player, BlockPos pos, IBlockstate blockState, @Nullable TileEntity tileEntity, ItemStack stack) {
+	      player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
+	      player.addExhaustion(0.005f);
 
 	    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), GameRegistries.ITEM.getName(stack.getItem()).toString()));
 	  System.out.println("Block Broken");
@@ -72,16 +74,15 @@ public void onBroken(World world, Player player, BlockPos pos, BlockState blockS
 	    
 
 	  }
-
-
-
+  
+  
 
   @Override
   public FCOre isSingleSided(boolean answer) {
-	holder().    single_sided = answer;
+	   holder(). single_sided = answer;
 	return this;  
   }
-
-
+  
+  
 
 }

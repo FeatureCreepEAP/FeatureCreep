@@ -12,21 +12,20 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.FeatureCreep;
 import game.Biome;
 import game.Block;
-import game.CompositeFeature;
-import game.GameRegistries;
-import game.IBlockstate;
-import game.OreGen;
+import game.BlockPropertiesData;
+import game.CompositeMapFeature;
+import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
-import game.ResourceConfig;
+import game.RegistryInterface;
 import game.ResourceLocation;
-import game.WorldGenFeature;
-import obf.class_unknown_1069.Feature;
+import game.StageGeneration.Feature;
+import game.WorldDecorationGenerator;
 
 
 public class OrespawnBasicFeatureParser {
 
 	
-public static List<CompositeFeature> configed = new ArrayList <CompositeFeature>();
+public static List<CompositeMapFeature> configed = new ArrayList <CompositeMapFeature>();
 	
 	
 	//I gotta rewrite all of the Orespawn Module including this part once I get more time
@@ -123,7 +122,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = GameRegistries.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = RegistryInterface.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -132,7 +131,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	System.out.println(getCorrectNameSpace(new_block));
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = GameRegistries.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = RegistryInterface.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	
@@ -140,7 +139,8 @@ if (node.get("enabled").asBoolean() == true)
 	//System.out.println(replacedBlock.getName());
 	//System.out.println(newBlock.getName());
 
-    final Predicate<IBlockstate> RULE = ResourceConfig.var_unknown_117567; //gotta make this more configuarable later
+    Predicate<BlockPropertiesData> RULE = MineralDepositFeatureGenerator.IS_ROCK;
+ //gotta make this more configuarable later
 
 	
 	// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, replacedBlock.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, replacedBlock.getDefaultState())), 4));
@@ -149,9 +149,9 @@ if (node.get("enabled").asBoolean() == true)
 	// final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
 //Gotta update mappings on this version
-    CompositeFeature ORE_CONFIG = Biome.def_unknown_138509(WorldGenFeature.var_unknown_117484,
+    CompositeMapFeature ORE_CONFIG = Biome.createCompositeFeature(WorldDecorationGenerator.MINABLE,
 						
-						new ResourceConfig(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), Biome.var_unknown_116468, new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
+						new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), Biome.COUNT_RANGE_DECORATOR, new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
 
 //			new OreFeatureConfig(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), Biome.field_76785, new RangeDecoratorConfig(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt(), node.get("parameters").get("frequency").asInt()));
 
@@ -203,7 +203,7 @@ public static void place(Biome biome) {
 	for (int f = 0; f < OrespawnBasicFeatureParser.configed.size(); f++) {
 
 	
-		biome.def_unknown_138511(Feature.UNDERGROUND_ORES, OrespawnBasicFeatureParser.configed.get(f));
+		biome.addFeature(Feature.UNDERGROUND_ORES, OrespawnBasicFeatureParser.configed.get(f));
 		if(FeatureCreep.debug_mode) {
 		System.out.println(OrespawnBasicFeatureParser.configed.get(f).toString());
 	}

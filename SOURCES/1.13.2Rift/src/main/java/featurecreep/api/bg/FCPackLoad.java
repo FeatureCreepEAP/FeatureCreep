@@ -87,11 +87,11 @@ public FCPackLoad(File location) {
 	if (loc.toString().contains("datapack")) {
 	      
 		
-	       pack =     ResourcePackInfo.register("data"+PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), factory, ResourcePackInfo.InsertionPosition.TOP);
+	       pack =     ResourcePackInfo.createResourcePack("data"+PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), factory, ResourcePackInfo.InsertionPosition.TOP);
 			
 	}else {	
 		
-		pack =     ResourcePackInfo.register(PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), factory, ResourcePackInfo.InsertionPosition.TOP);
+		pack =     ResourcePackInfo.createResourcePack(PackLoader.pack_name, true, () -> new DirectoryResourcePack(loc), factory, ResourcePackInfo.InsertionPosition.TOP);
 
 	}
 			 if (pack != null) {

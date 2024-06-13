@@ -3,29 +3,29 @@ package featurecreep.api.soundeffects;
 import game.BuiltInRegistries;
 import game.GameRegistries;
 import game.RegistryEntry;
-import game.SoundEffect;
+import game.SoundPoolComponent;
 
 public class VanillaSoundEffect implements AbstractSoundEffect {
 
-	public obf.class_unknown_586_ event;
+	public SoundPoolComponent event;
 
-	public VanillaSoundEffect(obf.class_unknown_586_ event) {
+	public VanillaSoundEffect(SoundPoolComponent event) {
 		this.event = event;
 	}
 	
-	public VanillaSoundEffect(RegistryEntry<obf.class_unknown_586_> event) {
+	public VanillaSoundEffect(RegistryEntry<SoundPoolComponent> event) {
 		this.event = event.comp_349();
 	}
 	
 
 	@Override
-	public obf.class_unknown_586_ get() {
+	public SoundPoolComponent get() {
 		// TODO Auto-generated method stub
 		return event;
 	}
 
 	@Override
-	public RegistryEntry<obf.class_unknown_586_> getEntry() {
+	public RegistryEntry<SoundPoolComponent> getEntry() {
 		// TODO Auto-generated method stub
 	//return (Reference<SoundEffect>)	Mirror.of(SoundEffects.class).method(FeatureCreep.mappings.getMappings().reverse.getDefMappedName("game.SoundEffects.def_unknown_25648(Lgame/ResourceLocation;)Lgame/RegistryEntry/Reference;")).invoke(get().getFile());
         return GameRegistries.registerReference(BuiltInRegistries.SOUND_EFFECTS, get().getFile(), get());

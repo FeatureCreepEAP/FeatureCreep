@@ -28,7 +28,7 @@ static {
 	// Needs to be fixed
 	public static JarFile getGameJar() {
 		List<String> cp = ClassPathUtils.getClassPath();
-		List<String> compat = ClassPathUtils.findJarFilesWithPackage(cp, "net.minecraft.client.");
+		List<String> compat = ClassPathUtils.findJarFilesWithPackage(cp, "net.minecraft.world");
 
 		try {
 			return new JarFile(compat.get(0));
@@ -41,7 +41,7 @@ static {
 	}
 
 	public static JarFile getShadow() {
-		String target = FeatureCreep.gamepath + "/usr/share/.shadows/mc_fabric_" + FeatureCreep.game_version + ".jar";
+		String target = FeatureCreep.gamepath + "/usr/share/.shadows/mc_forge_" + FeatureCreep.game_version + ".jar";
 		if (new File(target).exists()) {
 			try {
 				return new JarFile(target);
@@ -64,7 +64,7 @@ static {
 	}
 
 	public static JarFile getFCIShadow() {
-		String target = FeatureCreep.gamepath + "/usr/share/.fci_shadows/fabricmc_" + FeatureCreep.game_version + "-"
+		String target = FeatureCreep.gamepath + "/usr/share/.fci_shadows/mc_forge_" + FeatureCreep.game_version + "-"
 				+ FeatureCreep.version + ".jar";
 		if (new File(target).exists()) {
 			try {

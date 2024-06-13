@@ -20,8 +20,9 @@
   </plugins>
 </build>
  <properties>
- 	<maven.compiler.target>17</maven.compiler.target>
- 	 	<maven.compiler.source>17</maven.compiler.source>
+ 	<maven.compiler.target>21</maven.compiler.target>
+ 	 	<maven.compiler.source>21</maven.compiler.source>
+ 	 	        <fcdependencies.dir>${user.home}/fcdependencies/1.20.5MCForge</fcdependencies.dir>  
  </properties>
  
   <repositories>
@@ -330,5 +331,17 @@
  		<artifactId>mixin</artifactId>
  		<version>0.8.5</version>
  	</dependency>
+ 	
+ 	
+ 	        <!-- 添加本地 JAR 文件作为依赖 -->  
+        <dependency>  
+            <groupId>your.custom.group.id</groupId>  
+            <artifactId>fci</artifactId>  
+            <version>1.0.0</version> <!-- 可以是任意版本号，但最好是有意义的 -->  
+            <scope>system</scope>  
+            <systemPath>${fcdependencies.dir}/fci.jar</systemPath>  
+        </dependency> 
+ 	
+ 	
    </dependencies>
 </project>

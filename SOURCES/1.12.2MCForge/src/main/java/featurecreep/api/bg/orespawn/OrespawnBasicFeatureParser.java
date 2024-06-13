@@ -13,11 +13,10 @@ import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
 import game.Block;
-import game.OreGen;
+import game.DecoratorComponent;
+import game.MineralDepositFeatureGenerator;
 import game.ResourceLocation;
 import game.World;
-import game.WorldBuilder;
-import game.WorldDecorationGenerator;
 
 
 public class OrespawnBasicFeatureParser {
@@ -176,7 +175,7 @@ return new_string;
 
 
 	
-public static void applyOres(World world, Random rand, WorldBuilder dec)
+public static void applyOres(World world, Random rand, DecoratorComponent dec)
 {
 	for (int j = 0; j < configs.size(); j++) {
 
@@ -184,9 +183,9 @@ public static void applyOres(World world, Random rand, WorldBuilder dec)
 	//	accs.invoke(world, rand, configs.get(j).frequency, new WorldGenMinable(configs.get(j).block.getDefaultState(), configs.get(j).size), configs.get(j).minY, configs.get(j).maxY);
 		//Mirror having issues
 		try {
-		Method meth	= dec.getClass().getDeclaredMethod("func_76795_a", World.class, Random.class, int.class, WorldDecorationGenerator.class, int.class, int.class);
+		Method meth	= dec.getClass().getDeclaredMethod("func_76795_a", World.class, Random.class, int.class, MineralDepositFeatureGenerator.class, int.class, int.class);
 	 meth.setAccessible(true);
-	 meth.invoke(dec, world, rand, configs.get(j).frequency, new OreGen(configs.get(j).block.getDefaultState(), configs.get(j).size), configs.get(j).minY, configs.get(j).maxY);
+	 meth.invoke(dec, world, rand, configs.get(j).frequency, new MineralDepositFeatureGenerator(configs.get(j).block.getDefaultState(), configs.get(j).size), configs.get(j).minY, configs.get(j).maxY);
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

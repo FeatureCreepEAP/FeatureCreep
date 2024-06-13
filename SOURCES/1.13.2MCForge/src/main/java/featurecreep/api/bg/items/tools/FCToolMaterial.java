@@ -78,19 +78,10 @@ public class FCToolMaterial implements ToolMaterial
     }
     
     @Override
-    public float getAttackDamage() {
-        return (float)this.getToolAttackDamage();
-    }
-    
-    @Override
     public int getHarvestLevel() {
         return this.getToolHarvestLevel();
     }
-    
-    @Override
-    public int getEnchantability() {
-        return this.getToolEnchantability();
-    }
+ 
     
     @Override
     public ToolRepairIngredient getRepairIngredient() {
@@ -106,6 +97,22 @@ public class FCToolMaterial implements ToolMaterial
     public float getEfficiency() {
         return (float)this.getToolEfficiency();
     }
+
+
+	@Override
+	public float getAttackDamage() {
+		// TODO Auto-generated method stub
+		return (float)this.getToolAttackDamage();
+	}
+
+
+
+
+	@Override
+	public int getEnchantability() {
+		// TODO Auto-generated method stub
+		return this.getToolEnchantability();
+	}
 	
 	
 }

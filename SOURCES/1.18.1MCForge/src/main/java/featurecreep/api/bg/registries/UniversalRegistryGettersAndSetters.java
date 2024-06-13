@@ -214,7 +214,7 @@ public class UniversalRegistryGettersAndSetters {
 		ForgeRegistries.ITEMS.register((Item)Entry);
 	}else if(registry.equals(game.GameRegistries.BLOCK)){
 		ForgeRegistries.BLOCKS.register((Block)Entry);
-	}else if(registry.equals(game.GameRegistries.var_unknown_108770)){
+	}else if(registry.equals(game.GameRegistries.ATTRIBUTE)){
 		ForgeRegistries.ATTRIBUTES.register((UnitModifier) Entry);
 	}else if(registry.equals(game.GameRegistries.ACTIVITY)){
 			ForgeRegistries.ACTIVITIES.register((EntityActivity) Entry);
@@ -242,7 +242,7 @@ public class UniversalRegistryGettersAndSetters {
 				return DeferredRegister.create(ForgeRegistries.ITEMS, name);
 			}else if(registry.equals(game.GameRegistries.BLOCK)){
 				return DeferredRegister.create(ForgeRegistries.BLOCKS, name);
-			}else if(registry.equals(game.GameRegistries.var_unknown_108770)){
+			}else if(registry.equals(game.GameRegistries.ATTRIBUTE)){
 				return DeferredRegister.create(ForgeRegistries.ATTRIBUTES, name);
 			}else if(registry.equals(game.GameRegistries.ACTIVITY)){
 				return DeferredRegister.create(ForgeRegistries.ACTIVITIES, name);

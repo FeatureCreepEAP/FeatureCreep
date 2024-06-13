@@ -1,12 +1,12 @@
 package featurecreep.api.soundeffects;
 
 import game.RegistryEntry;
-import game.SoundEffect;
+import game.SoundPoolComponent;
 
 public interface AbstractSoundEffect {
 
-	public obf.class_unknown_586_ get();
+	public SoundPoolComponent get();
 	
-	public RegistryEntry<obf.class_unknown_586_> getEntry();
+	public RegistryEntry<SoundPoolComponent> getEntry();
 
 }

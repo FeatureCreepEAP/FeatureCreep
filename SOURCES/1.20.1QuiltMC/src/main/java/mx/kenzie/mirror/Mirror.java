@@ -1,11 +1,10 @@
 package mx.kenzie.mirror;
 
-import org.jetbrains.annotations.TestOnly;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+
 
 /**
  * Mirrors a type for accessing its members.
@@ -208,7 +207,7 @@ public class Mirror<Thing> {
         return glass.loadClass(target, name, bytecode);
     }
     
-    @TestOnly
+    
     protected byte[] retrieveCode(final Accessor object) {
         if (object instanceof FieldAccessor<?> accessor)
             return glass.writeFieldAccessor(accessor.getTargetType(), accessor.reflect(), accessor.getClass().getName()

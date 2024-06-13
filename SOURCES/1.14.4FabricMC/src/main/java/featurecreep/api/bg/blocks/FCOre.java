@@ -10,14 +10,14 @@ import featurecreep.api.bg.items.vanilla.VanillaItem;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
+import game.BlockAccessInterface;
 import game.BlockPos;
-import game.BlockState;
-import game.GameRegistries;
-import game.IBlockAccess;
+import game.BlockPropertiesData;
 import game.ItemStack;
 import game.Ore;
 import game.Player;
 import game.PlayerStatisticList;
+import game.RegistryInterface;
 import game.TileEntity;
 import game.World;
 import io.smallrye.common.constraint.Nullable;
@@ -37,10 +37,10 @@ resource = ore_material;
 
 
 	  @Override
-	  public void onBroken(World world, Player player, BlockPos pos, BlockState blockState, @Nullable TileEntity tileEntity, ItemStack stack) {
+	  public void onMinedSucessfully(World world, Player player, BlockPos pos, BlockPropertiesData blockState, @Nullable TileEntity tileEntity, ItemStack stack) {
 	      player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
 	      player.addExhaustion(0.005f);
-		    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), GameRegistries.ITEM.getName(stack.getItem()).toString()));
+		    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), RegistryInterface.ITEM.getName(stack.getItem()).toString()));
 		  System.out.println("Block Broken");
 		    for (int i = 0; i < arr.size(); i++) {
 		    	  System.out.println("Scanning Drops");
@@ -82,7 +82,7 @@ resource = ore_material;
 
   
   @Override
-  public boolean canHarvestBlock(BlockState state, IBlockAccess world, BlockPos pos, Player player) {
+  public boolean canHarvestBlock(BlockPropertiesData state, BlockAccessInterface world, BlockPos pos, Player player) {
   	// TODO Auto-generated method stub
   	return true;
   }

@@ -3,7 +3,7 @@ package featurecreep.api.bg.blocks.vanilla;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.ui.FCCreativeTabs;
 import game.Block;
-import game.IBlockstate;
+import game.BlockPropertiesData;
 
 
 /**
@@ -16,9 +16,9 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 	@Override public featurecreep.api.bg.blocks.BlockFieldHolder holder() {	return holder;	}
 	
 	public Block vanilla_block; //BE VERY CAREFUL
-	public IBlockstate state; //BE EVEN MORE CAREFUL WITH THIS, MC SPECIFC TO NEW VERSIONS
+	public BlockPropertiesData  state; //BE EVEN MORE CAREFUL WITH THIS, MC SPECIFC TO NEW VERSIONS
 	
-	public VanillaBlock(Block block, IBlockstate state, String registry_name)
+	public VanillaBlock(Block block, BlockPropertiesData  state, String registry_name)
 	{
 		block	= vanilla_block; //Set the Item to be returned
 		setModId(registry_name.split(":")[0]);
@@ -36,7 +36,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 	this(block, block.getDefaultState(), registry_name);	
 	}
 	
-	public VanillaBlock(FCBlockAPI block, IBlockstate state, String registry_name) //As a backup or for ported items
+	public VanillaBlock(FCBlockAPI block, BlockPropertiesData  state, String registry_name) //As a backup or for ported items
 	{
 		this (block.get(), state, registry_name);
 	}
@@ -53,7 +53,7 @@ public class VanillaBlock implements FCBlockAPI<VanillaBlock>{
 return 	vanilla_block; //BE VERY CAREFUL
 	}
 
-	public IBlockstate getFCBlockState() //BE EVEN MORE CAREFUL WITH THIS, MC SPECIFC TO NEW VERSIONS
+	public BlockPropertiesData  getFCBlockState() //BE EVEN MORE CAREFUL WITH THIS, MC SPECIFC TO NEW VERSIONS
 	{
 		return state;
 	}

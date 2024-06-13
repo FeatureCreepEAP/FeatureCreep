@@ -28,6 +28,7 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.mixin.CoreMod;
 import game.CommandDispatcher;
+import game.CommandOriginStack;
 import javassist.ClassPool;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.versions.mcp.MCPVersion;
@@ -93,7 +94,7 @@ public class FeatureCreep {
 	}
 
 	// TOCHANGE
-	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<obf.class_unknown_1967_> dispatcher) {
+	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {
 		dispatcher.register(CommandDispatcher.literal("fcdnf").executes(context -> {
 			// Code to execute when the command is executed
 

@@ -4,19 +4,14 @@ import java.util.ArrayList;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
-import featurecreep.api.bg.blocks.drop.BlockDropArrayObjects;
-import featurecreep.api.bg.blocks.drop.SelfBlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
-import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
-import io.smallrye.common.constraint.Nullable;
-import game.Block;
+import game.BlockAccessInterface;
 import game.BlockPos;
-import game.IBlockAccess;
-import game.IBlockstate;
+import game.BlockPropertiesData;
 import game.Item;
 import game.ItemStack;
 import game.Ore;
@@ -24,6 +19,7 @@ import game.Player;
 import game.PlayerStatisticList;
 import game.TileEntity;
 import game.World;
+import io.smallrye.common.constraint.Nullable;
 
 public class FCOre extends Ore implements FCBlockAPI<FCOre> {
     public BlockFieldHolder holder;
@@ -42,7 +38,7 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
     
  
     @Override
-    public void onMinedSucessfully(World worldIn, Player player, BlockPos pos, IBlockstate state, @Nullable TileEntity te, ItemStack stack)
+    public void onMinedSucessfully(World worldIn, Player player, BlockPos pos, BlockPropertiesData state, @Nullable TileEntity te, ItemStack stack)
     {
         player.incrementStat(PlayerStatisticList.getBlockStats(this));
         player.addExhaustion(0.005F);
@@ -82,7 +78,7 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
         return this;
     }
     
-    public boolean canHarvestBlock(IBlockAccess iBlockAccess, BlockPos blockPos, Player player) {
+    public boolean canHarvestBlock(BlockAccessInterface iBlockAccess, BlockPos blockPos, Player player) {
         return true;
     }
 }

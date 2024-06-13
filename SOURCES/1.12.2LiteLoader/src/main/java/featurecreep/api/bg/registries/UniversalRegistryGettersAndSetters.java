@@ -64,7 +64,7 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id)
 	{
-		Item.registry.def_unknown_141971(id, new ResourceLocation (registry_name.split(":")[0], registry_name.split(":")[1]), item);
+		Item.registry.register(id, new ResourceLocation (registry_name.split(":")[0], registry_name.split(":")[1]), item);
 		item.setUnlocalisedName(registry_name.split(":")[0] + "!" +  registry_name.split(":")[1]);
 		item.setCreativeTab(default_tab);
 		//May not be needed since we do start early and use vanilla registries
@@ -218,9 +218,9 @@ mesh.register(item, 0, new ModelResourceLocation(registry_name, "inventory"));
 		block.setUnlocalisedName(registry_name.split(":")[0] + "!" +  registry_name.split(":")[1]);
 		block.setCreativeTab(default_tab);
 
-		Block.registry.def_unknown_141971(id, new ResourceLocation (registry_name.split(":")[0], registry_name.split(":")[1]), block);
+		Block.registry.register(id, new ResourceLocation (registry_name.split(":")[0], registry_name.split(":")[1]), block);
 		
-		Block.BLOCKSTATE_IDS.set(block.getDefaultState(), id);
+		Block.BLOCKSTATE_IDS.put(block.getDefaultState(), id);
 		Item item =	new BlockAsItem(block).setCreativeTab(default_tab);
 		
 
@@ -234,7 +234,7 @@ mesh.register(item, 0, new ModelResourceLocation(registry_name, "inventory"));
 		} 
 		
 		
-	Item.registry.def_unknown_141971(id, new ResourceLocation (registry_name.split(":")[0], registry_name.split(":")[1]), item);
+	Item.registry.register(id, new ResourceLocation (registry_name.split(":")[0], registry_name.split(":")[1]), item);
 
 		
 	}

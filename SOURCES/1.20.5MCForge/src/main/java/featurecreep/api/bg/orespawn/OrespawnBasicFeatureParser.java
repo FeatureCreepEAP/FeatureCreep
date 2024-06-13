@@ -20,7 +20,7 @@ import game.PlacementModifier;
 import game.RegistryKey;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
-import obf.class_unknown_2362_.Feature;
+import game.StageGeneration.Feature;
 
 public class OrespawnBasicFeatureParser {
 

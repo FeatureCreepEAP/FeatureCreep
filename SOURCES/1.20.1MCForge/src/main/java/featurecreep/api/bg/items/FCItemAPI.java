@@ -121,7 +121,7 @@ extends BlockOrItem<T> {
 
     @Override
     default public void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-        this.get().getStackForRender().postMine(worl.get(), block.get().getDefaultState(), pos, p.get());
+        this.get().getStackForRender().mineBlock(worl.get(), block.get().getDefaultState(), pos, p.get());
     }
 
     @Override
@@ -141,6 +141,6 @@ extends BlockOrItem<T> {
 
     @Override
     default public void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {
-        this.get().onBlockDestroyed(this.toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());
+        this.get().onBlockLeftClick(this.toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());
     }
 }

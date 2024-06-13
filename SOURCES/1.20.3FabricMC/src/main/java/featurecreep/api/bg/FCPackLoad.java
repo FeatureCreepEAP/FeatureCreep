@@ -33,7 +33,7 @@ public class FCPackLoad implements ResourcePackProvider {
 	}
 
 	@Override
-	public void register(Consumer<ResourcePackInfo> consumer) {
+	public void loadPacks(Consumer<ResourcePackInfo> consumer) {
 		// TODO Auto-generated method stub
 		ModelNode node = new ModelNode();
 		node.get("pack").get("description")
@@ -57,12 +57,12 @@ public class FCPackLoad implements ResourcePackProvider {
 		// ResourcePackInfo.Loader packFactory = new DirPackLoader();
 		ResourcePackInfo.Loader packFactory = new DirectoryResourcePack.DirectoryPackLoader(loc.toPath(), false);
 
-		ResourcePackInfo.PackMcMeta metadata = ResourcePackInfo.creatPackMcMeta("datapack", packFactory,
+		ResourcePackInfo.PackMcMeta metadata = ResourcePackInfo.readPackInfo("datapack", packFactory,
 				DataPackLoader.packnumber);
 		// instantTextBoxType mutable_builder =
 		// instantTextBoxType.empty();//instantTextBoxType.translate("fcpack");
-		ResourcePackInfo pack = ResourcePackInfo.register("datapack", null, true, packFactory, metadata,
-				ResourcePackInfo.InsertionPosition.TOP, true, PackSources.BUILTIN);
+		ResourcePackInfo pack = ResourcePackInfo.create("datapack", null, true, packFactory, metadata,
+				ResourcePackInfo.InsertionPosition.TOP, true, PackSources.BUILT_IN);
 		if (pack != null) {
 			System.out.println("Adding FCDatapack");
 			consumer.accept(pack);

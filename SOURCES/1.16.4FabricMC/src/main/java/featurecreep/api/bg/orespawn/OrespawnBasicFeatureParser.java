@@ -14,15 +14,15 @@ import game.ConfiguredMapPlacement;
 import game.DepthAverageDecoratorConfig;
 import game.GameRegistries;
 import game.MapWorldGenerationRegistries;
+import game.MineralDepositFeatureGenerator;
 import game.RegistryKey;
 import game.ResourceLocation;
-import game.TerrainPlacementMod;
-import game.WorldGenFeature;
+import game.StageGeneration.Feature;
+import game.WorldBuilder;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import obf.class_unknown_1069.Feature;
-import obf.class_unknown_1210;
 
 public class OrespawnBasicFeatureParser {
 
@@ -150,7 +150,7 @@ if (node.get("enabled").asBoolean() == true)
 }
 
     BlockMatcher RULE = new BlockMatcher(replacedBlock);
-    WorldGenerationObjectConfiguration ORE_CONFIG = WorldGenFeature.ORE.config(new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature((ConfiguredMapPlacement)((ConfiguredMapPlacement)class_unknown_1210.COUNT_RANGE.config(new DepthAverageDecoratorConfig(node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt())).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt()));
+    WorldGenerationObjectConfiguration ORE_CONFIG = WorldDecorationGenerator.MINABLE.config(new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature((ConfiguredMapPlacement)((ConfiguredMapPlacement)WorldBuilder.DEPTH_AVERAGE.config(new DepthAverageDecoratorConfig(node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt())).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt()));
  
 
 	// Vein size

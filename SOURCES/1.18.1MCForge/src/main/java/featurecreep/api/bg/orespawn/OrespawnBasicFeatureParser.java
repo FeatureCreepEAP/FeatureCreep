@@ -16,15 +16,14 @@ import game.GameRegistries;
 import game.GenerationPlacement;
 import game.HeightRangePlacementModifier;
 import game.MapVerticleAnchor;
+import game.MineralDepositFeatureGenerator;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
-import game.TerrainPlacementMod;
-import game.WorldGenFeature;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import obf.class_unknown_1069.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -163,8 +162,8 @@ if (node.get("enabled").asBoolean() == true)
     
     
     
-	 final WorldGenerationObjectConfiguration<?, ?> ORE_CONFIG = WorldGenFeature.ORE
-				.config(new TerrainPlacementMod(
+	 final WorldGenerationObjectConfiguration<?, ?> ORE_CONFIG = WorldDecorationGenerator.MINABLE
+				.config(new MineralDepositFeatureGenerator(
 						RULE,
 						newBlock.getDefaultState(),
 						node.get("parameters").get("size").asInt())); // Vein size

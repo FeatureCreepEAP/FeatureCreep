@@ -2,8 +2,6 @@ package featurecreep.pizzamixin;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.SerializationUtils;
-
 import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
@@ -12,7 +10,6 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.NotFoundException;
 import net.minecraft.launchwrapper.IClassTransformer;
-import obf.class_unknown_1559;
 
 public class Core implements IClassTransformer{
 
@@ -40,7 +37,7 @@ System.out.println("trying to inject");
 	    ClassPool pool = ClassPool.getDefault();
 	    pool.insertClassPath(new ByteArrayClassPath("net.minecraft.client.settings.GameSettings", arr));
 
-    	pool.insertClassPath(new ByteArrayClassPath("net.minecraft.entity.player.EnumPlayerModelParts",SerializationUtils.serialize(class_unknown_1559.class)));
+    //	pool.insertClassPath(new ByteArrayClassPath("net.minecraft.entity.player.EnumPlayerModelParts",SerializationUtils.serialize(class_unknown_1559.class)));
 //
 //    	pool.insertClassPath(new ByteArrayClassPath("net.minecraft.entity.player.EntityPlayer$EnumChatVisibility",SerializationUtils.serialize(net.minecraft.entity.player.EntityPlayer.EnumChatVisibility.class)));
 //

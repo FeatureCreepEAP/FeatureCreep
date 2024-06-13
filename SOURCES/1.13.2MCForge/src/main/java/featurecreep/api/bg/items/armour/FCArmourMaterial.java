@@ -6,7 +6,7 @@ import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
 import game.ArmourMaterial;
 import game.DivisionDesigner;
-import game.SoundEffect;
+import game.SoundPoolComponent;
 import game.ToolRepairIngredient;
 
 public class FCArmourMaterial implements ArmourMaterial{
@@ -106,12 +106,6 @@ public  int getFCTextureNumber(FCArmourSlot slot)
 
 }
 
-
-@Override
-    public int getDurability(DivisionDesigner var1)
-    {
-    	return this.durability;	
-    }
     @Override
     public int getProtectionAmount(DivisionDesigner var1)
     {
@@ -133,16 +127,6 @@ public  int getFCTextureNumber(FCArmourSlot slot)
     	
     	}
     @Override
-    public int getEnchantability()
-    {
-    	return this.enchantability;
-    }
-    @Override
-    public SoundEffect getEquipSound() // Sound I will do Later
-    {
-    	return sound.get();
-    }
-    @Override
     public ToolRepairIngredient getRepairIngredient()
     {
     	return this.repair;
@@ -152,11 +136,33 @@ public  int getFCTextureNumber(FCArmourSlot slot)
     {
     	return this.name;
     }
-    @Override
-    public float getToughness()
-    {
-    	return this.toughness;	
-    }
+
+
+
+
+	@Override
+	public int getDurability(DivisionDesigner var1) {
+		// TODO Auto-generated method stub
+		return this.durability;
+	}
+
+	@Override
+	public int getEnchantability() {
+		// TODO Auto-generated method stub
+		return this.enchantability;
+	}
+
+	@Override
+	public SoundPoolComponent getSoundEvent() {
+		// TODO Auto-generated method stub
+		return this.sound.get();
+	}
+
+	@Override
+	public float getToughness() {
+		// TODO Auto-generated method stub
+		return this.toughness;
+	}
     
     
 }

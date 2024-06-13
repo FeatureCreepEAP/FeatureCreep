@@ -8,18 +8,19 @@ import java.util.List;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.bg.registries.GameRegistries;
 import game.Biome;
 import game.Biomes;
 import game.Block;
-import game.GameRegistries;
+import game.DecoratorComponent;
+import game.MineralDepositFeatureGenerator;
+import game.MineralDepositFeatureGenerator.Target;
 import game.RangeDecoratorConfiguration;
+import game.RegistryInterface;
 import game.ResourceLocation;
-import game.TerrainPlacementMod;
-import game.TerrainPlacementMod.Target;
-import game.WorldGenFeature;
+import game.StageGeneration.Feature;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
-import obf.class_unknown_1069.Feature;
-import obf.class_unknown_1210;
 
 public class OrespawnBasicFeatureParser {
 
@@ -128,7 +129,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -139,15 +140,12 @@ if (node.get("enabled").asBoolean() == true)
 	}
 	
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	
 	
-	//System.out.println(replacedBlock.getName());
-	//System.out.println(newBlock.getName());
-
-    final Target RULE = Target.NATURAL_STONE; //gotta make this more configuarable later
+final Target RULE = Target.NATURAL_STONE; //gotta make this more configuarable later
 
 	
 	// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, replacedBlock.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, replacedBlock.getDefaultState())), 4));
@@ -156,90 +154,44 @@ if (node.get("enabled").asBoolean() == true)
 	// final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
 
-    WorldGenerationObjectConfiguration ORE_CONFIG = Biome.configureFeature(WorldGenFeature.ORE,
+    WorldGenerationObjectConfiguration ORE_CONFIG = Biome.configureFeature(WorldDecorationGenerator.MINABLE,
 			
-			new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), class_unknown_1210.COUNT_RANGE, new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
-
+ 			new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), DecoratorComponent.COUNT_RANGE, new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
+	
 			
-			
-			Biomes.OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DEFAULT.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.PLAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DESERT.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.TAIGA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SWAMP.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.RIVER.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.NETHER.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.THE_END.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.FROZEN_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.FROZEN_RIVER.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SNOWY_TUNDRA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SNOWY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MUSHROOM_FIELDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MUSHROOM_FIELD_SHORE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BEACH.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DESERT_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.WOODED_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MOUNTAIN_EDGE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.JUNGLE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.JUNGLE_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.JUNGLE_EDGE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DEEP_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.STONE_SHORE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SNOWY_BEACH.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BIRCH_FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BIRCH_FOREST_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DARK_FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SNOWY_TAIGA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SNOWY_TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.GIANT_TREE_TAIGA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.GIANT_TREE_TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.WOODED_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SAVANNA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SAVANNA_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BADLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.WOODED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SMALL_END_ISLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.END_MIDLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.END_HIGHLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.END_BARRENS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DEEP_WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DEEP_LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DEEP_COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DEEP_FROZEN_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.THE_VOID.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SUNFLOWER_PLAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DESERT_LAKES.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.FLOWER_FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SWAMP_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.ICE_SPIKES.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MODIFIED_JUNGLE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MODIFIED_JUNGLE_EDGE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.TALL_BIRCH_FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.TALL_BIRCH_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.DARK_FOREST_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SNOWY_TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.GIANT_SPRUCE_TAIGA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.GIANT_SPRUCE_TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MODIFIED_GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SHATTERED_SAVANNA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.SHATTERED_SAVANNA_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.ERODED_BADLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.MODIFIED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BAMBOO_JUNGLE.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-			Biomes.BAMBOO_JUNGLE_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
-
-
+    Biomes.SMALL_END_ISLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.END_MIDLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.END_HIGHLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.END_BARRENS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.DEEP_WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.DEEP_LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.DEEP_COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.DEEP_FROZEN_OCEAN.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.THE_VOID.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.SUNFLOWER_PLAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.DESERT_LAKES.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.FLOWER_FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.SWAMP_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.ICE_SPIKES.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+  //  Biomes.var_unknown_116534.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+   // Biomes.var_unknown_116564.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.TALL_BIRCH_FOREST.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.TALL_BIRCH_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.DARK_FOREST_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.SNOWY_TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.GIANT_SPRUCE_TAIGA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.GIANT_SPRUCE_TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.MODIFIED_GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.SHATTERED_SAVANNA.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.SHATTERED_SAVANNA_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.ERODED_BADLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
+    Biomes.MODIFIED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);
 
 
 

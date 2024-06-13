@@ -1,18 +1,17 @@
 package featurecreep.api.soundeffects;
 
-import game.SoundEffect;
+import game.SoundPoolComponent;
 
-public class VanillaSoundEffect implements AbstractSoundEffect{
+public class VanillaSoundEffect implements AbstractSoundEffect {
 
-	public SoundEffect event;
-	
-	public VanillaSoundEffect(SoundEffect event) {
+	public SoundPoolComponent event;
+
+	public VanillaSoundEffect(SoundPoolComponent event) {
 		this.event = event;
 	}
-	
-	
+
 	@Override
-	public SoundEffect get() {
+	public SoundPoolComponent get() {
 		// TODO Auto-generated method stub
 		return event;
 	}

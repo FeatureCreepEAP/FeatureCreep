@@ -8,26 +8,7 @@ import java.util.List;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
-import game.BiomePlacementModifier;
-import game.Block;
-import game.BlockMatcher;
-import game.CountGenerationAttribute;
-import game.GameRegistries;
-import game.GenerationPlacement;
-import game.HeightRangePlacementModifier;
-import game.MapVerticleAnchor;
-import game.NudgerConfig;
-import game.NudgerPlacements;
-import game.PlacementModifier;
-import game.RegistryEntry;
-import game.ResourceLocation;
-import game.SquarePlacementModifier;
-import game.TerrainPlacementMod;
-import game.WorldGenFeature;
-import game.WorldGenerationObjectConfiguration;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import obf.class_unknown_1069.Feature;
+
 
 public class OrespawnBasicFeatureParser {
 

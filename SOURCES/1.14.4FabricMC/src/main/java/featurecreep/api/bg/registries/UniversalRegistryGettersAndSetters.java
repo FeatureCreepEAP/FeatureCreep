@@ -10,6 +10,7 @@ import game.Block;
 import game.BlockAsItem;
 import game.CreativeTab;
 import game.Item;
+import game.RegistryInterface;
 import game.ResourceLocation;
 
 public class UniversalRegistryGettersAndSetters {
@@ -55,14 +56,14 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getItemByID(id);
 		}else {
-			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), game.GameRegistries.ITEM.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
+			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), RegistryInterface.ITEM.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
 		}
 				
 	}
 
 	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id)
 	{
-		game.GameRegistries.register(game.GameRegistries.ITEM, new ResourceLocation(registry_name), item);
+		RegistryInterface.register(RegistryInterface.ITEM, new ResourceLocation(registry_name), item);
     }
 	
 	public static void registerItem(FCItemAPI item)
@@ -174,15 +175,15 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getBlockByID(id);
 		}else {
-			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), game.GameRegistries.BLOCK.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
+			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), RegistryInterface.BLOCK.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
 		}
 				
 	}
 
 	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id)
 	{
-		game.GameRegistries.register(game.GameRegistries.BLOCK, new ResourceLocation(registry_name), block);
-		game.GameRegistries.register(game.GameRegistries.ITEM, new ResourceLocation(registry_name), new BlockAsItem(block, new Item.Info().setCreativeTab(default_tab)));
+		RegistryInterface.register(RegistryInterface.BLOCK, new ResourceLocation(registry_name), block);
+		RegistryInterface.register(RegistryInterface.ITEM, new ResourceLocation(registry_name), new BlockAsItem(block, new Item.Info().setCreativeTab(default_tab)));
 
 	}
 	
@@ -193,8 +194,8 @@ public class UniversalRegistryGettersAndSetters {
 	
 	
 	
-	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
-	game.GameRegistries.register(registry,rl,Entry);
+	public static void vainillaRegister(RegistryInterface registry, ResourceLocation rl, Object Entry) {
+		RegistryInterface.register(registry,rl,Entry);
 }
 	
 	

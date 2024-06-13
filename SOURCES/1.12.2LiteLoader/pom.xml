@@ -22,12 +22,67 @@
  <properties>
  	<maven.compiler.target>1.8</maven.compiler.target>
  	 	<maven.compiler.source>1.8</maven.compiler.source>
+ 	 	<fcdependencies.dir>${user.home}/fcdependencies/1.12.2LiteLoader</fcdependencies.dir>  
  </properties>
+ 
+    <repositories>
+    <repository>
+      <id>Minecraft</id>
+      <name>Minecraft</name>
+      <url>https://libraries.minecraft.net</url>
+    </repository>
+    <repository>
+      <id>TLauncher</id>
+      <name>TLauncher</name>
+      <url>http://res.tlauncher.org</url>
+    </repository>  
+  </repositories>
+ 
   <dependencies>
  	<dependency>
  		<groupId>org.javassist</groupId>
  		<artifactId>javassist</artifactId>
  		<version>3.30.2-GA</version>
  	</dependency>
+ 	 <dependency>
+ 		<groupId>net.minecraft</groupId>
+ 		<artifactId>launchwrapper</artifactId>
+ 		<version>1.12</version>
+ 	</dependency>
+ 	<dependency>
+ 		<groupId>com.google.code.gson</groupId>
+ 		<artifactId>gson</artifactId>
+ 		<version>2.2.4</version>
+ 	</dependency>
+ 	<dependency>
+ 		<groupId>com.google.guava</groupId>
+ 		<artifactId>guava</artifactId>
+ 		<version>17.0</version>
+ 	</dependency>
+ 	  	<dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j-core</artifactId>
+  		<version>2.22.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j-api</artifactId>
+  		<version>2.22.1</version>
+  	</dependency>
+  	 	<dependency>
+  		<groupId>org.ow2.asm</groupId>
+  		<artifactId>asm-all</artifactId>
+  		<version>5.2</version>
+  	</dependency>
+  	
+  	        <!-- 添加本地 JAR 文件作为依赖 -->  
+        <dependency>  
+            <groupId>your.custom.group.id</groupId>  
+            <artifactId>fci</artifactId>  
+            <version>1.0.0</version> <!-- 可以是任意版本号，但最好是有意义的 -->  
+            <scope>system</scope>  
+            <systemPath>${fcdependencies.dir}/fci.jar</systemPath>  
+        </dependency> 
+  	
  </dependencies>
 </project>

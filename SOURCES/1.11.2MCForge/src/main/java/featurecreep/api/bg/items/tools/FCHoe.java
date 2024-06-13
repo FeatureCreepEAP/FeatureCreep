@@ -3,6 +3,7 @@ package featurecreep.api.bg.items.tools;
 import featurecreep.api.EnumModder;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Hoe;
+import game.Item.ToolMaterialEnum;
 
 public class FCHoe extends Hoe implements ToolsAPI<FCHoe>
 {

@@ -7,7 +7,7 @@ import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Block;
 import game.BlockPos;
-import game.BlockState;
+import game.IBlockstate;
 import game.Item;
 import game.ItemStack;
 import game.Player;
@@ -27,16 +27,16 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	public FCBlock(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops) {
-		super(Block.Info.normal().hardness(strength / 10));// Need to add material again soon
+		super(Block.Info.of().destroyTime(strength / 10));// Need to add material again soon
 		initialise(id, modid, name, group, material, strength, drops);
 
 	}
 
 	@Override
-	public void onBroken(World world, Player player, BlockPos pos, BlockState state, @Nullable TileEntity blockEntity,
+	public void playerDestroy(World world, Player player, BlockPos pos, IBlockstate state, @Nullable TileEntity blockEntity,
 			ItemStack stack) {
-		player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
-		player.addExhaustion(0.005f);
+		player.awardStat(PlayerStatisticList.BLOCK_MINED.get(this));
+		player.causeFoodExhaustion(0.005f);
 
 		for (int i = 0; i < getDropArrayObjects().length; i++) {
 			if (getDropArrayObjects()[i].getTool.equals(ToolTypes.BLANK)) {
@@ -61,7 +61,7 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 				} else {
 					System.out.print("Wrong Tool Used For This Array, you need an instance of"
 							+ getDropArrayObjects()[i].getTool.get.getCanonicalName() + "But instead got"
-							+ player.getActiveItem().getClass().getName());
+							+ player.getUseItem().getClass().getName());
 				}
 
 			}
@@ -74,16 +74,16 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 		if (loot instanceof featurecreep.api.bg.blocks.drop.SelfBlockDropArrayObject) {
 			System.out.println("Dropping Self");
-			Block.drop(world, pos, new ItemStack(this));
+			Block.popResource(world, pos, new ItemStack(this));
 		} else {
 			for (int t = 0; t < loot.drop.size(); t++) {
 				System.out.println("Right tool used");
 				if (loot.drop.get(t) instanceof Block) {
-					Block.drop(world, pos, new ItemStack((Block) loot.drop.get(t)));
+					Block.popResource(world, pos, new ItemStack((Block) loot.drop.get(t)));
 					// Block.dropStacks(state, world, pos, blockEntity, player, new
 					// ItemStack((Block) getDropArrayObjects()[i].drop.get(t)));
 				} else {
-					Block.drop(world, pos, new ItemStack((Item) loot.drop.get(t)));
+					Block.popResource(world, pos, new ItemStack((Item) loot.drop.get(t)));
 					// Block.dropStacks(state, world, pos, blockEntity, player, new ItemStack((Item)
 					// getDropArrayObjects()[i].drop.get(t)));
 				} // Gotta do entites soon

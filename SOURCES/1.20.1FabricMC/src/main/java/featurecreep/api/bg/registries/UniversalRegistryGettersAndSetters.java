@@ -204,4 +204,5 @@ public class UniversalRegistryGettersAndSetters {
 	game.GameRegistries.register(registry,rl,Entry);
 }
 	
+	
 }

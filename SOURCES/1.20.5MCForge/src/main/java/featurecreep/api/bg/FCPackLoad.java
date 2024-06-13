@@ -1,4 +1,3 @@
-
 package featurecreep.api.bg;
 
 import java.io.File;
@@ -17,10 +16,10 @@ import featurecreep.api.bg.datapacks.DataPackLoader;
 import game.DirectoryResourcePack;
 import game.PackSources;
 import game.ResourcePackInfo;
-import game.ResourcePackLocationInfo;
 import game.ResourcePackPositioningAndRequirnmentSetting;
 import game.ResourcePackProvider;
 import game.ResourceType;
+import game.ResourcePackLocationInfo;
 
 public class FCPackLoad implements ResourcePackProvider {
 	File loc;
@@ -35,7 +34,7 @@ public class FCPackLoad implements ResourcePackProvider {
 	}
 
 	@Override
-	public void register(Consumer<ResourcePackInfo> consumer) {
+	public void loadPacks(Consumer<ResourcePackInfo> consumer) {
 		// TODO Auto-generated method stub
 		ModelNode node = new ModelNode();
 		node.get("pack").get("description")

@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 
 import com.google.gson.JsonElement;
 
-import net.java.games.input.Component.Identifier;
+import game.ResourceLocation;
 
 public class ItemBioConsumer {
-static	 BiConsumer<Identifier, Supplier<JsonElement>> biConsumer = (identifier, supplier) -> {
+static	 BiConsumer<ResourceLocation, Supplier<JsonElement>> biConsumer = (identifier, supplier) -> {
          
 		
      };

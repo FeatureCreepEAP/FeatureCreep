@@ -73,7 +73,7 @@ public class LiteModFeatureCreepMC implements Tickable , Configurable, ServerCom
 	@Override
 	public void provideCommands(CommandDispatcher var1) {
 		// TODO Auto-generated method stub
-		var1.def_unknown_140228(new FeatureCreep.registerFCDNF());
+		var1.registerCommand(new FeatureCreep.registerFCDNF());
 	}
 
 

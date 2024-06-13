@@ -10,6 +10,7 @@ import game.Block;
 import game.BlockAsItem;
 import game.CreativeTab;
 import game.Item;
+import game.RegistryInterface;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -57,7 +58,7 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getItemByID(id);
 		}else {
-			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), game.GameRegistries.ITEM.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
+			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), RegistryInterface.ITEM.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
 		}
 				
 	}
@@ -178,7 +179,7 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getBlockByID(id);
 		}else {
-			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), game.GameRegistries.BLOCK.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
+			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), RegistryInterface.BLOCK.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
 		}
 				
 	}

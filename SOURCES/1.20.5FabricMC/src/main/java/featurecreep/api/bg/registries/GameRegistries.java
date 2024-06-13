@@ -38,7 +38,7 @@ public class GameRegistries {
 	}
 
 	public static Block getBlockFromGameRegistries(int id) {
-		return BuiltInRegistries.block.get(id);// May not work
+		return BuiltInRegistries.block.byId(id);// May not work
 	}
 
 	public static boolean BlockKeyExistsInRegistry(String registry_name) {

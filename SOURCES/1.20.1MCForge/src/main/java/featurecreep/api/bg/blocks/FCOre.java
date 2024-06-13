@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
-import featurecreep.api.bg.blocks.drop.SelfBlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
@@ -12,8 +11,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
 import game.BlockPos;
-import game.BlockState;
 import game.BuiltInRegistries;
+import game.IBlockstate;
 import game.ItemStack;
 import game.Ore;
 import game.Player;
@@ -41,7 +40,7 @@ resource = ore_material;
 
 
   @Override
-  public void onBroken(World world, Player player, BlockPos pos, BlockState state, @Nullable TileEntity blockEntity, ItemStack stack) {	  player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
+  public void onBroken(World world, Player player, BlockPos pos, IBlockstate state, @Nullable TileEntity blockEntity, ItemStack stack) {	  player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
     player.addExhaustion(0.005f);
 
     ArrayList<BlockDropArrayObject> arr = this.getDrops(new VanillaItem(stack.getItem(), BuiltInRegistries.ITEMS.getName(stack.getItem()).toString()));

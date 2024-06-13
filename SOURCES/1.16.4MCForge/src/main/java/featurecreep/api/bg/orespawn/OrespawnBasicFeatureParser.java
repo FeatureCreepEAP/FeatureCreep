@@ -14,16 +14,16 @@ import game.BlockMatcher;
 import game.ConfiguredMapPlacement;
 import game.DepthAverageDecoratorConfig;
 import game.GameRegistries;
+import game.MineralDepositFeatureGenerator;
 import game.ResourceLocation;
-import game.TerrainPlacementMod;
-import game.WorldGenFeature;
+import game.StageGeneration.Feature;
+import game.WorldBuilder;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import obf.class_unknown_1069.Feature;
-import obf.class_unknown_1210;
 
 public class OrespawnBasicFeatureParser {
 
@@ -154,8 +154,8 @@ if (node.get("enabled").asBoolean() == true)
 
 	// final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
-    WorldGenerationObjectConfiguration ORE_CONFIG = WorldGenFeature.ORE.config(new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature((ConfiguredMapPlacement)((ConfiguredMapPlacement)class_unknown_1210.COUNT_RANGE.config(new DepthAverageDecoratorConfig(node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt())).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt()));
-
+    WorldGenerationObjectConfiguration ORE_CONFIG = WorldDecorationGenerator.MINABLE.config(new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature((ConfiguredMapPlacement)((ConfiguredMapPlacement)WorldBuilder.DEPTH_AVERAGE.config(new DepthAverageDecoratorConfig(node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt())).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt()));
+    
 // Vein size
  // Number of veins per chunk
 				

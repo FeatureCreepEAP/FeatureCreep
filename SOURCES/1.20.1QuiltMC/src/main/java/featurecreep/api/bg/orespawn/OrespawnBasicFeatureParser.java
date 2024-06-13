@@ -202,7 +202,7 @@ private static List<PlacementModifier> modifiersWithCount(int count, PlacementMo
 
 }
 	
-	public static void spawnOre(BiomeGenerationSettings.class_unknown_9320 builder)
+	public static void spawnOre(BiomeGenerationSettings.Builder builder)
 	{
 		
 		
