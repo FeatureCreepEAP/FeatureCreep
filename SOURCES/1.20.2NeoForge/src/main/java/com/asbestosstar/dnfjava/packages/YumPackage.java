@@ -1,10 +1,6 @@
 package com.asbestosstar.dnfjava.packages;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 import com.asbestosstar.dnfjava.DnfJava;
 import com.asbestosstar.dnfjava.yum.YumRepo;
@@ -19,7 +15,7 @@ public class YumPackage implements Package{
 	
 	
 	public YumPackage(String name) {
-		this.name=name;
+		
 	}
 
 	@Override
@@ -106,35 +102,12 @@ this.setXMLSpecLocation(rpm.xmlSpecLocation);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }else {
-    	System.out.println("Could not find "+name);
     }
 	
 		
 		
 		
 	}
-	
-	 public static byte[] download(URL url) {
-		    try {
-		      URLConnection connection = url.openConnection();
-		      // Download the file and convert it to a byte array
-		      try (InputStream inputStream = connection.getInputStream(); ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-		        byte[] buffer = new byte[1024];
-		        int length;
-		        while ((length = inputStream.read(buffer)) != -1) {
-		          outputStream.write(buffer, 0, length);
-		        }
-		        byte[] fileContents = outputStream.toByteArray();
-		        return fileContents;
-		        // Do something with the file contents
-		      }
-		    } catch (IOException e) {
-		      // TODO Auto-generated catch block
-		      e.printStackTrace();
-		    }
-		    return null;
-		  }
 	
 	
 }

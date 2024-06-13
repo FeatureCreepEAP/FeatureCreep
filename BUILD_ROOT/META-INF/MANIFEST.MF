@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: rhel
+Build-Jdk: 21.0.3
+Created-By: Maven Integration for Eclipse
+MixinConfigs: featurecreep.mixins.json
+Main-Class: 

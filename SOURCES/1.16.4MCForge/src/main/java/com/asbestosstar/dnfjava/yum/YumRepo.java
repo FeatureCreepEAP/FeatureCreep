@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import com.asbestosstar.dnfjava.packages.YumPackage;
 
 public class YumRepo {
 
@@ -194,8 +191,20 @@ public List<Entry> entries;
 		  if(entry.name.equals(package_name) && entry.versionRelease.equals(latest_version)) {
 			  
 			  URL url = new URL(preferred.toString()+"/"+entry.location);
+			  InputStream in = new BufferedInputStream(url.openStream());
+			  //return byte[] from in
 
-				byte uncompressed[] = YumPackage.download(url);
+			  java.io.ByteArrayOutputStream byteout = new java.io.ByteArrayOutputStream();
+
+				int res = 0;
+				byte buf[] = new byte[1024];
+				while (res >= 0) {
+				    res = in.read(buf, 0, buf.length);
+				    if (res > 0) {
+				        byteout.write(buf, 0, res);
+				    }
+				}
+				byte uncompressed[] = byteout.toByteArray();
 			  
 			  return uncompressed;
 			  
@@ -249,52 +258,46 @@ return latest;
   
     public byte[] getRepoDataXMLByte() {
     	 URL url = this.getRepoDataXML();
-	      try {
-			URLConnection connection = url.openConnection();
+    	    
+    	    try (InputStream in = new BufferedInputStream(url.openStream());
+    	         ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+    	        
+    	        byte[] buffer = new byte[1024];
+    	        int bytesRead;
+    	        while ((bytesRead = in.read(buffer, 0, buffer.length)) != -1) {
+    	            out.write(buffer, 0, bytesRead);
+    	        }
+    	        //byte[] bytes = out.toByteArray();
+    	        //bytes is gz make it not gz
+    	    	java.util.zip.GZIPInputStream gzin = new java.util.zip.GZIPInputStream(in);
+    	    	java.io.ByteArrayOutputStream byteout = new java.io.ByteArrayOutputStream();
 
-			    try (InputStream in = new BufferedInputStream(connection.getInputStream());
-			         ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			        
-			        byte[] buffer = new byte[1024];
-			        int bytesRead;
-			        while ((bytesRead = in.read(buffer, 0, buffer.length)) != -1) {
-			            out.write(buffer, 0, bytesRead);
-			        }
-			        byte[] bytes = out.toByteArray();
-			        //bytes is gz make it not gz
-			    	java.util.zip.GZIPInputStream gzin = new java.util.zip.GZIPInputStream(in);
-			    	java.io.ByteArrayOutputStream byteout = new java.io.ByteArrayOutputStream();
+    	    	int res = 0;
+    	    	byte buf[] = new byte[1024];
+    	    	while (res >= 0) {
+    	    	    res = gzin.read(buf, 0, buf.length);
+    	    	    if (res > 0) {
+    	    	        byteout.write(buf, 0, res);
+    	    	    }
+    	    	}
+    	    	byte uncompressed[] = byteout.toByteArray();
 
-			    	int res = 0;
-			    	byte buf[] = new byte[1024];
-			    	while (res >= 0) {
-			    	    res = gzin.read(buf, 0, buf.length);
-			    	    if (res > 0) {
-			    	        byteout.write(buf, 0, res);
-			    	    }
-			    	}
-			    	byte uncompressed[] = byteout.toByteArray();
-
-			        
-			        
-			        return uncompressed;
-			        
-				
-				
-				
-				
-				
-				
-				
-			
-			    } catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	        
+    	        
+    	        return uncompressed;
+    	        
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    	
+    	    } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		return null;
 
     }
@@ -491,8 +494,8 @@ public static class Entry {
          this.name = name;
          this.arch = arch;
          this.versionRelease = versionRelease;
-     this.requires=requires;
-     this.files=files;
+     this.requires=requires2;
+     this.files=fileList;
 this.location=location;         
      }
 	

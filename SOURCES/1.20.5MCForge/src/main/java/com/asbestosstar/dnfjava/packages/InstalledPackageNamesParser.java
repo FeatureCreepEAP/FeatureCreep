@@ -10,9 +10,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import org.jboss.staxmapper.XMLExtendedStreamWriter;
-import org.jboss.staxmapper.XMLMapper;
-
 import com.asbestosstar.dnfjava.DnfJava;
 
 public class InstalledPackageNamesParser {
@@ -59,7 +56,7 @@ public class InstalledPackageNamesParser {
 	public static void saveXMLFromPackages(DnfJava instance) {
 	
 		
-		XMLMapper xml = XMLMapper.Factory.create();
+		//XMLMapper xml = XMLMapper.Factory.create();
 		//XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new FileInputStream(db));
 		//xml.parseDocument("packages", reader);
 

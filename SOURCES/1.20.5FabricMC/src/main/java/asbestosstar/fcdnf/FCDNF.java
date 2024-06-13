@@ -36,7 +36,6 @@ public class FCDNF extends DnfJava {
 				}
 
 			}
-			this.addRepos();
 		}
 
 	}
@@ -53,3 +52,4 @@ public class FCDNF extends DnfJava {
 	}
 
 }
+

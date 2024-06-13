@@ -1,5 +1,6 @@
 package com.asbestosstar.dnfjava.dnf;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ public class DNFInstallCommand {
 	
 	//Constructor that accetps args
 	public DNFInstallCommand(String[] args, DnfJava instance) {
+     
 		//Write code to sort through all the args and sort them if they have "-" in them
 		for(String arg: args) {
 			if(arg.startsWith("-")) {
@@ -54,12 +56,16 @@ arguments.add(String.valueOf(letter));
 						//We still need to parse for .onion sites
 					
 						 try {
-System.out.println("Downloading"+pack);
-							        rpmbytes = YumPackage.download(new URL(pack));
-						
-						 
-						 
-						 } catch (IOException e) {
+							InputStream in = new BufferedInputStream(new URL(pack).openStream());
+							         ByteArrayOutputStream out = new ByteArrayOutputStream() ;
+							        
+							        byte[] buffer = new byte[1024];
+							        int bytesRead;
+							        while ((bytesRead = in.read(buffer, 0, buffer.length)) != -1) {
+							            out.write(buffer, 0, bytesRead);
+							        }
+							        rpmbytes = out.toByteArray();
+						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -94,8 +100,7 @@ System.out.println("Downloading"+pack);
 				
 				
 				}else {
-					System.out.println("Installing "+pack);
-					YumPackage yum = new YumPackage(pack);
+			YumPackage yum = new YumPackage(pack);
 					yum.install(instance);
 					instance.installed_packages.add(yum);
 					
@@ -114,7 +119,7 @@ System.out.println("Downloading"+pack);
 		
 		
     }
-
+	
 	
 
 }

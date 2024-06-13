@@ -144,6 +144,7 @@ new File(macro_name).getParentFile().mkdirs();
 				try {
 					OutputStream outputStream = new FileOutputStream(macro_name);
 					outputStream.write(file.fileData());
+					outputStream.close();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
