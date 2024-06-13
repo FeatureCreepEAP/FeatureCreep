@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.jar.JarFile;
 
+import com.asbestosstar.assistremapper.mappings.PDMEMappings;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
+
 public class AssistRemapper {
 
 	public static void main(String[] args) throws Exception {
@@ -20,13 +23,13 @@ public class AssistRemapper {
 	}
 
 	public static void mapJar(JarFile file, InputStream mappings, String output_path, String[] args) throws Exception {
-		Mappings maps = new Mappings(mappings);
-		RemapperInstance remapper = new RemapperInstance(maps, output_path);
+		Mappings maps = new PDMEMappings(mappings);
+		JarRemapper remapper = new JarRemapper(maps, output_path);
 		parseArgs(args, remapper);
 		remapper.remapJar(file);
 	}
 
-	public static void parseArgs(String[] args, RemapperInstance remapper) {
+	public static void parseArgs(String[] args, JarRemapper remapper) {
 		for (String arg : args) {// switch to i based loop soon
 			if (arg.equals("--keepSourceFile") || arg.equals("--conservarArchivoFuente")) {
 				remapper.rename_source_files = false;

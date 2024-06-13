@@ -5,8 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import com.asbestosstar.assistremapper.remapper.ClassRemapper;
+
 import javassist.CannotCompileException;
-import javassist.CodeConverter;
 import javassist.bytecode.CodeIterator;
 import javassist.bytecode.ConstPool;
 import javassist.expr.Expr;
@@ -16,10 +17,10 @@ import javassist.expr.MethodCall;
 
 public class ExprScan extends ExprEditor {
 
-	public RemapperInstance remapper;
+	public ClassRemapper remapper;
 	public boolean dess;
 
-	public ExprScan(RemapperInstance remapper, boolean dess) {
+	public ExprScan(ClassRemapper remapper, boolean dess) {
 		this.remapper = remapper;
 		this.dess = dess;
 	}
@@ -32,11 +33,12 @@ public class ExprScan extends ExprEditor {
 		} else {
 			ArrayList<String> recersive_names = new ArrayList<String>();
 			if (!m.getClassName().contains("[]")) {
+				
 				String oldest = remapper.getOldestMethodName(
 						remapper.getClassFromName(m.getClassName().replace("/", ".")), m.getMethodName(),
 						m.getSignature(), recersive_names);
-
-				if (!oldest.equals(m.getMethodName()) && oldest != null) {
+				
+				if (!oldest.equals(m.getMethodName()) && oldest != null) {					
 					editNameAndType(m, oldest);
 				}
 			}
@@ -56,7 +58,8 @@ public class ExprScan extends ExprEditor {
 			String oldest = remapper.getOldestFieldName(remapper.getClassFromName(f.getClassName().replace("/", ".")),
 					f.getFieldName(), f.getSignature(), recersive_names);
 
-			if (!oldest.equals(f.getFieldName()) && oldest != null) {
+			
+			if (!oldest.equals(f.getFieldName()) && oldest != null) {			
 				editNameAndType(f, oldest);
 			}
 
@@ -78,6 +81,9 @@ public class ExprScan extends ExprEditor {
 			tipoynombre = cons.getFieldrefNameAndType(u16u);
 		}
 		int nombre = cons.addUtf8Info(new_name);
+		if(new_name.contains("/")) {
+		System.out.println(new_name);
+		}
 		try {
 			Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
 			additem.setAccessible(true);

@@ -1,13 +1,11 @@
 package com.asbestosstar.assistremapper;
 
+import com.asbestosstar.assistremapper.remapper.ClassRemapper;
+
 import javassist.CannotCompileException;
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
 import javassist.Modifier;
 import javassist.NotFoundException;
 import javassist.bytecode.BadBytecode;
-import javassist.bytecode.ClassFile;
 import javassist.bytecode.CodeIterator;
 import javassist.bytecode.ConstPool;
 import javassist.bytecode.MethodInfo;
@@ -16,9 +14,9 @@ import javassist.convert.Transformer;
 
 public class MethodTransformer extends TransformCall {
 
-	public RemapperInstance mapper;
+	public ClassRemapper mapper;
 
-	public MethodTransformer(Transformer next, MethodInfo oldMethodName, String substMethod, RemapperInstance mapper)
+	public MethodTransformer(Transformer next, MethodInfo oldMethodName, String substMethod, ClassRemapper mapper)
 			throws CannotCompileException, NotFoundException {
 		super(next, substMethod, mapper.getMethodFromClass("testMethod", "()",
 				mapper.getClassFromPool("donotcreateclazzwithestenombe")));

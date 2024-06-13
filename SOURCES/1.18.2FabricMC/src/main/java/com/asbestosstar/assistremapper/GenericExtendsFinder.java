@@ -3,6 +3,8 @@ package com.asbestosstar.assistremapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.asbestosstar.assistremapper.remapper.ClassRemapper;
+
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.CtMethod;
@@ -12,9 +14,9 @@ import javassist.bytecode.Descriptor;
 
 public class GenericExtendsFinder {
 
-	public RemapperInstance remapper;
+	public ClassRemapper remapper;
 
-	public GenericExtendsFinder(RemapperInstance remapper) {
+	public GenericExtendsFinder(ClassRemapper remapper) {
 		// TODO Auto-generated constructor stub
 		this.remapper = remapper;
 	}
@@ -70,7 +72,7 @@ public class GenericExtendsFinder {
 						String oldest = remapper.getOldestFieldName(var.getDeclaringClass().getClassFile(), fieldName,
 								var.getSignature(), new ArrayList<String>());
 						if (oldest != fieldName) {
-							remapper.mappings.vars.put(clazz.getName() + "." + fieldName + ":" + desc, oldest);
+							remapper.mappings.getVars().put(clazz.getName() + "." + fieldName + ":" + desc, oldest);
 							name = oldest;
 						}
 					}
@@ -92,6 +94,10 @@ public class GenericExtendsFinder {
 
 	public String getPotentialGenericExtendingMethod(ClassFile clazz, String methodName, String desc,
 			ArrayList<String> recersive_names) {
+		
+
+		
+		
 		String name = methodName;
 		CtClass ct = remapper.getClassFromPool(clazz.getName());// Ct is easier as it goes down
 		List<CtMethod> defs = getMethodsFromNameAlone(ct, methodName, false);
@@ -109,7 +115,7 @@ public class GenericExtendsFinder {
 						String oldest = remapper.getOldestMethodName(def.getDeclaringClass().getClassFile(), methodName,
 								def.getSignature(), new ArrayList<String>());
 						if (oldest != methodName) {
-							remapper.mappings.defs.put(clazz.getName() + "." + methodName + ":" + desc, oldest);
+							remapper.mappings.getDefs().put(clazz.getName() + "." + methodName + ":" + desc, oldest);
 							name = oldest;
 						}
 					}
