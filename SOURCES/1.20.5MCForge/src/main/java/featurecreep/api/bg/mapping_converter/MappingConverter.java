@@ -43,6 +43,8 @@ public class MappingConverter {
 						ActiveMapping.HASHED_MOJMAP.setMappings(maps);
 					} else if (entry.getName().contains("fabric-intermediary")) {
 						ActiveMapping.FABRICMC_INTERMEDIARY.setMappings(maps);
+					} else if (entry.getName().contains("sugarcane")) {
+						ActiveMapping.PARCHMENT.setMappings(maps);
 					} else if (entry.getName().contains("obf")) {
 						ActiveMapping.OBF.setMappings(maps);
 					} // need to do others

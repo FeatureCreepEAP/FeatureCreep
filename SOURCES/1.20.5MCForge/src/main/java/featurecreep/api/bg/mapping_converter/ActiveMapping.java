@@ -72,7 +72,7 @@ public class ActiveMapping {
 				e.printStackTrace();
 			}
 			determained = true;
-			return PARCHSRG;// temp
+			return PARCHMENT;// temp
 
 			// TODO QUILT and MCP and DYNAMIC MAPPINGS and PARCHMENT
 		} else {

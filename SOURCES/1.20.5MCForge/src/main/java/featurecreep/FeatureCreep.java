@@ -45,7 +45,7 @@ public class FeatureCreep {
 	public static double version = 3.919;// GA will be 4.0 for now 3.9pre will work
 	public static String game_version = MCPVersion.getMCVersion();
 
-	public static ActiveMapping mappings = ActiveMapping.PARCHSRG;// This is the default active mappings
+	public static ActiveMapping mappings = ActiveMapping.PARCHMENT;// This is the default active mappings
 	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;// Need to detect this eventually
 	public static ClassPool classpool = new ClassPool(true);
 	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);// To make sure to
