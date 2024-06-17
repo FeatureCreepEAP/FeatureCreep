@@ -5,8 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import org.jetbrains.annotations.TestOnly;
-
 /**
  * Mirrors a type for accessing its members.
  *
@@ -208,7 +206,7 @@ public class Mirror<Thing> {
         return glass.loadClass(target, name, bytecode);
     }
     
-    @TestOnly
+   // @TestOnly
     protected byte[] retrieveCode(final Accessor object) {
         if (object instanceof FieldAccessor<?> accessor)
             return glass.writeFieldAccessor(accessor.getTargetType(), accessor.reflect(), accessor.getClass().getName()

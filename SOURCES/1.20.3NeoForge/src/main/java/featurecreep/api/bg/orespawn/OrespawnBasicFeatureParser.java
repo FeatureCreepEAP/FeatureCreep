@@ -17,11 +17,10 @@ import game.BuiltInRegistries;
 import game.CountGenerationAttribute;
 import game.GenerationPlacement;
 import game.PlacementModifier;
-import game.RegistryEntry;
 import game.RegistryKey;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
-import obf.class_unknown_1069;
+import game.StageGeneration.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -196,11 +195,11 @@ public class OrespawnBasicFeatureParser {
 
 	}
 
-	public static void spawnOre(BiomeGenerationSettings.class_unknown_9320 builder) {
+	public static void spawnOre(BiomeGenerationSettings.Builder builder) {
 
 		for (int f = 0; f < placed.size(); f++) {
 
-			builder.addFeature(class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
+			builder.addFeature(Feature.UNDERGROUND_ORES, placed.get(f));
 			// (class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
 
 		}

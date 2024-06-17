@@ -6,8 +6,8 @@ import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Block;
 import game.BlockPos;
+import game.BlockPropertiesData;
 import game.ConstantIntProvider;
-import game.IBlockstate;
 import game.Item;
 import game.ItemStack;
 import game.Ore;
@@ -37,7 +37,7 @@ public class FCOre extends Ore implements FCBlockAPI<FCOre> {
 	}
 
 	@Override
-	public void onBroken(World world, Player player, BlockPos pos, IBlockstate state, @Nullable TileEntity blockEntity,
+	public void onMinedSucessfully(World world, Player player, BlockPos pos, BlockPropertiesData state, @Nullable TileEntity blockEntity,
 			ItemStack stack) {
 		player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
 		player.addExhaustion(0.005f);

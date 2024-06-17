@@ -10,19 +10,19 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.FeatureCreep;
 import game.Block;
 import game.BlockMatcher;
-import game.GameRegistries;
 import game.MapVerticleAnchor;
 import game.MapWorldGenerationRegistries;
+import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
+import game.RegistryInterface;
 import game.RegistryKey;
 import game.ResourceLocation;
-import game.TerrainPlacementMod;
+import game.StageGeneration.Feature;
 import game.UniformHeightProvider;
-import game.WorldGenFeature;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import obf.class_unknown_1069.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -133,7 +133,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -141,7 +141,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] new_block_identifier = OrespawnBasicFeatureParser.getCorrectNameSpace(new_block).split(":");
-	Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	
@@ -152,7 +152,7 @@ if (node.get("enabled").asBoolean() == true)
 	BlockMatcher RULE = new BlockMatcher(replacedBlock);
 
 	
-	WorldGenerationObjectConfiguration ORE_CONFIG = (WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)WorldGenFeature.ORE.config(new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature(new RangeDecoratorConfiguration(UniformHeightProvider.new_(MapVerticleAnchor.fixed(node.get("parameters").get("minHeight").asInt()), MapVerticleAnchor.fixed(node.get("parameters").get("maxHeight").asInt()))))).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt());
+	WorldGenerationObjectConfiguration ORE_CONFIG = (WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)WorldDecorationGenerator.MINABLE.config(new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature(new RangeDecoratorConfiguration(UniformHeightProvider.new_(MapVerticleAnchor.fixed(node.get("parameters").get("minHeight").asInt()), MapVerticleAnchor.fixed(node.get("parameters").get("maxHeight").asInt()))))).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt());
 
 	
  // Vein size
@@ -160,10 +160,10 @@ if (node.get("enabled").asBoolean() == true)
 	 // Number of veins per chunk
 	
 
-    RegistryKey<WorldGenerationObjectConfiguration<?, ?>> ORE_CONFIG_KEY = RegistryKey.of(GameRegistries.WORLD_GENERATION_OBJECT_CONFIGURATION,
+    RegistryKey<WorldGenerationObjectConfiguration<?, ?>> ORE_CONFIG_KEY = RegistryKey.of(RegistryInterface.WORLD_GENERATION_OBJECT_CONFIGURATION,
   	     new ResourceLocation("featurecreep", name));
     
-  	    GameRegistries.register(MapWorldGenerationRegistries.WORLD_GENERATION_OBJECT_CONFIGURATION, ORE_CONFIG_KEY.getValue(), ORE_CONFIG);
+  	    RegistryInterface.register(MapWorldGenerationRegistries.WORLD_GENERATION_OBJECT_CONFIGURATION, ORE_CONFIG_KEY.getValue(), ORE_CONFIG);
   	    BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), Feature.UNDERGROUND_ORES, ORE_CONFIG_KEY);
 }
 	

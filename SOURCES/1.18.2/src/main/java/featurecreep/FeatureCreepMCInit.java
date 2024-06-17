@@ -16,12 +16,10 @@ import org.jboss.modules.ModuleLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.asbestosstar.mixerlogger.MixerLoggerMain;
 import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 
 import featurecreep.api.PKZipUtils;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.GameJar;
 import featurecreep.api.hashing.Sha256;
 import featurecreep.loader.ExecutionSide;
 import featurecreep.loader.FCLoaderBasic;
@@ -31,11 +29,11 @@ import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
 import game.Chunk;
 import game.ChunkGenerator;
+import game.ClientMain;
 import game.CommandDispatcher;
 import game.NudgerBuildings;
-import game.NudgerBuildings;
-import game.NudgerBuildings;
 import game.RegistryBootstrap;
+import game.RegistryInterface;
 import game.ResourcePackInfo.IFactory;
 import game.ResourcePackManager;
 import game.SharedConstants;
@@ -129,13 +127,13 @@ for (File file : loader.getCombinedFiles()) {
 }
 
 List<String> hashes = new ArrayList<String>();
-FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
+//FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
 
 for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
 
   try {
 if(new File(cp).isFile()) {
-	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
+	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp),false);
 }
   } catch (IOException e) {
     // TODO Auto-generated catch block
@@ -291,16 +289,16 @@ protected static String modpath = gamepath.toString() + "/mods/";
 		SharedConstants.setVersion(VersionInfo.get());
 		System.out.println("Adding Registry Injection");
 
-		try {game.GameRegistries.ACTIVITY.hashCode();}catch(Exception e) {}// Do nothing
+		try {RegistryInterface.ACTIVITY.hashCode();}catch(Exception e) {}// Do nothing
 		try {
 			
-			CtClass registry = pool.get(game.GameRegistries.class.getCanonicalName());
+			CtClass registry = pool.get(RegistryInterface.class.getCanonicalName());
 			registry.getDeclaredMethod("i").setBody(null);//Null returns null or 0 or does nothing which is very convinient indeed, turned out we do not really need this one because we are disabling all freeze instances, but eh who cares now lets not remove it
 		//	registry.getDeclaredMethod("j").setBody("return this;");
 			System.out.println("Generating Bytecode");
 			byte[] code = registry.toBytecode();
 			System.out.println("Reloading Registry Class");
-			hs.reload(game.GameRegistries.class.getCanonicalName(), code);
+			hs.reload(RegistryInterface.class.getCanonicalName(), code);
 		} catch (NotFoundException | CannotCompileException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -391,7 +389,7 @@ try {
 	e.printStackTrace();
 }
 		
-try {CommandDispatcher.def_unknown_26289();}catch(Exception e) {}// Do nothing
+try {CommandDispatcher.validate();}catch(Exception e) {}// Do nothing
 try {
 	
 	  CtClass cc = pool.get(CommandDispatcher.class.getCanonicalName());
@@ -407,7 +405,7 @@ try {
 }
 		
 		System.out.println("Starting Game");
-		net.minecraft.client.main.Main.main(args);
+		ClientMain.main(args);
 
 
 		

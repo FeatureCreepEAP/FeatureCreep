@@ -22,7 +22,7 @@
  <properties>
  	<maven.compiler.target>17</maven.compiler.target>
  	 	<maven.compiler.source>17</maven.compiler.source>
- 	 	<fcdependencies.dir>${user.home}/fcdependencies/1.19.2FabricMC</fcdependencies.dir>  
+ 	 	<fcdependencies.dir>${user.home}/fcdependencies/1.19.3FabricMC</fcdependencies.dir>  
  </properties>
   
  

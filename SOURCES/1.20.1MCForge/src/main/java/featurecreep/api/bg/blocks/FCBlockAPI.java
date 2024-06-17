@@ -323,7 +323,7 @@ extends BlockOrItem<T> {
     }
 
     default public void onPlaced(FCWorld w, FCBlockPos pos) {
-        this.get().onPlaced(w.get(), pos, this.get().getDefaultState(), (LivingEntity)w.get().getEntityById(0), this.toStack(1));
+        this.get().onPlace(w.get(), pos, this.get().getDefaultState(), (LivingEntity)w.get().getEntityById(0), this.toStack(1));
     }
 
     default public ArrayList<BlockDropArrayObject> getDrops(FCItemAPI tool) {

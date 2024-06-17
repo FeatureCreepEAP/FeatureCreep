@@ -20,7 +20,7 @@ import game.PlacementModifier;
 import game.RegistryKey;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
-import obf.class_unknown_1069.Feature;
+import game.StageGeneration.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -216,7 +216,7 @@ private static List<PlacementModifier> modifiersWithCount(int count, PlacementMo
 
 }
 
-	public static void spawnOre(BiomeGenerationSettings.class_unknown_9320 builder)
+	public static void spawnOre(BiomeGenerationSettings.Builder builder)
 	{
 		
 		

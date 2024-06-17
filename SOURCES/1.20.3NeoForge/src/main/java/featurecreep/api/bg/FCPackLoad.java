@@ -30,7 +30,7 @@ public class FCPackLoad implements ResourcePackProvider {
 	}
 
 	@Override
-	public void register(Consumer<ResourcePackInfo> consumer) {
+	public void loadPacks(Consumer<ResourcePackInfo> consumer) {
 		// TODO Auto-generated method stub
 		ModelNode node = new ModelNode();
 		node.get("pack").get("description")

@@ -121,13 +121,13 @@ if(FeatureCreep.debug_mode) {
     }
 
     List<String> hashes = new ArrayList<String>();
-    FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
+   // FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
 
     for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
 
       try {
    if(new File(cp).isFile()) {
-    	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
+    	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp),false);
    }
       } catch (IOException e) {
         // TODO Auto-generated catch block

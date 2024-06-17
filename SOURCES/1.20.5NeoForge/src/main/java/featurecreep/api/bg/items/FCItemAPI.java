@@ -141,7 +141,7 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 	@Override
 	public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block,
 			int side) {
-		get().getStackForRender().onBlockDestroyed(worl.get(), block.get().getDefaultState(), pos, p.get());
+		get().getStackForRender().mineBlock(worl.get(), block.get().getDefaultState(), pos, p.get());
 	}
 
 	@Override

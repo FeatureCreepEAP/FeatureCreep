@@ -15,9 +15,9 @@ import game.GenerationPlacement;
 import game.RegistryKey;
 import game.RegistryKeys;
 import game.ResourceLocation;
+import game.StageGeneration.Feature;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import obf.class_unknown_1069.Feature;
 
 public class OreFeatureGenerator {
 

@@ -7,6 +7,7 @@ import game.Biome;
 import game.Block;
 import game.CreativeTab;
 import game.Item;
+import game.RegistryInterface;
 import game.ResourceLocation;
 
 /**
@@ -19,7 +20,7 @@ public class GameRegistries {
 	
 	public static Item getItemFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return game.GameRegistries.ITEM.get(new ResourceLocation(registry_name));
+		return RegistryInterface.ITEM.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Item getItemFromGameRegistries(int id)
@@ -29,22 +30,22 @@ public class GameRegistries {
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name)
 	{
-		return game.GameRegistries.ITEM.containsRL(new ResourceLocation(registry_name));
+		return RegistryInterface.ITEM.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return game.GameRegistries.BLOCK.get(new ResourceLocation(registry_name));
+		return RegistryInterface.BLOCK.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(int id)
 	{
-		return game.GameRegistries.BLOCK.byId(id);//May not work
+		return RegistryInterface.BLOCK.byId(id);//May not work
 	}
 	
 	public static boolean BlockKeyExistsInRegistry(String registry_name)
 	{
-		return game.GameRegistries.BLOCK.containsRL(new ResourceLocation(registry_name));
+		return RegistryInterface.BLOCK.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	
@@ -83,17 +84,17 @@ public class GameRegistries {
 	//Will need to change some biome registries after we add biomes
 	public static Biome getBiomeFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return game.GameRegistries.BIOME.get(new ResourceLocation(registry_name));
+		return RegistryInterface.BIOME.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Biome getBiomeFromGameRegistries(int id)
 	{
-		return game.GameRegistries.BIOME.byId(id);
+		return RegistryInterface.BIOME.byId(id);
 	}
 	
 	public static boolean BiomeKeyExistsInRegistry(String registry_name)
 	{
-		return game.GameRegistries.BIOME.containsRL(new ResourceLocation(registry_name));
+		return RegistryInterface.BIOME.containsRL(new ResourceLocation(registry_name));
 	}
 	
 }

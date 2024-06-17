@@ -1,6 +1,7 @@
 package featurecreep.api.bg.mapping_converter;
 
 import com.asbestosstar.assistremapper.Mappings;
+import com.asbestosstar.assistremapper.mappings.PDMEMappings;
 
 import javassist.ByteArrayClassPath;
 import javassist.ClassPool;
@@ -112,12 +113,13 @@ public Mappings getMappings() {
 	if(hasMappings()) {
 	return mappings;
 	}else{
-		return new Mappings();
+		return new PDMEMappings();
 	}
 }	
 
 
 	
 }
+
 
 

@@ -11,18 +11,18 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.FeatureCreep;
 import game.Block;
 import game.BlockMatcher;
-import game.GameRegistries;
 import game.MapVerticleAnchor;
+import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
+import game.RegistryInterface;
 import game.ResourceLocation;
-import game.TerrainPlacementMod;
+import game.StageGeneration.Feature;
 import game.UniformHeightProvider;
-import game.WorldGenFeature;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import obf.class_unknown_1069.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -134,7 +134,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		
 		
 		String[] block_identifier = replace_registry_names.split(":");
-		Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+		Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 		
 		String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 		
@@ -142,7 +142,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		
 		
 		String[] new_block_identifier = OrespawnBasicFeatureParser.getCorrectNameSpace(new_block).split(":");
-		Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+		Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 		
 		
 		
@@ -158,7 +158,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 
 	// final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 
-		WorldGenerationObjectConfiguration ORE_CONFIG = (WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)WorldGenFeature.ORE.config(new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature(new RangeDecoratorConfiguration(UniformHeightProvider.new_(MapVerticleAnchor.fixed(node.get("parameters").get("minHeight").asInt()), MapVerticleAnchor.fixed(node.get("parameters").get("maxHeight").asInt()))))).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt());
+		WorldGenerationObjectConfiguration ORE_CONFIG = (WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)((WorldGenerationObjectConfiguration)WorldDecorationGenerator.MINABLE.config(new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())).createDecoratedFeature(new RangeDecoratorConfiguration(UniformHeightProvider.new_(MapVerticleAnchor.fixed(node.get("parameters").get("minHeight").asInt()), MapVerticleAnchor.fixed(node.get("parameters").get("maxHeight").asInt()))))).spreadHorizontally()).repeat(node.get("parameters").get("frequency").asInt());
 /*
 			ConfiguredFeature<?, ?> ORE_CONFIG = Feature.ORE
 						.configure(new OreFeatureConfig(

@@ -125,19 +125,19 @@ public class CoreMod implements IMixinConfigPlugin {
 		}
 
 		List<String> hashes = new ArrayList<String>();
-		FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
-
-		for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
-
-			try {
-				if (new File(cp).isFile()) {
-					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
+//
+//		for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
+//
+//			try {
+//				if (new File(cp).isFile()) {
+//					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
+//				}
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 
 		File native_mods_folder = new File(FeatureCreep.natively_mapped_mods_folder);
 

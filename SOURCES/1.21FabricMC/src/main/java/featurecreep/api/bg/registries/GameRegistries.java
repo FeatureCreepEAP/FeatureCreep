@@ -21,7 +21,7 @@ public class GameRegistries {
 
 	public static Item getItemFromGameRegistries(String registry_name)// We also need a Number ID version of this
 	{
-		return BuiltInRegistries.ITEMS.get(ResourceLocation.def_unknown_11017_(registry_name));
+		return BuiltInRegistries.ITEMS.get(ResourceLocation.parse(registry_name));
 	}
 
 	public static Item getItemFromGameRegistries(int id) {
@@ -29,12 +29,12 @@ public class GameRegistries {
 	}
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name) {
-		return BuiltInRegistries.ITEMS.containsRL(ResourceLocation.def_unknown_11017_(registry_name));
+		return BuiltInRegistries.ITEMS.containsRL(ResourceLocation.parse(registry_name));
 	}
 
 	public static Block getBlockFromGameRegistries(String registry_name)// We also need a Number ID version of this
 	{
-		return BuiltInRegistries.block.get(ResourceLocation.def_unknown_11017_(registry_name));
+		return BuiltInRegistries.block.get(ResourceLocation.parse(registry_name));
 	}
 
 	public static Block getBlockFromGameRegistries(int id) {
@@ -42,7 +42,7 @@ public class GameRegistries {
 	}
 
 	public static boolean BlockKeyExistsInRegistry(String registry_name) {
-		return BuiltInRegistries.block.containsRL(ResourceLocation.def_unknown_11017_(registry_name));
+		return BuiltInRegistries.block.containsRL(ResourceLocation.parse(registry_name));
 	}
 
 	public static CreativeTab getItemGroupByName(String name) {

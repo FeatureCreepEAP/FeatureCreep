@@ -11,6 +11,7 @@ import game.BlockAsItem;
 import game.BuiltInRegistries;
 import game.CreativeTab;
 import game.Item;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
@@ -64,7 +65,7 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id)
 	{
-		game.GameRegistries.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), item);
+		RegistryInterface.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), item);
 		ItemGroupEvents.modifyEntriesEvent(default_tab).register((content) -> {
 	        content.add(item);
 	});
@@ -186,8 +187,8 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id)
 	{
-		game.GameRegistries.register(BuiltInRegistries.block, new ResourceLocation(registry_name), block);
-		game.GameRegistries.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), new BlockAsItem(block, new Item.Info()));
+		RegistryInterface.register(BuiltInRegistries.block, new ResourceLocation(registry_name), block);
+		RegistryInterface.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), new BlockAsItem(block, new Item.Info()));
 		ItemGroupEvents.modifyEntriesEvent(default_tab).register((content) -> {
 	        content.add(block);
 	});
@@ -200,8 +201,8 @@ public class UniversalRegistryGettersAndSetters {
 	}
 	
 	
-	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
-	game.GameRegistries.register(registry,rl,Entry);
+	public static void vainillaRegister(RegistryInterface registry, ResourceLocation rl, Object Entry) {
+	RegistryInterface.register(registry,rl,Entry);
 }
 	
 	

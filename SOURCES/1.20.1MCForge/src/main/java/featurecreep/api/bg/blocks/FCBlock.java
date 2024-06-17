@@ -11,8 +11,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
 import game.BlockPos;
+import game.BlockPropertiesData;
 import game.BuiltInRegistries;
-import game.IBlockstate;
 import game.ItemStack;
 import game.Player;
 import game.PlayerStatisticList;
@@ -37,7 +37,8 @@ public BlockFieldHolder holder = new BlockFieldHolder();
 
 
   @Override
-  public void onBroken(World world, Player player, BlockPos pos, IBlockstate state, @Nullable TileEntity blockEntity, ItemStack stack) {	  player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
+	public void onMinedSucessfully(World world, Player player, BlockPos pos, BlockPropertiesData state, @Nullable TileEntity blockEntity,
+		  ItemStack stack) {	  player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
     player.addExhaustion(0.005f);
 
     ArrayList<BlockDropArrayObject> arr = this.getDrops(new VanillaItem(stack.getItem(), BuiltInRegistries.ITEMS.getName(stack.getItem()).toString()));

@@ -12,13 +12,14 @@ import featurecreep.FeatureCreep;
 import game.Block;
 import game.BlockMatcher;
 import game.CountGenerationAttribute;
-import game.GameRegistries;
 import game.GenerationPlacement;
 import game.HeightRangePlacementModifier;
 import game.MapVerticleAnchor;
 import game.MineralDepositFeatureGenerator;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
+import game.StageGeneration.Feature;
 import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.minecraftforge.common.MinecraftForge;
@@ -132,7 +133,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -143,7 +144,7 @@ if (node.get("enabled").asBoolean() == true)
 	}
 	
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	

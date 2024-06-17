@@ -302,12 +302,12 @@
  	<dependency>
  		<groupId>net.neoforged.fancymodloader</groupId>
  		<artifactId>earlydisplay</artifactId>
- 		<version>3.0.18</version>
+ 		<version>3.0.37</version>
  	</dependency>
  	<dependency>
  		<groupId>net.neoforged.fancymodloader</groupId>
  		<artifactId>loader</artifactId>
- 		<version>3.0.18</version>
+ 		<version>3.0.37</version>
  	</dependency>
  	
  	        <!-- 添加本地 JAR 文件作为依赖 -->  

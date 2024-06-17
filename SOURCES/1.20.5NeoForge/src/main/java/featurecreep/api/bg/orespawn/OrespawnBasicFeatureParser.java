@@ -20,6 +20,7 @@ import game.PlacementModifier;
 import game.RegistryKey;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
+import game.StageGeneration.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -198,7 +199,7 @@ public class OrespawnBasicFeatureParser {
 
 		for (int f = 0; f < placed.size(); f++) {
 
-			builder.addFeature(obf.class_unknown_2362_.Feature.UNDERGROUND_ORES, placed.get(f));
+			builder.addFeature(Feature.UNDERGROUND_ORES, placed.get(f));
 			// (class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
 
 		}

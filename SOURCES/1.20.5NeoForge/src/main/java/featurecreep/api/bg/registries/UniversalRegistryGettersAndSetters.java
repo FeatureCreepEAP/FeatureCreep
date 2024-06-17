@@ -11,6 +11,7 @@ import game.BlockAsItem;
 import game.BuiltInRegistries;
 import game.CreativeTab;
 import game.Item;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -55,7 +56,7 @@ public class UniversalRegistryGettersAndSetters {
 
 	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id) {
 
-		game.GameRegistries.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), item);
+		RegistryInterface.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), item);
 	}
 
 	public static void registerItem(FCItemAPI item) {
@@ -144,8 +145,8 @@ public class UniversalRegistryGettersAndSetters {
 	}
 
 	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id) {
-		game.GameRegistries.register(BuiltInRegistries.block, new ResourceLocation(registry_name), block);
-		game.GameRegistries.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name),
+		RegistryInterface.register(BuiltInRegistries.block, new ResourceLocation(registry_name), block);
+		RegistryInterface.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name),
 				new BlockAsItem(block, new Item.Info()));
 	}
 
@@ -153,12 +154,12 @@ public class UniversalRegistryGettersAndSetters {
 		registerBlock(block.get(), block.getFCRegistryName(), block.getDefaultCreativeTab(), block.getNumberID());
 	}
 
-	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
-		game.GameRegistries.register(registry, rl, Entry);
+	public static void vainillaRegister(RegistryInterface registry, ResourceLocation rl, Object Entry) {
+		RegistryInterface.register(registry, rl, Entry);
 	}
 
 	// Converts NeoForge format to MCForge format
-	public static DeferredRegister deferredRegistryConverter(game.GameRegistries registry, String name) {
+	public static DeferredRegister deferredRegistryConverter(RegistryInterface registry, String name) {
 		return DeferredRegister.create(registry, name);
 	}
 

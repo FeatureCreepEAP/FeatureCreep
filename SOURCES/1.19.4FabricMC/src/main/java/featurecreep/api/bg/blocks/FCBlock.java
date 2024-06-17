@@ -1,20 +1,19 @@
 package featurecreep.api.bg.blocks;
 
-import org.jetbrains.annotations.Nullable;
-
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import game.Block;
 import game.BlockPos;
-import game.BlockState;
+import game.BlockPropertiesData;
 import game.Item;
 import game.ItemStack;
 import game.Player;
 import game.PlayerStatisticList;
 import game.TileEntity;
 import game.World;
+import io.smallrye.common.constraint.Nullable;
 
 public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
@@ -30,7 +29,7 @@ public BlockFieldHolder holder = new BlockFieldHolder();
 
 
   @Override
-  public void onBroken(World world, Player player, BlockPos pos, BlockState state, @Nullable TileEntity blockEntity, ItemStack stack) {
+  public void onMinedSucessfully(World world, Player player, BlockPos pos, BlockPropertiesData state, @Nullable TileEntity blockEntity, ItemStack stack) {
 	player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
     player.addExhaustion(0.005f);
 

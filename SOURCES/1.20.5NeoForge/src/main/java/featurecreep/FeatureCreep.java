@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import org.jboss.logging.Logger;
 import org.jboss.modules.ModuleLoader;
 
-import com.asbestosstar.assistremapper.RemapperInstance;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.ClassPoolNewer1st;
@@ -28,8 +28,9 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.mixin.CoreMod;
 import game.CommandDispatcher;
+import game.CommandOriginStack;
 import javassist.ClassPool;
-import net.neoforged.neoforge.internal.versions.neoform.NeoFormVersion;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.registries.GameData;
 
 public class FeatureCreep {
@@ -41,7 +42,7 @@ public class FeatureCreep {
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	public static double version = 3.918;// GA will be 4.0 for now 3.9pre will work
-	public static String game_version = NeoFormVersion.getMCVersion();
+	public static String game_version = FMLLoader.versionInfo().mcVersion();
 
 	public static ActiveMapping mappings = ActiveMapping.PARCHMENT;// This is the default active mappings
 	public static SuperLoader super_loader = SuperLoader.NEOFORGE;// Need to detect this eventually
@@ -61,7 +62,7 @@ public class FeatureCreep {
 	public static ModuleLoader modloader = loader.getLoader();
 	public static FCDNF fcdnf = new FCDNF();
 	public static MappingConverter mappings_converter = new MappingConverter();
-	public static RemapperInstance remapper = new RemapperInstance(mappings.getMappings().reverse, classpool,
+	public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool,
 			temp_mapping_location);
 
 //TODO Make Packages Needed list all forge packages as its not linear like Fabric
@@ -90,7 +91,7 @@ public class FeatureCreep {
 	}
 
 	// TOCHANGE
-	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<obf.class_unknown_1967_> dispatcher) {
+	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {
 		dispatcher.register(CommandDispatcher.literal("fcdnf").executes(context -> {
 			// Code to execute when the command is executed
 

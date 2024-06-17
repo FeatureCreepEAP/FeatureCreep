@@ -12,9 +12,9 @@ import game.ChunkStatus;
 import game.CreativeTab;
 import game.EntityActivity;
 import game.Item;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import game.TileEntites;
-import game.UnitModifier;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -63,7 +63,7 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getItemByID(id);
 		}else {
-			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), game.GameRegistries.ITEM.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
+			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), RegistryInterface.ITEM.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
 		}
 				
 	}
@@ -184,7 +184,7 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getBlockByID(id);
 		}else {
-			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), game.GameRegistries.BLOCK.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
+			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), RegistryInterface.BLOCK.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
 		}
 				
 	}
@@ -203,24 +203,24 @@ public class UniversalRegistryGettersAndSetters {
 		registerBlock(block.get(),block.getFCRegistryName(), block.getDefaultCreativeTab(), block.getNumberID());
 	}
 	
-	public static void vainillaRegister(game.GameRegistries registry, ResourceLocation rl, Object Entry) {
+	public static void vainillaRegister(RegistryInterface registry, ResourceLocation rl, Object Entry) {
 		//To complete
 			
 		ForgeRegistryEntry entr = (ForgeRegistryEntry)Entry;
 		entr.setRegistryName(rl);
 			
-	if(registry.equals(game.GameRegistries.ITEM)) {
+	if(registry.equals(RegistryInterface.ITEM)) {
 		ForgeRegistries.ITEMS.register((Item)Entry);
-	}else if(registry.equals(game.GameRegistries.BLOCK)){
+	}else if(registry.equals(RegistryInterface.BLOCK)){
 		ForgeRegistries.BLOCKS.register((Block)Entry);
-	}else if(registry.equals(game.GameRegistries.ACTIVITY)){
+	}else if(registry.equals(RegistryInterface.ACTIVITY)){
 			ForgeRegistries.ACTIVITIES.register((EntityActivity) Entry);
-	}else if(registry.equals(game.GameRegistries.BLOCK_ENTITY)){
+	}else if(registry.equals(RegistryInterface.BLOCK_ENTITY)){
 			ForgeRegistries.TILE_ENTITIES.register((TileEntites<?>) Entry);
-	}else if(registry.equals(game.GameRegistries.CHUNK_STATUS)){
+	}else if(registry.equals(RegistryInterface.CHUNK_STATUS)){
 		ForgeRegistries.CHUNK_STATUS.register((ChunkStatus) Entry);
 	}else {
-		game.GameRegistries.register(registry, rl, Entry);
+		RegistryInterface.register(registry, rl, Entry);
 	}
 			//	ForgeRegistries.CONDITION_SERIALIZERS.register(rl, (Item)Entry);
 //		ForgeRegistries.DISPLAY_CONTEXTS.register(rl, (Item)Entry);
@@ -234,16 +234,16 @@ public class UniversalRegistryGettersAndSetters {
 	}
 		
 		//Converts NeoForge format to MCForge format
-		public static DeferredRegister deferredRegistryConverter(game.GameRegistries registry, String name) {
-			if(registry.equals(game.GameRegistries.ITEM)) {
+		public static DeferredRegister deferredRegistryConverter(RegistryInterface registry, String name) {
+			if(registry.equals(RegistryInterface.ITEM)) {
 				return DeferredRegister.create(ForgeRegistries.ITEMS, name);
-			}else if(registry.equals(game.GameRegistries.BLOCK)){
+			}else if(registry.equals(RegistryInterface.BLOCK)){
 				return DeferredRegister.create(ForgeRegistries.BLOCKS, name);
-			}else if(registry.equals(game.GameRegistries.ACTIVITY)){
+			}else if(registry.equals(RegistryInterface.ACTIVITY)){
 				return DeferredRegister.create(ForgeRegistries.ACTIVITIES, name);
-			}else if(registry.equals(game.GameRegistries.BLOCK_ENTITY)){
+			}else if(registry.equals(RegistryInterface.BLOCK_ENTITY)){
 				return DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, name);
-			}else if(registry.equals(game.GameRegistries.CHUNK_STATUS)){
+			}else if(registry.equals(RegistryInterface.CHUNK_STATUS)){
 				return DeferredRegister.create(ForgeRegistries.CHUNK_STATUS, name);
 			}else {
 				return null; //At least this will let me debug thought it should be avoided

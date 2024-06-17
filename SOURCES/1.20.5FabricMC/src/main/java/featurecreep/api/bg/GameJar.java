@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.jar.JarFile;
 
+import com.asbestosstar.assistremapper.RemapperInstance;
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import com.asbestosstar.shadowassist.ShadowAssist;
 

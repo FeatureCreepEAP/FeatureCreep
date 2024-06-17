@@ -11,8 +11,8 @@ import game.Armour;
 import game.ArmourMaterial;
 import game.BuiltInRegistries;
 import game.DivisionDesigner;
-import game.GameRegistries;
 import game.RegistryEntry;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import game.SoundPoolComponent;
 import game.ToolRepairIngredient;
@@ -129,7 +129,7 @@ public class FCArmourMaterial {
             $$8.put($$9, this.getProtectionAmount($$9.getDivisionDesigner()));
         }
         ArmourMaterial mat = new ArmourMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7, this.getFCToughness(), this.getFCKnockBackResistance());
-        return GameRegistries.registerReference(BuiltInRegistries.ARMOUR_MATERIAL, new ResourceLocation(name), mat);
+        return RegistryInterface.registerReference(BuiltInRegistries.ARMOUR_MATERIAL, new ResourceLocation(name), mat);
         
         
 	}

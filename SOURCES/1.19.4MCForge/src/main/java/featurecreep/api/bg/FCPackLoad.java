@@ -42,7 +42,7 @@ public class FCPackLoad implements ResourcePackProvider {
 
 
 		@Override
-		public IResourcePack def_unknown_7382_(String string) {
+		public IResourcePack open(String string) {
 			// TODO Auto-generated method stub
 			return new DirectoryResourcePack(string, loc.toPath(), false);
 		}

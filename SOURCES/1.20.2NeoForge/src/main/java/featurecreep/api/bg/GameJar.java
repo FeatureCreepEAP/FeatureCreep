@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.jar.JarFile;
 
-import com.asbestosstar.assistremapper.RemapperInstance;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import com.asbestosstar.shadowassist.ShadowAssist;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.PKZipUtils;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
@@ -19,11 +18,10 @@ import javassist.NotFoundException;
 public class GameJar {
 
 	public static ClassPool pool = new ClassPool(true);
-	
-static {
-	pool.childFirstLookup=true;
-}
 
+	static {
+		pool.childFirstLookup = true;
+	}
 
 	// Needs to be fixed
 	public static JarFile getGameJar() {
@@ -78,9 +76,10 @@ static {
 		}
 
 		try {
-			RemapperInstance remapper = new RemapperInstance(FeatureCreep.mappings.getMappings(), pool,
+			JarRemapper remapper = new JarRemapper(FeatureCreep.mappings.getMappings(), pool,
 					FeatureCreep.temp_mapping_location);
-		//	remapper.debug_mode = false;//Debug mode will throw lots of stacktraces which are fine
+			// remapper.debug_mode = false;//Debug mode will throw lots of stacktraces which
+			// are fine
 			remapper.remapJar(getShadow());
 			PKZipUtils.zipDirectory(new File(FeatureCreep.temp_mapping_location), target);
 			FileUtils.deleteFolderWithFiles(new File(FeatureCreep.temp_mapping_location));
@@ -96,3 +95,4 @@ static {
 	}
 
 }
+

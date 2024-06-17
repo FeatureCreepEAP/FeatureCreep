@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.jar.JarFile;
 
 import com.asbestosstar.assistremapper.RemapperInstance;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import com.asbestosstar.shadowassist.ShadowAssist;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.PKZipUtils;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
@@ -77,7 +77,7 @@ public class GameJar {
 		}
 
 		try {
-			RemapperInstance remapper = new RemapperInstance(FeatureCreep.mappings.getMappings(), pool,
+			JarRemapper remapper = new JarRemapper(FeatureCreep.mappings.getMappings(), pool,
 					FeatureCreep.temp_mapping_location);
 			// remapper.debug_mode = false;//Debug mode will throw lots of stacktraces which
 			// are fine

@@ -8,6 +8,7 @@ import game.Armour;
 import game.ArmourMaterial;
 import game.DivisionDesigner;
 import game.SoundEffect;
+import game.SoundPoolComponent;
 import game.ToolRepairIngredient;
 
 public class FCArmourMaterial
@@ -113,7 +114,7 @@ implements ArmourMaterial {
     }
 
     @Override
-    public SoundEffect getEquipSound() {
+    public SoundPoolComponent getSoundEvent() {
         return this.sound.get();
     }
 

@@ -268,7 +268,7 @@ if(FeatureCreep.debug_mode) {
 		}
 		@Override
 		public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side) {
-			get().asItem().onBlockDestroyed(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
+			get().asItem().onBlockLeftClick(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
 		}
 		
 		@Override
@@ -290,7 +290,7 @@ if(FeatureCreep.debug_mode) {
 			
 		}
 		@Override
-		public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().asItem().onBlockDestroyed(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
+		public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {get().asItem().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos, (LivingEntity)ent.get());};
 
 		
 		

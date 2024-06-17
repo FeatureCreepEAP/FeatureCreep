@@ -2,10 +2,11 @@ package featurecreep.api.bg.orespawn;
 
 import game.GenerationPlacement;
 import game.RegistryKey;
+import game.StageGeneration.Feature;
 
 public interface FabricAPIOreGenUpdate {
 
-	public static void addFCFeatures(obf.class_unknown_2362_.Feature step, RegistryKey<GenerationPlacement> entry) {
+	public static void addFCFeatures(Feature step, RegistryKey<GenerationPlacement> entry) {
 
 	}
 

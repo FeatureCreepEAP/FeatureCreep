@@ -9,7 +9,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import com.asbestosstar.mixerlogger.MixerLoggerMain;
+//import com.asbestosstar.mixerlogger.MixerLoggerMain;
 
 import featurecreep.api.PKZipUtils;
 import featurecreep.api.bg.BGSide;
@@ -77,7 +77,7 @@ if(temp_mapping_dir.exists()) {
 	  
 
 if(FeatureCreep.debug_mode) {
-	MixerLoggerMain.doit();	  
+	//MixerLoggerMain.doit();	  
 }
 	  
   List<File> fci_jars = new ArrayList<File>();
@@ -113,13 +113,13 @@ if(FeatureCreep.debug_mode) {
   }
 
   List<String> hashes = new ArrayList<String>();
-  FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
+  //FeatureCreep.remapper.addToClasspathJar(GameJar.getFCIShadow());
 
   for (String cp : ClassPathUtils.getClassPath(FeatureCreep.loader)) {
 
     try {
  if(new File(cp).isFile()) {
-  	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp));
+  	  FeatureCreep.remapper.addToClasspathJar(new JarFile(cp),false);
  }
     } catch (IOException e) {
       // TODO Auto-generated catch block

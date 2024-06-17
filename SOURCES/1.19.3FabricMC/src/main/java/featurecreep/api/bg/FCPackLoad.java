@@ -11,6 +11,12 @@ import java.util.function.Consumer;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.api.bg.datapacks.DataPackLoader;
+import game.DirectoryResourcePack;
+import game.IResourcePack;
+import game.PackSources;
+import game.ResourcePackInfo;
+import game.ResourcePackProvider;
+import game.ResourceType;
 
 public class FCPackLoad implements ResourcePackProvider {
     File loc;

@@ -25,7 +25,7 @@ public class DatafiedObjectRegistration {
 		
 	if(FeatureCreep.debug_mode) {
 		System.out.print(item.getModId() + item.getUnlocName() + item.getNumberID() + item.getDefaultCreativeTab());
-        }
+      }
         ModelNode node = item.toModelNode();
 		
 				
@@ -69,7 +69,7 @@ public class DatafiedObjectRegistration {
 		  try {
 				 
 	  		File myObj = new File(FeatureCreep.gamepath.toString() +  ("/datafiedcontents/items/") + item.getModId() + "/" + item.getUnlocName() + ".dmr");
-	  	  if(FeatureCreep.debug_mode) {
+	  	if(FeatureCreep.debug_mode) {
 	  	  System.out.println(myObj.toString());
 	  	}
 	  		myObj.getParentFile().mkdirs();

@@ -11,9 +11,10 @@ import game.Armour;
 import game.ArmourMaterial;
 import game.BuiltInRegistries;
 import game.DivisionDesigner;
-import game.GameRegistries;
 import game.RegistryEntry;
+import game.RegistryInterface;
 import game.ResourceLocation;
+import game.SoundPoolComponent;
 import game.ToolRepairIngredient;
 
 public class FCArmourMaterial {
@@ -121,14 +122,14 @@ public class FCArmourMaterial {
 
 	
 	public RegistryEntry<ArmourMaterial> get() {
-		RegistryEntry<obf.class_unknown_586_> vainilla_sound = this.sound.getEntry();
+		RegistryEntry<SoundPoolComponent> vainilla_sound = this.sound.getEntry();
         List<ArmourMaterial.ArmourLayer> $$7 = List.of(new ArmourMaterial.ArmourLayer(new ResourceLocation(name)));
         EnumMap<Armour.ArmourPeice, Integer> $$8 = new EnumMap<Armour.ArmourPeice, Integer>(Armour.ArmourPeice.class);
-        for (Armour.ArmourPeice $$9 : Armour.ArmourPeice.def_unknown_8802_()) {
+        for (Armour.ArmourPeice $$9 : Armour.ArmourPeice.values()) {
             $$8.put($$9, this.getProtectionAmount($$9.getDivisionDesigner()));
         }
         ArmourMaterial mat = new ArmourMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7, this.getFCToughness(), this.getFCKnockBackResistance());
-        return GameRegistries.registerReference(BuiltInRegistries.var_unknown_37484_, new ResourceLocation(name), mat);
+        return RegistryInterface.registerReference(BuiltInRegistries.ARMOUR_MATERIAL, new ResourceLocation(name), mat);
         
         
 	}

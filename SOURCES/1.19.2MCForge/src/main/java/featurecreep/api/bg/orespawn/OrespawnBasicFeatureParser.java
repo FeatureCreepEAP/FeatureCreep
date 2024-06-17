@@ -18,25 +18,25 @@ import game.BiomePlacementModifier;
 import game.Block;
 import game.BlockMatcher;
 import game.CountGenerationAttribute;
-import game.GameRegistries;
 import game.GenerationPlacement;
 import game.HeightRangePlacementModifier;
 import game.MapVerticleAnchor;
+import game.MineralDepositFeatureGenerator;
 import game.NudgerConfig;
 import game.NudgerPlacements;
 import game.PlacementModifier;
 import game.RegistryEntry;
 import game.RegistryEntryList;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
-import game.TerrainPlacementMod;
-import game.WorldGenFeature;
+import game.StageGeneration.Feature;
+import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
-import obf.class_unknown_1069.Feature;
 
 public class OrespawnBasicFeatureParser {
 
@@ -173,7 +173,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		
 		
 		String[] block_identifier = replace_registry_names.split(":");
-		Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+		Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 		
 		String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 		
@@ -183,7 +183,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		System.out.println(getCorrectNameSpace(new_block));
 		}
 		String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-		Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+		Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 		
 		
 		
@@ -197,7 +197,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 
 
 		// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, replacedBlock.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, replacedBlock.getDefaultState())), 4));
-	     RegistryEntry<WorldGenerationObjectConfiguration<TerrainPlacementMod, ?>> ORE_CONFIG = NudgerConfig.register(name, WorldGenFeature.ORE, new TerrainPlacementMod(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()));//I need to also include veriation in the future
+	     RegistryEntry<WorldGenerationObjectConfiguration<MineralDepositFeatureGenerator, ?>> ORE_CONFIG = NudgerConfig.register(name, WorldDecorationGenerator.MINABLE, new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()));//I need to also include veriation in the future
 
 		 final RegistryEntry<GenerationPlacement> ORE_PLACED = NudgerPlacements.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(MapVerticleAnchor.fixed(node.get("parameters").get("minHeight").asInt()), MapVerticleAnchor.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
 

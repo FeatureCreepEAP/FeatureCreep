@@ -10,13 +10,13 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.FeatureCreep;
 import game.Biomes;
 import game.Block;
-import game.GameRegistries;
+import game.DecoratorComponent;
 import game.MineralDepositFeatureGenerator;
 import game.MineralDepositFeatureGenerator.Target;
 import game.RangeDecoratorConfiguration;
+import game.RegistryInterface;
 import game.ResourceLocation;
 import game.StageGeneration.Feature;
-import game.WorldBuilder;
 import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
 
@@ -127,7 +127,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = GameRegistries.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -138,7 +138,7 @@ if (node.get("enabled").asBoolean() == true)
 	}
 	
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = GameRegistries.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	
@@ -156,7 +156,7 @@ if (node.get("enabled").asBoolean() == true)
 
 
     WorldGenerationObjectConfiguration<?, ?> ORE_CONFIG = WorldDecorationGenerator.MINABLE.config(new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt())) // Vein size						
-						.createDecoratedFeature(WorldBuilder.COUNT_RANGE.config(new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()))); // Number of veins per chunk
+						.createDecoratedFeature(DecoratorComponent.COUNT_RANGE.config(new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()))); // Number of veins per chunk
 				
 		
     Biomes.SMALL_END_ISLANDS.addFeature(Feature.UNDERGROUND_ORES, ORE_CONFIG);

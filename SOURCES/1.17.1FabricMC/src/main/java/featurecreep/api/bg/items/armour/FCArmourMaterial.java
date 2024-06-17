@@ -6,7 +6,7 @@ import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
 import game.ArmourMaterial;
 import game.DivisionDesigner;
-import game.SoundEffect;
+import game.SoundPoolComponent;
 import game.ToolRepairIngredient;
 
 public class FCArmourMaterial implements ArmourMaterial{
@@ -141,7 +141,7 @@ public  int getFCTextureNumber(FCArmourSlot slot)
     }
 
     @Override
-    public SoundEffect getEquipSound() // Sound I will do Later
+    public SoundPoolComponent getSoundEvent() // Sound I will do Later
     {
     	return sound.get();
     }

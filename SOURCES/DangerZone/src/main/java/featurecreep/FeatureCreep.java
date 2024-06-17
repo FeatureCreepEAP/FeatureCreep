@@ -59,8 +59,7 @@ public class FeatureCreep {
 	public static ModuleLoader modloader = loader.getLoader();
 	public static FCDNF fcdnf = new FCDNF();
 	public static MappingConverter mappings_converter = new MappingConverter();
-	public static RemapperInstance remapper = new RemapperInstance(mappings.getMappings().reverse, classpool,
-			temp_mapping_location);
+public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool, temp_mapping_location);
 
 	public static void onInitialise() {
 		// TODO Auto-generated method stub

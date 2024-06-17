@@ -25,25 +25,27 @@ public class VanillaCreativeTab implements UnifiedItemGroupGetter {
 //Minecraft Only gotta change the mappings for these once i figure them out
 	public static CreativeTab getVanillaGroupFromString(VanillaCreativeTab groupname) {
 		if (groupname.tabname.equals("BUILDING_BLOCKS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.BUILDING_BLOCKS:Lgame/CreativeTabs")).get());
+			String tab_string = FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.BUILDING_BLOCKS:Lgame/RegistryKey;");
+			System.out.println(tab_string);
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(tab_string).get());
 		} else if (groupname.tabname.equals("BREWING")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.MISULANIOUS:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.MISULANIOUS:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("COMBAT")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.COMBAT:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.COMBAT:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("DECORATIONS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.BUILDING_BLOCKS:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.BUILDING_BLOCKS:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("FOOD")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.FOODSTUFFS:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.FOODSTUFFS:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("MATERIALS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.PLANTS:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.PLANTS:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("MISC")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.MISULANIOUS:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.MISULANIOUS:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("REDSTONE")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.REDSTONE:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.REDSTONE:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("TOOLS")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.TOOLS:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.TOOLS:Lgame/RegistryKey;")).get());
 		} else if (groupname.tabname.equals("TRANSPORTATION")) {
-			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.FUNCTION:Lgame/CreativeTabs")).get());
+			return BuiltInRegistries.CREATIVE_TABS.get((RegistryKey<CreativeTab>)Mirror.of(CreativeTabs.class).field(FeatureCreep.mappings.getMappings().getReverse().getVarMappedName("game.CreativeTabs.FUNCTION:Lgame/RegistryKey;")).get());
 		} else {
 			return null;
 		}

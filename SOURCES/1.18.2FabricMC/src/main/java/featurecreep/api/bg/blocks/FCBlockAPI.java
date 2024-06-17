@@ -299,7 +299,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 			public default void onBroken(AbstractPlayer player, int dimension, FCBlockPos pos) {}
 			public default void executeOnPlaced(FCWorld w,FCBlockPos pos) {}
-			public default void onPlaced(FCWorld w,FCBlockPos pos) {get().onPlaced(w.get(), pos, get().getDefaultState(), (LivingEntity)w.get().getEntityById(0), this.toStack(1));}//Gotta update the last 2 args later
+			public default void onPlaced(FCWorld w,FCBlockPos pos) {get().onPlace(w.get(), pos, get().getDefaultState(), (LivingEntity)w.get().getEntityById(0), this.toStack(1));}//Gotta update the last 2 args later
 			public default ArrayList<BlockDropArrayObject> getDrops(FCItemAPI tool) {
 				
 				ArrayList<BlockDropArrayObject> result = new ArrayList<BlockDropArrayObject>();

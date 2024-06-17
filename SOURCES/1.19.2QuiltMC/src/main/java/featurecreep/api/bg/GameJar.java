@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.jar.JarFile;
 
-import com.asbestosstar.assistremapper.RemapperInstance;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import com.asbestosstar.shadowassist.ShadowAssist;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.PKZipUtils;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
@@ -64,7 +63,7 @@ static {
 	}
 
 	public static JarFile getFCIShadow() {
-		String target = FeatureCreep.gamepath + "/usr/share/.fci_shadows/mc_forge_" + FeatureCreep.game_version + "-"
+		String target = FeatureCreep.gamepath + "/usr/share/.fci_shadows/mc_quiltmc_" + FeatureCreep.game_version + "-"
 				+ FeatureCreep.version + ".jar";
 		if (new File(target).exists()) {
 			try {
@@ -78,7 +77,7 @@ static {
 		}
 
 		try {
-			RemapperInstance remapper = new RemapperInstance(FeatureCreep.mappings.getMappings(), pool,
+			JarRemapper remapper = new JarRemapper(FeatureCreep.mappings.getMappings(), pool,
 					FeatureCreep.temp_mapping_location);
 		//	remapper.debug_mode = false;//Debug mode will throw lots of stacktraces which are fine
 			remapper.remapJar(getShadow());
@@ -96,3 +95,4 @@ static {
 	}
 
 }
+

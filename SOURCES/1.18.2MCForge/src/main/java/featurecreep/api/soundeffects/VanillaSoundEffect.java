@@ -1,19 +1,18 @@
 package featurecreep.api.soundeffects;
 
-import game.SoundEffect;
-import net.minecraftforge.client.event.sound.SoundEvent;
+import game.SoundPoolComponent;
 
 public class VanillaSoundEffect implements AbstractSoundEffect{
 
-	public SoundEffect event;
+	public SoundPoolComponent event;
 	
-	public VanillaSoundEffect(SoundEffect event) {
+	public VanillaSoundEffect(SoundPoolComponent event) {
 		this.event = event;
 	}
 	
 	
 	@Override
-	public SoundEffect get() {
+	public SoundPoolComponent get() {
 		// TODO Auto-generated method stub
 		return event;
 	}
