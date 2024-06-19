@@ -110,7 +110,7 @@ public class OrespawnBasicFeatureParser {
 
 			String[] block_identifier = replace_registry_names.split(":");
 			Block replacedBlock = BuiltInRegistries.block
-					.get(ResourceLocation.def_unknown_4753_(block_identifier[0], block_identifier[1]));
+					.get(ResourceLocation.fromSeperated(block_identifier[0], block_identifier[1]));
 
 			String new_block = node.get("blocks").get(0).get("name").asString();// I needa Do this as a List eventually
 																				// to handle the Array
@@ -120,7 +120,7 @@ public class OrespawnBasicFeatureParser {
 			}
 			String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
 			Block newBlock = BuiltInRegistries.block
-					.get(ResourceLocation.def_unknown_4753_(new_block_identifier[0], new_block_identifier[1]));
+					.get(ResourceLocation.fromSeperated(new_block_identifier[0], new_block_identifier[1]));
 
 			if (FeatureCreep.debug_mode) {
 				System.out.println(replacedBlock.getName());

@@ -18,7 +18,7 @@ import game.BlockPropertiesData;
 import game.CompositeMapFeature;
 import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.ResourceConfig;
 import game.ResourceLocation;
 import game.StageGeneration.Feature;
@@ -89,13 +89,13 @@ public class OrespawnBasicFeatureParser {
             }
             string3 = getCorrectNameSpace(string3);
             String[] block_identifier = string3.split(":");
-            Block block5 = RegistryInterface.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+            Block block5 = GameRegistriesInterface.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
             String string6 = modelNode.get("blocks").get(0).get("name").asString();
           if(FeatureCreep.debug_mode) {
             System.out.println(getCorrectNameSpace(string6));
           }
             String[] new_block_identifier = getCorrectNameSpace(string6).split(":");
-            Block block8 = RegistryInterface.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+            Block block8 = GameRegistriesInterface.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
            if(FeatureCreep.debug_mode) {
             System.out.println(block5.getLocalisedNameAsTextObject());
             System.out.println(block8.getLocalisedNameAsTextObject());

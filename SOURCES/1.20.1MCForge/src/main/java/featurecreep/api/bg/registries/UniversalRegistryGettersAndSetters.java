@@ -14,7 +14,7 @@ import game.CommandArgParser;
 import game.CreativeTab;
 import game.EntityActivity;
 import game.Item;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.ResourceLocation;
 import game.TileEntites;
 import game.UnitModifier;
@@ -202,7 +202,7 @@ public class UniversalRegistryGettersAndSetters {
 	}
 	
 	
-	public static void vainillaRegister(RegistryInterface registry, ResourceLocation rl, Object Entry) {
+	public static void vainillaRegister(GameRegistriesInterface registry, ResourceLocation rl, Object Entry) {
 	//To complete
 if(registry.equals(BuiltInRegistries.ITEMS)) {
 	ForgeRegistries.ITEMS.register(rl, (Item)Entry);
@@ -219,7 +219,7 @@ if(registry.equals(BuiltInRegistries.ITEMS)) {
 }else if(registry.equals(BuiltInRegistries.COMMAND_ARGUMENT_TYPE)){
 		ForgeRegistries.COMMAND_ARGUMENT_TYPES.register(rl, (CommandArgParser<?, ?>) Entry);
 }else {
-	RegistryInterface.register(registry, rl, Entry);
+	GameRegistriesInterface.register(registry, rl, Entry);
 }
 		//	ForgeRegistries.CONDITION_SERIALIZERS.register(rl, (Item)Entry);
 //	ForgeRegistries.DISPLAY_CONTEXTS.register(rl, (Item)Entry);
@@ -233,7 +233,7 @@ if(registry.equals(BuiltInRegistries.ITEMS)) {
 }
 	
 	//Converts NeoForge format to MCForge format
-	public static DeferredRegister deferredRegistryConverter(RegistryInterface registry, String name) {
+	public static DeferredRegister deferredRegistryConverter(GameRegistriesInterface registry, String name) {
 		if(registry.equals(BuiltInRegistries.ITEMS)) {
 			return DeferredRegister.create(ForgeRegistries.ITEMS, name);
 		}else if(registry.equals(BuiltInRegistries.block)){

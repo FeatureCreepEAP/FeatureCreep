@@ -21,7 +21,7 @@ public class VanillaBlockMaterials {
   	public static VanillaBlockMaterial ICE = new VanillaBlockMaterial(BlockMaterial.ICE);
   	public static VanillaBlockMaterial WOOD = new VanillaBlockMaterial(BlockMaterial.WOOD);
   	public static VanillaBlockMaterial SUGAR = new VanillaBlockMaterial(BlockMaterial.BAMBOO);
-  	public static VanillaBlockMaterial WOOL = new VanillaBlockMaterial(BlockMaterial.var_unknown_237_);
+  	public static VanillaBlockMaterial WOOL = new VanillaBlockMaterial(BlockMaterial.WEB);
   	public static VanillaBlockMaterial TNT = new VanillaBlockMaterial(BlockMaterial.TNT);
   	public static VanillaBlockMaterial LEAVES = new VanillaBlockMaterial(BlockMaterial.LEAVES);
   	public static VanillaBlockMaterial GLASS = new VanillaBlockMaterial(BlockMaterial.GLASS);

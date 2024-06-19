@@ -21,7 +21,7 @@ public class VanillaBlockMaterials {
   	public static VanillaBlockMaterial ICE = new VanillaBlockMaterial(BlockMaterial.ICE);
   	public static VanillaBlockMaterial WOOD = new VanillaBlockMaterial(BlockMaterial.WOOD);
   	public static VanillaBlockMaterial SUGAR = new VanillaBlockMaterial(BlockMaterial.BAMBOO);
-  	public static VanillaBlockMaterial WOOL = new VanillaBlockMaterial(BlockMaterial.var_unknown_237_);
+  	public static VanillaBlockMaterial WOOL = new VanillaBlockMaterial(BlockMaterial.WOOL);
   	public static VanillaBlockMaterial TNT = new VanillaBlockMaterial(BlockMaterial.TNT);
   	public static VanillaBlockMaterial LEAVES = new VanillaBlockMaterial(BlockMaterial.LEAVES);
   	public static VanillaBlockMaterial GLASS = new VanillaBlockMaterial(BlockMaterial.GLASS);
@@ -32,6 +32,6 @@ public class VanillaBlockMaterials {
   	public static VanillaBlockMaterial MOSS_STONE = new VanillaBlockMaterial(BlockMaterial.STONE);
   	public static VanillaBlockMaterial PUMPKIN = new VanillaBlockMaterial(BlockMaterial.PUMPKIN);
   	public static VanillaBlockMaterial EGG = new VanillaBlockMaterial(BlockMaterial.EGG);
-  	public static VanillaBlockMaterial CAKE = new VanillaBlockMaterial(BlockMaterial.var_unknown_4798_);
+  	public static VanillaBlockMaterial CAKE = new VanillaBlockMaterial(BlockMaterial.EGG);
 	
 }

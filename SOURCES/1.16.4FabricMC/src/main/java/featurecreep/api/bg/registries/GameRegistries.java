@@ -6,7 +6,7 @@ import game.Block;
 import game.CreativeTab;
 import game.Item;
 import game.MapWorldGenerationRegistries;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.ResourceLocation;
 
 /**
@@ -19,7 +19,7 @@ public class GameRegistries {
 	
 	public static Item getItemFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return RegistryInterface.ITEM.get(new ResourceLocation(registry_name));
+		return GameRegistriesInterface.ITEM.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Item getItemFromGameRegistries(int id)
@@ -29,22 +29,22 @@ public class GameRegistries {
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name)
 	{
-		return RegistryInterface.ITEM.containsRL(new ResourceLocation(registry_name));
+		return GameRegistriesInterface.ITEM.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(String registry_name)//We also need a Number ID version of this
 	{
-		return RegistryInterface.BLOCK.get(new ResourceLocation(registry_name));
+		return GameRegistriesInterface.BLOCK.get(new ResourceLocation(registry_name));
 	}
 	
 	public static Block getBlockFromGameRegistries(int id)
 	{
-		return RegistryInterface.BLOCK.byId(id);//May not work
+		return GameRegistriesInterface.BLOCK.byId(id);//May not work
 	}
 	
 	public static boolean BlockKeyExistsInRegistry(String registry_name)
 	{
-		return RegistryInterface.BLOCK.containsRL(new ResourceLocation(registry_name));
+		return GameRegistriesInterface.BLOCK.containsRL(new ResourceLocation(registry_name));
 	}
 	
 	

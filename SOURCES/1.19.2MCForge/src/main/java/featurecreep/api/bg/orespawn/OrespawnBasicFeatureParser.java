@@ -27,7 +27,7 @@ import game.NudgerPlacements;
 import game.PlacementModifier;
 import game.RegistryEntry;
 import game.RegistryEntryList;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.ResourceLocation;
 import game.SquarePlacementModifier;
 import game.StageGeneration.Feature;
@@ -173,7 +173,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		
 		
 		String[] block_identifier = replace_registry_names.split(":");
-		Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+		Block replacedBlock = GameRegistriesInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 		
 		String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 		
@@ -183,7 +183,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		System.out.println(getCorrectNameSpace(new_block));
 		}
 		String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-		Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+		Block newBlock = GameRegistriesInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 		
 		
 		

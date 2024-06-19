@@ -99,5 +99,15 @@
         </dependency> 
  	
  	
+ 	        <!-- 添加本地 JAR 文件作为依赖 -->  
+        <dependency>  
+            <groupId>dimdev</groupId>  
+            <artifactId>reiftfci</artifactId>  
+            <version>1.0.0</version> <!-- 可以是任意版本号，但最好是有意义的 -->  
+            <scope>system</scope>  
+            <systemPath>${fcdependencies.dir}/riftfci.jar</systemPath>  
+        </dependency> 
+ 	
+ 	
  </dependencies>
 </project>

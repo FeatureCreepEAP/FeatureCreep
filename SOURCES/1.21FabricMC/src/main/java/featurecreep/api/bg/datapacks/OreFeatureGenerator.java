@@ -88,7 +88,7 @@ public class OreFeatureGenerator {
 
 //https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
 			RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
-					ResourceLocation.def_unknown_4753_("orespawn", configs.get(i).name));
+					ResourceLocation.fromSeperated("orespawn", configs.get(i).name));
 
 			BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), Feature.UNDERGROUND_ORES, MY_ORE_PF);
 

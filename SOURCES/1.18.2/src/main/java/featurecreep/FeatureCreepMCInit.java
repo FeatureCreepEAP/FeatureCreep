@@ -33,7 +33,7 @@ import game.ClientMain;
 import game.CommandDispatcher;
 import game.NudgerBuildings;
 import game.RegistryBootstrap;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.ResourcePackInfo.IFactory;
 import game.ResourcePackManager;
 import game.SharedConstants;
@@ -289,16 +289,16 @@ protected static String modpath = gamepath.toString() + "/mods/";
 		SharedConstants.setVersion(VersionInfo.get());
 		System.out.println("Adding Registry Injection");
 
-		try {RegistryInterface.ACTIVITY.hashCode();}catch(Exception e) {}// Do nothing
+		try {GameRegistriesInterface.ACTIVITY.hashCode();}catch(Exception e) {}// Do nothing
 		try {
 			
-			CtClass registry = pool.get(RegistryInterface.class.getCanonicalName());
+			CtClass registry = pool.get(GameRegistriesInterface.class.getCanonicalName());
 			registry.getDeclaredMethod("i").setBody(null);//Null returns null or 0 or does nothing which is very convinient indeed, turned out we do not really need this one because we are disabling all freeze instances, but eh who cares now lets not remove it
 		//	registry.getDeclaredMethod("j").setBody("return this;");
 			System.out.println("Generating Bytecode");
 			byte[] code = registry.toBytecode();
 			System.out.println("Reloading Registry Class");
-			hs.reload(RegistryInterface.class.getCanonicalName(), code);
+			hs.reload(GameRegistriesInterface.class.getCanonicalName(), code);
 		} catch (NotFoundException | CannotCompileException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

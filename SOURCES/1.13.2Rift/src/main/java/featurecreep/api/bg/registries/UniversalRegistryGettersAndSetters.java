@@ -10,7 +10,7 @@ import game.Block;
 import game.BlockAsItem;
 import game.CreativeTab;
 import game.Item;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.ResourceLocation;
 
 public class UniversalRegistryGettersAndSetters {
@@ -56,14 +56,14 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getItemByID(id);
 		}else {
-			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), RegistryInterface.ITEMS.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
+			return new VanillaItem(GameRegistries.getItemFromGameRegistries(id), GameRegistriesInterface.ITEMS.getName(GameRegistries.getItemFromGameRegistries(id)).toString());
 		}
 				
 	}
 
 	public static void registerItem(Item item, String registry_name, CreativeTab default_tab, int id)
 	{
-		RegistryInterface.ITEMS.register(new ResourceLocation(registry_name), item);		
+		GameRegistriesInterface.ITEMS.register(new ResourceLocation(registry_name), item);		
     }
 	
 	public static void registerItem(FCItemAPI item)
@@ -175,16 +175,16 @@ public class UniversalRegistryGettersAndSetters {
 		{
 			return GlobalRegistries.getBlockByID(id);
 		}else {
-			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), RegistryInterface.BLOCKS.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
+			return new VanillaBlock(GameRegistries.getBlockFromGameRegistries(id), GameRegistriesInterface.BLOCKS.getName(GameRegistries.getBlockFromGameRegistries(id)).toString() );
 		}
 				
 	}
 
 	public static void registerBlock(Block block, String registry_name, CreativeTab default_tab, int id)
 	{
-		RegistryInterface.BLOCKS.register(new ResourceLocation(registry_name), block);
+		GameRegistriesInterface.BLOCKS.register(new ResourceLocation(registry_name), block);
 		BlockAsItem item = new BlockAsItem(block, new Item.Info().setCreativeTab(default_tab));
-		RegistryInterface.ITEMS.register(new ResourceLocation(registry_name), item);
+		GameRegistriesInterface.ITEMS.register(new ResourceLocation(registry_name), item);
 	Item.BLOCK_ITEMS.put(block, item);
 	Block.BLOCKSTATE_IDS.add(block.getDefaultState());
 	}

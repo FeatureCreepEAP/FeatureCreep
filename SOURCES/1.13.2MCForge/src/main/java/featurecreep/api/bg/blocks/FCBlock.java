@@ -16,7 +16,7 @@ import game.BlockPropertiesData;
 import game.ItemStack;
 import game.Player;
 import game.PlayerStatisticList;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.TileEntity;
 import game.World;
 import io.smallrye.common.constraint.Nullable;
@@ -43,7 +43,7 @@ public BlockFieldHolder holder = new BlockFieldHolder();
 	  player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
 	    player.addExhaustion(0.005f);
 
-	    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), RegistryInterface.ITEMS.getName(stack.getItem()).toString()));
+	    ArrayList<BlockDropArrayObject> arr = getDrops(new VanillaItem(stack.getItem(), GameRegistriesInterface.ITEMS.getName(stack.getItem()).toString()));
 	  System.out.println("Block Broken");
 	    for (int i = 0; i < arr.size(); i++) {
 	    	  System.out.println("Scanning Drops");

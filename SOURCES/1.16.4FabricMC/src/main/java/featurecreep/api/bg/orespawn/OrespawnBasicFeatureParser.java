@@ -15,7 +15,7 @@ import game.DecoratorComponent;
 import game.DepthAverageDecoratorConfig;
 import game.MapWorldGenerationRegistries;
 import game.MineralDepositFeatureGenerator;
-import game.RegistryInterface;
+import game.GameRegistriesInterface;
 import game.RegistryKey;
 import game.ResourceLocation;
 import game.StageGeneration.Feature;
@@ -130,7 +130,7 @@ if (node.get("enabled").asBoolean() == true)
 	
 	
 	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+	Block replacedBlock = GameRegistriesInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 	
 	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 	
@@ -140,7 +140,7 @@ if (node.get("enabled").asBoolean() == true)
 	System.out.println(getCorrectNameSpace(new_block));
 	}
 	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+	Block newBlock = GameRegistriesInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 	
 	
 	
@@ -157,10 +157,10 @@ if (node.get("enabled").asBoolean() == true)
 			 // Number of veins per chunk
 	
 
-    RegistryKey<WorldGenerationObjectConfiguration<?, ?>> ORE_CONFIG_KEY = RegistryKey.of(RegistryInterface.WORLD_GENERATION_OBJECT_CONFIGURATION,
+    RegistryKey<WorldGenerationObjectConfiguration<?, ?>> ORE_CONFIG_KEY = RegistryKey.of(GameRegistriesInterface.WORLD_GENERATION_OBJECT_CONFIGURATION,
   	      new ResourceLocation("featurecreep", name));
     
-  	    RegistryInterface.register(MapWorldGenerationRegistries.WORLD_GENERATION_OBJECT_CONFIGURATION, ORE_CONFIG_KEY.getValue(), ORE_CONFIG);
+  	    GameRegistriesInterface.register(MapWorldGenerationRegistries.WORLD_GENERATION_OBJECT_CONFIGURATION, ORE_CONFIG_KEY.getValue(), ORE_CONFIG);
   	    BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), Feature.UNDERGROUND_ORES, ORE_CONFIG_KEY);
 }
 	

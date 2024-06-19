@@ -19,6 +19,7 @@ import game.ChunkPos;
 import game.ChunkRandom;
 import game.ChunkSectionPosition;
 import game.CountGenerationAttribute;
+import game.GameRegistriesInterface;
 import game.GenerationPlacement;
 import game.HeightRangePlacementModifier;
 import game.MapVerticleAnchor;
@@ -29,14 +30,13 @@ import game.NudgerPlacements;
 import game.PlacementModifier;
 import game.RandomSeedSupport;
 import game.RegistryEntry;
-import game.RegistryInterface;
 import game.ResourceLocation;
 import game.SharedConstants;
 import game.SquarePlacementModifier;
 import game.StructureWorldGenerationAccessLevel;
 import game.WorldDecorationGenerator;
 import game.WorldGenerationObjectConfiguration;
-import obf.class_unknown_1160_;
+import game.Xoroshiro128PlusPlusRandomGenerator;
 
 public class OrespawnBasicFeatureParser {
 
@@ -142,7 +142,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		
 		
 		String[] block_identifier = replace_registry_names.split(":");
-		Block replacedBlock = RegistryInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+		Block replacedBlock = GameRegistriesInterface.BLOCK.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 		
 		String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
 		
@@ -152,7 +152,7 @@ public static void 	parseOS3Basic(ModelNode node,String name)
 		System.out.println(getCorrectNameSpace(new_block));
 		}
 		String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-		Block newBlock = RegistryInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+		Block newBlock = GameRegistriesInterface.BLOCK.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 		
 		
 		
@@ -189,7 +189,7 @@ public static void applyOres(ChunkGenerator gen, StructureWorldGenerationAccessL
       ChunkSectionPosition chunkSectionPos = ChunkSectionPosition.from(chunkPos, world.getBottomSectionCoord());
       BlockPos blockPos = chunkSectionPos.getMinPos();
 	
-      ChunkRandom chunkRandom = new ChunkRandom(new class_unknown_1160_(RandomSeedSupport.getUniqueSeed()));
+      ChunkRandom chunkRandom = new ChunkRandom(new Xoroshiro128PlusPlusRandomGenerator(RandomSeedSupport.getUniqueSeed()));
       long l = chunkRandom.setSeed(world.getSeed(), blockPos.getX(), blockPos.getZ());
       
 	
