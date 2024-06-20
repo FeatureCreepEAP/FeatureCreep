@@ -17,25 +17,26 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.spongepowered.asm.transformers.MixinClassReader;
 
+import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.mixerlogger.MixerLoggerMain;
 
 import featurecreep.FeatureCreep;
 import featurecreep.api.PKZipUtils;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.GameJar;
 import featurecreep.api.hashing.Sha256;
+import featurecreep.bytecode.ClassFileUtils;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
-import javassist.ByteArrayClassPath;
-import javassist.CannotCompileException;
-import javassist.ClassPool;
 import javassist.CtClass;
-import javassist.CtConstructor;
-import javassist.CtMethod;
-import javassist.NotFoundException;
+import javassist.bytecode.BadBytecode;
+import javassist.bytecode.Bytecode;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.CodeIterator;
+import javassist.bytecode.MethodInfo;
 
 public class CoreMod implements IMixinConfigPlugin {
 
@@ -46,21 +47,30 @@ public class CoreMod implements IMixinConfigPlugin {
 	public static FCLoaderBasic loader = new FCLoaderBasicR8(FeatureCreep.modpaths, FeatureCreep.dependancies,
 			FeatureCreep.packages_needed, 4, true, BGSide.getExecutionSide());
 
+	public static Mappings reverse_mappings = FeatureCreep.mappings.getMappings().getReverse();
+
 	public byte[] titlescreenja(byte[] arr) {
 
 		try {
-			ClassPool pool = ClassPool.getDefault();
-			pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_442", arr));
+			ClassFile file = ClassFileUtils.classFileFromBytes(arr);
+			String target = reverse_mappings.getDefMappedName("game.TitleScreen.initalise()V");
+			System.out.println(target);
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Testing JA");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); // System.out.println("Testing
+																									// JA");
+				coat.iterator().begin();
+				coat.iterator().insert(code.get());
+				return ClassFileUtils.classFileToBytes(file);
+			}
 
-			pool.appendSystemPath();
-			CtClass cc = pool.get("net.minecraft.class_442");
-			CtMethod m = cc.getDeclaredMethod("method_25426");
-
-			m.insertBefore("System.out.println(\"Testin JA\");");
-
-			arr = cc.toBytecode();
-
-		} catch (Throwable e) {
+		} catch (IOException | BadBytecode e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -131,13 +141,13 @@ public class CoreMod implements IMixinConfigPlugin {
 
 			try {
 				if (new File(cp).isFile()) {
-					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp),false);
+					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp), false);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
+		}
 
 		File native_mods_folder = new File(FeatureCreep.natively_mapped_mods_folder);
 
@@ -269,37 +279,71 @@ public class CoreMod implements IMixinConfigPlugin {
 
 	public byte[] transformresourcemanager(byte[] basicClass) {
 		// TODO Auto-generated method stub
+//game.ResourcePackManager.reloadPacksFromFinders()V
+		// game.ResourcePackManager.providers:Ljava/util/Set;
 
 		try {
-			ClassPool pool = ClassPool.getDefault();
-			pool.insertClassPath(new ByteArrayClassPath("net.minecraft.class_3283", basicClass));
+			ClassFile file = ClassFileUtils.classFileFromBytes(basicClass);
+			String target = reverse_mappings.getDefMappedName("game.ResourcePackManager.reloadPacksFromFinders()V");
+			String providers = reverse_mappings.getVarMappedName("game.ResourcePackManager.providers:Ljava/util/Set;");
 
-			pool.appendSystemPath();
-			CtClass cc = pool.get("net.minecraft.class_3283");
-			// CtMethod m = CtNewMethod.make(
-			// "public void registerFCPack() { field_14227.add(new
-			// featurecreep.api.FCPackLoad(new
-			// java.io.File(featurecreep.api.datapacks.DataPackLoader.datapacklocation)));
-			// }",
-			// cc);
+			System.out.println(target);
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
 
-			CtMethod m = cc.getDeclaredMethod("method_14445");
+				code.addAload(0);
+				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				code.addNew("featurecreep/api/bg/FCPackLoad");
+				code.addOpcode(code.DUP);// Luckily this one was the example in javassist
+				code.addNew("java/io/File");
+				code.addOpcode(code.DUP);
+				code.addGetstatic("featurecreep/api/bg/datapacks/DataPackLoader", "datapacklocation",
+						"Ljava/lang/String;");
+				code.addInvokespecial("java/io/File", "<init>", "(Ljava/lang/String;)V");
+				code.addInvokespecial("featurecreep/api/bg/FCPackLoad", "<init>", "(Ljava/io/File;)V");
+				code.addInvokeinterface("java/util/Set", "add", "(Ljava/lang/Object;)Z", 2); // providers.add(new
+																								// featurecreep.api.bg.FCPackLoad(new
+																								// java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));
+				code.addOpcode(code.POP);
 
-			m.insertBefore("System.out.println(\"Testin JA\");");
-			m.insertBefore(
-					"field_14227.add(new featurecreep.api.bg.FCPackLoad(new java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));");
-			// cc.addMethod(m);
-			CtConstructor cons = cc.getDeclaredConstructors()[0];
-			cons.insertAfter("field_14227 = featurecreep.api.io.BasicIO.setFromArray($1);");
-			return cc.toBytecode();// SHould maybe also be redefining the providers in the constructor, but it
-									// works on TLauncher so maybe it works everywhere on fabric without it, ill
-									// still include it anyhow, may remove it if iknow it conflicts with some mods
-		} catch (NotFoundException | CannotCompileException | IOException e) {
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Testing JA");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); // System.out.println("Testing
+																									// JA");
+
+				coat.iterator().begin();
+				coat.iterator().insert(code.get());
+
+				MethodInfo constr = ClassFileUtils.getMethodInfoWithDescriptor(file, "<init>",
+						reverse_mappings.renameClassesInMethodDescriptor("(Lgame/ResourcePackProvider;)V"));
+				if (constr != null) {
+					CodeAttribute constrcoat = def.getCodeAttribute();
+					Bytecode constrcode = new Bytecode(file.getConstPool());
+					constrcode.addOpcode(constrcode.GOTO);
+					constrcode.addOpcode(constrcode.ACONST_NULL);
+					constrcode.addAstore(3);
+					constrcode.addAload(0);
+					constrcode.addAload(1);
+					constrcode.addInvokestatic("featurecreep/api/io/BasicIO", "setFromArray",
+							"([Ljava/lang/Object;)Ljava/util/Set;");
+					constrcode.addPutfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+					CodeIterator consiter = constrcoat.iterator();
+					consiter.append(constrcode.get());
+
+				}
+
+				return ClassFileUtils.classFileToBytes(file);
+			}
+
+		} catch (IOException | BadBytecode e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return null;
+		return basicClass;
 	}
 
 	@Override
