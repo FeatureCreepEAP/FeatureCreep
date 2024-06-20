@@ -88,6 +88,7 @@ public interface Mappings {
 			String[] val = include.getValue();
 			if(val.length>0) {
 			String[] new_values = new String[val.length];
+
 			int i = 0;
 			for (String incl : val) {
 				new_values[i] = getClassMappedName(incl.trim());
@@ -166,22 +167,31 @@ public interface Mappings {
 	}
 
 	public default String getDefMappedName(String original) {
-
+		
 		// 检查当前类是否有方法定义
 		if (this.getDefs().containsKey(original)) {
 			return this.getDefs().get(original);
 		}
 
+	
+		
+		
 		String defau = original.split("\\.")[original.split("\\.").length - 1].split("\\(")[0];
 		String[] split = original.split("\\.");
 		// 检查当前类是否有继承的父类
-		String[] superclazzes = this.getIncludes().get(String.join(".", getAllButLast(split)));
+		String og_clazz = String.join(".", getAllButLast(split));
+		
+		
+		String[] superclazzes = this.getIncludes().get(og_clazz);
+
+		
+		
 		if (superclazzes != null) {
 			// 分割父类名
 			for (String superClass : superclazzes) {
 				// 去除父类名两侧的空白字符
 				superClass = superClass.trim();
-
+				
 				// 递归查找父类的方法定义
 				String name_and_desc = split[split.length - 1];
 				String definition = getDefMappedName(superClass + "." + name_and_desc);

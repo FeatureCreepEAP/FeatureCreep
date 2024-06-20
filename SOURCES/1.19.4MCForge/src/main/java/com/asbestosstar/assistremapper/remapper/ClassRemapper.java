@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,7 +52,9 @@ public class ClassRemapper implements RemapperInstance {
 	public ArrayList<ClassFile> clazzes = new ArrayList<ClassFile>(); // For Jar Remapping or multiclass files
 	public int threads;
 	public boolean dont_export = false;
-
+	public ArrayList<String> vardefnewnamesogdefs = new ArrayList<String>();
+	
+	
 	public ClassRemapper(Mappings mappings, ClassPool pool, ClassFile file, String export_location, int threads) {
 		this.mappings = mappings;
 		this.classpool = pool;
@@ -66,8 +69,6 @@ public class ClassRemapper implements RemapperInstance {
 		updateIncludes(false);
 		checkInhertitedMaps();
 
-		
-
 		System.out.println("Remapping Bodies");
 
 		try {
@@ -79,14 +80,10 @@ public class ClassRemapper implements RemapperInstance {
 
 			}
 		}
-		
-		
-		
-		
+
 		System.out.println("renaming");
 
 		rename_all();
-
 
 		System.out.println("Renaming Classes");
 
@@ -183,25 +180,23 @@ public class ClassRemapper implements RemapperInstance {
 			int rec = 0;
 			while (rec < inners.tableLength()) {
 				String og = inners.innerClass(rec);
-				
-				
+
 				String full = mappings.getClassMappedName(og);
 				String sub;
-				
+
 				if (full.contains("$")) {
 					String[] split = full.split("\\$");
 					sub = split[split.length - 1];
 				} else {
 					sub = full;
 				}
-				
+
 				inners.setInnerNameIndex(rec, file.getConstPool().addUtf8Info(sub));
-				
+
 				rec++;
 			}
 		}
-		
-		
+
 		file.renameClass(file.getName(), mappings.getClassMappedName(file.getName()));
 		file.setName(mappings.getClassMappedName(file.getName()));
 
@@ -216,12 +211,11 @@ public class ClassRemapper implements RemapperInstance {
 			}
 		}
 
-
-
-		file.renameClass(mappings.getJVMClasses());// Not Sure if calling the method is fastest or if making a field would
-										// be faster but eh its ok for now as for field we would need a way
-										// to regen if classes were later added to mappings, we can see
-										// later though
+		file.renameClass(mappings.getJVMClasses());// Not Sure if calling the method is fastest or if making a field
+													// would
+		// be faster but eh its ok for now as for field we would need a way
+		// to regen if classes were later added to mappings, we can see
+		// later though
 		// }
 	}
 
@@ -269,69 +263,64 @@ public class ClassRemapper implements RemapperInstance {
 //					}
 //					 else {
 
-						for (int arg : def.arguments) {
-							int tag = file.getConstPool().getTag(arg);
-							if (tag == 15) { // MethodHandleInfo.tag
+					for (int arg : def.arguments) {
+						int tag = file.getConstPool().getTag(arg);
+						if (tag == 15) { // MethodHandleInfo.tag
 
-								int ref = file.getConstPool().getMethodHandleKind(arg);
-								int refered = file.getConstPool().getMethodHandleIndex(arg);
-								int argtipoynombre = file.getConstPool().getMethodrefNameAndType(refered);
-								int existing_nombre = file.getConstPool().getNameAndTypeName(argtipoynombre);
-								String existing_nombre_string = file.getConstPool().getUtf8Info(existing_nombre);
-								
+							int ref = file.getConstPool().getMethodHandleKind(arg);
+							int refered = file.getConstPool().getMethodHandleIndex(arg);
+							int argtipoynombre = file.getConstPool().getMethodrefNameAndType(refered);
+							int existing_nombre = file.getConstPool().getNameAndTypeName(argtipoynombre);
+							String existing_nombre_string = file.getConstPool().getUtf8Info(existing_nombre);
 
-								int existing_desc = file.getConstPool().getNameAndTypeDescriptor(argtipoynombre);
-								String argdesc_string = file.getConstPool().getUtf8Info(existing_desc);
-								ArrayList<String> recu = new ArrayList<String>();
-								String oldest;
-								String argclazz = file.getConstPool().getMethodrefClassName(refered);
+							int existing_desc = file.getConstPool().getNameAndTypeDescriptor(argtipoynombre);
+							String argdesc_string = file.getConstPool().getUtf8Info(existing_desc);
+							ArrayList<String> recu = new ArrayList<String>();
+							String oldest;
+							String argclazz = file.getConstPool().getMethodrefClassName(refered);
 
+							if (ref == ConstPool.REF_getField // || ref == ConstPool.CONST_Fieldref reenable if needed
+																// but it conflicts with the interfaceref
+									|| ref == ConstPool.REF_putField) {
+								oldest = getOldestFieldName(getClassFromName(argclazz), existing_nombre_string,
+										argdesc_string, recu);
+							} else {// Method and field classname may be similar but we just add both in case
+								oldest = getOldestMethodName(getClassFromName(argclazz), existing_nombre_string,
+										argdesc_string, recu);
+							}
 
+							if (!existing_nombre_string.equals(oldest)) {
 
-								
-								if (ref == ConstPool.REF_getField //|| ref == ConstPool.CONST_Fieldref reenable if needed but it conflicts with the interfaceref
-										|| ref == ConstPool.REF_putField) {
-									oldest = getOldestFieldName(getClassFromName(argclazz),
-											existing_nombre_string, argdesc_string, recu);
-								} else {//Method and field classname may be similar but we just add both in case
-									oldest = getOldestMethodName(getClassFromName(argclazz),
-											existing_nombre_string, argdesc_string, recu);
-								}
-
-								if (!existing_nombre_string.equals(oldest)) {
-
-								
-									try {
-										Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
-										additem.setAccessible(true);
-										Object inf = additem.invoke(file.getConstPool(), argtipoynombre);
-										// Should make this check for instance 1st
-										Class<?> ref_info = Class.forName(
-												ConstPool.class.getPackage().getName() + ".NameAndTypeInfo", false,
-												file.getConstPool().getClass().getClassLoader());
-										Field nati = ref_info.getDeclaredField("memberName");
-										nati.setAccessible(true);
-										nati.setInt(inf, file.getConstPool().addUtf8Info(oldest));
-									} catch (NoSuchMethodException | SecurityException | IllegalAccessException
-											| IllegalArgumentException | InvocationTargetException
-											| ClassNotFoundException | NoSuchFieldException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-
+								try {
+									Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
+									additem.setAccessible(true);
+									Object inf = additem.invoke(file.getConstPool(), argtipoynombre);
+									// Should make this check for instance 1st
+									Class<?> ref_info = Class.forName(
+											ConstPool.class.getPackage().getName() + ".NameAndTypeInfo", false,
+											file.getConstPool().getClass().getClassLoader());
+									Field nati = ref_info.getDeclaredField("memberName");
+									nati.setAccessible(true);
+									nati.setInt(inf, file.getConstPool().addUtf8Info(oldest));
+								} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+										| IllegalArgumentException | InvocationTargetException | ClassNotFoundException
+										| NoSuchFieldException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
 
 							}
 
 						}
+
 					}
 				}
-
 			}
-		}
-		//}
 
-	
+		}
+	}
+	// }
+
 //TODO maybe remove clazz and use arg[0]
 	public void recordcaller(BootstrapMethod def) {
 		// TODO Auto-generated method stub
@@ -340,84 +329,80 @@ public class ClassRemapper implements RemapperInstance {
 		String existing = file.getConstPool().getStringInfo(args[1]);
 		String[] split = existing.split(";");
 		List<String> to_join = new ArrayList<String>();
-		if(args.length>2) {//There is likely a better way to do this but i am still not too farmilar with records so for now this will do
-		int i = 2;
+		if (args.length > 2) {// There is likely a better way to do this but i am still not too farmilar with
+								// records so for now this will do
+			int i = 2;
 
-		for(String nombre:split) {
-			int arg = args[i];
-			
-			int ref = file.getConstPool().getMethodHandleKind(arg);
-			int refered = file.getConstPool().getMethodHandleIndex(arg);
-			int tipoynombre = file.getConstPool().getMethodrefNameAndType(refered);
-			int existing_nombre = file.getConstPool().getNameAndTypeName(tipoynombre);
-			String existing_nombre_string = file.getConstPool().getUtf8Info(existing_nombre);
-			int existing_desc = file.getConstPool().getNameAndTypeDescriptor(tipoynombre);
-			String desc_string = file.getConstPool().getUtf8Info(existing_desc);
-			
-			ArrayList<String> recu = new ArrayList<String>();
-			String oldest;
-			
-			if (ref == ConstPool.REF_getField || ref == ConstPool.CONST_Fieldref
-					|| ref == ConstPool.REF_putField) {
-				oldest = getOldestFieldName(getClassFromName(clazz.replace("/", ".")),
-						existing_nombre_string, desc_string, recu);
-			} else {
-				oldest = getOldestMethodName(getClassFromName(clazz.replace("/", ".")),
-						existing_nombre_string, desc_string, recu);
-			}
-			to_join.add(oldest);
-			
-			if (!existing_nombre_string.equals(oldest)) {
+			for (String nombre : split) {
+				int arg = args[i];
 
-				try {
-					Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
-					additem.setAccessible(true);
-					Object inf = additem.invoke(file.getConstPool(), tipoynombre);
-					// Should make this check for instance 1st
-					Class<?> ref_info = Class.forName(
-							ConstPool.class.getPackage().getName() + ".NameAndTypeInfo", false,
-							file.getConstPool().getClass().getClassLoader());
-					Field nati = ref_info.getDeclaredField("memberName");
-					nati.setAccessible(true);
-					nati.setInt(inf, file.getConstPool().addUtf8Info(oldest));
-				} catch (NoSuchMethodException | SecurityException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| ClassNotFoundException | NoSuchFieldException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				int ref = file.getConstPool().getMethodHandleKind(arg);
+				int refered = file.getConstPool().getMethodHandleIndex(arg);
+				int tipoynombre = file.getConstPool().getMethodrefNameAndType(refered);
+				int existing_nombre = file.getConstPool().getNameAndTypeName(tipoynombre);
+				String existing_nombre_string = file.getConstPool().getUtf8Info(existing_nombre);
+				int existing_desc = file.getConstPool().getNameAndTypeDescriptor(tipoynombre);
+				String desc_string = file.getConstPool().getUtf8Info(existing_desc);
+
+				ArrayList<String> recu = new ArrayList<String>();
+				String oldest;
+
+				if (ref == ConstPool.REF_getField || ref == ConstPool.CONST_Fieldref || ref == ConstPool.REF_putField) {
+					oldest = getOldestFieldName(getClassFromName(clazz.replace("/", ".")), existing_nombre_string,
+							desc_string, recu);
+				} else {
+					oldest = getOldestMethodName(getClassFromName(clazz.replace("/", ".")), existing_nombre_string,
+							desc_string, recu);
+				}
+				to_join.add(oldest);
+
+				if (!existing_nombre_string.equals(oldest)) {
+
+					try {
+						Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
+						additem.setAccessible(true);
+						Object inf = additem.invoke(file.getConstPool(), tipoynombre);
+						// Should make this check for instance 1st
+						Class<?> ref_info = Class.forName(ConstPool.class.getPackage().getName() + ".NameAndTypeInfo",
+								false, file.getConstPool().getClass().getClassLoader());
+						Field nati = ref_info.getDeclaredField("memberName");
+						nati.setAccessible(true);
+						nati.setInt(inf, file.getConstPool().addUtf8Info(oldest));
+					} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+							| IllegalArgumentException | InvocationTargetException | ClassNotFoundException
+							| NoSuchFieldException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
 
+				i++;
 			}
-			
-			i++;
-		}
-		if(to_join.size()>0) {
-			String arg1 = String.join(";", to_join);
-			if(existing!=arg1) {
-			try {
-				Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
-				additem.setAccessible(true);
-				Object inf = additem.invoke(file.getConstPool(), args[1]);
-				// Should make this check for instance 1st
-				Class<?> ref_info = Class.forName(
-						ConstPool.class.getPackage().getName() + ".StringInfo", false,
-						file.getConstPool().getClass().getClassLoader());
-				Field nati = ref_info.getDeclaredField("string");
-				nati.setAccessible(true);
-				nati.setInt(inf, file.getConstPool().addUtf8Info(arg1));
-			} catch (NoSuchMethodException | SecurityException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException
-					| ClassNotFoundException | NoSuchFieldException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (to_join.size() > 0) {
+				String arg1 = String.join(";", to_join);
+				if (existing != arg1) {
+					try {
+						Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
+						additem.setAccessible(true);
+						Object inf = additem.invoke(file.getConstPool(), args[1]);
+						// Should make this check for instance 1st
+						Class<?> ref_info = Class.forName(ConstPool.class.getPackage().getName() + ".StringInfo", false,
+								file.getConstPool().getClass().getClassLoader());
+						Field nati = ref_info.getDeclaredField("string");
+						nati.setAccessible(true);
+						nati.setInt(inf, file.getConstPool().addUtf8Info(arg1));
+					} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+							| IllegalArgumentException | InvocationTargetException | ClassNotFoundException
+							| NoSuchFieldException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
+
 		}
-		}
-		
-		
-	}
-		
-		
+
 	}
 
 	public void putMethod(MethodInfo def) {
@@ -438,11 +423,14 @@ public class ClassRemapper implements RemapperInstance {
 		}
 
 		if (nombre != null) {
-			if (this.classFileHasMethod(file.getName(), nombre, def.getDescriptor()) && !old_nombre.equals(nombre)
-					&& disallowDupes) {
+			String anti_dupe_lleve = nombre+def.getDescriptor();
+			if (this.classFileHasMethod(file.getName(), nombre, def.getDescriptor()) // This should be changed to account for when there are dupes which a duped name is duped with a non remapped, other wise its basically useless 
+					&& !old_nombre.equals(nombre)
+					&& disallowDupes && this.vardefnewnamesogdefs.contains(anti_dupe_lleve)) {
 				System.out.println("Dupe" + file.getName() + nombre + def.getDescriptor());
 			} else if (!old_nombre.equals(nombre)) {
 				def.setName(nombre);
+				this.vardefnewnamesogdefs.add(anti_dupe_lleve);
 			}
 
 		}
@@ -470,15 +458,21 @@ public class ClassRemapper implements RemapperInstance {
 			nombre = getOldestFieldName(file, old_nombre, var.getDescriptor(), recersive_names);
 			recersive_names.clear();
 		}
-		if (this.classFileHasField(file.getName(), nombre, var.getDescriptor()) && !old_nombre.equals(nombre)
-				&& disallowDupes) {
+		
+		String anti_dupe_lleve = nombre+":"+var.getDescriptor();
+		if (this.classFileHasField(file.getName(), nombre, var.getDescriptor()) // This should be changed to account for when there are dupes which a duped name is duped with a non remapped, other wise its basically useless 
+				&& !old_nombre.equals(nombre)
+				&& disallowDupes && this.vardefnewnamesogdefs.contains(anti_dupe_lleve)) {
 			System.out.println("Dupe" + file.getName() + nombre + var.getDescriptor());
 		} else if (!nombre.equals(old_nombre)) {
 			var.setName(nombre);
+			this.vardefnewnamesogdefs.add(anti_dupe_lleve);
 		}
 
 	}
-
+	
+	
+	
 	public boolean checkIfFieldExists(String name, String desc) {
 		for (FieldInfo var : file.getFields()) {
 			if (var.getName().equals(name) && var.getDescriptor().equals(desc)) {
@@ -502,11 +496,12 @@ public class ClassRemapper implements RemapperInstance {
 				e.printStackTrace();
 			}
 		}
-		
+
 		renameBootStrapMethods();
 		remapInvokeDyamics();
 		renameEnclosedMethods();
-//		executorService.shutdown();
+
+		// executorService.shutdown();
 
 		// TODO Auto-generated method stub
 
@@ -617,13 +612,9 @@ public class ClassRemapper implements RemapperInstance {
 		// https://github.com/pocolifo/jar-remapper/blob/main/com.pocolifo.jarremapper/src/main/java/com/pocolifo/jarremapper/
 		String className = clazz.getName();
 
-
-		
-		
-		
 		if (!recersive_names.contains(className)) {
 
-			if (mappings.getDefs().containsKey(className + "." + methodName + desc)) {			
+			if (mappings.getDefs().containsKey(className + "." + methodName + desc)) {
 				String ret = mappings.getDefs().get(className + "." + methodName + desc);
 				return ret;
 			} else {
@@ -635,7 +626,7 @@ public class ClassRemapper implements RemapperInstance {
 
 				if (this.classFileHasMethod(className, methodName, desc)) { // Soon need to account for descriptorsss
 					// This section is likely going to be removed in the future
-					
+
 					ArrayList<ClassFile> supers = new ArrayList<ClassFile>();
 
 					String[] sups = mappings.getIncludes().get(className);
@@ -734,9 +725,10 @@ public class ClassRemapper implements RemapperInstance {
 	}
 
 	public void cleanClassPool() {
-	if(!file.getSuperclass().replace("/", ".").equals("java.lang.Record")) {	//At this time compact does not work well with attribute record
-		file.compact();
-	}
+		if (!file.getSuperclass().replace("/", ".").equals("java.lang.Record")) { // At this time compact does not work
+																					// well with attribute record
+			file.compact();
+		}
 	}
 
 	// If include already exist it will not try to find more
@@ -776,93 +768,79 @@ public class ClassRemapper implements RemapperInstance {
 		}
 
 	}
-	
-	
+
 	public void remapInvokeDyamics() {
 		ConstPool pool = file.getConstPool();
-		for(int i = 1; i<pool.getSize();i++) {
-				if(pool.getTag(i) == 18) {
-					int nameandtype = pool.getInvokeDynamicNameAndType(i);
-					String old_name = pool.getUtf8Info(pool.getNameAndTypeName(nameandtype));
-					String old_desc = pool.getUtf8Info(pool.getNameAndTypeDescriptor(nameandtype));
-					
-					
-					//Try with return as class
-					if(old_desc.contains(")L")){
-						String returning_class = old_desc.split("\\)L")[1].replace(";", "").replace("/", ".");
-						//THIS IS VERY TEMPORARY AND ONLY WORKS IN SOME CASES AND RELYS ON FUNCTIONAL INTERFACES ONLY HAVING 1 METHOD ESPECIALLY OF THAT NAME
-					//	String oldest = getOldestMethodName(getClassFromName(returning_class),		old_name, "()Ljava/lang/Object;", new ArrayList<String>());
-						String oldest = null;
-						for (Map.Entry<String, String> clazz : mappings.getDefs().entrySet()) {
-							if(clazz.getKey().startsWith(returning_class+"."+old_name+"(")) {
-								oldest=clazz.getValue();
-							}
+		for (int i = 1; i < pool.getSize(); i++) {
+			if (pool.getTag(i) == 18) {
+				int nameandtype = pool.getInvokeDynamicNameAndType(i);
+				String old_name = pool.getUtf8Info(pool.getNameAndTypeName(nameandtype));
+				String old_desc = pool.getUtf8Info(pool.getNameAndTypeDescriptor(nameandtype));
 
+				// Try with return as class
+				if (old_desc.contains(")L")) {
+					String returning_class = old_desc.split("\\)L")[1].replace(";", "").replace("/", ".");
+					// THIS IS VERY TEMPORARY AND ONLY WORKS IN SOME CASES AND RELYS ON FUNCTIONAL
+					// INTERFACES ONLY HAVING 1 METHOD ESPECIALLY OF THAT NAME
+					// String oldest = getOldestMethodName(getClassFromName(returning_class),
+					// old_name, "()Ljava/lang/Object;", new ArrayList<String>());
+					String oldest = null;
+					for (Map.Entry<String, String> clazz : mappings.getDefs().entrySet()) {
+						if (clazz.getKey().startsWith(returning_class + "." + old_name + "(")) {
+							oldest = clazz.getValue();
 						}
-						
-						if(oldest!=null) {
-						
-						if(!old_name.equals(oldest)) {
-						
-							
+
+					}
+
+					if (oldest != null) {
+
+						if (!old_name.equals(oldest)) {
+
 							try {
 								Method additem = ConstPool.class.getDeclaredMethod("getItem", int.class);
 								additem.setAccessible(true);
 								Object inf = additem.invoke(pool, nameandtype);
-					//Should make this check for instance 1st
-								Class<?> ref_info = Class.forName(ConstPool.class.getPackage().getName() + ".NameAndTypeInfo", false,
+								// Should make this check for instance 1st
+								Class<?> ref_info = Class.forName(
+										ConstPool.class.getPackage().getName() + ".NameAndTypeInfo", false,
 										pool.getClass().getClassLoader());
 								Field nati = ref_info.getDeclaredField("memberName");
 								nati.setAccessible(true);
 								nati.setInt(inf, pool.addUtf8Info(oldest));
-							} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-									| InvocationTargetException | ClassNotFoundException | NoSuchFieldException e) {
+							} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+									| IllegalArgumentException | InvocationTargetException | ClassNotFoundException
+									| NoSuchFieldException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
-							
-							
-							
+
 						}
-						
-						
+
 					}
-					
-					
-					
-					}
+
 				}
-		
-			
-			
+			}
+
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public void renameEnclosedMethods() {
 		// TODO Auto-generated method stub
 
-		//Not sure if there can be more than 1
+		// Not sure if there can be more than 1
 		EnclosingMethodAttribute em = (EnclosingMethodAttribute) file.getAttribute(EnclosingMethodAttribute.tag);
-		if (em != null && em.methodIndex()!=0) {
-			String oldest = getOldestMethodName(getClassFromName(em.className().replace("/", ".")),
-					em.methodName(), em.methodDescriptor(), new ArrayList<String>());
-	
-	if(!oldest.equals(em.methodName())) {
-		file.removeAttribute(EnclosingMethodAttribute.tag);	//Perhaps replacing nameandtype would be better
-		file.addAttribute(new EnclosingMethodAttribute(file.getConstPool(),em.className(),oldest,em.methodDescriptor()));
-	}
+		if (em != null && em.methodIndex() != 0) {
+			String oldest = getOldestMethodName(getClassFromName(em.className().replace("/", ".")), em.methodName(),
+					em.methodDescriptor(), new ArrayList<String>());
+
+			if (!oldest.equals(em.methodName())) {
+				file.removeAttribute(EnclosingMethodAttribute.tag); // Perhaps replacing nameandtype would be better
+				file.addAttribute(new EnclosingMethodAttribute(file.getConstPool(), em.className(), oldest,
+						em.methodDescriptor()));
+			}
 		}
-	
-	
+
 	}
 
 }

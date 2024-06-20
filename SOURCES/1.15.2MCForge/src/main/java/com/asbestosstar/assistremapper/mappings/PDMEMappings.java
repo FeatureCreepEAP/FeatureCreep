@@ -144,7 +144,7 @@ public class PDMEMappings implements Mappings {
 			lines.add(line);
 		}
 		for (Map.Entry<String, String[]> include : getIncludes().entrySet()) {
-			String line = "Inlude¶" + include.getKey() + "¶" + String.join(",",include.getValue()) + "¶nil¶nil¶";
+			String line = "Include¶" + include.getKey() + "¶" + String.join(",",include.getValue()) + "¶nil¶nil¶";
 			lines.add(line);
 		}
 

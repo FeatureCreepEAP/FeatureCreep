@@ -13,6 +13,7 @@ import game.CreativeTab;
 import game.Item;
 import game.GameRegistriesInterface;
 import game.ResourceLocation;
+import game.CreativeTab.Entries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
 public class UniversalRegistryGettersAndSetters {
@@ -58,7 +59,9 @@ public class UniversalRegistryGettersAndSetters {
 		GameRegistriesInterface.register(BuiltInRegistries.ITEMS, new ResourceLocation(registry_name), item);
 		ItemGroupEvents.modifyEntriesEvent(BuiltInRegistries.CREATIVE_TABS.get(default_tab).get())
 				.register((content) -> {
-					content.add(item);
+					Entries entries = (Entries)(content);
+					entries.add(item);
+
 				});
 	}
 
@@ -153,8 +156,9 @@ public class UniversalRegistryGettersAndSetters {
 				new BlockAsItem(block, new Item.Info()));
 		ItemGroupEvents.modifyEntriesEvent(BuiltInRegistries.CREATIVE_TABS.get(default_tab).get())
 				.register((content) -> {
-					content.add(block);
-				});
+					Entries entries = (Entries)(content);
+					entries.add(block);
+					});
 
 	}
 

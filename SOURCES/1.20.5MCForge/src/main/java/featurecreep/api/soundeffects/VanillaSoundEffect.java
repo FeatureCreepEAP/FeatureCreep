@@ -4,6 +4,7 @@ import game.BuiltInRegistries;
 import game.RegistryEntry;
 import game.GameRegistriesInterface;
 import game.SoundPoolComponent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class VanillaSoundEffect implements AbstractSoundEffect {
 
@@ -27,9 +28,13 @@ public class VanillaSoundEffect implements AbstractSoundEffect {
 	@Override
 	public RegistryEntry<SoundPoolComponent> getEntry() {
 		// TODO Auto-generated method stub
-	//return (Reference<SoundEffect>)	Mirror.of(SoundEffects.class).method(FeatureCreep.mappings.getMappings().reverse.getDefMappedName("game.SoundEffects.def_unknown_25648(Lgame/ResourceLocation;)Lgame/RegistryEntry/Reference;")).invoke(get().getFile());
-        return GameRegistriesInterface.registerReference(BuiltInRegistries.SOUND_EFFECTS, get().getFile(), get());
+	//return (Reference<SoundEffect>)	Mirror.of(SoundEffects.class).method(FeatureCreep.mappings.getMappings().reverse.getDefMappedName("game.SoundEffects.def_unknown_25648(Lgame/ResourceLocation;)Lgame/RegistryEntry/Reference;")).invoke(get().getFile());		
+		
+		//return GameRegistriesInterface.registerReference(BuiltInRegistries.SOUND_EFFECTS, get().getFile(), get());
+		//return ForgeRegistries.SOUND_EVENTS.register(get().getFile(), );
 
+return RegistryEntry.of(get());
+	
 	}
 
 }

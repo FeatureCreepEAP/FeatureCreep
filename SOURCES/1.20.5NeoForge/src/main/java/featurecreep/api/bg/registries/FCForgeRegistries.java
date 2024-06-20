@@ -1,6 +1,6 @@
 package featurecreep.api.bg.registries;
 
-import game.ItemStack;
+import game.CreativeTab.Entries;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public class FCForgeRegistries {
@@ -11,7 +11,9 @@ public class FCForgeRegistries {
 		for (int i = 0; i < FCRegistries.ITEMS.size(); i++) {
 
 			if (event.getTab() == FCRegistries.ITEMS.get(i).getDefaultCreativeTab()) {
-				event.add(FCRegistries.ITEMS.get(i).get());
+				Entries entries = (Entries)(event);
+				entries.add(FCRegistries.ITEMS.get(i).get());
+
 				System.out.println("Adding to ItemGroup" + FCRegistries.ITEMS.get(i).getFCRegistryName());
 			}
 
@@ -20,7 +22,9 @@ public class FCForgeRegistries {
 		for (int b = 0; b < FCRegistries.BLOCKS.size(); b++) {
 
 			if (event.getTab() == FCRegistries.BLOCKS.get(b).getDefaultCreativeTab()) {
-				event.add(FCRegistries.BLOCKS.get(b).get());
+				Entries entries = (Entries)(event);
+				entries.add(FCRegistries.ITEMS.get(b).get());
+
 				System.out.println("Adding to ItemGroup" + FCRegistries.BLOCKS.get(b).getFCRegistryName());
 			}
 

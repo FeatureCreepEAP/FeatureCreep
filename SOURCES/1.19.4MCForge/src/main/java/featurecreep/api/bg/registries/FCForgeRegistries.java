@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 
 import game.Item;
 import game.ItemStack;
+import game.CreativeTab.Entries;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,8 +29,10 @@ public class FCForgeRegistries {
 		
 		if (event.getTab() == FCRegistries.ITEMS.get(i).getDefaultCreativeTab())
 		{
-		event.add(new ItemStack(FCRegistries.ITEMS.get(i).get()));
-		System.out.println("Adding to ItemGroup" + FCRegistries.ITEMS.get(i).getFCRegistryName());
+			Entries entries = (Entries)(event);
+			entries.add(FCRegistries.ITEMS.get(i).get());
+
+			System.out.println("Adding to ItemGroup" + FCRegistries.ITEMS.get(i).getFCRegistryName());
 		}
 
 		}
@@ -39,7 +42,9 @@ public class FCForgeRegistries {
 			
 		if (event.getTab() == FCRegistries.BLOCKS.get(b).getDefaultCreativeTab())
 		{
-			event.add(new ItemStack(FCRegistries.BLOCKS.get(b).get()));
+			Entries entries = (Entries)(event);
+			entries.add(FCRegistries.ITEMS.get(b).get());
+
 			System.out.println("Adding to ItemGroup" + FCRegistries.BLOCKS.get(b).getFCRegistryName());
 		}
 
