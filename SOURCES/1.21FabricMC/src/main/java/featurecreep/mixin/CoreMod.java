@@ -30,6 +30,7 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
+import game.TitleScreen;
 import javassist.CtClass;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
@@ -265,11 +266,11 @@ public class CoreMod implements IMixinConfigPlugin {
 
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 
-		if (transformedName.equals("net.minecraft.class_442")) {
+		if (transformedName.equals(reverse_mappings.getClassMappedName("game.TitleScreen"))) {
 			return titlescreenja(basicClass);
-		} else if (transformedName.equals("net.minecraft.class_5478")) {
+		} else if (transformedName.equals(reverse_mappings.getClassMappedName("game.OverWorldBiomeCreator"))) {
 			return overworldbiomecreation(basicClass);
-		} else if (transformedName.equals("net.minecraft.class_3283")) {
+		} else if (transformedName.equals(reverse_mappings.getClassMappedName("game.ResourcePackManager"))) {
 			return transformresourcemanager(basicClass);
 		}
 
