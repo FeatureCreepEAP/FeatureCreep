@@ -17,24 +17,26 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.spongepowered.asm.transformers.MixinClassReader;
 
+import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.mixerlogger.MixerLoggerMain;
 
 import featurecreep.FeatureCreep;
 import featurecreep.api.PKZipUtils;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.GameJar;
 import featurecreep.api.hashing.Sha256;
+import featurecreep.bytecode.ClassFileUtils;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
-import javassist.ByteArrayClassPath;
-import javassist.CannotCompileException;
-import javassist.ClassPool;
 import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
+import javassist.bytecode.BadBytecode;
+import javassist.bytecode.Bytecode;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.CodeIterator;
+import javassist.bytecode.MethodInfo;
 
 public class CoreMod implements IMixinConfigPlugin {
 
@@ -45,14 +47,36 @@ public class CoreMod implements IMixinConfigPlugin {
 	public static FCLoaderBasic loader = new FCLoaderBasicR8(FeatureCreep.modpaths, FeatureCreep.dependancies,
 			FeatureCreep.packages_needed, 4, true, BGSide.getExecutionSide());
 
-	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+	public static Mappings reverse_mappings = FeatureCreep.mappings.getMappings().getReverse();
 
-		if (transformedName.equals("net.minecraft.server.packs.repository.PackRepository")) {
-			return transformresourcemanager(basicClass);
-		} else if (transformedName.equals("net.minecraft.data.worldgen.BiomeDefaultFeatures")) {
-			// return defaultbiomefeaturestransform(basicClass);
+	public byte[] titlescreenja(byte[] arr) {
+
+		try {
+			ClassFile file = ClassFileUtils.classFileFromBytes(arr);
+			String target = reverse_mappings.getDefMappedName("game.TitleScreen.initalise()V");
+			System.out.println(target);
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Testing JA");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); // System.out.println("Testing
+																									// JA");
+				coat.iterator().begin();
+				coat.iterator().insert(code.get());
+				return ClassFileUtils.classFileToBytes(file);
+			}
+
+		} catch (IOException | BadBytecode e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return basicClass;
+
+		System.out.println("Yay Javaassist Worked!, though its capability is limted");
+
+		return arr;
 
 	}
 
@@ -117,13 +141,13 @@ public class CoreMod implements IMixinConfigPlugin {
 
 			try {
 				if (new File(cp).isFile()) {
-					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp),false);
+					FeatureCreep.remapper.addToClasspathJar(new JarFile(cp), false);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
+		}
 
 		File native_mods_folder = new File(FeatureCreep.natively_mapped_mods_folder);
 
@@ -216,51 +240,134 @@ public class CoreMod implements IMixinConfigPlugin {
 
 	// Odddly Doesnt Trigger
 	public byte[] defaultbiomefeaturestransform(byte[] basicClass) {
-		// TODO Auto-generated method stub
+			// TODO Auto-generated method stub
 
-		try {
-			ClassPool pool = ClassPool.getDefault();
-			pool.insertClassPath(
-					new ByteArrayClassPath("net.minecraft.data.worldgen.BiomeDefaultFeatures", basicClass));
+			
+//			public void createBiome(BiomeGenerationSettings.Builder builder) {
+//				System.out.println("Adding FCOres");
+//				featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser.spawnOre(builder);
+//			}
+			
+			
+			String desc = reverse_mappings.renameClassesInMethodDescriptor("(ZFFIILjava/lang/Integer;Ljava/lang/Integer;Lgame/MobSpawnSettings$Builder;Lgame/BiomeGenerationSettings$Builder;Lgame/MusicSound;)Lgame/Biome;");
 
-			pool.appendSystemPath();
-			CtClass cc = pool.get("net.minecraft.data.worldgen.BiomeDefaultFeatures");
-			CtMethod m = cc.getDeclaredMethod("m_126814_");
-			m.insertBefore("System.out.println(\"Adding FCOres\");");
-			m.insertBefore("featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser.spawnOre($1);");
-			return cc.toBytecode();
-		} catch (NotFoundException | CannotCompileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			try {
+				ClassFile file = ClassFileUtils.classFileFromBytes(basicClass);
+				String target = reverse_mappings.getDefMappedName("game.OverWorldBiomeCreator.createBiome(ZFFIILjava/lang/Integer;Ljava/lang/Integer;Lgame/MobSpawnSettings$Builder;Lgame/BiomeGenerationSettings$Builder;Lgame/MusicSound;)Lgame/Biome;");
+				System.out.println(target);
+				// initialise
+				MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, desc);
+				if (def != null) {
+					CodeAttribute coat = def.getCodeAttribute();
+					Bytecode code = new Bytecode(file.getConstPool());
+					code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+					code.addLdc("Adding FCOres");
+					code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); 
+					code.addAload(1);
+					code.addInvokestatic("featurecreep/api/bg/orespawn/OrespawnBasicFeatureParser", "spawnOre", reverse_mappings.renameClassesInMethodDescriptor("(Lgame/BiomeGenerationSettings$Builder;)V"));
+
+					coat.iterator().begin();
+					coat.iterator().insert(code.get());
+					return ClassFileUtils.classFileToBytes(file);
+				}
+
+			} catch (IOException | BadBytecode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			System.out.println("Injecting Datapack");
+			
+			
+			return basicClass;
+
 		}
 
-		return null;
+	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+
+		if (transformedName.equals(reverse_mappings.getClassMappedName("game.TitleScreen"))) {
+			return titlescreenja(basicClass);
+		} else if (transformedName.equals(reverse_mappings.getClassMappedName("game.OverWorldBiomeCreator"))) {
+		
+			return defaultbiomefeaturestransform(basicClass);
+		
+		} else if (transformedName.equals(reverse_mappings.getClassMappedName("game.ResourcePackManager"))) {
+			return transformresourcemanager(basicClass);
+		}
+
+		return basicClass;
 
 	}
 
 	public byte[] transformresourcemanager(byte[] basicClass) {
 		// TODO Auto-generated method stub
+//game.ResourcePackManager.reloadPacksFromFinders()V
+		// game.ResourcePackManager.providers:Ljava/util/Set;
 
 		try {
-			ClassPool pool = ClassPool.getDefault();
-			pool.insertClassPath(
-					new ByteArrayClassPath("net.minecraft.server.packs.repository.PackRepository", basicClass));
+			ClassFile file = ClassFileUtils.classFileFromBytes(basicClass);
+			String target = reverse_mappings.getDefMappedName("game.ResourcePackManager.reloadPacksFromFinders()V");
+			String providers = reverse_mappings.getVarMappedName("game.ResourcePackManager.providers:Ljava/util/Set;");
 
-			pool.appendSystemPath();
-			CtClass cc = pool.get("net.minecraft.server.packs.repository.PackRepository");
-			CtMethod m = cc.getDeclaredMethod("reload");
-			m.insertBefore("System.out.println(\"Testin JA\");");
-			m.insertBefore(
-					"sources.add(new featurecreep.api.bg.FCPackLoad(new java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));");
-			System.out.println("Injecting Datapack");
-			return cc.toBytecode();
-		} catch (NotFoundException | CannotCompileException | IOException e) {
+			System.out.println(target);
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
+
+				code.addAload(0);
+				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				code.addNew("featurecreep/api/bg/FCPackLoad");
+				code.addOpcode(code.DUP);// Luckily this one was the example in javassist
+				code.addNew("java/io/File");
+				code.addOpcode(code.DUP);
+				code.addGetstatic("featurecreep/api/bg/datapacks/DataPackLoader", "datapacklocation",
+						"Ljava/lang/String;");
+				code.addInvokespecial("java/io/File", "<init>", "(Ljava/lang/String;)V");
+				code.addInvokespecial("featurecreep/api/bg/FCPackLoad", "<init>", "(Ljava/io/File;)V");
+				code.addInvokeinterface("java/util/Set", "add", "(Ljava/lang/Object;)Z", 2); // providers.add(new
+																								// featurecreep.api.bg.FCPackLoad(new
+																								// java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));
+				code.addOpcode(code.POP);
+
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Testing JA");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); // System.out.println("Testing
+																									// JA");
+
+				coat.iterator().begin();
+				coat.iterator().insert(code.get());
+
+				MethodInfo constr = ClassFileUtils.getMethodInfoWithDescriptor(file, "<init>",
+						reverse_mappings.renameClassesInMethodDescriptor("(Lgame/ResourcePackProvider;)V"));
+				if (constr != null) {
+					CodeAttribute constrcoat = def.getCodeAttribute();
+					Bytecode constrcode = new Bytecode(file.getConstPool());
+					constrcode.addOpcode(constrcode.GOTO);
+					constrcode.addOpcode(constrcode.ACONST_NULL);
+					constrcode.addAstore(3);
+					constrcode.addAload(0);
+					constrcode.addAload(1);
+					constrcode.addInvokestatic("featurecreep/api/io/BasicIO", "setFromArray",
+							"([Ljava/lang/Object;)Ljava/util/Set;");
+					constrcode.addPutfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+					CodeIterator consiter = constrcoat.iterator();
+					consiter.append(constrcode.get());
+
+				}
+
+				return ClassFileUtils.classFileToBytes(file);
+			}
+
+		} catch (IOException | BadBytecode e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return null;
-
+		return basicClass;
 	}
 
 	@Override
@@ -290,12 +397,17 @@ public class CoreMod implements IMixinConfigPlugin {
 	@Override
 	public List<String> getMixins() {
 		// TODO Auto-generated method stub
-		return null;
+
+		List<String> fakemixins = new ArrayList<String>();
+
+		return fakemixins;
 	}
 
 	@Override
 	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
+
+		System.out.println(CtClass.class.getCanonicalName());
 
 		System.out.println(targetClassName);
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);

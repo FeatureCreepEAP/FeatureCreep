@@ -30,7 +30,6 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
-import game.TitleScreen;
 import javassist.CtClass;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
@@ -239,37 +238,61 @@ public class CoreMod implements IMixinConfigPlugin {
 		return "OverWorldBiomeCreator";
 	}
 
-	public byte[] overworldbiomecreation(byte[] basicClass) {
-		// TODO Auto-generated method stub
-		/*
-		 * try { ClassPool pool = ClassPool.getDefault(); pool.insertClassPath(new
-		 * ByteArrayClassPath("net.minecraft.class_5478", basicClass));
-		 * 
-		 * pool.appendSystemPath(); CtClass cc = pool.get("net.minecraft.class_5478");
-		 * CtMethod m = cc.getDeclaredMethod("method_39151");
-		 * 
-		 * m.insertBefore(
-		 * "featurecreep.api.orespawn.OrespawnBasicFeatureParser.spawnOre($7);");
-		 * 
-		 * m.insertBefore("System.out.println(\"Adding FCOres\");");
-		 * 
-		 * basicClass = cc.toBytecode(); cc.writeFile();
-		 * 
-		 * } catch (Throwable e) { e.printStackTrace(); }
-		 * 
-		 * System.out.println("Yay Javaassist Worked!, though its capability is limted"
-		 * ); we dont need to do anything
-		 */
-		return basicClass;
+	// Odddly Doesnt Trigger
+	public byte[] defaultbiomefeaturestransform(byte[] basicClass) {
+			// TODO Auto-generated method stub
 
-	}
+			
+//			public void createBiome(BiomeGenerationSettings.Builder builder) {
+//				System.out.println("Adding FCOres");
+//				featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser.spawnOre(builder);
+//			}
+			
+			
+			String desc = reverse_mappings.renameClassesInMethodDescriptor("(ZFFIILjava/lang/Integer;Ljava/lang/Integer;Lgame/MobSpawnSettings$Builder;Lgame/BiomeGenerationSettings$Builder;Lgame/MusicSound;)Lgame/Biome;");
+
+			
+			try {
+				ClassFile file = ClassFileUtils.classFileFromBytes(basicClass);
+				String target = reverse_mappings.getDefMappedName("game.OverWorldBiomeCreator.createBiome(ZFFIILjava/lang/Integer;Ljava/lang/Integer;Lgame/MobSpawnSettings$Builder;Lgame/BiomeGenerationSettings$Builder;Lgame/MusicSound;)Lgame/Biome;");
+				System.out.println(target);
+				// initialise
+				MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, desc);
+				if (def != null) {
+					CodeAttribute coat = def.getCodeAttribute();
+					Bytecode code = new Bytecode(file.getConstPool());
+					code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+					code.addLdc("Adding FCOres");
+					code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); 
+					code.addAload(1);
+					code.addInvokestatic("featurecreep/api/bg/orespawn/OrespawnBasicFeatureParser", "spawnOre", reverse_mappings.renameClassesInMethodDescriptor("(Lgame/BiomeGenerationSettings$Builder;)V"));
+
+					coat.iterator().begin();
+					coat.iterator().insert(code.get());
+					return ClassFileUtils.classFileToBytes(file);
+				}
+
+			} catch (IOException | BadBytecode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			System.out.println("Injecting Datapack");
+			
+			
+			return basicClass;
+
+		}
 
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 
 		if (transformedName.equals(reverse_mappings.getClassMappedName("game.TitleScreen"))) {
 			return titlescreenja(basicClass);
 		} else if (transformedName.equals(reverse_mappings.getClassMappedName("game.OverWorldBiomeCreator"))) {
-			return overworldbiomecreation(basicClass);
+		
+			return defaultbiomefeaturestransform(basicClass);
+		
 		} else if (transformedName.equals(reverse_mappings.getClassMappedName("game.ResourcePackManager"))) {
 			return transformresourcemanager(basicClass);
 		}
@@ -403,32 +426,6 @@ public class CoreMod implements IMixinConfigPlugin {
 	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
 
-	}
-
-	class Loader extends ClassLoader {
-
-		public byte[] catchall;
-
-		public Loader(byte[] catchall) {
-			this.catchall = catchall;
-		}
-
-		@Override
-		public Class findClass(String classname) {
-
-			try {
-				return super.findClass(classname);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return this.defineClass(classname, catchall);
-		}
-
-		Class defineClass(String name, byte[] bytes) {
-			return this.defineClass(name, bytes, 0, bytes.length);
-		}
 	}
 
 }
