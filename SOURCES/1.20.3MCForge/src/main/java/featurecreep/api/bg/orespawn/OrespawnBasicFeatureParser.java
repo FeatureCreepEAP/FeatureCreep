@@ -10,16 +10,11 @@ import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
 import game.BiomeGenerationSettings;
-import game.BiomePlacementModifier;
 import game.Block;
-import game.BlockMatcher;
 import game.BuiltInRegistries;
-import game.CountGenerationAttribute;
 import game.GenerationPlacement;
-import game.PlacementModifier;
 import game.RegistryKey;
 import game.ResourceLocation;
-import game.SquarePlacementModifier;
 import game.StageGeneration.Feature;
 
 public class OrespawnBasicFeatureParser {
@@ -28,22 +23,10 @@ public class OrespawnBasicFeatureParser {
 
 	public static List<RegistryKey<GenerationPlacement>> placed = new ArrayList<RegistryKey<GenerationPlacement>>();
 
-	// public static RegistryObject<Codec<ExampleBiomeModifier>> EXAMPLE_CODEC;
-
 	// I gotta rewrite all of the Orespawn Module including this part once I get
 	// more time
 	// Loads the contents from %GAMEDIR%/orespawn/config/
 	public static void spawnOresFromDefaultConfig() {
-
-//		
-//		EXAMPLE_CODEC =	FCForgeRegistries.BIOME_MODIFIER_SERIALIZERS.register("fccodec", () -> RecordCodecBuilder.create(builder -> builder.group(
-//		        // declare fields
-//		        Biome.REGISTRY_ENTRY_LIST_CODEC.fieldOf("biomes").forGetter(ExampleBiomeModifier::biomes),
-//		        PlacedFeature.REGISTRY_CODEC.fieldOf("feature").forGetter(ExampleBiomeModifier::feature)
-//		      // declare constructor
-//		      ).apply(builder, ExampleBiomeModifier::new)));
-//		
-//		FCForgeRegistries.BIOME_MODIFIER_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		String orespawn_dir = new String(FeatureCreep.gamepath.toString() + ("/orespawn/config/"));
 		File file = new File(orespawn_dir);
@@ -56,6 +39,7 @@ public class OrespawnBasicFeatureParser {
 
 		if (contents != null) {
 			for (int i = 0; i < contents.length; i++) {
+
 				if (FeatureCreep.debug_mode) {
 					System.out.println("FeatureCreep is trying to load " + contents[i]);
 
@@ -95,9 +79,7 @@ public class OrespawnBasicFeatureParser {
 	public static void splitOS3Basic(ModelNode node) {
 		List<ModelNode> list = node.get("spawns").asList();
 		for (ModelNode rowNode : list) {
-			if (FeatureCreep.debug_mode) {
-				System.out.println(rowNode.asString().split("\"")[1]);
-			}
+			System.out.println(rowNode.asString().split("\"")[1]);
 			parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
 
 		}
@@ -136,34 +118,12 @@ public class OrespawnBasicFeatureParser {
 				System.out.println(replacedBlock.getName());
 				System.out.println(newBlock.getName());
 			}
-			BlockMatcher RULE = new BlockMatcher(replacedBlock);
 
 			OreSpawnBasicConfig config = new OreSpawnBasicConfig(name, newBlock,
 					node.get("parameters").get("size").asInt(), node.get("parameters").get("frequency").asInt(),
 					node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt());
 
 			configs.add(config);
-
-			// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG =
-			// ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new
-			// OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES,
-			// replacedBlock.getDefaultState()),
-			// OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES,
-			// replacedBlock.getDefaultState())), 4));
-			// RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG =
-			// ConfiguredFeatures.(name, Feature.ORE, new OreFeatureConfig(RULE,
-			// newBlock.getDefaultState(), node.get("parameters").get("size").asInt()));//I
-			// need to also include veriation in the future
-
-//	 final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
-//placed.add(ORE_PLACED);
-			// BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
-			// GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLACED.getKey().get()); No
-			// longer seems to work
-
-//	 BiomeModifications.create(ORE_PLACED.getKey().get().getValue()).add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), context -> {
-//			context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLACED.value());
-//		});
 
 		}
 
@@ -183,57 +143,14 @@ public class OrespawnBasicFeatureParser {
 		return new_string;
 	}
 
-	private static List<PlacementModifier> modifiers(PlacementModifier countModifier,
-			PlacementModifier heightModifier) {
-		return List.of(countModifier, SquarePlacementModifier.basic(), heightModifier,
-				BiomePlacementModifier.standard());
-	}
-
-	private static List<PlacementModifier> modifiersWithCount(int count, PlacementModifier heightModifier) {
-		return modifiers(CountGenerationAttribute.count(count), heightModifier);
-
-	}
-
 	public static void spawnOre(BiomeGenerationSettings.Builder builder) {
 
 		for (int f = 0; f < placed.size(); f++) {
 
 			builder.addFeature(Feature.UNDERGROUND_ORES, placed.get(f));
-			// (class_unknown_1069.Feature.UNDERGROUND_ORES, placed.get(f));
-
 		}
 
 	}
 
-	/*
-	 * public record ExampleBiomeModifier(RegistryEntryList<Biome> biomes,
-	 * RegistryEntry<PlacedFeature> feature) implements BiomeModifier {
-	 * 
-	 * 
-	 * public Codec<? extends BiomeModifier> codec() { return EXAMPLE_CODEC.get(); }
-	 * 
-	 * 
-	 * public void modify(RegistryEntry<Biome> biome, Phase phase, Builder builder)
-	 * { // TODO Auto-generated method stub
-	 * 
-	 * // add a feature to all specified biomes if (phase == Phase.ADD) // all
-	 * biomes currently, this system sucks {
-	 * 
-	 * 
-	 * for (int f = 0; f < placed.size(); f++) { RegistryEntryLookup<PlacedFeature>
-	 * placedFeatureLookup = null;
-	 * builder.getGenerationSettings().feature(GenerationStep.Feature.
-	 * UNDERGROUND_ORES, placedFeatureLookup.getOrThrow(placed.get(f)) ); }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * 
-	 * }
-	 */
-
 }
+
