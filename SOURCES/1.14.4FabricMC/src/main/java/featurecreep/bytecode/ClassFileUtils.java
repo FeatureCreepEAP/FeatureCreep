@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.FieldInfo;
@@ -23,6 +24,10 @@ public class ClassFileUtils {
 	
 	public static ClassFile classFileFromBytes(byte[] bytes) throws IOException { 
         return new ClassFile(dataInputStreamFromBytes(bytes));
+	}
+	
+	public static ClassFile classFileFromByteBuffer(ByteBuffer bytes) throws IOException { 
+        return new ClassFile(dataInputStreamFromBytes(bytes.array()));
 	}
 	
 	public static MethodInfo getMethodInfoWithDescriptor(ClassFile file, String name, String descriptor) {
@@ -58,6 +63,10 @@ public class ClassFileUtils {
         return byteArrayOutputStream.toByteArray();
 	}	
 	
+	public static ByteBuffer classFileToByteBuffer(ClassFile file) throws IOException
+	{	
+		return ByteBuffer.wrap(classFileToBytes(file));
+	}
 	
 	public static void exportClassFile(File location, ClassFile file) throws IOException {
 		location.getParentFile().mkdirs();
@@ -66,3 +75,4 @@ public class ClassFileUtils {
 	}
 	
 }
+

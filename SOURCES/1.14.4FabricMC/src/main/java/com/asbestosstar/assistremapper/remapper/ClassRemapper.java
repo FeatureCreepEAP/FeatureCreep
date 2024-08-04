@@ -8,10 +8,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,7 +18,6 @@ import com.asbestosstar.assistremapper.GenericExtendsFinder;
 import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.assistremapper.RemapperInstance;
 
-import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -50,9 +47,13 @@ public class ClassRemapper implements RemapperInstance {
 	public boolean clean_classpools = true;
 	public boolean disallowDupes = true;
 	public ArrayList<ClassFile> clazzes = new ArrayList<ClassFile>(); // For Jar Remapping or multiclass files
+	public ArrayList<ClassFile> not_remapped_classes = new ArrayList<ClassFile>();
 	public int threads;
 	public boolean dont_export = false;
 	public ArrayList<String> vardefnewnamesogdefs = new ArrayList<String>();
+	public boolean useResourceInputStream = false;
+	public ClassLoader resourceInputStreamLoader = RemapperInstance.class.getClassLoader();
+	public boolean load_class_from_pool = true;
 	
 	
 	public ClassRemapper(Mappings mappings, ClassPool pool, ClassFile file, String export_location, int threads) {
@@ -131,19 +132,11 @@ public class ClassRemapper implements RemapperInstance {
 		}
 	}
 
-	public static String extractClassName(String fullyQualifiedName) {
-		int lastDotIndex = fullyQualifiedName.lastIndexOf('.');
-		if (lastDotIndex > 0 && lastDotIndex < fullyQualifiedName.length() - 1) {
-			return fullyQualifiedName.substring(lastDotIndex + 1);
-		}
-		return fullyQualifiedName;
-	}
-
 	public void writeClassToLocation() {
 
 		String name = export_location + "/" + file.getName().replace(".", "/") + ".class";
 		File clazz = new File(name);
-		File directory = new File(name.replace(extractClassName(file.getName()) + ".class", ""));
+		File directory = new File(name.replace(RemapperInstance.extractClassName(file.getName()) + ".class", ""));
 
 		directory.mkdirs();
 
@@ -161,17 +154,6 @@ public class ClassRemapper implements RemapperInstance {
 
 	}
 
-	public void addClassFromBytesAndName(byte[] bytes, String name) {
-		classpool.appendClassPath(new ByteArrayClassPath(name, bytes));
-		try {
-			classpool.get(name);
-		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
-			if (debug_mode) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	public void reNameAllClasses() {
 
@@ -584,139 +566,7 @@ public class ClassRemapper implements RemapperInstance {
 		executorService.shutdown();
 	}
 
-	public static boolean hasField(ClassFile cf, String fieldName, String descriptor) {
-		for (FieldInfo fieldInfo : cf.getFields()) {
-			if (Objects.equals(fieldInfo.getName(), fieldName)
-					&& Objects.equals(fieldInfo.getDescriptor(), descriptor)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public ClassFile getClassFromName(String name) {
-
-		for (ClassFile clazz : clazzes) {
-			if (clazz.getName() == name) {
-				return clazz;
-			}
-		}
-		return getClassFromPool(name).getClassFile();
-
-	}
-
-	public String getOldestMethodName(ClassFile clazz, String methodName, String desc,
-			ArrayList<String> recersive_names) {
-		// The idea of searching the mappings for the mapping reference 1st was copied
-		// from
-		// https://github.com/pocolifo/jar-remapper/blob/main/com.pocolifo.jarremapper/src/main/java/com/pocolifo/jarremapper/
-		String className = clazz.getName();
-
-		if (!recersive_names.contains(className)) {
-
-			if (mappings.getDefs().containsKey(className + "." + methodName + desc)) {
-				String ret = mappings.getDefs().get(className + "." + methodName + desc);
-				return ret;
-			} else {
-				recersive_names.add(className);
-				String protomapped = mappings.getDefMappedName(className + "." + methodName + desc);
-				if (protomapped != methodName) {
-					return protomapped;
-				}
-
-				if (this.classFileHasMethod(className, methodName, desc)) { // Soon need to account for descriptorsss
-					// This section is likely going to be removed in the future
-
-					ArrayList<ClassFile> supers = new ArrayList<ClassFile>();
-
-					String[] sups = mappings.getIncludes().get(className);
-					if (sups != null) {
-						for (String interface_name : sups) {
-							supers.add(getClassFromName(interface_name));
-						}
-
-						for (ClassFile super_clazz : supers) {
-							String old = getOldestMethodName(super_clazz, methodName, desc, recersive_names);
-							if (!old.equals(methodName)) {
-								mappings.getDefs().put(className + "." + methodName + desc, old);
-								return old;
-							}
-						}
-					}
-				}
-
-			}
-		}
-
-		return gef.getPotentialGenericExtendingMethod(clazz, methodName, desc, recersive_names);
-
-	}
-
-	public String getOldestFieldName(ClassFile clazz, String fieldName, String desc,
-			ArrayList<String> recersive_names) {
-		// The idea of searching the mappings for the mapping reference rather than
-		// searching form the oldest from
-		// https://github.com/pocolifo/jar-remapper/blob/main/com.pocolifo.jarremapper/src/main/java/com/pocolifo/jarremapper/
-		String className = clazz.getName();
-
-		if (!recersive_names.contains(className)) {
-			if (mappings.getVars().containsKey(className + "." + fieldName + ":" + desc)) {
-				return mappings.getVars().get(className + "." + fieldName + ":" + desc);
-			} else {
-				recersive_names.add(className);
-
-				String protomapped = mappings.getVarMappedName(className + "." + fieldName + ":" + desc);
-				if (protomapped != fieldName) {
-					return protomapped;
-				}
-
-				if (this.classFileHasField(className, fieldName, desc)) { // Soon need to account for descriptorsss
-					// This section will likely be removed in the future
-					ArrayList<ClassFile> supers = new ArrayList<ClassFile>();
-
-					String[] sups = mappings.getIncludes().get(className);
-					for (String interface_name : sups) {
-						supers.add(getClassFromName(interface_name));
-					}
-
-					for (ClassFile super_clazz : supers) {
-						String old = getOldestFieldName(super_clazz, fieldName, desc, recersive_names);
-						if (!old.equals(fieldName)) {
-							mappings.getVars().put(className + "." + fieldName + ":" + desc, old);
-							return old;
-						}
-					}
-				}
-			}
-		}
-
-		return gef.getPotentialGenericExtendingField(clazz, fieldName, desc, recersive_names);
-
-	}
-
-	public boolean classFileHasField(String clazz, String field_name, String desc) {
-
-		for (CtField field : this.getClassFromPool(clazz).getFields()) {
-			if (field.getName().equals(field_name) && field.getSignature().equals(desc)) {
-				return true;
-			}
-
-		}
-
-		return false;
-	}
-
-	public boolean classFileHasMethod(String clazz, String method_name, String desc) {
-
-		for (CtMethod method : this.getClassFromPool(clazz).getMethods()) {
-			if (method.getName().equals(method_name) && method.getSignature().equals(desc)) {
-				return true;
-			}
-
-		}
-
-		return false;
-	}
+	
 
 	@Override
 	public ClassPool getClassPool() {
@@ -842,5 +692,85 @@ public class ClassRemapper implements RemapperInstance {
 		}
 
 	}
+	
+	
+	
+	
+	
+	@Override
+	public void setDebugMode(boolean bool) {
+		// TODO Auto-generated method stub
+		this.debug_mode=bool;
+	}
+
+	@Override
+	public boolean debugMode() {
+		// TODO Auto-generated method stub
+		return this.debug_mode;
+	}
+
+	@Override
+	public ArrayList<ClassFile> getRemapClassFiles() {
+		// TODO Auto-generated method stub
+		return this.clazzes;
+	}
+
+	@Override
+	public ArrayList<ClassFile> getUnRemappedClassFiles() {
+		// TODO Auto-generated method stub
+		return this.not_remapped_classes;
+	}
+
+	@Override
+	public boolean useResourceInputStream() {
+		// TODO Auto-generated method stub
+		return this.useResourceInputStream;
+	}
+
+	@Override
+	public void setUseResourceInputStream(boolean bool) {
+		// TODO Auto-generated method stub
+		this.useResourceInputStream=bool;
+	}
+
+	@Override
+	public ClassLoader loaderForResourceInputStream() {
+		// TODO Auto-generated method stub
+		return this.loaderForResourceInputStream();
+	}
+
+	@Override
+	public void setLoaderForResourceInputStream(ClassLoader loader) {
+		// TODO Auto-generated method stub
+		this.resourceInputStreamLoader=loader;
+	}
+
+	@Override
+	public boolean loadFromClassPool() {
+		// TODO Auto-generated method stub
+		return this.load_class_from_pool;
+	}
+
+	@Override
+	public void setLoadFromClassPool(boolean bool) {
+		// TODO Auto-generated method stub
+		load_class_from_pool=bool;
+	}
+
+	@Override
+	public Mappings getMappings() {
+		// TODO Auto-generated method stub
+		return this.mappings;
+	}
+
+	@Override
+	public GenericExtendsFinder getGenericExtendsFinder() {
+		// TODO Auto-generated method stub
+		return this.gef;
+	}
+	
+	
+	
 
 }
+

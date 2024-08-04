@@ -26,7 +26,8 @@ public class FCTransformer implements ClassTransformer {
 
 		}
 
-		return classBytes;
+		return buff;
 	}
 
 }
+

@@ -4,7 +4,7 @@
   "package": "featurecreep.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-"ResourceSMI"
+
   ],
   "client": [
     "ExampleMixin"

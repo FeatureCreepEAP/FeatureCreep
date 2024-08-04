@@ -71,6 +71,9 @@ public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getR
 		FCItems.onInitialise();
 		FCBlocks.onInitialise();
 		loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
+				if(GameInjections.agent_mode) {
+			loader.setInstrumentation(instrumentation);
+		}
 		loader.loadMods();
 		loader.runAgents();
 		loader.runMods();// Soon I got to load before transforming and then run now

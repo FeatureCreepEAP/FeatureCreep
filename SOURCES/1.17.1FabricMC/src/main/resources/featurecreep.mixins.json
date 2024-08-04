@@ -5,7 +5,6 @@
   "compatibilityLevel": "JAVA_16",
   "plugin": "featurecreep.mixin.CoreMod",
   "mixins": [
-  "ResourceSMI",
   "OverworldBiomeCreatorBlank"
   ],
   "client": [

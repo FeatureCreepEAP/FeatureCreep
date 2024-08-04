@@ -12,8 +12,8 @@ public class CraftingZone {
 
 	public static void addShapedCrafting(BlockOrItem result, int quantity, BlockOrItem ingredient0,
 			BlockOrItem ingredient1, BlockOrItem ingredient2, BlockOrItem ingredient3, BlockOrItem ingredient4,
-			BlockOrItem ingredient5, BlockOrItem ingredient6, BlockOrItem ingredient7, BlockOrItem ingredient8) {
-
+			BlockOrItem ingredient5, BlockOrItem ingredient6, BlockOrItem ingredient7, BlockOrItem ingredient8) {		
+		
 		objects.add(new CraftObject(result, quantity, ingredient0, ingredient1, ingredient2, ingredient3, ingredient4,
 				ingredient5, ingredient6, ingredient7, ingredient8));
 

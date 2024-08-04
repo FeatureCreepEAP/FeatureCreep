@@ -3,8 +3,6 @@ package com.asbestosstar.assistremapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.assistremapper.remapper.ClassRemapper;
-
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.CtMethod;
@@ -14,9 +12,9 @@ import javassist.bytecode.Descriptor;
 
 public class GenericExtendsFinder {
 
-	public ClassRemapper remapper;
+	public RemapperInstance remapper;
 
-	public GenericExtendsFinder(ClassRemapper remapper) {
+	public GenericExtendsFinder(RemapperInstance remapper) {
 		// TODO Auto-generated constructor stub
 		this.remapper = remapper;
 	}
@@ -63,16 +61,16 @@ public class GenericExtendsFinder {
 		CtClass ct = remapper.getClassFromPool(clazz.getName());// Ct is easier as it goes down
 		List<CtField> vars = getFieldsFromNameAlone(ct, fieldName, false);
 		try {
-			CtClass return_type = Descriptor.getReturnType(desc, remapper.classpool);
+			CtClass return_type = Descriptor.getReturnType(desc, remapper.getClassPool());
 
 			for (CtField var : vars) {
-				CtClass var_ret = Descriptor.getReturnType(var.getSignature(), remapper.classpool);
+				CtClass var_ret = Descriptor.getReturnType(var.getSignature(), remapper.getClassPool());
 				if (return_type != null && var_ret != null) {
 					if (return_type.subtypeOf(var_ret) && !var.getSignature().equals(desc)) {
 						String oldest = remapper.getOldestFieldName(var.getDeclaringClass().getClassFile(), fieldName,
 								var.getSignature(), new ArrayList<String>());
 						if (oldest != fieldName) {
-							remapper.mappings.getVars().put(clazz.getName() + "." + fieldName + ":" + desc, oldest);
+							remapper.getMappings().getVars().put(clazz.getName() + "." + fieldName + ":" + desc, oldest);
 							name = oldest;
 						}
 					}
@@ -81,7 +79,7 @@ public class GenericExtendsFinder {
 
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
-			if (remapper.debug_mode) {
+			if (remapper.debugMode()) {
 				e.printStackTrace();
 			}
 			remapper.getClassFromPool(e.getMessage());
@@ -102,20 +100,20 @@ public class GenericExtendsFinder {
 		CtClass ct = remapper.getClassFromPool(clazz.getName());// Ct is easier as it goes down
 		List<CtMethod> defs = getMethodsFromNameAlone(ct, methodName, false);
 		try {
-			CtClass return_type = Descriptor.getReturnType(desc, remapper.classpool);
+			CtClass return_type = Descriptor.getReturnType(desc, remapper.getClassPool());
 
 			for (CtMethod def : defs) {
-				CtClass var_ret = Descriptor.getReturnType(def.getSignature(), remapper.classpool);
+				CtClass var_ret = Descriptor.getReturnType(def.getSignature(), remapper.getClassPool());
 				if (return_type != null && var_ret != null) {
 
 					if (return_type.subtypeOf(var_ret) && !def.getSignature().equals(desc)
-							&& isCompatible(Descriptor.getParameterTypes(desc, remapper.classpool),
-									Descriptor.getParameterTypes(def.getSignature(), remapper.classpool))) {
+							&& isCompatible(Descriptor.getParameterTypes(desc, remapper.getClassPool()),
+									Descriptor.getParameterTypes(def.getSignature(), remapper.getClassPool()))) {
 
 						String oldest = remapper.getOldestMethodName(def.getDeclaringClass().getClassFile(), methodName,
 								def.getSignature(), new ArrayList<String>());
 						if (oldest != methodName) {
-							remapper.mappings.getDefs().put(clazz.getName() + "." + methodName + ":" + desc, oldest);
+							remapper.getMappings().getDefs().put(clazz.getName() + "." + methodName + ":" + desc, oldest);
 							name = oldest;
 						}
 					}
@@ -124,7 +122,7 @@ public class GenericExtendsFinder {
 
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
-			if (remapper.debug_mode) {
+			if (remapper.debugMode()) {
 				e.printStackTrace();
 			}
 			remapper.getClassFromPool(e.getMessage());
@@ -158,3 +156,4 @@ public class GenericExtendsFinder {
 	}
 
 }
+

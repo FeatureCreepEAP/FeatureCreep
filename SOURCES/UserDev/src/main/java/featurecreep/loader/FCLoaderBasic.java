@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -93,8 +96,9 @@ public interface FCLoaderBasic {
 		JarFile jar;
 
 		jar = new JarFile(location.toString());
-		StringBuilder contentBuilder = new StringBuilder();
+		//StringBuilder contentBuilder = new StringBuilder();
 		InputStream stream = jar.getInputStream(jar.getJarEntry("module.xml"));
+		jar.close();
 		return stream;
 
 	}
@@ -102,7 +106,7 @@ public interface FCLoaderBasic {
 	public default String getModuleXMLFromJarAsString(File location) throws IOException {
 		String text = new BufferedReader(
 				new InputStreamReader(getModuleXMLFromJarAsInputStream(location), StandardCharsets.UTF_8)).lines()
-						.collect(Collectors.joining("\n"));
+				.collect(Collectors.joining("\n"));
 		return text;
 
 		// TODO Auto-generated catch block
@@ -287,10 +291,37 @@ public interface FCLoaderBasic {
 
 	public Map<Module, ArrayList<String>> getAgents();
 
+	/**
+	 * Solo usas para Agentes
+	 * @param instrument
+	 * @return
+	 */
+	public Instrumentation setInstrumentation(Instrumentation instrument);
+	
 	public Instrumentation getInstrumentation();
 
-	public default ClassTransformer fromClassFileTransformer(ClassFileTransformer transformer) {
+	public static ClassTransformer fromClassFileTransformer(ClassFileTransformer transformer) {
 		return new JLIClassTransformer(transformer);
+	}
+
+	public static ClassFileTransformer fromClassTransformer(ClassTransformer transformer) {
+		class Returned implements ClassFileTransformer {
+			public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
+					ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+
+				ByteBuffer buff = transformer.transform(loader, className, protectionDomain,
+						ByteBuffer.wrap(classfileBuffer));
+				if (buff != null) {
+					return buff.array();
+				}
+
+				return classfileBuffer;
+			}
+
+		}
+		Returned ret = new Returned();
+		return ret;
+
 	}
 
 	public default void addTransformer(ClassTransformer transformer) {
@@ -364,6 +395,11 @@ public interface FCLoaderBasic {
 
 	public ClassTransformer getMainTransformer();
 
+	/*
+	 * This should be run BEFORE any transformers are added
+	 */
+	public ClassTransformer setMainTransformer(ClassTransformer transformer);
+
 	public EventViewer getEventViewer();
 
 	public default List<DependencySpec> getCombinedDepSpecs(Module mod) {
@@ -396,3 +432,5 @@ public interface FCLoaderBasic {
 	public ExecutionSide getExecutionSide();
 
 }
+
+

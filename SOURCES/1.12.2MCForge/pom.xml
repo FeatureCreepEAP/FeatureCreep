@@ -14,6 +14,9 @@
           <manifestEntries>
             <FMLCorePluginContainsFMLMod>true</FMLCorePluginContainsFMLMod>
             <FMLCorePlugin>featurecreep.FCCoreMod</FMLCorePlugin>
+            <Premain-Class>asbestosstar.FCAgent</Premain-Class>
+                        <Can-Retransform-Classes>true</Can-Retransform-Classes>
+            <Can-Redefine-Classes>true</Can-Redefine-Classes>
           </manifestEntries>
         </archive>
       </configuration> 

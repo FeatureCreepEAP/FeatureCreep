@@ -109,17 +109,30 @@ public Mappings setMappings(Mappings mappings) {
 	return mappings;
 }
 
+/**
+ * es para **ESPAÑOL** ,pero aún no está implementado. IF YOU WANT ENGLISH MAPPINGS USE getEnglishToMativeMappings()
+ * @return
+ */
 public Mappings getMappings() {
 	if(hasMappings()) {
 	return mappings;
 	}else{
+		System.out.println("¡¡¡No Mappings por "+ name +"!!!");
 		return new PDMEMappings();
 	}
 }	
 
+/**
+ * For English Mappings. English FCI to the Native Mappings for the super loader
+ * @return
+ */
+public Mappings getEnglishToNativeMappings(){
+	return getMappings();
+}
 
 	
 }
+
 
 
 

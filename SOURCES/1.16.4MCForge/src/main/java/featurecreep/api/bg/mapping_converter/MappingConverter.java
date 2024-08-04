@@ -58,7 +58,7 @@ public class MappingConverter {
 
 	}
 
-	// full_class_name should be the full class name in FeatureCreep intermediary
+	// full_class_name should be the full class name in FeatureCreep intermediary. Should be Spanish in the future, for now just use English method
 	// mappings seperated with . for package and $ for subclass
 	public static String getUnMappedClass(String full_class_name) {
 		if (!FeatureCreep.mappings.hasMappings()) {
@@ -68,8 +68,15 @@ public class MappingConverter {
 
 		return FeatureCreep.mappings.getMappings().getClassUnMappedName(full_class_name);
 	}
+	
+	// full_class_name should be the full class name in FeatureCreep intermediary English
+	// mappings seperated with . for package and $ for subclass
+	public static String getUnMappedClassEnglish(String full_class_name) {
+		return getUnMappedClass(full_class_name);//This will be changed when we have Spanish FCI
+	}
+	
 
-	// full_class_name should be the full class name in FeatureCreep intermediary
+	// full_class_name should be the full class name in FeatureCreep intermediary Should be Spanish in the future, for now just use English method
 	// mappings seperated with . for package and $ for subclass
 	public static String getUnMappedClass(String full_class_name, ActiveMapping mappings) {
 		if (!mappings.hasMappings()) {
@@ -80,7 +87,15 @@ public class MappingConverter {
 		return mappings.getMappings().getClassUnMappedName(full_class_name);
 	}
 
-	// full_class_name should be the full class name in preferred format and it
+	
+	// full_class_name should be the full class name in FeatureCreep intermediary Should be English
+	// mappings seperated with . for package and $ for subclass
+	public static String getUnMappedClassEnglish(String full_class_name, ActiveMapping mappings) {
+			return getUnMappedClassEnglish(full_class_name,mappings); //Will be changed when FCIs are in Spanish
+	}
+	
+	
+	// full_class_name should be the full class name in preferred format and it Should be Spanish in the future, for now just use English method
 	// returns featurecreep intermediary mappings seperated with . for package and $
 	// for subclass
 	public static String getMappedClass(String full_class_name, ActiveMapping mappings) {
@@ -91,8 +106,17 @@ public class MappingConverter {
 
 		return mappings.getMappings().getClassMappedName(full_class_name);
 	}
+	
+	
+	// full_class_name should be the full class name in preferred format and it Should be English
+	// returns featurecreep intermediary mappings seperated with . for package and $
+	// for subclass
+	public static String getMappedClassEnglish(String full_class_name, ActiveMapping mappings) {
+return getMappedClass(full_class_name,mappings);//escribir otra vez cuando FCIs son en español
+	}
+	
 
-	// full_class_name should be the full class name in default format and it
+	// full_class_name should be the full class name in default format and it Should be Spanish in the future, for now just use English method
 	// returns featurecreep intermediary mappings seperated with . for package and $
 	// for subclass
 	public static String getMappedClass(String full_class_name) {
@@ -104,5 +128,16 @@ public class MappingConverter {
 		return FeatureCreep.mappings.getMappings().getClassMappedName(full_class_name);
 	}
 
+	
+	
+	// full_class_name should be the full class name in default format and it Should be English
+		// returns featurecreep intermediary mappings seperated with . for package and $
+		// for subclass
+		public static String getMappedClassEnglish(String full_class_name) {
+			return getMappedClass(full_class_name);//escribir otra vez cuando FCIs son en español
+		}
+	
+	
 }
+
 

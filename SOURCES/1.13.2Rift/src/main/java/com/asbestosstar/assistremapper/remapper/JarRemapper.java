@@ -1,27 +1,17 @@
 package com.asbestosstar.assistremapper.remapper;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 
+import com.asbestosstar.assistremapper.GenericExtendsFinder;
 import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.assistremapper.RemapperInstance;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CodeConverter;
-import javassist.CtClass;
-import javassist.NotFoundException;
 import javassist.bytecode.ClassFile;
 
 public class JarRemapper implements RemapperInstance {
@@ -30,7 +20,7 @@ public class JarRemapper implements RemapperInstance {
 	public ClassPool classpool;
 	public int method_collect = 0;
 	public ArrayList<ClassFile> clazzes = new ArrayList<ClassFile>();
-	public ArrayList<CtClass> ct_clazzes = new ArrayList<CtClass>();
+	public ArrayList<ClassFile> not_remapped_classes = new ArrayList<ClassFile>();
 	public CodeConverter converter = new CodeConverter();
 	public String export_location;
 	public int threads = 4;
@@ -39,6 +29,10 @@ public class JarRemapper implements RemapperInstance {
 	public boolean clean_classpools = true;
 	public boolean disallowDupes = true;
 	public ArrayList<ClassRemapper> class_remappers = new ArrayList<ClassRemapper>();
+	public boolean useResourceInputStream = false;
+	public ClassLoader resourceInputStreamLoader = RemapperInstance.class.getClassLoader();
+	public boolean load_class_from_pool = true;
+	public GenericExtendsFinder gef = new GenericExtendsFinder(this);
 
 	public JarRemapper(Mappings mappings, String export_location) {
 		this(mappings, ClassPool.getDefault(), export_location);
@@ -52,86 +46,7 @@ public class JarRemapper implements RemapperInstance {
 	
 	
 	
-	public void addToClasspathJarFromStream(InputStream jarInputStream, boolean to_remap) {  
-	    try (JarInputStream jarInput = new JarInputStream(new BufferedInputStream(jarInputStream))) {  
-	        JarEntry entry;  
-	        while ((entry = jarInput.getNextJarEntry()) != null) {  
-	            if (entry.getName().endsWith(".class")) {  
-	            	ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	                byte[] buffer = new byte[1024];
-	                int bytesRead;
-	                while ((bytesRead = jarInput.read(buffer)) != -1) {
-	                    bos.write(buffer, 0, bytesRead);
-	                }
-	                byte[] entryBytes = bos.toByteArray();
-	                ClassFile clazz_fil = new ClassFile(new DataInputStream(new ByteArrayInputStream(entryBytes)));
-                    // Convert the class bytes to a CtClass
-	                CtClass ctClass = classpool.makeClass(clazz_fil, false);
-	                  
-	                // If to_remap is true, add the CtClass to some collection or process it  
-	                if (to_remap) {  
-	                    // TODO: Add the CtClass to a collection or perform some other operation  
-	                    // For example:  
-	                     ct_clazzes.add(ctClass);  
-	                
-	                     try {
-	                     ctClass.defrost();
-	                     clazzes.add(ctClass.getClassFile());
-	                     }catch(Exception e) {
-	                    	 if(debug_mode) {
-	                    	 e.printStackTrace();
-	                    	 //this is not likely to go well
-	                    	 }
-	                     }
-	                }  
-	                  
-	                // Defrost the CtClass if needed  
-	                // ctClass.defrost();  
-	            }  
-	        }  
-	    } catch (IOException e) {  
-	        if (debug_mode) {  
-	            e.printStackTrace();  
-	        }  
-	    }  
-	}
-	
 
-	public void addToClasspathJar(JarFile file, boolean to_remap) {
-		try {
-			classpool.appendClassPath(file.getName());
-		} catch (NotFoundException e1) {
-			// TODO Auto-generated catch block
-			if (debug_mode) {
-				e1.printStackTrace();
-			}
-		}
-
-		if (to_remap) {
-			try {
-				Enumeration<JarEntry> entries = file.entries();
-				while (entries.hasMoreElements()) {
-					JarEntry entry = entries.nextElement();
-					if (entry.getName().endsWith(".class")) {
-
-						// InputStream inputStream = jarFile.getInputStream(entry);
-						// DataInputStream dataInputStream = new DataInputStream(inputStream);
-
-						CtClass ct = getClassFromPool(entry.getName().replace(".class", "").replace("/", "."));
-						ct_clazzes.add(ct);
-						ct.defrost();
-						clazzes.add(ct.getClassFile());
-					}
-				}
-				file.close();
-			} catch (IOException e) {
-				if (debug_mode) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-	}
 
 	public void remapJar(JarFile jarFile) {
 
@@ -217,7 +132,6 @@ public class JarRemapper implements RemapperInstance {
 				}
 			}
 			clazzes.clear();
-			ct_clazzes.clear();
 			System.out.println("Done if not blinking");
 
 		} else {
@@ -232,4 +146,78 @@ public class JarRemapper implements RemapperInstance {
 		return classpool;
 	}
 
+	@Override
+	public void setDebugMode(boolean bool) {
+		// TODO Auto-generated method stub
+		this.debug_mode=bool;
+	}
+
+	@Override
+	public boolean debugMode() {
+		// TODO Auto-generated method stub
+		return this.debug_mode;
+	}
+
+	@Override
+	public ArrayList<ClassFile> getRemapClassFiles() {
+		// TODO Auto-generated method stub
+		return this.clazzes;
+	}
+
+	@Override
+	public ArrayList<ClassFile> getUnRemappedClassFiles() {
+		// TODO Auto-generated method stub
+		return this.not_remapped_classes;
+	}
+
+	@Override
+	public boolean useResourceInputStream() {
+		// TODO Auto-generated method stub
+		return this.useResourceInputStream;
+	}
+
+	@Override
+	public void setUseResourceInputStream(boolean bool) {
+		// TODO Auto-generated method stub
+		this.useResourceInputStream=bool;
+	}
+
+	@Override
+	public ClassLoader loaderForResourceInputStream() {
+		// TODO Auto-generated method stub
+		return this.loaderForResourceInputStream();
+	}
+
+	@Override
+	public void setLoaderForResourceInputStream(ClassLoader loader) {
+		// TODO Auto-generated method stub
+		this.resourceInputStreamLoader=loader;
+	}
+
+	
+	@Override
+	public boolean loadFromClassPool() {
+		// TODO Auto-generated method stub
+		return this.load_class_from_pool;
+	}
+
+	@Override
+	public void setLoadFromClassPool(boolean bool) {
+		// TODO Auto-generated method stub
+		load_class_from_pool=bool;
+	}
+
+	@Override
+	public Mappings getMappings() {
+		// TODO Auto-generated method stub
+		return this.mappings;
+	}
+
+	@Override
+	public GenericExtendsFinder getGenericExtendsFinder() {
+		// TODO Auto-generated method stub
+		return this.gef;
+	}
+	
 }
+

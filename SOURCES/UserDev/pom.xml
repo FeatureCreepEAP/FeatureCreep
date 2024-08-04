@@ -3,6 +3,31 @@
   <groupId>featurecreep</groupId>
   <artifactId>featurecreep</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  
+  
+  
+   <build>
+  <plugins>
+    <!-- other plugins omitted -->
+    <plugin>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>2.4</version>
+      <configuration>
+        <archive>
+          <manifestEntries>
+            <Premain-Class>asbestosstar.FCAgent</Premain-Class>
+                        <Can-Retransform-Classes>true</Can-Retransform-Classes>
+            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+          </manifestEntries>
+        </archive>
+      </configuration> 
+    </plugin>
+  </plugins>
+</build>
+  
+  
+  
   <name>FeatureCreep UserDev</name>
   <description>The User Development API for FeatureCreep</description>
   <repositories>

@@ -159,7 +159,6 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 			String main = FCFileSystemClassPathModuleFinder.getMainClass(getRunModules().get(m));
 			if (main != null && main.length() > 0) {
 				System.out.println(main);
-				if (main.contains("coderbot")) {// Until i finally get transformers uniformally working
 					try {
 						getRunModules().get(m).run(new String[] { "" });
 
@@ -169,7 +168,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 							e.printStackTrace();
 						}
 					}
-				}
+				
 
 			} else {
 				if (this.getDebugMode()) {
@@ -378,4 +377,21 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 		return side;
 	}
 
+	@Override
+	public ClassTransformer setMainTransformer(ClassTransformer transformer) {
+		// TODO Auto-generated method stub
+		this.main_transformer=transformer;
+		return transformer;
+	}
+
+	@Override
+	public Instrumentation setInstrumentation(Instrumentation instrument) {
+		// TODO Auto-generated method stub
+		this.instrumentation=instrument;
+		return instrument;
+	}
+
 }
+
+
+

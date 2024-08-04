@@ -1,6 +1,7 @@
 package featurecreep;
 
 import java.io.File;
+import java.lang.instrument.Instrumentation;
 import java.nio.file.Path;
 
 import org.jboss.logging.Logger;
@@ -27,6 +28,8 @@ import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.mixin.CoreMod;
+import featurecreep.unsupported.ModuleRemapper;
+import featurecreep.unsupported.RemappingClassFileTransformer;
 import game.CommandDispatcher;
 import game.CommandOriginStack;
 import javassist.ClassPool;
@@ -64,6 +67,15 @@ public class FeatureCreep {
 	public static MappingConverter mappings_converter = new MappingConverter();
 	public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool, temp_mapping_location);
 
+	
+	/***
+	 * Solo Existe cuando en modio agenta, generalmente esta null, usas featurecreep.api.HotSwapper
+	 */
+	public static Instrumentation instrumentation = ModuleRemapper.instrumentation;
+	
+	
+	
+	
 	// TODO Make Packages Needed list all forge packages as its not linear like
 	// Fabric
 
@@ -79,8 +91,11 @@ public class FeatureCreep {
 		FCItems.onInitialise();
 		FCBlocks.onInitialise();
 		loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
-
-		loader.getTransformers().addAll(CoreMod.loader.getTransformers());
+				if(GameInjections.agent_mode) {
+			loader.setInstrumentation(instrumentation);
+		}
+		loader.setMainTransformer(new RemappingClassFileTransformer(loader));
+		loader.getTransformers().addAll(ModuleRemapper.loader.getTransformers());
 
 		loader.loadMods();
 		// loader.runAgents();

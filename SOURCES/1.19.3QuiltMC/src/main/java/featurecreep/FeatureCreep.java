@@ -1,6 +1,7 @@
 package featurecreep;
 
 import java.io.File;
+import java.lang.instrument.Instrumentation;
 import java.nio.file.Path;
 
 import org.jboss.logging.Logger;
@@ -28,6 +29,8 @@ import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.mixin.CoreMod;
+import featurecreep.unsupported.ModuleRemapper;
+import featurecreep.unsupported.RemappingClassFileTransformer;
 import game.CommandDispatcher;
 import game.CommandOriginStack;
 import javassist.ClassPool;
@@ -61,6 +64,12 @@ public static boolean debug_mode = false;
 	public static MappingConverter mappings_converter = new MappingConverter();
 public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool, temp_mapping_location);
 	
+/***
+ * Solo Existe cuando en modio agenta, generalmente esta null, usas featurecreep.api.HotSwapper
+ */
+public static Instrumentation instrumentation = ModuleRemapper.instrumentation;
+
+
 		public static void onInitialise() {
 		// TODO Auto-generated method stub
 			System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID " + io.smallrye.common.os.Process.getProcessId());
@@ -70,7 +79,11 @@ public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getR
 			FCItems.onInitialise();
 			FCBlocks.onInitialise();
 loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
-loader.getTransformers().addAll(CoreMod.loader.getTransformers());
+if(GameInjections.agent_mode) {
+			loader.setInstrumentation(instrumentation);
+		}
+loader.setMainTransformer(new RemappingClassFileTransformer(loader));
+loader.getTransformers().addAll(ModuleRemapper.loader.getTransformers());
 loader.loadMods();
 loader.runMods();//Soon I got to load before transforming and then run now
 			DataParseContent.parseContent();
