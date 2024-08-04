@@ -71,7 +71,9 @@ public class GameInjections {
 	public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool,
 			temp_mapping_location);
 	public static Mappings reverse_mappings = mappings.getMappings().getReverse();
-
+	public static boolean agente_init=false;
+	
+	
 	/***
 	 * Solo Existe cuando en modio agenta, generalmente esta null, usas
 	 * featurecreep.api.HotSwapper

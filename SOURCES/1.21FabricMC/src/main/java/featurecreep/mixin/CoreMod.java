@@ -25,6 +25,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import com.asbestosstar.mixerlogger.MixerLoggerMain;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.GameInjections;
 import featurecreep.unsupported.ModuleRemapper;
 import featurecreep.unsupported.SpongeMixinUtils;
 import javassist.bytecode.AnnotationsAttribute;
@@ -95,8 +96,8 @@ public class CoreMod implements IMixinConfigPlugin {
 		List<String> fakemixins = new ArrayList<String>();
 
 		
-		
-		
+		if(!GameInjections.agente_init) {
+			GameInjections.agente_init=true;
 		
 		
 
@@ -197,7 +198,7 @@ public class CoreMod implements IMixinConfigPlugin {
 			e.printStackTrace();
 		}
 		
-		
+		}
 		
 		
 		

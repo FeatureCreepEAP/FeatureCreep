@@ -58,13 +58,15 @@ public class FeatureCreep {
 	public static FCDNF fcdnf = GameInjections.fcdnf;
 	public static MappingConverter mappings_converter = GameInjections.mappings_converter;
 public static JarRemapper remapper = GameInjections.remapper;
-
+public static boolean main_init =false;
 
 
 
 	public static void onInitialise() {
 		// TODO Auto-generated method stub
-		System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID "
+		if(!main_init) {
+		main_init=true;
+			System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID "
 				+ io.smallrye.common.os.Process.getProcessId());
 		FCCreativeTabs.onInitialise();
 		VanillaItems.onInitialise();
@@ -82,6 +84,7 @@ public static JarRemapper remapper = GameInjections.remapper;
 		PackLoader.loadPacks(loader.getModules());
 		OrespawnBasicFeatureParser.spawnOresFromDefaultConfig();
 		DataPackLoader.onInitialise();
+		}
 
 	}
 
