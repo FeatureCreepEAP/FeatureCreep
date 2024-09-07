@@ -23,13 +23,14 @@ import org.jboss.modules.Module;
 import co.phoenixlab.dds.Dds;
 import co.phoenixlab.dds.DdsImageDecoder;
 import featurecreep.FeatureCreep;
+import featurecreep.api.GameInjections;
 import featurecreep.api.bg.registries.FCRegistries;
 
 public class PackLoader {
 
-	public static int pack_version = 8;
+	public static int pack_version = GameInjections.texture_pack_version;
 	public static String pack_name = "fcpack_" + pack_version;
-	public static String fc_pack_location = new String(FeatureCreep.gamepath + "/resourcepacks/" + pack_name);
+	public static String fc_pack_location = new String(GameInjections.gamepath + "/resourcepacks/" + pack_name);
 
 	public static void loadPacks(List<Module> modules) {
 		FCRegistries.generateModels();
@@ -226,7 +227,7 @@ public class PackLoader {
 				String modid = filarr[0];
 				String item_name = filarr[1];
 
-				File output = new File(fc_pack_location + "/assets/" + modid + "/textures/items/"
+				File output = new File(fc_pack_location + "/assets/" + modid + "/textures/item/"
 						+ item_name.replace(".dds", "") + ".png");
 
 				if (!output.exists()) {
@@ -256,7 +257,7 @@ public class PackLoader {
 				String modid = filarr[0];
 				String item_name = filarr[1];
 
-				File output = new File(fc_pack_location + "/assets/" + modid + "/textures/blocks/"
+				File output = new File(fc_pack_location + "/assets/" + modid + "/textures/block/"
 						+ item_name.replace(".dds", "") + ".png");
 
 				if (!output.exists()) {
@@ -339,3 +340,4 @@ public class PackLoader {
 	}
 
 }
+

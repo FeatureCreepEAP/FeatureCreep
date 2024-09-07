@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import org.jboss.logging.Logger;
 import org.jboss.modules.ModuleLoader;
 
-import com.asbestosstar.assistremapper.RemapperInstance;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.ClassPoolNewer1st;
@@ -23,58 +23,60 @@ import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
+import featurecreep.unsupported.RemappingClassFileTransformer;
 import javassist.ClassPool;
 
 public class FeatureCreep {
 
-	public static boolean debug_mode;
-	public static Path gamepath;
-	public static String modpath;
+	public static boolean debug_mode = GameInjections.debug_mode;
+	public static Path gamepath = GameInjections.gamepath;
+	public static String modpath = GameInjections.modpath;
 	public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
-	public static String modid;
-	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
-	public static double version = 3.918;
-	public static String game_version;
-
-	public static ActiveMapping mappings = ActiveMapping.DANGERZONE;// This is the default active mappings
-	public static SuperLoader super_loader = SuperLoader.DANGERZONE_BUILTIN_LOADER;// Need to detect this eventually
-
+	public static String modid = "featurecreep";
+	public static final Logger LOGGER = GameInjections.LOGGER;
+	public static double version = GameInjections.version;
+	public static String game_version = GameInjections.game_version;
+	public static ActiveMapping mappings = GameInjections.mappings;
+	public static SuperLoader super_loader = GameInjections.super_loader;
 	public static ClassPool classpool = new ClassPool(true);
 	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);// To make sure to
 																								// prioritise our own
 																								// classes 1st then and
 																								// reuse
-	public static String natively_mapped_mods_folder = gamepath + "/usr/share/.natively_mapped_mods/" + mappings.name
-			+ "/";
-	public static String temp_mapping_location = gamepath + "/tmp/.remapping/";
+	public static String natively_mapped_mods_folder = GameInjections.natively_mapped_mods_folder;
+	public static String temp_mapping_location = GameInjections.temp_mapping_location;
 	public static Path[] dependancies = {};
 	public static Path[] modpaths = { new File(modpath).toPath(), new File(natively_mapped_mods_folder).toPath() };
 	public static FCLoaderBasic loader = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true,
 			BGSide.getExecutionSide());
 	public static ModuleLoader modloader = loader.getLoader();
-	public static FCDNF fcdnf = new FCDNF();
-	public static MappingConverter mappings_converter = new MappingConverter();
-	public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool, temp_mapping_location);
+	public static FCDNF fcdnf = GameInjections.fcdnf;
+	public static MappingConverter mappings_converter = GameInjections.mappings_converter;
+public static JarRemapper remapper = GameInjections.remapper;
+public static boolean main_init =false;
 	
 
 	public static void onInitialise() {
 		// TODO Auto-generated method stub
+		if(!main_init) {
+			main_init=true;
 		System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID "
 				+ io.smallrye.common.os.Process.getProcessId());
-		GameInjections.inject();
 		FCCreativeTabs.onInitialise();
 		FCItems.onInitialise();
 		FCBlocks.onInitialise();
-		loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());
+		loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());	
 				if(GameInjections.agent_mode) {
-			loader.setInstrumentation(instrumentation);
+			loader.setInstrumentation(GameInjections.instrumentation);
 		}
+		loader.setMainTransformer(new RemappingClassFileTransformer(loader));
+		loader.getTransformers().addAll(GameInjections.cargador.getTransformers());
 		loader.loadMods();
 		loader.runMods();// Soon I got to load before transforming and then run now
 		DataParseContent.parseContent();
 		PackLoader.loadPacks(loader.getModules());
 //		OrespawnBasicFeatureParser.spawnOresFromDefaultConfig();
-
+		}
 	}
 
 }

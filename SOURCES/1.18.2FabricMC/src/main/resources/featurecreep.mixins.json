@@ -1,16 +1,14 @@
 {
   "required": true,
-  "minVersion": "0.8",
+  "minVersion": "0.7",
   "package": "featurecreep.mixin",
   "compatibilityLevel": "JAVA_17",
   "plugin": "featurecreep.mixin.CoreMod",
   "mixins": [
   "OverworldBiomeCreatorBlank"
   ],
-  "client": [
-    "ExampleMixin"
-  ],
     "injectors": {
     "defaultRequire": 1
   }
 }
+

@@ -12,7 +12,6 @@
       <configuration>
         <archive>
           <manifestEntries>
-            <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
          <Premain-Class>asbestosstar.FCAgent</Premain-Class>
                      <Can-Retransform-Classes>true</Can-Retransform-Classes>
             <Can-Redefine-Classes>true</Can-Redefine-Classes>
@@ -334,7 +333,13 @@
  		<artifactId>mixin</artifactId>
  		<version>0.8.5</version>
  	</dependency>
- 	
+ 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+<dependency>
+    <groupId>cpw.mods</groupId>
+    <artifactId>securejarhandler</artifactId>
+    <version>1.0.1</version>
+</dependency>
+
  	
  	        <!-- 添加本地 JAR 文件作为依赖 -->  
         <dependency>  
@@ -344,6 +349,10 @@
             <scope>system</scope>  
             <systemPath>${fcdependencies.dir}/fci.jar</systemPath>  
         </dependency> 
+ 	
+ 	
+ 	
+ 	
  	
  	
    </dependencies>

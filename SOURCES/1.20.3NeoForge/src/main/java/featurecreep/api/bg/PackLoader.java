@@ -23,13 +23,14 @@ import org.jboss.modules.Module;
 import co.phoenixlab.dds.Dds;
 import co.phoenixlab.dds.DdsImageDecoder;
 import featurecreep.FeatureCreep;
+import featurecreep.api.GameInjections;
 import featurecreep.api.bg.registries.FCRegistries;
 
 public class PackLoader {
 
-	public static int pack_version = 15;
+	public static int pack_version = GameInjections.texture_pack_version;
 	public static String pack_name = "fcpack_" + pack_version;
-	public static String fc_pack_location = new String(FeatureCreep.gamepath + "/resourcepacks/" + pack_name);
+	public static String fc_pack_location = new String(GameInjections.gamepath + "/resourcepacks/" + pack_name);
 
 	public static void loadPacks(List<Module> modules) {
 		FCRegistries.generateModels();
@@ -339,3 +340,4 @@ public class PackLoader {
 	}
 
 }
+

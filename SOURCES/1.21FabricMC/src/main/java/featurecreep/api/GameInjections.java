@@ -72,7 +72,8 @@ public class GameInjections {
 			temp_mapping_location);
 	public static Mappings reverse_mappings = mappings.getMappings().getReverse();
 	public static boolean agente_init=false;
-	
+	public static int texture_pack_version = 34;
+	public static int data_pack_version = 48;
 	
 	/***
 	 * Solo Existe cuando en modio agenta, generalmente esta null, usas
@@ -128,7 +129,7 @@ public class GameInjections {
 
 				code.addAload(0);
 				code.addGetfield(file.getName().replace(".", "/"), packs, "Ljava/util/List;");
-				code.addLdc("fcpack_" + Integer.toString(PackLoader.pack_version));
+				code.addLdc("fcpack_" + Integer.toString(texture_pack_version));
 				code.addInvokeinterface("java/util/List", "add", "(Ljava/lang/Object;)Z", 2);
 				code.addOpcode(Opcode.POP);
 

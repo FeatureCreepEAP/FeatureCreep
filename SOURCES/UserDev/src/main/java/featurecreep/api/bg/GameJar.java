@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.jar.JarFile;
 
-import com.asbestosstar.assistremapper.RemapperInstance;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import com.asbestosstar.shadowassist.ShadowAssist;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.PKZipUtils;
 import featurecreep.loader.utils.ClassPathUtils;
 import featurecreep.loader.utils.FileUtils;
@@ -27,7 +26,7 @@ public class GameJar {
 	// Needs to be fixed
 	public static JarFile getGameJar() {
 		List<String> cp = ClassPathUtils.getClassPath();
-		List<String> compat = ClassPathUtils.findJarFilesWithPackage(cp, "net.minecraft.client");
+		List<String> compat = ClassPathUtils.findJarFilesWithPackage(cp, "net.minecraft.client.");
 
 		try {
 			return new JarFile(compat.get(0));
@@ -40,7 +39,7 @@ public class GameJar {
 	}
 
 	public static JarFile getShadow() {
-		String target = FeatureCreep.gamepath + "/usr/share/.shadows/mc_forge_" + FeatureCreep.game_version + ".jar";
+		String target = FeatureCreep.gamepath + "/usr/share/.shadows/mc_fabric_" + FeatureCreep.game_version + ".jar";
 		if (new File(target).exists()) {
 			try {
 				return new JarFile(target);
@@ -63,7 +62,7 @@ public class GameJar {
 	}
 
 	public static JarFile getFCIShadow() {
-		String target = FeatureCreep.gamepath + "/usr/share/.fci_shadows/mc_forge_" + FeatureCreep.game_version + "-"
+		String target = FeatureCreep.gamepath + "/usr/share/.fci_shadows/fabricmc_" + FeatureCreep.game_version + "-"
 				+ FeatureCreep.version + ".jar";
 		if (new File(target).exists()) {
 			try {
@@ -77,7 +76,7 @@ public class GameJar {
 		}
 
 		try {
-			RemapperInstance remapper = new RemapperInstance(FeatureCreep.mappings.getMappings(), pool,
+			JarRemapper remapper = new JarRemapper(FeatureCreep.mappings.getMappings(), pool,
 					FeatureCreep.temp_mapping_location);
 			// remapper.debug_mode = false;//Debug mode will throw lots of stacktraces which
 			// are fine

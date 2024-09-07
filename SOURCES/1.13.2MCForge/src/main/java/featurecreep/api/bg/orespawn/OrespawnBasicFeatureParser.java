@@ -10,16 +10,14 @@ import java.util.function.Predicate;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.bg.registries.GameRegistries;
 import game.Biome;
 import game.Biomes;
 import game.Block;
 import game.BlockPropertiesData;
 import game.CompositeMapFeature;
+import game.GameRegistriesInterface;
 import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
-import game.GameRegistriesInterface;
-import game.ResourceConfig;
 import game.ResourceLocation;
 import game.StageGeneration.Feature;
 import game.WorldDecorationGenerator;

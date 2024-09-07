@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import mx.kenzie.mirror.Mirror;
 import sun.reflect.ConstructorAccessor;
 
 public class EnumModder {

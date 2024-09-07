@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>1.12.2LiteLoader</groupId>
   <artifactId>1.12.2LiteLoader</artifactId>
@@ -38,6 +38,13 @@
       <name>TLauncher</name>
       <url>http://res.tlauncher.org</url>
     </repository>  
+    
+      <repository>
+    <id>kenzie</id>
+    <name>Kenzie's Repository</name>
+    <url>https://repo.kenzie.mx/releases</url>
+</repository>
+    
   </repositories>
  
   <dependencies>
@@ -76,6 +83,19 @@
   		<artifactId>asm-all</artifactId>
   		<version>5.2</version>
   	</dependency>
+  	
+  	
+  	  	<dependency>
+  		<groupId>mx.kenzie</groupId>
+  		<artifactId>mirror</artifactId>
+  		<version>5.0.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>mx.kenzie</groupId>
+  		<artifactId>mimic</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+  	
   	
   	        <!-- 添加本地 JAR 文件作为依赖 -->  
         <dependency>  

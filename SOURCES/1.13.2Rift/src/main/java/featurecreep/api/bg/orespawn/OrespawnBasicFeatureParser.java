@@ -3,7 +3,7 @@ package featurecreep.api.bg.orespawn;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -11,219 +11,139 @@ import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
 import game.Biome;
+import game.Biomes;
 import game.Block;
 import game.BlockPropertiesData;
 import game.CompositeMapFeature;
+import game.GameRegistriesInterface;
 import game.MineralDepositFeatureGenerator;
 import game.RangeDecoratorConfiguration;
-import game.GameRegistriesInterface;
 import game.ResourceLocation;
 import game.StageGeneration.Feature;
 import game.WorldDecorationGenerator;
 
-
 public class OrespawnBasicFeatureParser {
-
-	
-public static List<CompositeMapFeature> configed = new ArrayList <CompositeMapFeature>();
-	
-	
-	//I gotta rewrite all of the Orespawn Module including this part once I get more time
-	//Loads the contents from %GAMEDIR%/orespawn/config/
-	public static void spawnOresFromDefaultConfig()
-	{
-	String orespawn_dir = new String (FeatureCreep.gamepath.toString() +  ("/orespawn/config/"));
-	File file = new File(orespawn_dir);
-		
-		String contents[] = file.list();
-		if(FeatureCreep.debug_mode) {
-		System.out.println("List of files and directories in the specified directory:");
-		}
-		//I need to make this multicore
-
-
-
-		if (contents != null) {
-		for(int i=0; i<contents.length; i++) {
-		 
-		 if(FeatureCreep.debug_mode) {  
-			System.out.println("FeatureCreep is trying to load "+contents[i]);
-
-			System.out.println(orespawn_dir + contents[i] + "/");
-		}
-			splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
-
-		}
-		
-		}else {
-			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
-		}
-		
-		
-	}
-	
-	
-public static ModelNode	getModelNodesFromFile(String file)
-{
-	if (file.contains(".json")){
-try {
-	return ModelNode.fromJSONStream(new FileInputStream(file));
-} catch (IOException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-	return new ModelNode();
-}
-	}else
-	{
-		try {
-			return ModelNode.fromStream(new FileInputStream(file));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ModelNode();
-		}
-	}
-
-
-}
-	
-
-public static void 	splitOS3Basic(ModelNode node)
-{
-	List<ModelNode> list = node.get("spawns").asList();
-	for(ModelNode rowNode : list) {
-		System.out.println(rowNode.asString().split("\"")[1]);
-		parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
-		
-	}
-	
-	
-	
-}
-
-
-	
-public static void 	parseOS3Basic(ModelNode node,String name)
-{
-	
-if (node.get("enabled").asBoolean() == true)
-{
-	//List<String> replace_registry_names = new ArrayList<String>(); We will do array list later
-	String replace_registry_names = new String();
-	if (node.get("replaces").asString().equals("default"))
-	{
-		replace_registry_names = "minecraft:stone";
-	}else
-	{
-		replace_registry_names = node.get("replaces").asString();
-	}
-	
-	replace_registry_names = getCorrectNameSpace(replace_registry_names);
-	
-	
-	String[] block_identifier = replace_registry_names.split(":");
-	Block replacedBlock = GameRegistriesInterface.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
-	
-	String new_block = node.get("blocks").get(0).get("name").asString();//I needa Do this as a List eventually to handle the Array
-	
-	
-	
-	
-	System.out.println(getCorrectNameSpace(new_block));
-	String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-	Block newBlock = GameRegistriesInterface.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
-	
-	
-	
-	
-	//System.out.println(replacedBlock.getName());
-	//System.out.println(newBlock.getName());
-
-    Predicate<BlockPropertiesData> RULE = MineralDepositFeatureGenerator.IS_ROCK;
- //gotta make this more configuarable later
-
-	
-	// final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register("ore_amethyst", Feature.ORE, new OreFeatureConfig(List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, replacedBlock.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, replacedBlock.getDefaultState())), 4));
-    // RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> ORE_CONFIG = ConfiguredFeatures.register(name, Feature.ORE, new OreFeatureConfig(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()));//I need to also include veriation in the future
-
-	// final RegistryEntry<PlacedFeature> ORE_PLACED = PlacedFeatures.register(name+"_placed", ORE_CONFIG, modifiersWithCount(node.get("parameters").get("frequency").asInt(), HeightRangePlacementModifier.uniform(YOffset.fixed(node.get("parameters").get("minHeight").asInt()), YOffset.fixed(node.get("parameters").get("maxHeight").asInt()))));// YOffset.getBottom is for bottom
-
-//Gotta update mappings on this version
-    CompositeMapFeature ORE_CONFIG = Biome.createCompositeFeature(WorldDecorationGenerator.MINABLE,
-						
-						new MineralDepositFeatureGenerator(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), Biome.COUNT_RANGE_DECORATOR, new RangeDecoratorConfiguration(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt()));
-
-//			new OreFeatureConfig(RULE, newBlock.getDefaultState(), node.get("parameters").get("size").asInt()), Biome.field_76785, new RangeDecoratorConfig(node.get("parameters").get("frequency").asInt(),node.get("parameters").get("minHeight").asInt(), node.get("parameters").get("maxHeight").asInt(), node.get("parameters").get("frequency").asInt()));
-
-			
-			configed.add(ORE_CONFIG);
-			
-			
-
-
-
-
-
-
-}
-	
-	
-}
-
-
-public static String getCorrectNameSpace(String old)
-{
-String new_string = new String (old);	
-
-
-
-if (new_string.contains("vanilla:"))
-{
-	new_string = new_string.replace("vanilla:", "minecraft:");
-}
-
-if (new_string.contains("dangerzone:"))
-{
-	new_string = new_string.replace("dangerzone:", "minecraft:");
-}
-
-return new_string;
-}
-
-
-	
-
-
-
-
-
-public static void place(Biome biome) {
-	// TODO Auto-generated method stub
-	
-	for (int f = 0; f < OrespawnBasicFeatureParser.configed.size(); f++) {
-
-	
-		biome.addFeature(Feature.UNDERGROUND_ORES, OrespawnBasicFeatureParser.configed.get(f));
-		if(FeatureCreep.debug_mode) {
-		System.out.println(OrespawnBasicFeatureParser.configed.get(f).toString());
-	}
-	
-	
-	
-	
-	}
-	
-	
-	// These 2 dont appear to exist	Biomes.BAMBOO_JUNGLE.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_CONFIG);
-//		Biomes.BAMBOO_JUNGLE_HILLS.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_CONFIG);
-
-
-
-
-	
-	
-}
-
-	
-	
+    public static void spawnOresFromDefaultConfig() {
+        String string1 = new String(FeatureCreep.gamepath.toString() + "/orespawn/config/");
+        File file2 = new File(string1);
+        String[] contents = file2.list();
+       
+       if(FeatureCreep.debug_mode) {
+        System.out.println("List of files and directories in the specified directory:");
+       }
+       
+        if (contents != null) {
+            for (int i = 0; i < contents.length; ++i) {
+            if(FeatureCreep.debug_mode) {
+                System.out.println("FeatureCreep is trying to load " + contents[i]);
+                System.out.println(string1 + contents[i] + "/");
+            }
+                splitOS3Basic(getModelNodesFromFile(string1 + contents[i] + "/"));
+            }
+        }
+        else {
+            FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
+        }
+    }
+    
+    public static ModelNode getModelNodesFromFile(String string) {
+        if (string.contains(".json")) {
+            try {
+                return ModelNode.fromJSONStream((InputStream)new FileInputStream(string));
+            }
+            catch (final IOException e) {
+                e.printStackTrace();
+                return new ModelNode();
+            }
+        }
+        try {
+            return ModelNode.fromStream((InputStream)new FileInputStream(string));
+        }
+        catch (final IOException e) {
+            e.printStackTrace();
+            return new ModelNode();
+        }
+    }
+    
+    public static void splitOS3Basic(ModelNode modelNode) {
+        List<ModelNode> list2 = modelNode.get("spawns").asList();
+        for (final ModelNode rowNode : list2) {
+         if(FeatureCreep.debug_mode) {
+            System.out.println(rowNode.asString().split("\"")[1]);
+         }
+         
+            parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
+        }
+    }
+    
+    public static void parseOS3Basic(ModelNode modelNode, String string) {
+        if (modelNode.get("enabled").asBoolean()) {
+            String string3 = new String();
+            if (modelNode.get("replaces").asString().equals("default")) {
+                string3 = "minecraft:stone";
+            }
+            else {
+                string3 = modelNode.get("replaces").asString();
+            }
+            string3 = getCorrectNameSpace(string3);
+            String[] block_identifier = string3.split(":");
+            Block block5 = GameRegistriesInterface.BLOCKS.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
+            String string6 = modelNode.get("blocks").get(0).get("name").asString();
+          if(FeatureCreep.debug_mode) {
+            System.out.println(getCorrectNameSpace(string6));
+          }
+            String[] new_block_identifier = getCorrectNameSpace(string6).split(":");
+            Block block8 = GameRegistriesInterface.BLOCKS.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
+           if(FeatureCreep.debug_mode) {
+            System.out.println(block5.getLocalisedNameAsTextObject());
+            System.out.println(block8.getLocalisedNameAsTextObject());
+           }
+            Predicate<BlockPropertiesData> predicate9 = MineralDepositFeatureGenerator.IS_ROCK;
+            CompositeMapFeature compositeFeature10 = Biome.<MineralDepositFeatureGenerator, RangeDecoratorConfiguration>createCompositeFeature(WorldDecorationGenerator.MINABLE, new MineralDepositFeatureGenerator(predicate9, block8.getDefaultState(), modelNode.get("parameters").get("size").asInt()), Biome.COUNT_RANGE_DECORATOR, new RangeDecoratorConfiguration(modelNode.get("parameters").get("frequency").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("minHeight").asInt(), modelNode.get("parameters").get("maxHeight").asInt()));
+            Biomes.SMALL_END_ISLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.END_MIDLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.END_HIGHLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.END_BARRENS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_WARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_LUKEWARM_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_COLD_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DEEP_FROZEN_OCEAN.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.THE_VOID.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SUNFLOWER_PLAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DESERT_LAKES.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.FLOWER_FOREST.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SWAMP_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.ICE_SPIKES.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+          //  Biomes.var_unknown_116534.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+           // Biomes.var_unknown_116564.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.TALL_BIRCH_FOREST.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.TALL_BIRCH_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.DARK_FOREST_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SNOWY_TAIGA_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.GIANT_SPRUCE_TAIGA.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.GIANT_SPRUCE_TAIGA_HILLS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.MODIFIED_GRAVELLY_MOUNTAINS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SHATTERED_SAVANNA.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.SHATTERED_SAVANNA_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.ERODED_BADLANDS.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+            Biomes.MODIFIED_BADLANDS_PLATEAU.addFeature(Feature.UNDERGROUND_ORES, compositeFeature10);
+        }
+    }
+    
+    public static String getCorrectNameSpace(String string) {
+        String string2 = new String(string);
+        if (string2.contains("vanilla:")) {
+            string2 = string2.replace("vanilla:", "minecraft:");
+        }
+        if (string2.contains("dangerzone:")) {
+            string2 = string2.replace("dangerzone:", "minecraft:");
+        }
+        return string2;
+    }
 }

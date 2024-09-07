@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>1.13.2Rift</groupId>
   <artifactId>1.13.2Rift</artifactId>
@@ -38,6 +38,22 @@
       <name>TLauncher</name>
       <url>http://res.tlauncher.org</url>
     </repository>  
+    
+     <!-- solo por SpongeMixin --> 
+     <repository>
+      <id>FabricMC</id>
+      <name>FabricMC</name>
+      <url>https://maven.fabricmc.net/</url>
+    </repository>
+    
+    
+      <repository>
+    <id>kenzie</id>
+    <name>Kenzie's Repository</name>
+    <url>https://repo.kenzie.mx/releases</url>
+</repository>
+    
+    
   </repositories>
  
   <dependencies>
@@ -46,6 +62,9 @@
  		<artifactId>javassist</artifactId>
  		<version>3.30.2-GA</version>
  	</dependency>
+ 	
+ 	
+ 	
  	
  	 <dependency>
  		<groupId>net.minecraft</groupId>
@@ -90,6 +109,18 @@
   		<version>5.0.3</version>
   	</dependency>
  	
+ 	  	<dependency>
+  		<groupId>mx.kenzie</groupId>
+  		<artifactId>mirror</artifactId>
+  		<version>5.0.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>mx.kenzie</groupId>
+  		<artifactId>mimic</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+ 	
+ 	
  	
  	        <!-- 添加本地 JAR 文件作为依赖 -->  
         <dependency>  
@@ -110,6 +141,15 @@
             <systemPath>${fcdependencies.dir}/riftfci.jar</systemPath>  
         </dependency> 
  	
+ 	
+ 	
+<!-- https://mvnrepository.com/artifact/net.fabricmc/sponge-mixin -->
+<dependency>
+    <groupId>net.fabricmc</groupId>
+    <artifactId>sponge-mixin</artifactId>
+    <version>0.7.11.38</version>
+</dependency>
+
  	
  </dependencies>
 </project>

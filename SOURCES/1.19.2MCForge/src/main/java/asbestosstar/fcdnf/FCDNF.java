@@ -12,15 +12,15 @@ import java.util.jar.JarFile;
 
 import com.asbestosstar.dnfjava.DnfJava;
 
-import featurecreep.FeatureCreep;
+import featurecreep.api.GameInjections;
 import featurecreep.loader.FCLoaderBasic;
 
 public class FCDNF extends DnfJava {
 
 	public FCDNF() {
 		super();
-		this.setBaseLocation(FeatureCreep.gamepath.toString(), true);
-		for (File mod : FeatureCreep.loader.getCombinedFiles()) {
+		this.setBaseLocation(GameInjections.gamepath.toString(), true);
+		for (File mod : GameInjections.cargador.getCombinedFiles()) {
 			if (FCLoaderBasic.isFilePKZipCompatible(mod)) {
 				try {
 					JarFile jar = new JarFile(mod);
@@ -41,7 +41,7 @@ public class FCDNF extends DnfJava {
 	}
 
 	public void extractRepoFile(InputStream stream, String name) {
-		Path rep = new File(FeatureCreep.gamepath.toString() + "/" + name).toPath();
+		Path rep = new File(GameInjections.gamepath.toString() + "/" + name).toPath();
 		rep.toFile().mkdirs();
 		try {
 			Files.copy(stream, rep, StandardCopyOption.REPLACE_EXISTING);
@@ -52,4 +52,6 @@ public class FCDNF extends DnfJava {
 	}
 
 }
+
+
 

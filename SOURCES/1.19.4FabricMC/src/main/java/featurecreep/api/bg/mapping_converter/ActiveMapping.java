@@ -117,6 +117,7 @@ public Mappings getMappings() {
 	if(hasMappings()) {
 	return mappings;
 	}else{
+		System.out.println("¡¡¡No Mappings por "+ name +"!!!");
 		return new PDMEMappings();
 	}
 }	

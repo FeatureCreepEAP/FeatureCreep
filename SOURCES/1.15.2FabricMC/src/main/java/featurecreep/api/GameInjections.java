@@ -1,146 +1,181 @@
 package featurecreep.api;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.lang.instrument.Instrumentation;
+import java.nio.ByteBuffer;
+import java.nio.file.Path;
+import java.util.Map;
 
-import javassist.CannotCompileException;
-import javassist.NotFoundException;
+import org.jboss.logging.Logger;
+import org.jboss.modules.ModuleLoader;
 
+import com.asbestosstar.assistremapper.Mappings;
+import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
-
-
+import asbestosstar.fcdnf.FCDNF;
+import featurecreep.FabricDirs;
+import featurecreep.api.bg.BGSide;
+import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.mapping_converter.ActiveMapping;
+import featurecreep.api.bg.mapping_converter.MappingConverter;
+import featurecreep.api.platform.super_.SuperLoader;
+import featurecreep.bytecode.ClassFileUtils;
+import featurecreep.loader.FCLoaderBasic;
+import featurecreep.loader.FCLoaderBasicR8;
+import featurecreep.loader.GetPackagesFromClassLoader;
+import featurecreep.unsupported.RemappingClassFileTransformer;
+import javassist.ClassPool;
+import javassist.bytecode.BadBytecode;
+import javassist.bytecode.Bytecode;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.MethodInfo;
+import javassist.bytecode.Opcode;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class GameInjections {
 
+	public static boolean agent_mode = false;
+	public static boolean debug_mode = false;
+	public static Path gamepath = FabricLoader.getInstance().getGameDir();
+	public static String modpath = FabricLoader.getInstance().getGameDir() + ("/mods/");
+	public static String[] packages_needed = GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader();
+	public static final Logger LOGGER = Logger.getLogger("FeatureCreep-Inyecciones-de-Juego");
+	public static double version = 3.919;// GA will be 4.0 for now 3.9pre will work
+	public static String game_version = FabricDirs.getMCVersion();
+	public static ActiveMapping mappings = ActiveMapping.FABRICMC_INTERMEDIARY;// This is the default active mappings
+	public static SuperLoader super_loader = SuperLoader.FABRICMC;// Need to detect this eventually
+	public static ClassPool classpool = new ClassPool(true);
+	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);// To make sure to
+																								// prioritise our own
+																								// classes 1st then and
+																								// reuse
+	public static String natively_mapped_mods_folder = gamepath + "/usr/share/.natively_mapped_mods/" + mappings.name
+			+ "/";
+	public static String temp_mapping_location = gamepath + "/tmp/.remapping/";
+	public static Path[] dependancies = {};
+	public static Path[] modpaths = { new File(modpath).toPath(), new File(natively_mapped_mods_folder).toPath() };
+
+	/**
+	 * Este cargadora es solo para Agentes en GameInjections, en algunas platformas
+	 * es lo mismo que FeatureCreep.loader. ¡No dependas de esto!
+	 */
+	public static FCLoaderBasic cargador = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true,
+			BGSide.getExecutionSide());
+
+	public static ModuleLoader cargadormod = cargador.getLoader();
+	public static FCDNF fcdnf = new FCDNF();
+	public static MappingConverter mappings_converter = new MappingConverter();
+	public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool,
+			temp_mapping_location);
+	public static Mappings reverse_mappings = mappings.getMappings().getReverse();
+	public static boolean agente_init=false;
+	public static int texture_pack_version = 5;
+	public static int data_pack_version = 5;
 	
-	
-	public static void inject()
-	{
+	/***
+	 * Solo Existe cuando en modio agenta, generalmente esta null, usas
+	 * featurecreep.api.HotSwapper
+	 */
+	public static Instrumentation instrumentation = null;
+
+	public static Map<String, Mappings> getClassesToRemapToFeatureCreepIntermediaryBeforeTransforming() {
+		return RemappingClassFileTransformer.to_be_fcied_classes;
+	}
+
+	public static Map<String, Mappings> getClassesToRemapFromFeatureCreepIntermediaryAfterTransforming() {
+		return RemappingClassFileTransformer.fcied_classes;
+	}
+
+	public static ByteBuffer inject(String nombre, ByteBuffer buff) {
+
+		if (nombre.equals(reverse_mappings.getClassMappedName("game.TitleScreen"))) {
+			return TitleScreenInjection(buff);
+		} else if (nombre.equals(reverse_mappings.getClassMappedName("game.GameConfig"))) {
+			return GameOptionsInjection(buff);
+		}
+
+		return buff;
+
+	}
+
+	// From Fabric API
+	public static ByteBuffer GameOptionsInjection(ByteBuffer buff) {
+
 		try {
+			ClassFile file = ClassFileUtils.classFileFromByteBuffer(buff);
+			String target = reverse_mappings.getDefMappedName("game.GameConfig.load()V");
+			String packs = reverse_mappings.getVarMappedName("game.GameConfig.texture_packs:Ljava/util/List;");
 
-			//AddInjections();
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
 
-			GameOptionsInjection();
-			TitleScreenInjection();
-			
+//				public List<String> texture_packs;
+//
+//				public void load() {
+//
+//					this.texture_packs.add("fcpack_22");
+//					System.out.println("Adding FCPack");
+//				}
 
-			
-			
-		} catch (NotFoundException | CannotCompileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
+				code.addAload(0);
+				code.addGetfield(file.getName().replace(".", "/"), packs, "Ljava/util/List;");
+				code.addLdc("fcpack_" + Integer.toString(texture_pack_version));
+				code.addInvokeinterface("java/util/List", "add", "(Ljava/lang/Object;)Z", 2);
+				code.addOpcode(Opcode.POP);
+
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Adding FCPack");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V");
+
+				int len = coat.iterator().getCodeLength();
+				coat.iterator().insert(len - 1, code.get());
+
+				return ClassFileUtils.classFileToByteBuffer(file);
+			}
+
+		} catch (IOException | BadBytecode e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		return buff;
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void GameOptionsInjection() throws NotFoundException, CannotCompileException, IOException
-	{
-		
 
-		
-	/*	
-		
+	public static ByteBuffer TitleScreenInjection(ByteBuffer buff) {
+
 		try {
+			ClassFile file = ClassFileUtils.classFileFromByteBuffer(buff);
+			String target = reverse_mappings.getDefMappedName("game.TitleScreen.initalise()V");
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Testing JA with TitleScreen");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); // System.out.println("Testing
+																									// JA");
+				coat.iterator().begin();
+				coat.iterator().insert(code.get());
+				return ClassFileUtils.classFileToByteBuffer(file);
+			}
 
-			
-			
-			
-			System.out.println(Arrays.toString(GameInjections.class.getClassLoader().getDefinedPackages()));
-		    
-System.out.println("trying to inject");			
-			
-			
-			//this was hard with the weirdness of Lists
-	
-		
-			
-	    ClassPool pool = ClassPool.getDefault();
-	    CtClass cc = pool.get("net.minecraft.class_315");
-	  //  CtMethod m = cc.getDeclaredMethod(MCObfList.GameOptions_Load);
-	    CtMethod m = CtNewMethod.make(
-                "public void fcpackadd() {}",
-                cc);
-
-	    //" + "this." + MCObfList.GameOptions_ResourcePacks + ".add(\"fcpack_9\");" +  "System.out.println(\\\"fcpack_9\\\"); 
-	    
-	    
-	    CtField f = cc.getField(MCObfList.GameOptions_ResourcePacks);
-	    m.insertBefore("this." + MCObfList.GameOptions_ResourcePacks + ".add(\"fcpack_9\");");
-	  //  cc.writeFile();
-	    
-	    //byte[] classFile = cc.toBytecode();
-	    
-	    
-	    //inst.redefineClasses(new ClassDefinition(GameOptions.class, cc.toBytecode()));
-	    
-	    
-	    //System.out.println(GameInjections.class.getClassLoader().getDefinedPackages());
-	//	System.out.println(Arrays.toString(GameInjections.class.getClassLoader().getDefinedPackages()));
-
-	    
-	   cc.toClass(net.minecraft.client.option.GameOptions.class);
-
-	    
-	    
-	    Method meth = net.minecraft.client.option.GameOptions.class.getDeclaredMethod("fcpackadd");
-	    meth.invoke(null);
-	    
-	    
-	    
-		System.out.println(cc.toString());
-			
-			//MinecraftClient.getInstance().options.resourcePacks.add("fcpack_9");
-			
-		}catch (Throwable e)
-		{
+		} catch (IOException | BadBytecode e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		*/
-		
-		
-			
-		
+
+		System.out.println("Yay Javaassist Worked!, though its capability is limted");
+
+		return buff;
+
 	}
 
 
-		
-	public static void TitleScreenInjection() throws NotFoundException, CannotCompileException, IOException
-	{
-		/*
-	try {
-	ClassPool pool = ClassPool.getDefault();
-   CtClass cc = pool.get(TitleScreen.class.getName());
-   CtMethod m = cc.getDeclaredMethod("method_25426");
-   m.insertBefore("System.out.println(featurecreep.FeatureCreep.modpath + 'Is loading from injection');");
-   cc.writeFile();
-	}catch (Throwable e)
-	{
-		e.printStackTrace();
-	}
-	*/
-	
-	}
-	
-	
-	
-	
-	
-	
 }
