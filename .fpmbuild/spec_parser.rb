@@ -440,6 +440,15 @@ end
     $remap_depndencies = args[1]
 
 
+  else
+    valid=validate(line)
+    unless valid.empty?
+    system(valid) # execute the command
+    end
+
+
+
+
   end
 
 
