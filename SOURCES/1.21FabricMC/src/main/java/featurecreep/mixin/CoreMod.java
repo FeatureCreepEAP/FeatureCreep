@@ -87,6 +87,7 @@ public class CoreMod implements IMixinConfigPlugin {
 			objectivo.setValue(arr);
 			AnnotationsAttribute atr = new AnnotationsAttribute(pool, AnnotationsAttribute.invisibleTag);
 			atr.addAnnotation(mixinan);
+			//atr.addAnnotation(new Annotation("org.spongepowered.asm.mixin.Pseudo", pool));
 			archivo.addAttribute(atr);
 
 			try {
@@ -186,3 +187,4 @@ public class CoreMod implements IMixinConfigPlugin {
 	}
 
 }
+

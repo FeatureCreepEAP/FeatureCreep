@@ -24,6 +24,17 @@ Main-Class:
 #%make_build
 buildfpm_maven %{?sources_location}/1.14.4MCForge #This is the main command you need to look at as it is responsible for packaging your maven project and adding all the extra required files to fpm and sfpm files
 remap(/home/rhel/fcdependencies/featurecreep-intermediary-1.14.4-srg.pdme,/home/rhel/fcdependencies/1.14.4MCForge/)
+rm -rf %{?build_root}/*
+cp -r  %{?sources_location}/featurecreep-bootstrap/target/classes/* %{?build_root} 
+cd %{?fpm_dir} 
+pwd 
+mv %{?name}-%{?version}-%{?release}.noarch.fpm %{?name}-%{?version}-%{?release}-mod.noarch.fpm.jar 
+mkdir %{?build_root}/META-INF/jarjar/
+mv %{?name}-%{?version}-%{?release}-mod.noarch.fpm.jar %{?build_root}/META-INF/jarjar/ 
+cd %{?build_root}
+zip -r %{?fpm_dir}/%{?name}-%{?version}-%{?release}.noarch.fpm.jar . 
+rm -rf %{?build_root}/*
+
 
 #Some stuff for installing, not yet implemented
 %install

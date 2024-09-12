@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import cpw.mods.modlauncher.TransformingClassLoader;
 import featurecreep.api.GameInjections;
 import featurecreep.unsupported.LaunchActivities;
 import featurecreep.unsupported.SpongeMixinUtils;
@@ -88,6 +87,7 @@ public class CoreMod implements IMixinConfigPlugin {
 			objectivo.setValue(arr);
 			AnnotationsAttribute atr = new AnnotationsAttribute(pool, AnnotationsAttribute.invisibleTag);
 			atr.addAnnotation(mixinan);
+			//atr.addAnnotation(new Annotation("org.spongepowered.asm.mixin.Pseudo", pool));
 			archivo.addAttribute(atr);
 
 			try {
@@ -152,18 +152,7 @@ public class CoreMod implements IMixinConfigPlugin {
 						def = clasedeclassloader.getDeclaredMethod("addUrl", URL.class);
 					} catch (NoSuchMethodException e1) {
 						// TODO Auto-generated catch block
-						//e1.printStackTrace();
-				
-						try {
-							def = clasedeclassloader.getDeclaredMethod("addUrl", URL.class);
-						} catch (NoSuchMethodException e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}
-					
-					
-					
-					
+						e1.printStackTrace();
 					}
 					// e.printStackTrace();
 				}
@@ -198,3 +187,4 @@ public class CoreMod implements IMixinConfigPlugin {
 	}
 
 }
+

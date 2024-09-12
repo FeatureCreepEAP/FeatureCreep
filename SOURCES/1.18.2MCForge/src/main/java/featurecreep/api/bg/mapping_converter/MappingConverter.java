@@ -24,44 +24,48 @@ public class MappingConverter {
 	public MappingConverter() {
 
 		try {
+			JarFile fcjar = null;
 			Enumeration<URL> resources = MappingConverter.class.getClassLoader().getResources("fci/");
 			Map<String, InputStream> pairs = new HashMap<String, InputStream>();
 
 			if (resources.hasMoreElements()) {
-	            URL url = resources.nextElement();  
-					if (url.getProtocol().equals("jar")) {  
-		                String jarPath = url.getPath().substring(0, url.getPath().indexOf('!')); // 去除 jar:file: 和 ! 后的部分  
-		                try (JarInputStream jar = new JarInputStream(new URL(jarPath).openStream())) {  
-		                    JarEntry entry;  
-		                    while ((entry = jar.getNextJarEntry()) != null) {  
-		                        if (entry.getName().startsWith("fci") && !entry.isDirectory() && entry.getName().endsWith(".gz")) {  
-		                            // 使用 classLoader 来获取输入流，以便正确处理缓存等  
-		                            InputStream inputStream = MappingConverter.class.getClassLoader().getResourceAsStream(entry.getName());  
-		                            if (inputStream != null) {  
-		                                pairs.put(entry.getName(), inputStream);  
-		                            }  
-		                        }  
-		                    }  
-		                }
+
+				while (resources.hasMoreElements()) {
+					URL url = resources.nextElement();
+					if (url.getProtocol().equals("jar")) {
+						String jarPath = url.getPath().substring(0, url.getPath().indexOf('!')); // 去除 jar:file: 和 !
+																									// 后的部分
+						try (JarInputStream jar = new JarInputStream(new URL(jarPath).openStream())) {
+							JarEntry entry;
+							while ((entry = jar.getNextJarEntry()) != null) {
+								if (entry.getName().startsWith("fci") && !entry.isDirectory()
+										&& entry.getName().endsWith(".pdme.gz")) {
+									// 使用 classLoader 来获取输入流，以便正确处理缓存等
+									InputStream inputStream = MappingConverter.class.getClassLoader()
+											.getResourceAsStream(entry.getName());
+									if (inputStream != null) {
+										pairs.put(entry.getName(), inputStream);
+									}
+								}
+							}
+						}
+
+					} else {
+						fcjar = new JarFile(FeatureCreep.loader.getFeatureCreepJar());
+						System.out.println("FC JAR "+fcjar.getName());
+						searchJarForMappings(pairs, fcjar);
+					}
+
 				}
 
 			} else {
-
-				JarFile fcjar = new JarFile(FeatureCreep.loader.getFeatureCreepJar());
-				for (JarEntry entry : Collections.list(fcjar.entries())) {
-					if (entry.getName().startsWith("fci") &&  !entry.isDirectory() && entry.getName().endsWith(".gz") ) {
-						InputStream mapstream = fcjar.getInputStream(entry);
-
-						pairs.put(entry.getName(), mapstream);
-
-					}
-				}
-				fcjar.close();
+				fcjar = new JarFile(FeatureCreep.loader.getFeatureCreepJar());
+				searchJarForMappings(pairs, fcjar);
 
 			}
 
 			for (Map.Entry<String, InputStream> entry : pairs.entrySet()) {
-
+				System.out.println(entry.getKey());
 				GZIPInputStream gzipInputStream = new GZIPInputStream(entry.getValue());
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				byte[] buffer = new byte[1024];
@@ -89,12 +93,32 @@ public class MappingConverter {
 				} // need to do others
 			}
 
+			if (fcjar != null) {
+				fcjar.close();
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
+	}
+
+	public static void searchJarForMappings(Map<String, InputStream> map_to_append, JarFile fcjar) {
+		for (JarEntry entry : Collections.list(fcjar.entries())) {
+			if (entry.getName().startsWith("fci") && !entry.isDirectory() && entry.getName().endsWith(".pdme.gz")) {
+				try {
+					InputStream mapstream = fcjar.getInputStream(entry);
+					if(!map_to_append.containsKey(entry.getName())) {
+					map_to_append.put(entry.getName(), mapstream);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
 	}
 
 	// full_class_name should be the full class name in FeatureCreep intermediary.

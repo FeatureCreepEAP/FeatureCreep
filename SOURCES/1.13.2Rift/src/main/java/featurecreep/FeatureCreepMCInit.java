@@ -12,6 +12,7 @@ import com.mojang.brigadier.CommandDispatcher;
 
 import featurecreep.api.bg.FCPackLoad;
 import featurecreep.api.bg.PackLoader;
+import featurecreep.unsupported.LaunchActivities;
 import game.Client;
 import net.minecraft.launchwrapper.Launch;
 
@@ -22,6 +23,14 @@ public class FeatureCreepMCInit implements ItemAdder, InitializationListener, Co
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = Logger.getLogger("modid");
 
+	
+	static {
+		LaunchActivities.preLaunchActivities();
+		Launch.classLoader.registerTransformer("featurecreep.unsupported.FCLaunchWrapperTransformer");
+		//LW lets you add args which may help us in the future
+	}
+	
+	
 //	@Override
 //	public void onInitialization() {
 		// TODO Auto-generated method stub
@@ -44,8 +53,7 @@ public class FeatureCreepMCInit implements ItemAdder, InitializationListener, Co
 	@Override
 	public void onInitialization() {
 		// TODO Auto-generated method stub
-Launch.classLoader.registerTransformer("featurecreep.CoreMod");
-//LW lets you add args which may help us in the future
+
 	}
 
 	@Override

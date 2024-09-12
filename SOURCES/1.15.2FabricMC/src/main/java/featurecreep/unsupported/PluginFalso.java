@@ -54,18 +54,36 @@ public class PluginFalso implements IMixinConfigPlugin{
 	@Override
 	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
-//		if(GameInjections.debug_mode)
-//			System.out.println("clase para transformacion: " + targetClassName);
+		if(GameInjections.debug_mode)
+			System.out.println("clase para transformacion: " + targetClassName);
 		
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 		targetClass.accept(cw);
-
+//
+//		
+//		File old = new File("tmp/tmp/"+targetClassName+".class");
+//		try {
+//			old.createNewFile();
+//			FileOutputStream outstream = new FileOutputStream(old);
+//			ByteArrayOutputStream byteout = new ByteArrayOutputStream();
+//			byteout.write(cw.toByteArray());
+//			byteout.writeTo(outstream);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		ByteBuffer pre = ByteBuffer.wrap(cw.toByteArray());
+		
 		ByteBuffer transformed = GameInjections.cargador.getMainTransformer().transform(CoreMod.class.getClassLoader(), // cambiar
 				targetClassName.replace(".", "/"), CoreMod.class.getProtectionDomain(), // camiar
-				ByteBuffer.wrap(cw.toByteArray()));
+				pre);
 
+		if(!pre.equals(transformed)) { //Solucion Temp
+		
 		ClassReader classReader = new MixinClassReader(transformed.array(), targetClassName);
-
+		
+		
 		if(targetClass.fields!=null)
 			targetClass.fields.removeAll(targetClass.fields);
 		
@@ -90,14 +108,32 @@ public class PluginFalso implements IMixinConfigPlugin{
 		if(targetClass.invisibleTypeAnnotations!=null)
 			targetClass.invisibleTypeAnnotations.removeAll(targetClass.invisibleTypeAnnotations);
 		
-		if(targetClass.permittedSubclasses!=null)
-			targetClass.permittedSubclasses.removeAll(targetClass.permittedSubclasses);
-		
+	
 		if(targetClass.visibleTypeAnnotations!=null)
 			targetClass.visibleTypeAnnotations.removeAll(targetClass.visibleTypeAnnotations);
 
+		if(targetClass.permittedSubclasses!=null)
+			targetClass.permittedSubclasses.removeAll(targetClass.permittedSubclasses);
+		
+		
 		
 		classReader.accept(targetClass, 0);
+		
+		
+//		File nuevo = new File("tmp/tmp/"+targetClassName+"_nuevo.class");
+//		try {
+//			nuevo.createNewFile();
+//			FileOutputStream outstream = new FileOutputStream(nuevo);
+//			ByteArrayOutputStream byteout = new ByteArrayOutputStream();
+//			byteout.write(transformed.array());
+//			byteout.writeTo(outstream);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		}
+		
 	}
 
 	@Override
@@ -107,3 +143,5 @@ public class PluginFalso implements IMixinConfigPlugin{
 	}
 
 }
+
+

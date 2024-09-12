@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -21,7 +24,7 @@ import net.minecraftforge.fml.loading.FMLLoader;
 
 public class TargetGetter {
 
-	static String path = FMLLoader.getGamePath().toString();
+	static String path = obtainerUbicationDeJuego();
 	
 	public static List<String> obtainirTodos(){
 	
@@ -71,6 +74,27 @@ public class TargetGetter {
 		
 	}
 	
+	private static String obtainerUbicationDeJuego() {
+		// TODO Auto-generated method stub
+		
+		if(claseExiste("net.minecraftforge.fml.loading.FMLLoader")) {
+			return FMLLoader.getGamePath().toString();
+		}else if (claseExiste("net.neoforged.fml.loading.FMLLoader")) {
+			Path path;
+			try {
+				path = (Path)Class.forName("net.neoforged.fml.loading.FMLLoader").getDeclaredMethod("getGamePath", null).invoke(null, null);
+				return path.toString();
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}//Mas
+		
+		return  Paths.get(System.getProperty("user.dir")).toString();
+		
+	}
+
 	public static List<String> obtainerClasesDeJuego() {
 		// TODO Auto-generated method stub
 		List<String> strs = new ArrayList<String>();
@@ -150,6 +174,18 @@ public class TargetGetter {
 			e.printStackTrace();
 		}
 		return jarEntries;
+	}
+	
+	
+	
+	public static boolean claseExiste(String nombre) {
+		try {
+			Class clase_mcf = Class.forName(nombre);
+			return true;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+		return false;//	e.printStackTrace();
+		}
 	}
 	
 	

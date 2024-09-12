@@ -1,0 +1,4 @@
+[AppStream]
+name=AppStream
+baseurl=https://fcdnf.asbestosstar.com/AppStream
+enabled=1

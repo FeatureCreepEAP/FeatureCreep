@@ -26,10 +26,11 @@ public Path repos_dir = new File(macros.get("%{_sysconfdir}")+"/etc/yum.repos.d/
 		InstalledPackageNamesParser.getPackageNames(this);
 		
 		//Get all the Files in repos_dir
+		if(repos_dir.toFile().listFiles()!=null) {
 		for(File repo : repos_dir.toFile().listFiles()) {
 			repos.add(YumRepo.fromFile(repo));
 		}
-		
+		}
 		
 		
 		
@@ -87,3 +88,4 @@ public Path repos_dir = new File(macros.get("%{_sysconfdir}")+"/etc/yum.repos.d/
 	
 	
 }
+

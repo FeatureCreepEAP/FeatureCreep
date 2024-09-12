@@ -16,7 +16,6 @@ import com.mumfrey.liteloader.core.LiteLoaderVersion;
 
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.platform.super_.SuperLoader;
@@ -26,6 +25,7 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
 import javassist.ClassPool;
+import javassist.bytecode.AccessFlag;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
 import javassist.bytecode.ClassFile;
@@ -46,8 +46,8 @@ public class GameInjections {
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	public static double version = 3.919;// GA will be 4.0 for now 3.9pre will work
 	public static String game_version = LiteLoaderVersion.CURRENT.getMinecraftVersion(); //Do not know where vesion is located and plus its obf so only 1 version is supported in most cases
-	public static ActiveMapping mappings = ActiveMapping.SRG;// This is the default active mappings
-	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;// Need to detect this eventually
+	public static ActiveMapping mappings = ActiveMapping.OBF;// This is the default active mappings
+	public static SuperLoader super_loader = SuperLoader.LITELOADER;// Need to detect this eventually
 	public static ClassPool classpool = new ClassPool(true);
 	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);// To make sure to
 																								// prioritise our own
@@ -92,14 +92,19 @@ public class GameInjections {
 
 	public static ByteBuffer inject(String nombre, ByteBuffer buff) {
 		if (nombre.equals(reverse_mappings.getClassMappedName("game.GameConfig"))) {
+			System.out.println(nombre);
 			return GameOptionsInjection(buff);
 		} else if (nombre.equals(reverse_mappings.getClassMappedName("game.Item"))) {
+			System.out.println(nombre);
 			return itemInjection(buff);
 		}else if (nombre.equals(reverse_mappings.getClassMappedName("game.DecoratorComponent"))) {
+			System.out.println(nombre);
 			return DecoratorComponentInjection(buff);
 		}else if (nombre.equals(reverse_mappings.getClassMappedName("obf.class_unknown_0_"))) {
+			System.out.println(nombre);
 			return itemRendererInjection(buff);
 		}else if (nombre.equals(reverse_mappings.getClassMappedName("game.RegionFileStorage"))) {
+			System.out.println(nombre);
 			return regionFileStorageInjection(buff);
 		}
 		
@@ -149,6 +154,7 @@ public class GameInjections {
 			 * 
 			 */
 			MethodInfo rereg = new MethodInfo(file.getConstPool(),"rereg","()V");
+			rereg.setAccessFlags(AccessFlag.STATIC);
 			Bytecode rereg_bytes 	= new Bytecode(rereg.getConstPool());
 			rereg_bytes.addAload(0);
 			rereg_bytes.addInvokevirtual(reverse_mappings.getClassMappedName("obf.class_unknown_0_").replace("/", "."), target, "()V");
@@ -170,10 +176,17 @@ public class GameInjections {
 			
 			
 			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
-			Bytecode def_bytes 	= new Bytecode(rereg.getConstPool());
+			CodeAttribute coat = def.getCodeAttribute();
+			Bytecode def_bytes 	= new Bytecode(def.getConstPool());
 			def_bytes.addAload(0);
 			def_bytes.addInvokevirtual(reverse_mappings.getClassMappedName("obf.class_unknown_0_").replace("/", "."), "fcRegister", "()V");
-			
+			int len = coat.iterator().getCodeLength();
+			try {
+				coat.iterator().insert(len - 1, def_bytes.get());
+			} catch (BadBytecode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 			// initialise
@@ -197,7 +210,7 @@ public class GameInjections {
 				 * 
 				 */
 			MethodInfo addFCOres = new MethodInfo(file.getConstPool(),"fcRegister","()V");
-			Bytecode fc_ore_bytes 	= new Bytecode(rereg.getConstPool());
+			Bytecode fc_ore_bytes 	= new Bytecode(addFCOres.getConstPool());
 			fc_ore_bytes.addIconst(0);
 			fc_ore_bytes.addIstore(1);
 			fc_ore_bytes.add(Opcode.GOTO, 47);
@@ -331,18 +344,18 @@ public class GameInjections {
 //					System.out.println("Adding FCPack");
 //				}
 
-				code.addAload(0);
-				code.addGetfield(file.getName().replace(".", "/"), packs, "Ljava/util/List;");
-				code.addLdc("fcpack_" + Integer.toString(texture_pack_version));
-				code.addInvokeinterface("java/util/List", "add", "(Ljava/lang/Object;)Z", 2);
-				code.addOpcode(Opcode.POP);
+//				code.addAload(0);   TIENE PROBLEMAS CON LITELOADER
+//				code.addGetfield(file.getName().replace(".", "/"), packs, "Ljava/util/List;");
+//				code.addLdc("fcpack_" + Integer.toString(texture_pack_version));
+//				code.addInvokeinterface("java/util/List", "add", "(Ljava/lang/Object;)Z", 2);
+//				code.addOpcode(Opcode.POP);
 
 				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
 				code.addLdc("Adding FCPack");
 				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 
 				int len = coat.iterator().getCodeLength();
-				coat.iterator().insert(len - 1, code.get());
+				coat.iterator().insert(len-1, code.get());
 
 				return ClassFileUtils.classFileToByteBuffer(file);
 			}
@@ -403,6 +416,7 @@ public class GameInjections {
 			 * 
 			 */
 			MethodInfo blocktoitemadd = new MethodInfo(file.getConstPool(),"blocktoitemadd",reverse_mappings.renameClassesInMethodDescriptor("(Lgame/Block;Lgame/Item;)V"));
+			blocktoitemadd.setAccessFlags(AccessFlag.STATIC);
 			Bytecode blocktoitemadd_bytes 	= new Bytecode(blocktoitemadd.getConstPool());
 			blocktoitemadd_bytes.addGetstatic(reverse_mappings.getClassMappedName("game.Item").replace(".", "/"), reverse_mappings.getVarMappedName("game.Item.BLOCK_ITEMS:Ljava/util/Map;"), "Ljava/util/Map;");
 			blocktoitemadd_bytes.addAload(0);

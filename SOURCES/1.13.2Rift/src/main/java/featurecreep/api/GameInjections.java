@@ -15,7 +15,6 @@ import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.platform.super_.SuperLoader;
@@ -44,8 +43,8 @@ public class GameInjections {
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	public static double version = 3.919;// GA will be 4.0 for now 3.9pre will work
 	public static String game_version = "1.13.2";//We only have 1.13.2 ATM and i cant find a way to find it in RiftLoader.
-	public static ActiveMapping mappings = ActiveMapping.SRG;// This is the default active mappings
-	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;// Need to detect this eventually
+	public static ActiveMapping mappings = ActiveMapping.OBF;// This is the default active mappings
+	public static SuperLoader super_loader = SuperLoader.RIFT;// Need to detect this eventually
 	public static ClassPool classpool = new ClassPool(true);
 	public boolean classpool_newer = ClassPoolNewer1st.setClassPoolToNewer1st(classpool, true);// To make sure to
 																								// prioritise our own

@@ -2,6 +2,7 @@ package asbestosstar.cpwinit;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +29,7 @@ import cpw.mods.modlauncher.api.ITransformerVotingContext;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 
+
 public class CPWTransformer implements ITransformationService  {
 
 	public static int launchplugin = obtainirLaunchPlugin();
@@ -50,41 +52,17 @@ public class CPWTransformer implements ITransformationService  {
 				if (url.getProtocol().equals("jar")) {
 
 					String jarPath = url.getPath().substring(0, url.getPath().indexOf('!')); // 去除 jar:file: 和 ! 后的部分
-					try (JarInputStream jar = new JarInputStream(new URL(jarPath).openStream())) {
+					actividadesStream(new URL(jarPath).openStream());
 
-						JarEntry entry;
-						while ((entry = jar.getNextJarEntry()) != null) {
-
-							if (entry.getName().startsWith("META-INF/jarjar/featurecreep") && !entry.isDirectory()) {
-								// 使用 classLoader 来获取输入流，以便正确处理缓存等
-								InputStream inputStream = CPWTransformer.class.getClassLoader()
-										.getResourceAsStream(entry.getName());
-								if (inputStream != null) {
-
-									String output_location = Paths.get(System.getProperty("user.dir")).toString()
-											+ "/mods/";
-
-									BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-									String simple = entry.getName().split("/")[entry.getName().split("/").length - 1];
-									File out = new File(output_location + simple);
-									mod_jar = out;
-									FileOutputStream fileOutputStream = new FileOutputStream(out);
-									byte[] buffer = new byte[1024];
-									int len;
-									while ((len = bufferedInputStream.read(buffer)) > 0) {
-										fileOutputStream.write(buffer, 0, len);
-									}
-
-									fileOutputStream.close();
-
-								}
-
-							}
-
+				}else {
+					File carpetera_mods = new File(Paths.get(System.getProperty("user.dir")).toString() + "/mods/");
+					for (File potencial : carpetera_mods.listFiles()) {
+						if(!potencial.isDirectory() && potencial.getName().endsWith(".jar")) {
+						actividadesStream(new FileInputStream(potencial));
 						}
-
+						
 					}
-
+				
 				}
 
 			}
@@ -96,6 +74,48 @@ public class CPWTransformer implements ITransformationService  {
 		return 0;
 	}
 
+	
+	public static void actividadesStream(InputStream stream) {
+		try (JarInputStream jar = new JarInputStream(stream)) {
+
+			JarEntry entry;
+			while ((entry = jar.getNextJarEntry()) != null) {
+
+				if (entry.getName().startsWith("META-INF/jarjar/featurecreep") && entry.getName().endsWith(".noarch.fpm.jar") && !entry.isDirectory()) {
+					// 使用 classLoader 来获取输入流，以便正确处理缓存等
+					System.out.println(entry.getName());
+					InputStream inputStream = CPWTransformer.class.getClassLoader()
+							.getResourceAsStream(entry.getName());
+					if (inputStream != null) {
+
+						String output_location = Paths.get(System.getProperty("user.dir")).toString()
+								+ "/mods/";
+
+						BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+						String simple = entry.getName().split("/")[entry.getName().split("/").length - 1];
+						File out = new File(output_location + simple);
+						mod_jar = out;
+						FileOutputStream fileOutputStream = new FileOutputStream(out);
+						byte[] buffer = new byte[1024];
+						int len;
+						while ((len = bufferedInputStream.read(buffer)) > 0) {
+							fileOutputStream.write(buffer, 0, len);
+						}
+
+						fileOutputStream.close();
+
+					}
+
+				}
+
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void initialize(IEnvironment arg0) {
 		// TODO Auto-generated method stub
@@ -245,6 +265,14 @@ public class CPWTransformer implements ITransformationService  {
 
 			return resulto;
 		}
+		
+		//@Override solo en NeoForge y Pillow
+		public cpw.mods.modlauncher.api.TargetType<ClassNode> getTargetType() {
+			// TODO Auto-generated method stub
+			return cpw.mods.modlauncher.api.TargetType.CLASS;
+		}
+
+		
 
 	}
 

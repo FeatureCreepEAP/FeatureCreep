@@ -7,10 +7,12 @@ class SpecParser
   $remap
   $mappings
   $remap_depndencies
+  $actual_location #para cd
 
   def initialize(spec, location)
     $Spec = spec
     $Location = location
+    $actual_location = location
   end
 
   def get_spec_location
@@ -438,12 +440,23 @@ end
     $remap=true
     $mappings =args[0]
     $remap_depndencies = args[1]
+    puts "remapping"
+      puts "java -jar ./.fpmbuild/fpmbuild-java.jar -remap " + get_fpm_dir.to_s + "/" + get_name.to_s + "-" + get_version.to_s + "-"+ get_release.to_s+".noarch.fpm " +$mappings.to_s + " " + $remap_depndencies.to_s
+      system("java -jar ./.fpmbuild/fpmbuild-java.jar -remap " + get_fpm_dir.to_s + "/" + get_name.to_s + "-" + get_version.to_s + "-"+ get_release.to_s+".noarch.fpm " +$mappings.to_s + " " + $remap_depndencies.to_s)
+
+  elsif(line.start_with?("cd"))
+	    valid=validate(line)
+	    if(valid == "cd /dev/null")
+	    $actual_location=$Location
+	    else
+	    $actual_location=valid[3..-1]	    
+	    end
 
 
   else
     valid=validate(line)
     unless valid.empty?
-    system(valid) # execute the command
+    system("cd "+ $actual_location + "&&" +valid) # execute the command
     end
 
 
@@ -465,7 +478,14 @@ end
 
   def build_fpm
     # code here
+    $actual_location=$Location #in case others changed it somehow
     spec_array = IO.readlines($Spec)
+build_root_files = Dir[get_build_root + '/*'].select
+     build_root_files.each do |brf|
+      begin
+        FileUtils.rm_rf(brf)
+      end
+    end
 
     line_first = find_build_part_to_int(spec_array)
     line_last = find_install_part_to_int(spec_array) -1
@@ -475,11 +495,6 @@ end
       current_line = current_line + 1
     end
 
-    if $remap
-      puts "remapping"
-      puts "java -jar ./.fpmbuild/fpmbuild-java.jar -remap " + get_fpm_dir.to_s + "/" + get_name.to_s + "-" + get_version.to_s + "-"+ get_release.to_s+".noarch.fpm " +$mappings.to_s + " " + $remap_depndencies.to_s
-      system("java -jar ./.fpmbuild/fpmbuild-java.jar -remap " + get_fpm_dir.to_s + "/" + get_name.to_s + "-" + get_version.to_s + "-"+ get_release.to_s+".noarch.fpm " +$mappings.to_s + " " + $remap_depndencies.to_s)
-    end
 
 
   end

@@ -1,0 +1,4 @@
+[BaseOS]
+name=BaseOS
+baseurl=https://fcdnf.asbestosstar.com/BaseOS
+enabled=1

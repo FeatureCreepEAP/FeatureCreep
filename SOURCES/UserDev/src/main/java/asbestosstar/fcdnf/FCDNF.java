@@ -11,6 +11,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import com.asbestosstar.dnfjava.DnfJava;
+import com.asbestosstar.dnfjava.yum.YumRepo;
 
 import featurecreep.api.GameInjections;
 import featurecreep.loader.FCLoaderBasic;
@@ -37,6 +38,12 @@ public class FCDNF extends DnfJava {
 
 			}
 		}
+		//Get all the Files in repos_dir
+		if(repos_dir.toFile().listFiles()!=null) {
+		for(File repo : repos_dir.toFile().listFiles()) {
+			repos.add(YumRepo.fromFile(repo));
+		}
+		}
 
 	}
 
@@ -52,6 +59,7 @@ public class FCDNF extends DnfJava {
 	}
 
 }
+
 
 
 

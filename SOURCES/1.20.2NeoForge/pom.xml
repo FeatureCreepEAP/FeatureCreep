@@ -12,7 +12,6 @@
       <configuration>
         <archive>
           <manifestEntries>
-            <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
             <Premain-Class>asbestosstar.FCAgent</Premain-Class>
                         <Can-Retransform-Classes>true</Can-Retransform-Classes>
             <Can-Redefine-Classes>true</Can-Redefine-Classes>
@@ -314,6 +313,12 @@
  		<groupId>net.neoforged.fancymodloader</groupId>
  		<artifactId>loader</artifactId>
  		<version>3.0.18</version>
+ 	</dependency>
+ 	
+ 	 <dependency>
+ 		<groupId>cpw.mods</groupId>
+ 		<artifactId>modlauncher</artifactId>
+ 		<version>10.0.9</version>
  	</dependency>
  	
  	        <!-- 添加本地 JAR 文件作为依赖 -->  

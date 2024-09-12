@@ -6,7 +6,6 @@ import java.lang.instrument.Instrumentation;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
@@ -16,9 +15,7 @@ import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
 import asbestosstar.fcdnf.FCDNF;
-import featurecreep.FeatureCreep;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.platform.super_.SuperLoader;
@@ -27,19 +24,13 @@ import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
-import game.CommandOriginStack;
-import game.GameRegistriesInterface;
-import game.IChunkAccess;
-import game.NudgerBuildings;
-import game.RegistryEntry;
-import game.RegistryKey;
-import game.StructureWorldGenerationAccessLevel;
 import javassist.ClassPool;
+import javassist.bytecode.AccessFlag;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
+import javassist.bytecode.FieldInfo;
 import javassist.bytecode.MethodInfo;
 import javassist.bytecode.Opcode;
 
@@ -319,11 +310,10 @@ public static int texture_pack_version = 8;
 
 	}
 
-	public static ByteBuffer transformresourcemanager(ByteBuffer basicClass) {
+		public static ByteBuffer transformresourcemanager(ByteBuffer basicClass) {
 		// TODO Auto-generated method stub
 //game.ResourcePackManager.reloadPacksFromFinders()V
 		// game.ResourcePackManager.providers:Ljava/util/Set;
-		System.out.println("Adding Resource and Data Pack Injector");
 
 		try {
 			ClassFile file = ClassFileUtils.classFileFromByteBuffer(basicClass);
@@ -336,6 +326,13 @@ public static int texture_pack_version = 8;
 				CodeAttribute coat = def.getCodeAttribute();
 				Bytecode code = new Bytecode(file.getConstPool());
 
+				
+				code.addAload(0);
+				code.addAload(0);
+				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				code.addInvokestatic("featurecreep/api/io/BasicIO", "deImmutaliseSet", "(Ljava/util/Set;)Ljava/util/Set;");
+				code.addPutfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				
 				code.addAload(0);
 				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
 				code.addNew("featurecreep/api/bg/FCPackLoad");
@@ -359,23 +356,9 @@ public static int texture_pack_version = 8;
 				coat.iterator().begin();
 				coat.iterator().insert(code.get());
 
-				MethodInfo constr = ClassFileUtils.getMethodInfoWithDescriptor(file, "<init>",
-						reverse_mappings.renameClassesInMethodDescriptor("(Lgame/ResourcePackProvider;)V"));
-				if (constr != null) {
-					CodeAttribute constrcoat = def.getCodeAttribute();
-					Bytecode constrcode = new Bytecode(file.getConstPool());
-					constrcode.addOpcode(Opcode.GOTO);
-					constrcode.addOpcode(Opcode.ACONST_NULL);
-					constrcode.addAstore(3);
-					constrcode.addAload(0);
-					constrcode.addAload(1);
-					constrcode.addInvokestatic("featurecreep/api/io/BasicIO", "setFromArray",
-							"([Ljava/lang/Object;)Ljava/util/Set;");
-					constrcode.addPutfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
-					CodeIterator consiter = constrcoat.iterator();
-					consiter.append(constrcode.get());
-
-				}
+				FieldInfo provs = ClassFileUtils.getFieldInfoWithDescriptor(file, providers, "Ljava/util/Set;");
+				provs.setAccessFlags(AccessFlag.PUBLIC);
+				
 				return ClassFileUtils.classFileToByteBuffer(file);
 			}
 

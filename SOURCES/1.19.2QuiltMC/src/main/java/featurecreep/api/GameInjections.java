@@ -17,7 +17,6 @@ import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.FabricDirs;
 import featurecreep.api.bg.BGSide;
-import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.platform.super_.SuperLoader;
@@ -27,11 +26,12 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
 import javassist.ClassPool;
+import javassist.bytecode.AccessFlag;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
+import javassist.bytecode.FieldInfo;
 import javassist.bytecode.MethodInfo;
 import javassist.bytecode.Opcode;
 
@@ -196,6 +196,13 @@ public class GameInjections {
 				CodeAttribute coat = def.getCodeAttribute();
 				Bytecode code = new Bytecode(file.getConstPool());
 
+				
+				code.addAload(0);
+				code.addAload(0);
+				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				code.addInvokestatic("featurecreep/api/io/BasicIO", "deImmutaliseSet", "(Ljava/util/Set;)Ljava/util/Set;");
+				code.addPutfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				
 				code.addAload(0);
 				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
 				code.addNew("featurecreep/api/bg/FCPackLoad");
@@ -219,23 +226,9 @@ public class GameInjections {
 				coat.iterator().begin();
 				coat.iterator().insert(code.get());
 
-				MethodInfo constr = ClassFileUtils.getMethodInfoWithDescriptor(file, "<init>",
-						reverse_mappings.renameClassesInMethodDescriptor("(Lgame/ResourcePackProvider;)V"));
-				if (constr != null) {
-					CodeAttribute constrcoat = def.getCodeAttribute();
-					Bytecode constrcode = new Bytecode(file.getConstPool());
-					constrcode.addOpcode(Opcode.GOTO);
-					constrcode.addOpcode(Opcode.ACONST_NULL);
-					constrcode.addAstore(3);
-					constrcode.addAload(0);
-					constrcode.addAload(1);
-					constrcode.addInvokestatic("featurecreep/api/io/BasicIO", "setFromArray",
-							"([Ljava/lang/Object;)Ljava/util/Set;");
-					constrcode.addPutfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
-					CodeIterator consiter = constrcoat.iterator();
-					consiter.append(constrcode.get());
-
-				}
+				FieldInfo provs = ClassFileUtils.getFieldInfoWithDescriptor(file, providers, "Ljava/util/Set;");
+				provs.setAccessFlags(AccessFlag.PUBLIC);
+				
 				return ClassFileUtils.classFileToByteBuffer(file);
 			}
 

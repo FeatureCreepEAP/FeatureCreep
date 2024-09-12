@@ -15,7 +15,6 @@ import cpw.mods.modlauncher.api.ITransformationService;
 import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.ITransformerVotingContext;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
-import cpw.mods.modlauncher.api.TargetType;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 import featurecreep.api.GameInjections;
 
@@ -72,14 +71,14 @@ public class CPWTransformer implements ITransformationService {
 
 
 	@Override
-	public  List<? extends ITransformer<?>> transformers() {
+	public List<ITransformer> transformers() {
 		// TODO Auto-generated method stub
 		
 		//actualmente nesesita estar despues de initalize por que usa funciones initalizado de initalize
 	//	 LaunchActivities.preLaunchActivities();
 	//	 ModuleLayer layer = Launcher.INSTANCE.findLayerManager().flatMap(lm -> lm.getLayer(IModuleLayerManager.Layer.GAME)).orElseThrow();
 //		ClassLoader cargadora =  layer.modules().stream().findFirst().map(Module::getClassLoader).get();
-		 ArrayList<CPWITransformer> transformers = new ArrayList<CPWITransformer>();
+		 ArrayList<ITransformer> transformers = new ArrayList<ITransformer>();
 	//	transformers.add(new CPWITransformer());
 		return transformers;
 	}
@@ -140,10 +139,10 @@ public class CPWTransformer implements ITransformationService {
 		}
 
 		@Override
-		public  Set<Target<ClassNode>> targets() {
+		public  Set<Target> targets() {
 			// TODO Auto-generated method stub
 		
-			Set<Target<ClassNode>> resulto = new HashSet<Target<ClassNode>>();
+			Set<Target> resulto = new HashSet<Target>();
 			for(String target : TransformerTargets.getCPWTransformerTargets())
 			{
 				resulto.add(Target.targetClass(target));
@@ -151,18 +150,6 @@ public class CPWTransformer implements ITransformationService {
 			
 			return resulto;
 		}
-
-
-
-		@Override
-		public TargetType<ClassNode> getTargetType() {
-			// TODO Auto-generated method stub
-			return TargetType.CLASS;
-		}
-
-
-
-	
 		
 	}
 

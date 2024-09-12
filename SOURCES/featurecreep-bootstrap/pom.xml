@@ -39,6 +39,11 @@
       <name>TLauncher</name>
       <url>http://res.tlauncher.org</url>
     </repository>  
+     <repository>
+      <id>NeoForge</id>
+      <name>NeoForge</name>
+      <url>https://maven.neoforged.net/</url>
+    </repository>
   </repositories>
  
    <dependencies>
@@ -333,7 +338,12 @@
 </dependency>
 
  	
- 	
+ 	 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+<dependency>
+    <groupId>cpw.mods</groupId>
+    <artifactId>modlauncher</artifactId>
+    <version>10.1.10</version>
+</dependency>
  	
  	
    </dependencies>
