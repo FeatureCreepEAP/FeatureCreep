@@ -33,6 +33,7 @@ import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.MethodInfo;
 import javassist.bytecode.Opcode;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.versions.mcp.MCPVersion;
 
 public class GameInjections {
 
@@ -45,7 +46,7 @@ public class GameInjections {
 	public static String modid = "featurecreep";
 	public static final Logger LOGGER = Logger.getLogger("FeatureCreep");
 	public static double version = 3.919;// GA will be 4.0 for now 3.9pre will work
-	public static String game_version = FMLLoader.versionInfo().mcVersion();
+	public static String game_version = MCPVersion.getMCVersion();//Functiona en este version pero no en versiones nuevo.
 	public static ActiveMapping mappings = ActiveMapping.SRG;// This is the default active mappings
 	public static SuperLoader super_loader = SuperLoader.MINECRAFTFORGE;// Need to detect this eventually
 	public static ClassPool classpool = new ClassPool(true);

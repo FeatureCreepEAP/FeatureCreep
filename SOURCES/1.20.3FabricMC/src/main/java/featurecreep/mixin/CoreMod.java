@@ -93,7 +93,7 @@ public class CoreMod implements IMixinConfigPlugin {
 			try {
 
 				ModelNode node = new ModelNode();
-				node.get("required").set(true);
+				node.get("required").set(false);
 				node.get("minVersion").set("0.1");
 				node.get("package").set("falso.spongemixin");
 				node.get("compatibilityLevel").set("JAVA_6");
@@ -187,4 +187,5 @@ public class CoreMod implements IMixinConfigPlugin {
 	}
 
 }
+
 

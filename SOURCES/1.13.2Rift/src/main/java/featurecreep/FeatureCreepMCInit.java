@@ -1,9 +1,11 @@
 package featurecreep;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import org.dimdev.rift.listener.BiomeAdder;
 import org.dimdev.rift.listener.CommandAdder;
-import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.riftloader.listener.InitializationListener;
 //import org.dimdev.riftloader.listener.InitializationListener;
 import org.jboss.logging.Logger;
@@ -14,10 +16,11 @@ import featurecreep.api.bg.FCPackLoad;
 import featurecreep.api.bg.PackLoader;
 import featurecreep.unsupported.LaunchActivities;
 import game.Client;
+import game.UnitSpawnerEntry;
 import net.minecraft.launchwrapper.Launch;
 
 
-public class FeatureCreepMCInit implements ItemAdder, InitializationListener, CommandAdder{
+public class FeatureCreepMCInit implements BiomeAdder, InitializationListener, CommandAdder{
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
@@ -40,7 +43,7 @@ public class FeatureCreepMCInit implements ItemAdder, InitializationListener, Co
 	//}
 
 	@Override
-	public void registerItems() {
+	public void registerBiomes() {
 		// TODO Auto-generated method stub
      	FeatureCreep.onInitialise();
 //FeatureCreepMC.registerItems();
@@ -60,6 +63,12 @@ public class FeatureCreepMCInit implements ItemAdder, InitializationListener, Co
 	public void registerCommands(CommandDispatcher arg0) {
 		// TODO Auto-generated method stub
 		FeatureCreep.registerFCDNF(arg0);
+	}
+
+	@Override
+	public Collection<UnitSpawnerEntry> getOverworldBiomes() {
+		// TODO Auto-generated method stub
+		return new ArrayList();
 	}
 
 

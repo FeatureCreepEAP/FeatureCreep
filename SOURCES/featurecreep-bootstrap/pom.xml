@@ -18,9 +18,8 @@
   </plugins>
 </build>
  <properties>
- 	<maven.compiler.target>17</maven.compiler.target>
- 	 	<maven.compiler.source>17</maven.compiler.source>
- 	 	        <fcdependencies.dir>${user.home}/fcdependencies/1.20.5MCForge</fcdependencies.dir>  
+ 	<maven.compiler.target>11</maven.compiler.target>
+ 	 	<maven.compiler.source>11</maven.compiler.source>
  </properties>
  
   <repositories>

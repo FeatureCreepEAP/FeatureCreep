@@ -265,13 +265,12 @@ public class CPWTransformer implements ITransformationService  {
 
 			return resulto;
 		}
-		
+
 		//@Override solo en NeoForge y Pillow
 		public cpw.mods.modlauncher.api.TargetType<ClassNode> getTargetType() {
 			// TODO Auto-generated method stub
 			return cpw.mods.modlauncher.api.TargetType.CLASS;
 		}
-
 		
 
 	}
