@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 
 import org.jboss.modules.ClassTransformer;
 import org.jboss.modules.DependencySpec;
-import org.jboss.modules.FCFileSystemClassPathModuleFinder;
 import org.jboss.modules.JLIClassTransformer;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleDependencySpecBuilder;
@@ -39,6 +38,7 @@ import org.jboss.modules.xml.ModuleXmlParser;
 import org.jboss.modules.xml.ModuleXmlParser.ResourceRootFactory;
 
 import featurecreep.loader.eventviewer.EventViewer;
+import featurecreep.loader.utils.JBMUtilsAccessors;
 
 public interface FCLoaderBasic {
 
@@ -86,13 +86,14 @@ public interface FCLoaderBasic {
 
 	public void runModule(String name);
 
+	@Deprecated
 	public default void runModule(ModuleIdentifier id) {
 		runModule(id.getName());
 	}
 
 	public ModuleLoader getBootModuleLoader();
 
-	public default InputStream getModuleXMLFromJarAsInputStream(File location) throws IOException {
+	public static InputStream getModuleXMLFromJarAsInputStream(File location) throws IOException {
 		JarFile jar;
 
 		jar = new JarFile(location.toString());
@@ -114,10 +115,10 @@ public interface FCLoaderBasic {
 
 	}
 
-	public default ModuleSpec getModuleSpecFromXMLJar(File location) throws IOException, ModuleLoadException {
+	public static ModuleSpec getModuleSpecFromXMLJar(File location, ModuleLoader loader) throws IOException, ModuleLoadException {
 
 		return ModuleXmlParser.parseModuleXml(ResourceRootFactory.getDefault(), MavenResolver.createDefaultResolver(),
-				location.toString(), getModuleXMLFromJarAsInputStream(location), location.toString(), getLoader(),
+				location.toString(), getModuleXMLFromJarAsInputStream(location), location.toString(), loader,
 				location.toString());
 
 		// TODO Auto-generated catch block
@@ -342,8 +343,7 @@ public interface FCLoaderBasic {
 	public default void runAgent(Module agent) {
 		for (String agent_clazz : this.getAgents().get(agent)) {
 			System.out.println(agent_clazz);
-			final ClassLoader oldClassLoader = FCFileSystemClassPathModuleFinder
-					.setContextClassLoader(agent.getClassLoader());
+			final ClassLoader oldClassLoader = JBMUtilsAccessors.setContextClassLoader(agent.getClassLoader());
 			try {
 				final Class<?> mainClass = Class.forName(agent_clazz, false, agent.getClassLoader());
 
@@ -386,7 +386,7 @@ public interface FCLoaderBasic {
 					e.printStackTrace();
 				}
 			} finally {
-				FCFileSystemClassPathModuleFinder.setContextClassLoader(oldClassLoader);
+				JBMUtilsAccessors.setContextClassLoader(oldClassLoader);
 			}
 
 		}
@@ -423,7 +423,7 @@ public interface FCLoaderBasic {
 
 	public default void combineModuleDepSpecs() {
 		for (Module mod : this.getModules()) {
-			FCFileSystemClassPathModuleFinder.setModuleDependencies(mod, this.getCombinedDepSpecs(mod));
+			JBMUtilsAccessors.setModuleDependencies(mod, this.getCombinedDepSpecs(mod));
 		}
 	}
 

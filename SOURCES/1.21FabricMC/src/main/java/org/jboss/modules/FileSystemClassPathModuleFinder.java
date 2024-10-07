@@ -63,7 +63,8 @@ public class FileSystemClassPathModuleFinder implements ModuleFinder {
     static final ModuleLoader EMPTY_MODULE_LOADER = new ModuleLoader();
     static final SimpleSupplier<ModuleLoader> EMPTY_MODULE_LOADER_SUPPLIER = new SimpleSupplier<>(EMPTY_MODULE_LOADER);
 
-    private final AccessControlContext context;
+    @SuppressWarnings("removal")
+	private final AccessControlContext context;
     private final Supplier<ModuleLoader> baseModuleLoaderSupplier;
     private final Supplier<ModuleLoader> extensionModuleLoaderSupplier;
     private static final PathFilter NO_MODULES_DIR;
@@ -101,7 +102,8 @@ public class FileSystemClassPathModuleFinder implements ModuleFinder {
      * @param baseModuleLoaderSupplier the supplier to supply a module loader for loading dependencies (must not be {@code null})
      * @param extensionModuleLoaderSupplier a supplier which yields a module loader for loading extensions (must not be {@code null})
      */
-    public FileSystemClassPathModuleFinder(final Supplier<ModuleLoader> baseModuleLoaderSupplier, final Supplier<ModuleLoader> extensionModuleLoaderSupplier) {
+    @SuppressWarnings({ "removal" })
+	public FileSystemClassPathModuleFinder(final Supplier<ModuleLoader> baseModuleLoaderSupplier, final Supplier<ModuleLoader> extensionModuleLoaderSupplier) {
         if (baseModuleLoaderSupplier == null) throw new IllegalArgumentException("baseModuleLoaderSupplier is null");
         this.baseModuleLoaderSupplier = baseModuleLoaderSupplier;
         if (extensionModuleLoaderSupplier == null) throw new IllegalArgumentException("extensionModuleLoaderSupplier is null");

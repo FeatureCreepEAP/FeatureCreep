@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.jar.JarFile;
 
 import org.jboss.modules.ClassTransformer;
-import org.jboss.modules.FCFileSystemClassPathModuleFinder;
 import org.jboss.modules.LocalModuleLoader;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoadException;
@@ -24,6 +23,7 @@ import org.jboss.modules.ModuleLoader;
 import org.jboss.modules.ModuleSpec;
 
 import featurecreep.loader.eventviewer.EventViewer;
+import featurecreep.loader.utils.JBMUtilsAccessors;
 
 public class FCLoaderBasicR8 implements FCLoaderBasic {
 
@@ -36,7 +36,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 	public ArrayList<Module> run_only_modules = new ArrayList<Module>();
 	public ArrayList<Module> modules = new ArrayList<Module>();
 	public int threads;
-	public ModuleLoader loader = new ModuleLoader(new FCFileSystemClassPathModuleFinder(getBootModuleLoader(), this));
+	public ModuleLoader loader = new ModuleLoader(new FCFileSystemClassPathFinder(getBootModuleLoader(), this));
 	public Map<File, ModuleSpec> custom_root_specs = new HashMap<File, ModuleSpec>();
 	public Map<Module, ArrayList<String>> agents = new HashMap<Module, ArrayList<String>>();
 	public Instrumentation instrumentation = new FCInstrumentation(this);
@@ -108,7 +108,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 		// TODO Auto-generated method stub
 		Set<String> hash_Set = new HashSet<String>();
 
-		hash_Set.addAll(FCFileSystemClassPathModuleFinder.jdk_paths);
+		hash_Set.addAll(JBMUtilsAccessors.getJDKPaths());
 		hash_Set.addAll(current_packages_exported);
 
 		return hash_Set;
@@ -156,7 +156,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 
 		for (int m = 0; m < getRunModules().size(); m++) {
 
-			String main = FCFileSystemClassPathModuleFinder.getMainClass(getRunModules().get(m));
+			String main = JBMUtilsAccessors.getMainClass(getRunModules().get(m));
 			if (main != null && main.length() > 0) {
 				System.out.println(main);
 					try {
@@ -275,7 +275,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 		try {
 			JarFile jar = new JarFile(file);
 			if (this.checkIfPKZipHasModuleXML(jar)) {
-				this.custom_root_specs.put(file, this.getModuleSpecFromXMLJar(file));
+				this.custom_root_specs.put(file, FCLoaderBasic.getModuleSpecFromXMLJar(file, getLoader()));
 			}
 			if (jar.getManifest() != null) {
 

@@ -22,9 +22,9 @@ public class FeatureCreepMCInit implements ModInitializer {
 		FeatureCreep.onInitialise();
 		// FeatureCreepMC.onInitialize();
 
-//		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-//			FeatureCreep.registerFCDNF(dispatcher);
-//		});
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+			FeatureCreep.registerFCDNF(dispatcher);
+		});
 
 	}
 

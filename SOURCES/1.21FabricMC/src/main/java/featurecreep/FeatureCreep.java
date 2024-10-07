@@ -84,9 +84,11 @@ public static boolean main_init =false;
 		PackLoader.loadPacks(loader.getModules());
 		OrespawnBasicFeatureParser.spawnOresFromDefaultConfig();
 		DataPackLoader.onInitialise();
+
 		}
 
 	}
+
 
 	// TOCHANGE
 	public static void registerFCDNF(CommandDispatcher<CommandOriginStack> dispatcher) {
