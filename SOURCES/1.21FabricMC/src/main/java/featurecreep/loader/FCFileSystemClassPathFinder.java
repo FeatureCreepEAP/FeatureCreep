@@ -142,7 +142,8 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
 	                    } catch (IOException e) {
 	                        throw new ModuleLoadException("Failed to load MANIFEST from " + path, e);
 	                    }
-	                    resourceLoader = new PKZipResourceLoader(fileName, jarFile);
+	                    resourceLoader = new PKZipResourceLoader(fileName, jarFile);	                    
+	                    
 	                } catch (Throwable t) {
 	                    try {
 	                        jarFile.close();
@@ -154,7 +155,13 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
 	                }
 	                fatModuleLoader = new DelegatingModuleLoader(baseModuleLoader, new ResourceLoaderModuleFinder(resourceLoader));
 	                
-	                builder = ModuleSpec.build(fileName);
+	                Resource moduleXmlResource = resourceLoader.getResource("modules/module.xml");
+                    try (final InputStream inputStream = moduleXmlResource.openStream()) {
+ 	                   ModuleSpec moduleSpec = ModuleXmlParser.parseModuleXml(factory, moduleXmlResource.getURL().getPath(), inputStream, moduleXmlResource.getName(), delegateLoader, name);
+ 	                   builder=ConcreteModuleSpecAccessor.getBuilder((ConcreteModuleSpec)moduleSpec);
+ 	                }catch (Exception e) {
+ 	                	 builder = ModuleSpec.build(fileName);
+ 	                }
 	            }
 	            // now build the module specification from the manifest information
 	            try {

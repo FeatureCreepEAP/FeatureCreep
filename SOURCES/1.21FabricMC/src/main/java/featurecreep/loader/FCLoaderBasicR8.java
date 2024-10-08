@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -27,7 +28,7 @@ import featurecreep.loader.utils.JBMUtilsAccessors;
 
 public class FCLoaderBasicR8 implements FCLoaderBasic {
 
-	public File fc_file;
+	public URL fc_file;
 	public boolean debug_mode;
 	public Path[] mod_locations;
 	public Path[] classpath_locations;
@@ -68,13 +69,13 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 	}
 
 	@Override // DONOT Use
-	public void setFCFile(File fc_file) {
+	public void setFCFile(URL fc_file) {
 		// TODO Auto-generated method stub
 		this.fc_file = fc_file;
 	}
 
 	@Override
-	public File getFCFile() { // DONOT Use
+	public URL getFCFile() { // DONOT Use
 		// TODO Auto-generated method stub
 		return fc_file;
 	}
@@ -274,9 +275,9 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 
 		try {
 			JarFile jar = new JarFile(file);
-			if (this.checkIfPKZipHasModuleXML(jar)) {
-				this.custom_root_specs.put(file, FCLoaderBasic.getModuleSpecFromXMLJar(file, getLoader()));
-			}
+//			if (this.checkIfPKZipHasModuleXML(jar)) {
+//				this.custom_root_specs.put(file, FCLoaderBasic.getModuleSpecFromXMLJar(file, getLoader()));
+//			}
 			if (jar.getManifest() != null) {
 
 				String agent_class = jar.getManifest().getMainAttributes().getValue("Agent-Class");
@@ -297,7 +298,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 			}
 
 			jar.close();
-		} catch (IOException | ModuleLoadException e1) {
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			if (this.getDebugMode()) {
 				e1.printStackTrace();

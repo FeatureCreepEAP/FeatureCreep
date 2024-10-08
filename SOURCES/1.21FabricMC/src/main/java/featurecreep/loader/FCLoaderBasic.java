@@ -11,6 +11,7 @@ import java.lang.instrument.Instrumentation;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -42,9 +43,9 @@ import featurecreep.loader.utils.JBMUtilsAccessors;
 
 public interface FCLoaderBasic {
 
-	public void setFCFile(File fc_file); // DONOT Use
+	public void setFCFile(URL fc_file); // DONOT Use
 
-	public File getFCFile(); // DONOT Use
+	public URL getFCFile(); // DONOT Use
 
 	public void setDebugMode(boolean bool);
 
@@ -93,37 +94,37 @@ public interface FCLoaderBasic {
 
 	public ModuleLoader getBootModuleLoader();
 
-	public static InputStream getModuleXMLFromJarAsInputStream(File location) throws IOException {
-		JarFile jar;
+//	public static InputStream getModuleXMLFromJarAsInputStream(File location) throws IOException {
+//		JarFile jar;
+//
+//		jar = new JarFile(location.toString());
+//		//StringBuilder contentBuilder = new StringBuilder();
+//		InputStream stream = jar.getInputStream(jar.getJarEntry("module.xml"));
+//		jar.close();
+//		return stream;
+//
+//	}
 
-		jar = new JarFile(location.toString());
-		//StringBuilder contentBuilder = new StringBuilder();
-		InputStream stream = jar.getInputStream(jar.getJarEntry("module.xml"));
-		jar.close();
-		return stream;
+//	public default String getModuleXMLFromJarAsString(File location) throws IOException {
+//		String text = new BufferedReader(
+//				new InputStreamReader(getModuleXMLFromJarAsInputStream(location), StandardCharsets.UTF_8)).lines()
+//				.collect(Collectors.joining("\n"));
+//		return text;
+//
+//		// TODO Auto-generated catch block
+//		// System.out.println(location.toString() + " Likely not a PkZip/Jar File");
+//
+//	}
 
-	}
-
-	public default String getModuleXMLFromJarAsString(File location) throws IOException {
-		String text = new BufferedReader(
-				new InputStreamReader(getModuleXMLFromJarAsInputStream(location), StandardCharsets.UTF_8)).lines()
-				.collect(Collectors.joining("\n"));
-		return text;
-
-		// TODO Auto-generated catch block
-		// System.out.println(location.toString() + " Likely not a PkZip/Jar File");
-
-	}
-
-	public static ModuleSpec getModuleSpecFromXMLJar(File location, ModuleLoader loader) throws IOException, ModuleLoadException {
-
-		return ModuleXmlParser.parseModuleXml(ResourceRootFactory.getDefault(), MavenResolver.createDefaultResolver(),
-				location.toString(), getModuleXMLFromJarAsInputStream(location), location.toString(), loader,
-				location.toString());
-
-		// TODO Auto-generated catch block
-
-	}
+//	public static ModuleSpec getModuleSpecFromXMLJar(File location, ModuleLoader loader) throws IOException, ModuleLoadException {
+//
+//		return ModuleXmlParser.parseModuleXml(ResourceRootFactory.getDefault(), MavenResolver.createDefaultResolver(),
+//				location.toString(), getModuleXMLFromJarAsInputStream(location), location.toString(), loader,
+//				location.toString());
+//
+//		// TODO Auto-generated catch block
+//
+//	}
 
 	public static MethodType PREMAIN_METHOD_TYPE() {
 		return MethodType.methodType(void.class, String.class, Instrumentation.class);
@@ -133,26 +134,26 @@ public interface FCLoaderBasic {
 		return MethodType.methodType(void.class, EventViewer.class);
 	}
 
-	public default boolean checkIfPKZipHasModuleXML(JarFile location) {
-		try {
-			JarEntry entry = location.getJarEntry("module.xml");
-			if (entry != null) {
-				InputStream stream = location.getInputStream(entry);
-				return true;
-			}
-			return false;
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			if (this.getDebugMode()) {
-				System.out.println(location.toString()
-						+ " Likely not a PkZip/Jar File or does not have module.xml, note that module.xml parsing is still new so expect issues");
-			}
-			return false;
-			// e.printStackTrace();
-		}
-
-	}
+//	public default boolean checkIfPKZipHasModuleXML(JarFile location) {
+//		try {
+//			JarEntry entry = location.getJarEntry("module.xml");
+//			if (entry != null) {
+//				InputStream stream = location.getInputStream(entry);
+//				return true;
+//			}
+//			return false;
+//
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			if (this.getDebugMode()) {
+//				System.out.println(location.toString()
+//						+ " Likely not a PkZip/Jar File or does not have module.xml, note that module.xml parsing is still new so expect issues");
+//			}
+//			return false;
+//			// e.printStackTrace();
+//		}
+//
+//	}
 
 	public ArrayList<ClassTransformer> getTransformers();
 
