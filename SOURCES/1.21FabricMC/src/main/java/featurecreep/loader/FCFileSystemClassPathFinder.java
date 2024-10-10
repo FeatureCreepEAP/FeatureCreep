@@ -38,12 +38,12 @@ import org.jboss.modules.xml.ModuleXmlParser;
 import org.jboss.modules.xml.PermissionsXmlParser;
 import org.jboss.modules.xml.XmlPullParserException;
 
-import featurecreep.loader.finder.PKZipResourceLoader;
-import featurecreep.loader.finder.PathResourceLoader;
+import featurecreep.loader.finder.ModuleLoadingMap.ModuleLoadingMapEntry;
+import featurecreep.loader.finder.NeedsFCLoaderBasic;
 import featurecreep.loader.utils.ConcreteModuleSpecAccessor;
 import featurecreep.loader.utils.JBMUtilsAccessors;
 
-public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinder{
+public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinder implements NeedsFCLoaderBasic{
 
 	
     FCLoaderBasic load;
@@ -80,20 +80,47 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
         this.extensionModuleLoader=extensionModuleLoader;
     }
 	
+    /**
+     * You MUST define the field "load" at a later point before loading any mods and should be done so with setFCLoaderBasic
+     * @param baseModuleLoader
+     */
+    public FCFileSystemClassPathFinder(ModuleLoader baseModuleLoader) {
+        super(baseModuleLoader);
+        // TODO Auto-generated constructor stub
+        this.baseModuleLoader=baseModuleLoader;
+        this.extensionModuleLoader=new ModuleLoader(ModuleLoader.NO_FINDERS);
+}
+
+    /**
+     * You MUST define the field "load" at a later point before loading any mods and should be done so with setFCLoaderBasic
+     * @param baseModuleLoader
+     */
+public FCFileSystemClassPathFinder(ModuleLoader baseModuleLoader, ModuleLoader extensionModuleLoader) {
+    super(baseModuleLoader);
+    // TODO Auto-generated constructor stub
+    this.baseModuleLoader=baseModuleLoader;
+    this.extensionModuleLoader=extensionModuleLoader;
+}
+
+
+
+
+
 	
 	 public ModuleSpec findModule(final String name, final ModuleLoader delegateLoader) throws ModuleLoadException {
-	        final Path path = Paths.get(name);
-	        if (! path.isAbsolute()) {
-	            return null;
-	        }
-	        final Path normalizedPath = path.normalize();
-	        if (! path.equals(normalizedPath)) {
-	            return null;
-	        }
+	      ModuleLoadingMapEntry map = load.getModuleLoadingMap().get(name);
+		 final Path path = Paths.get(name);
+//	        if (! path.isAbsolute()) {
+//	            return null;
+//	        }
+//	        final Path normalizedPath = path.normalize();
+//	        if (! path.equals(normalizedPath)) {
+//	            return null;
+//	        }
 	        try {
 	            final Manifest manifest;
 	            final String fileName = path.toString();
-	            final ResourceLoader resourceLoader;
+	            final ResourceLoader resourceLoader = map.getLoader();
 	            final ModuleLoader fatModuleLoader;
 	            ModuleSpec.Builder builder;
 	            if (Files.isDirectory(path)) {
@@ -110,16 +137,14 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
 	                
 	                
 
-	                resourceLoader = new PathResourceLoader(fileName, path, context);
 	                
-	                if (path == null) {
-	                    return null; // not valid, so not found
-	                }
+//	                if (path == null) {
+//	                    return null; // not valid, so not found
+//	                }
 	                
 	                factory = new NestedResourceRootFactory(resourceLoader);
 	                String basePath = "modules/" + path;
 	                Resource moduleXmlResource = resourceLoader.getResource(basePath + "/module.xml");
-	                moduleXmlResource.openStream();
 	                
 	                try (final InputStream inputStream = moduleXmlResource.openStream()) {
 	                   ModuleSpec moduleSpec = ModuleXmlParser.parseModuleXml(factory, basePath, inputStream, moduleXmlResource.getName(), delegateLoader, name);
@@ -135,24 +160,9 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
 	                fatModuleLoader = new DelegatingModuleLoader(baseModuleLoader, new LocalModuleFinder(new File[]{ path.resolve("modules").toFile() }));
 	            } else {
 	                // assume some kind of JAR file
-	                final JarFile jarFile = JBMUtilsAccessors.getJarFile(path.toFile(), true);
-	                try {
-	                    try {
-	                        manifest = jarFile.getManifest();
-	                    } catch (IOException e) {
-	                        throw new ModuleLoadException("Failed to load MANIFEST from " + path, e);
-	                    }
-	                    resourceLoader = new PKZipResourceLoader(fileName, jarFile);	                    
-	                    
-	                } catch (Throwable t) {
-	                    try {
-	                        jarFile.close();
-	                    } catch (Throwable e2) {
-	                        e2.addSuppressed(t);
-	                        throw e2;
-	                    }
-	                    throw t;
-	                }
+	            	manifest = new Manifest();
+	            	System.out.println(name);
+	                manifest.read(resourceLoader.getResource("META-INF/MANIFEST.MF").openStream());
 	                fatModuleLoader = new DelegatingModuleLoader(baseModuleLoader, new ResourceLoaderModuleFinder(resourceLoader));
 	                
 	                Resource moduleXmlResource = resourceLoader.getResource("modules/module.xml");
@@ -178,6 +188,7 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
 	                resourceLoader.close();
 	                throw t;
 	            }
+	            map.setName(builder.getName());
 	            return builder.create();
 	        } catch (IOException e) {
 	            throw new ModuleLoadException(e);
@@ -317,6 +328,18 @@ public class FCFileSystemClassPathFinder  extends FileSystemClassPathModuleFinde
             return subloader;
         }
     }
+
+
+
+
+
+
+
+@Override
+public void setFCLoaderBasic(FCLoaderBasic fcloader) {
+	// TODO Auto-generated method stub
+	this.load=fcloader;
+}
     
     
     

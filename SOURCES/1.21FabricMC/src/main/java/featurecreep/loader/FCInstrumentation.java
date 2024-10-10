@@ -120,7 +120,7 @@ public class FCInstrumentation implements Instrumentation {
 		// TODO Auto-generated method stub
 		// Prolly wont work but dont use this
 		try {
-			loader.getBootModuleLoader().loadModule(jarfile.getName());
+			FCLoaderBasic.getBootModuleLoader().loadModule(jarfile.getName());
 		} catch (ModuleLoadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

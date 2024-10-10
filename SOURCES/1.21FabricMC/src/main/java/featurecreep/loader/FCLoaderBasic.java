@@ -1,44 +1,44 @@
 package featurecreep.loader;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.stream.Collectors;
 
 import org.jboss.modules.ClassTransformer;
 import org.jboss.modules.DependencySpec;
 import org.jboss.modules.JLIClassTransformer;
+import org.jboss.modules.LocalModuleLoader;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleDependencySpecBuilder;
+import org.jboss.modules.ModuleFinder;
 import org.jboss.modules.ModuleIdentifier;
-import org.jboss.modules.ModuleLoadException;
 import org.jboss.modules.ModuleLoader;
 import org.jboss.modules.ModuleSpec;
-import org.jboss.modules.maven.MavenResolver;
-import org.jboss.modules.xml.ModuleXmlParser;
-import org.jboss.modules.xml.ModuleXmlParser.ResourceRootFactory;
 
 import featurecreep.loader.eventviewer.EventViewer;
+import featurecreep.loader.finder.ModuleLoadingMap;
+import featurecreep.loader.utils.ArrayCombiner;
 import featurecreep.loader.utils.JBMUtilsAccessors;
 
 public interface FCLoaderBasic {
@@ -60,15 +60,9 @@ public interface FCLoaderBasic {
 	public ArrayList<String> known_nils();
 
 	default Path[] getCombindedModulePKZipLocations() {
-		ArrayList<Path> combined = new ArrayList<Path>();
-		for (int m = 0; m < getModulePKZipLocations().length; m++) {
-			combined.add(getModulePKZipLocations()[m]);
-		}
-		for (int c = 0; c < getClassPathPKZipLocations().length; c++) {
-			combined.add(getClassPathPKZipLocations()[c]);
-		}
-		// https://stackoverflow.com/questions/18119494/why-cant-cast-object-to-string#18119737
-		return combined.toArray(new Path[getModulePKZipLocations().length + getClassPathPKZipLocations().length]);
+		ArrayCombiner<Path> combiner = new ArrayCombiner<Path>();
+		return combiner.combineArrays(getModulePKZipLocations(), getClassPathPKZipLocations());
+
 	}
 
 	public Set<String> getNeededPackages();
@@ -92,7 +86,46 @@ public interface FCLoaderBasic {
 		runModule(id.getName());
 	}
 
-	public ModuleLoader getBootModuleLoader();
+	public static ModuleLoader getBootModuleLoader() {
+		// TODO Auto-generated method stub
+		return AccessController.doPrivileged(new PrivilegedAction<ModuleLoader>() {
+			public ModuleLoader run() {
+				final String loaderClass = System.getProperty("boot.module.loader", LocalModuleLoader.class.getName());
+				try {
+					return Class.forName(loaderClass, true, FCLoaderBasicR8.class.getClassLoader())
+							.asSubclass(ModuleLoader.class).getConstructor().newInstance();
+					// return Class.forName(LocalModuleLoader.class.getName(), true,
+					// FCLoaderBasicR4.class.getClassLoader()).asSubclass(ModuleLoader.class).getConstructor().newInstance();
+					// return Class.forName(LocalModuleLoader.class.getName(), true,
+					// FCLoaderBasicR4.class.getClassLoader()).asSubclass(ModuleLoader.class).getConstructor().newInstance();
+
+				} catch (InstantiationException e) {
+					throw new InstantiationError(e.getMessage());
+				} catch (IllegalAccessException e) {
+					throw new IllegalAccessError(e.getMessage());
+				} catch (InvocationTargetException e) {
+					try {
+						throw e.getCause();
+					} catch (RuntimeException cause) {
+						throw cause;
+					} catch (Error cause) {
+						throw cause;
+					} catch (Throwable t) {
+						throw new Error(t);
+					}
+				} catch (NoSuchMethodException e) {
+					throw new NoSuchMethodError(e.getMessage());
+				} catch (ClassNotFoundException e) {
+					throw new NoClassDefFoundError(e.getMessage());
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Do not rely too much on atm because it may be replaced with ModuleLoadingMap
+	 */
+	public ModuleLoadingMap getModuleLoadingMap();
 
 //	public static InputStream getModuleXMLFromJarAsInputStream(File location) throws IOException {
 //		JarFile jar;
@@ -288,6 +321,9 @@ public interface FCLoaderBasic {
 
 	public Module loadModule(String name, boolean runnable);
 
+	public Module loadModuleFromFile(File file, boolean runnable);
+	
+	
 	// Not for Jar in Jars
 	public Map<File, ModuleSpec> getCustomRootSpecs();
 
@@ -395,6 +431,28 @@ public interface FCLoaderBasic {
 	}
 
 	public ClassTransformer getMainTransformer();
+	
+	/**
+	 * For the constructor only, does not currently readd after definition. You MUST define the load field in the constructor
+	 * @param toAdd
+	 * @return
+	 */
+	public static ModuleFinder[] appendFinders(ModuleFinder[] toAdd,Path[] mod_locations, Path[] classpath_locations) {
+		ArrayCombiner<ModuleFinder> combiner = new ArrayCombiner<ModuleFinder>();
+		return combiner.combineArrays(toAdd, findFinders(mod_locations,classpath_locations));
+	}
+	
+	/**
+	 * Internal, for constructor. You MUST implement NeedsFCLoaderBasic if you need access to FCLoaderBasic
+	 * @param mod_locations
+	 * @param classpath_locations
+	 * @return
+	 */
+	public static ModuleFinder[] findFinders(Path[] mod_locations, Path[] classpath_locations) {
+		//TODO
+		return new ModuleFinder[] {new FCFileSystemClassPathFinder(getBootModuleLoader())};
+	}
+	
 
 	/*
 	 * This should be run BEFORE any transformers are added
@@ -432,6 +490,10 @@ public interface FCLoaderBasic {
 
 	public ExecutionSide getExecutionSide();
 
+	
+	public default AccessControlContext getContext() { return AccessController.getContext();}
+	
+	
 }
 
 

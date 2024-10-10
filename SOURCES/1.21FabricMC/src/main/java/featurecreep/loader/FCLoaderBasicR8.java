@@ -3,30 +3,35 @@ package featurecreep.loader;
 import java.io.File;
 import java.io.IOException;
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.jar.JarFile;
 
 import org.jboss.modules.ClassTransformer;
-import org.jboss.modules.LocalModuleLoader;
 import org.jboss.modules.Module;
+import org.jboss.modules.ModuleFinder;
 import org.jboss.modules.ModuleLoadException;
 import org.jboss.modules.ModuleLoader;
 import org.jboss.modules.ModuleSpec;
+import org.jboss.modules.ResourceLoader;
 
 import featurecreep.loader.eventviewer.EventViewer;
+import featurecreep.loader.finder.ModuleLoadingMap;
+import featurecreep.loader.finder.ModuleLoadingMap.ModuleLoadingMapEntry;
+import featurecreep.loader.finder.NeedsFCLoaderBasic;
+import featurecreep.loader.finder.PKZipResourceLoader;
+import featurecreep.loader.finder.PathResourceLoader;
 import featurecreep.loader.utils.JBMUtilsAccessors;
 
-public class FCLoaderBasicR8 implements FCLoaderBasic {
+public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 
 	public URL fc_file;
 	public boolean debug_mode;
@@ -37,7 +42,6 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 	public ArrayList<Module> run_only_modules = new ArrayList<Module>();
 	public ArrayList<Module> modules = new ArrayList<Module>();
 	public int threads;
-	public ModuleLoader loader = new ModuleLoader(new FCFileSystemClassPathFinder(getBootModuleLoader(), this));
 	public Map<File, ModuleSpec> custom_root_specs = new HashMap<File, ModuleSpec>();
 	public Map<Module, ArrayList<String>> agents = new HashMap<Module, ArrayList<String>>();
 	public Instrumentation instrumentation = new FCInstrumentation(this);
@@ -46,9 +50,22 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 	public ArrayList<String> known_nulls = new ArrayList<String>();
 	public boolean mods_loaded = false;
 	public ExecutionSide side;
-
+	public ModuleLoadingMap module_loading_map = new ModuleLoadingMap();
+	public ModuleFinder[] finders;
+	
+	/**
+	 * Define a new instance of FCLoaderBasic
+	 * @param mod_locations Folder for Mods to be ran
+	 * @param classpath_locations Folders to search for mods which will not be run
+	 * @param current_packages_exported Packages to Export from ClassPath
+	 * @param threads  How many threads to use
+	 * @param debug_mode   Does more Logging
+	 * @param side Weather its server or client side or some other side
+	 * @param finders The modulefinders. They should implement NeedsFCLoaderBasic if they need access to this
+	 */
 	public FCLoaderBasicR8(Path[] mod_locations, Path[] classpath_locations, String[] current_packages_exported,
-			int threads, boolean debug_mode, ExecutionSide side) { // We will probably add more variables son
+			int threads, boolean debug_mode, ExecutionSide side, ModuleFinder[] finders) { // We will probably add more variables son
+		this(FCLoaderBasic.appendFinders(finders, mod_locations, classpath_locations));
 		this.mod_locations = mod_locations;
 		this.classpath_locations = classpath_locations;
 		this.current_packages_exported.addAll(Arrays.asList(current_packages_exported));
@@ -58,6 +75,12 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 			System.out.println("Debug mode is off");
 		}
 		this.side = side;
+		
+
+
+		
+		
+		
 		/*
 		 * try { FileSystemClassPathModuleFinder.class.getDeclaredMethod(
 		 * "addSystemDependencies", ModuleSpec.Builder.class).setAccessible(true); }
@@ -68,6 +91,40 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 		// we find out why the LINKAGE error exists
 	}
 
+	/**
+	 * Internal Use Only, if you really want to use this you can, but is highly condemned
+	 * @param combinedmodulefinders Should be ALL the module finders
+	 */
+	public FCLoaderBasicR8(ModuleFinder[] combinedmodulefinders) { // We will probably add more variables son
+		super(combinedmodulefinders);
+		this.finders=combinedmodulefinders;
+		for(ModuleFinder finder:finders) {
+			
+			if(finder instanceof  NeedsFCLoaderBasic) {
+				NeedsFCLoaderBasic needsfcloaderbasic = (NeedsFCLoaderBasic)finder;
+				needsfcloaderbasic.setFCLoaderBasic(this);
+			}
+			
+		}
+		try {
+			Field supfinder = ModuleLoader.class.getDeclaredField("finders");
+			supfinder.setAccessible(true);
+			supfinder.set(this, finders);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		System.out.println(finders.length);
+		
+	}
+	
+	public FCLoaderBasicR8(Path[] mod_locations, Path[] classpath_locations, String[] current_packages_exported,
+			int threads, boolean debug_mode, ExecutionSide side) { // We will probably add more variables son
+			this(mod_locations,classpath_locations,current_packages_exported,threads,debug_mode,side,ModuleLoader.NO_FINDERS);
+	}
+	
+	
+	
 	@Override // DONOT Use
 	public void setFCFile(URL fc_file) {
 		// TODO Auto-generated method stub
@@ -128,17 +185,21 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 
 		for (int c = 0; c < getClassPathFiles().size(); c++) { // Soon I need to do with XML
 			if (!this.known_nils().contains(getClassPathFiles().get(c).toString())) {
-				if (getClassPathFiles().get(c).isFile()) {// Temporary until we get folder dirs
-					this.loadModule(getClassPathFiles().get(c).toString(), false);
-				}
+				
+				File archivo = getClassPathFiles().get(c);
+				this.loadModuleFromFile(archivo, false);
+				
+				
+				
 			}
 		}
 		System.out.println("Loading Runabble Mods");
 		for (int c = 0; c < getRunOnlyFiles().size(); c++) { // Soon I need to do with XML
 			if (!this.known_nils().contains(getRunOnlyFiles().get(c).toString())) {
 				if (getRunOnlyFiles().get(c).isFile()) {// Temporary until we get folder modules
-					System.out.println(getRunOnlyFiles().get(c).toString());
-					this.loadModule(getRunOnlyFiles().get(c).toString(), true);
+
+					File archivo = getRunOnlyFiles().get(c);
+					this.loadModuleFromFile(archivo, true);
 				}
 			}
 		}
@@ -148,7 +209,7 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 
 	@Override
 	public ModuleLoader getLoader() {
-		return loader;
+		return this;
 	}
 
 	@Override
@@ -210,43 +271,6 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 	}
 
 	@Override
-	public ModuleLoader getBootModuleLoader() {
-		// TODO Auto-generated method stub
-		return AccessController.doPrivileged(new PrivilegedAction<ModuleLoader>() {
-			public ModuleLoader run() {
-				final String loaderClass = System.getProperty("boot.module.loader", LocalModuleLoader.class.getName());
-				try {
-					return Class.forName(loaderClass, true, FCLoaderBasicR8.class.getClassLoader())
-							.asSubclass(ModuleLoader.class).getConstructor().newInstance();
-					// return Class.forName(LocalModuleLoader.class.getName(), true,
-					// FCLoaderBasicR4.class.getClassLoader()).asSubclass(ModuleLoader.class).getConstructor().newInstance();
-					// return Class.forName(LocalModuleLoader.class.getName(), true,
-					// FCLoaderBasicR4.class.getClassLoader()).asSubclass(ModuleLoader.class).getConstructor().newInstance();
-
-				} catch (InstantiationException e) {
-					throw new InstantiationError(e.getMessage());
-				} catch (IllegalAccessException e) {
-					throw new IllegalAccessError(e.getMessage());
-				} catch (InvocationTargetException e) {
-					try {
-						throw e.getCause();
-					} catch (RuntimeException cause) {
-						throw cause;
-					} catch (Error cause) {
-						throw cause;
-					} catch (Throwable t) {
-						throw new Error(t);
-					}
-				} catch (NoSuchMethodException e) {
-					throw new NoSuchMethodError(e.getMessage());
-				} catch (ClassNotFoundException e) {
-					throw new NoClassDefFoundError(e.getMessage());
-				}
-			}
-		});
-	}
-
-	@Override
 	public ArrayList<ClassTransformer> getTransformers() {
 		// TODO Auto-generated method stub
 		return transformers;
@@ -269,41 +293,41 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 		// TODO Auto-generated method stub
 
 		Module mod = null;
-
+		
 		ArrayList<String> agent = null;
 		File file = new File(name);
 
-		try {
-			JarFile jar = new JarFile(file);
-//			if (this.checkIfPKZipHasModuleXML(jar)) {
-//				this.custom_root_specs.put(file, FCLoaderBasic.getModuleSpecFromXMLJar(file, getLoader()));
+//		try {
+//			JarFile jar = new JarFile(file);
+////			if (this.checkIfPKZipHasModuleXML(jar)) {
+////				this.custom_root_specs.put(file, FCLoaderBasic.getModuleSpecFromXMLJar(file, getLoader()));
+////			}
+//			if (jar.getManifest() != null) {
+//
+//				String agent_class = jar.getManifest().getMainAttributes().getValue("Agent-Class");
+//				String preagent_class = jar.getManifest().getMainAttributes().getValue("Premain-Class");
+//
+//				if (agent_class != null && preagent_class != null) {
+//					agent = new ArrayList<String>();
+//					agent.addAll(Arrays.asList(agent_class.split(",")));
+//					agent.addAll(Arrays.asList(preagent_class.split(",")));
+//				} else if (agent_class != null) {
+//					agent = new ArrayList<String>();
+//					agent.addAll(Arrays.asList(agent_class.split(",")));
+//				} else if (preagent_class != null) {
+//					agent = new ArrayList<String>();
+//					agent.addAll(Arrays.asList(preagent_class.split(",")));
+//				}
+//
 //			}
-			if (jar.getManifest() != null) {
-
-				String agent_class = jar.getManifest().getMainAttributes().getValue("Agent-Class");
-				String preagent_class = jar.getManifest().getMainAttributes().getValue("Premain-Class");
-
-				if (agent_class != null && preagent_class != null) {
-					agent = new ArrayList<String>();
-					agent.addAll(Arrays.asList(agent_class.split(",")));
-					agent.addAll(Arrays.asList(preagent_class.split(",")));
-				} else if (agent_class != null) {
-					agent = new ArrayList<String>();
-					agent.addAll(Arrays.asList(agent_class.split(",")));
-				} else if (preagent_class != null) {
-					agent = new ArrayList<String>();
-					agent.addAll(Arrays.asList(preagent_class.split(",")));
-				}
-
-			}
-
-			jar.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			if (this.getDebugMode()) {
-				e1.printStackTrace();
-			}
-		}
+//
+//			jar.close();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			if (this.getDebugMode()) {
+//				e1.printStackTrace();
+//			}
+//		}
 
 		try {
 			mod = getLoader().loadModule(name);
@@ -390,6 +414,42 @@ public class FCLoaderBasicR8 implements FCLoaderBasic {
 		// TODO Auto-generated method stub
 		this.instrumentation=instrument;
 		return instrument;
+	}
+
+	@Override
+	public ModuleLoadingMap getModuleLoadingMap() {
+		// TODO Auto-generated method stub
+		return module_loading_map;
+	}
+
+	@Override
+	public Module loadModuleFromFile(File file, boolean runnable) {
+		// TODO Auto-generated method stub
+		
+		try {
+			URL url = file.toURI().toURL();
+			String url_as_string = url.toString();
+			//TODO allow for other resource detecters
+			if (file.isFile()) {
+				
+					ResourceLoader rl = new PKZipResourceLoader(file.getCanonicalPath(),url);
+					this.getModuleLoadingMap().put(url_as_string, new ModuleLoadingMapEntry(url_as_string,rl));
+					
+			}else {
+				//Directory
+				
+				ResourceLoader rl = new PathResourceLoader(file.getCanonicalPath(), file.toPath(), this.getContext());
+				this.getModuleLoadingMap().put(url_as_string,new ModuleLoadingMapEntry(url_as_string,rl));
+				
+			}
+		return 	this.loadModule(url_as_string, runnable);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
 	}
 
 }

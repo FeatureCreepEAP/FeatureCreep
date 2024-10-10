@@ -189,7 +189,7 @@ public class PackLoader {
 					continue;
 				}
 				// Plain file, copy it
-				try (FileOutputStream fos = new FileOutputStream(destFile);
+				try (FileOutputStream fos = new FileOutputStream(destFile);﻿
 						BufferedOutputStream bos = new BufferedOutputStream(fos, buffer.length)) {
 					int len;
 					while ((len = zis.read(buffer)) > 0) {
@@ -340,4 +340,3 @@ public class PackLoader {
 	}
 
 }
-
