@@ -15,6 +15,7 @@ public class FileTypes {
 		PKZIP_COMPATIBLES.add(".rar");// For Java Resource Adapter Archive, not Eugene Roshal's RAR
 		PKZIP_COMPATIBLES.add(".war");
 		PKZIP_COMPATIBLES.add(".ear");
+		PKZIP_COMPATIBLES.add(".litemod");
 		EUGENE_ROSHALS_ARCHIVE_COMPATIBLE.add("rar");// For Eugene Roshal's RAR, not Java Resource Adapter Archive
 	}
 

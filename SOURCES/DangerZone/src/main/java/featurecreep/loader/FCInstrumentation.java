@@ -120,7 +120,7 @@ public class FCInstrumentation implements Instrumentation {
 		// TODO Auto-generated method stub
 		// Prolly wont work but dont use this
 		try {
-			loader.getBootModuleLoader().loadModule(jarfile.getName());
+			FCLoaderBasic.getBootModuleLoader().loadModule(jarfile.getName());
 		} catch (ModuleLoadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,6 +143,19 @@ public class FCInstrumentation implements Instrumentation {
 	public void setNativeMethodPrefix(ClassFileTransformer transformer, String prefix) {
 		// TODO Auto-generated method stub
 		// Soon TM
+	}
+
+	@Override
+	public void redefineModule(Module module, Set<Module> extraReads, Map<String, Set<Module>> extraExports,
+			Map<String, Set<Module>> extraOpens, Set<Class<?>> extraUses, Map<Class<?>, List<Class<?>>> extraProvides) {
+		// TODO Auto-generated method stub
+		// Soon TM
+	}
+
+	@Override
+	public boolean isModifiableModule(Module module) {
+		// TODO Auto-generated method stub
+		return false;// Soon TM
 	}
 
 }
