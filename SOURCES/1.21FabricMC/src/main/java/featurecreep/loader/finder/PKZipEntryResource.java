@@ -20,6 +20,7 @@ package featurecreep.loader.finder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.jar.JarEntry;
@@ -57,9 +58,29 @@ public class PKZipEntryResource implements Resource {
 
     @Override
     public URL getURL() {
+
+        // Ensure the entry name is properly formatted for a URL
+        String entryPath = entryName.replace("\\", "/"); // Normalize path for URL
+        try {
+        	String proto = jarFileURL.toString() + "!/" + entryPath;
+        	if(!proto.startsWith("jar:")) {
+        		proto = "jar:"+proto;
+        	}
+			return new URL(proto);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jarFileURL;
+    
+    }
+
+    public URL getZipURL() {
         return jarFileURL;
     }
 
+    
+    
     public JarEntry getEntry() {
     	 JarInputStream jarInputStream = null;
          try {
@@ -85,11 +106,14 @@ public class PKZipEntryResource implements Resource {
         JarInputStream jarInputStream = null;
         try {
             jarInputStream = createJarInputStream();
-            ZipEntry entry;
+            JarEntry entry;
             String fullEntryName = getFullEntryName();
 
-            while ((entry = jarInputStream.getNextEntry()) != null) {
-                if (entry.getName().equals(fullEntryName)) {
+   
+            
+            while ((entry = jarInputStream.getNextJarEntry()) != null) {
+
+            	if (entry.getName().equals(fullEntryName)) {
                     // Return a wrapper InputStream that closes the JarInputStream when done
                     return new JarEntryInputStream(jarInputStream);
                 } 

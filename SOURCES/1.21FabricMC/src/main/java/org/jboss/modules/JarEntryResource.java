@@ -28,7 +28,7 @@ import java.util.zip.ZipEntry;
  * @author <a href="mailto:david.lloyd@redhat.com">David M. Lloyd</a>
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
-final class JarEntryResource implements Resource {
+public class JarEntryResource implements Resource {
     private final JarFile jarFile;
     private final String relativePath;
     private final String entryName;

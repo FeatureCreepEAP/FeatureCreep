@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 	public ArrayList<Module> modules = new ArrayList<Module>();
 	public int threads;
 	public Map<File, ModuleSpec> custom_root_specs = new HashMap<File, ModuleSpec>();
-	public Map<Module, ArrayList<String>> agents = new HashMap<Module, ArrayList<String>>();
+	//public Map<Module, ArrayList<String>> agents = new HashMap<Module, ArrayList<String>>();
 	public Instrumentation instrumentation = new FCInstrumentation(this);
 	public ClassTransformer main_transformer = new FCTransformer(this);
 	public EventViewer eventvwr = new EventViewer();
@@ -114,7 +113,6 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		System.out.println(finders.length);
 		
 	}
 	
@@ -294,8 +292,8 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 
 		Module mod = null;
 		
-		ArrayList<String> agent = null;
-		File file = new File(name);
+		
+		//File file = new File(name);
 
 //		try {
 //			JarFile jar = new JarFile(file);
@@ -304,20 +302,10 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 ////			}
 //			if (jar.getManifest() != null) {
 //
-//				String agent_class = jar.getManifest().getMainAttributes().getValue("Agent-Class");
-//				String preagent_class = jar.getManifest().getMainAttributes().getValue("Premain-Class");
+//				
+//				
 //
-//				if (agent_class != null && preagent_class != null) {
-//					agent = new ArrayList<String>();
-//					agent.addAll(Arrays.asList(agent_class.split(",")));
-//					agent.addAll(Arrays.asList(preagent_class.split(",")));
-//				} else if (agent_class != null) {
-//					agent = new ArrayList<String>();
-//					agent.addAll(Arrays.asList(agent_class.split(",")));
-//				} else if (preagent_class != null) {
-//					agent = new ArrayList<String>();
-//					agent.addAll(Arrays.asList(preagent_class.split(",")));
-//				}
+
 //
 //			}
 //
@@ -331,10 +319,9 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 
 		try {
 			mod = getLoader().loadModule(name);
-
-			if (agent != null) {
-				this.agents.put(mod, agent);
-			}
+//			if (agent != null) {
+//				this.agents.put(mod, agent);
+//			}
 
 		} catch (ModuleLoadException e) {
 			// TODO Auto-generated catch block
@@ -360,11 +347,11 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 		return this.custom_root_specs;
 	}
 
-	@Override
-	public Map<Module, ArrayList<String>> getAgents() {
-		// TODO Auto-generated method stub
-		return this.agents;
-	}
+//	@Override
+//	public Map<Module, ArrayList<String>> getAgents() {
+//		// TODO Auto-generated method stub
+//		return this.agents;
+//	}
 
 	@Override
 	public Instrumentation getInstrumentation() {
@@ -432,7 +419,7 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 			//TODO allow for other resource detecters
 			if (file.isFile()) {
 				
-					ResourceLoader rl = new PKZipResourceLoader(file.getCanonicalPath(),url);
+					ResourceLoader rl = new PKZipResourceLoader(url);
 					this.getModuleLoadingMap().put(url_as_string, new ModuleLoadingMapEntry(url_as_string,rl));
 					
 			}else {
@@ -451,6 +438,9 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 		
 		
 	}
+
+	
+
 
 }
 

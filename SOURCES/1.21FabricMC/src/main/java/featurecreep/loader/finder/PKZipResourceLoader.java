@@ -57,7 +57,6 @@ import org.jboss.modules.ResourceLoader;
  */
 public class PKZipResourceLoader extends AbstractResourceLoader implements IterableResourceLoader {
 	public final URL jar_url;
-    public final String rootName;
     public final URL rootUrl;
     public final String relativePath;
     public volatile List<String> directory;
@@ -65,19 +64,18 @@ public class PKZipResourceLoader extends AbstractResourceLoader implements Itera
     // protected by {@code this}
     public final Map<CodeSigners, CodeSource> codeSources = new HashMap<>();
 
-    public PKZipResourceLoader(final String rootName, final URL jar_url) {
-        this(rootName, jar_url, null);
+    public PKZipResourceLoader(final URL jar_url) {
+        this(jar_url, null);
     }
 
-    public PKZipResourceLoader(final String rootName, final URL jar_url, final String relativePath) {
+    public PKZipResourceLoader(final URL jar_url, final String relativePath) {
         if (jar_url == null) {
             throw new IllegalArgumentException("jarFile is null");
         }
-        if (rootName == null) {
-            throw new IllegalArgumentException("rootName is null");
-        }
+//        if (rootName == null) {
+//            throw new IllegalArgumentException("rootName is null");
+//        }
         this.jar_url = jar_url;
-        this.rootName = rootName;
         String realPath = relativePath == null ? null : PathUtils.canonicalize(relativePath);
         if (realPath != null && realPath.endsWith("/")) realPath = realPath.substring(0, realPath.length() - 1);
         this.relativePath = realPath;
@@ -112,9 +110,6 @@ public class PKZipResourceLoader extends AbstractResourceLoader implements Itera
         return new URI("jar", b.toString(), null);
     }
 
-    public String getRootName() {
-        return rootName;
-    }
 
     public synchronized ClassSpec getClassSpec(final String fileName) throws IOException {
         final ClassSpec spec = new ClassSpec();
@@ -320,10 +315,10 @@ public class PKZipResourceLoader extends AbstractResourceLoader implements Itera
         }
     }
 
-    public ResourceLoader createSubloader(final String relativePath, final String rootName) {
+    public ResourceLoader createSubloader(final String relativePath) {
         final String ourRelativePath = this.relativePath;
         final String fixedPath = PathUtils.relativize(PathUtils.canonicalize(relativePath));
-        return new PKZipResourceLoader(rootName, jar_url, ourRelativePath == null ? fixedPath : ourRelativePath + "/" + fixedPath);
+        return new PKZipResourceLoader(jar_url, ourRelativePath == null ? fixedPath : ourRelativePath + "/" + fixedPath);
     }
 
 //    public static void extractJarPaths(final JarInputStream jarFile, String relativePath, final Collection<String> index) {

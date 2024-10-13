@@ -122,7 +122,7 @@ public class ModuleLoadingMap implements Map<String,ModuleLoadingMapEntry>{
 
 	public ModuleLoadingMapEntry put(String arg0, ModuleLoadingMapEntry arg1) {
 		// TODO Auto-generated method stub
-		removebyURL(arg0);
+		removebyName(arg0);
 		list.add(arg1);
 		
 		return arg1;
@@ -149,7 +149,7 @@ public class ModuleLoadingMap implements Map<String,ModuleLoadingMapEntry>{
 	
 	
 	
-	public ModuleLoadingMapEntry removebyURL(String url) {
+	public ModuleLoadingMapEntry removebyName(String url) {
 		// TODO Auto-generated method stub
 		ModuleLoadingMapEntry existing = get(url);
 		if(existing!=null) {
