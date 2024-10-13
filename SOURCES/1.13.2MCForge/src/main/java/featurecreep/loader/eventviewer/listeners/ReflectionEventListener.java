@@ -3,8 +3,6 @@ package featurecreep.loader.eventviewer.listeners;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import javax.annotation.Nonnull;
-
 import featurecreep.loader.eventviewer.EventListener;
 import featurecreep.loader.eventviewer.EventViewer;
 import featurecreep.loader.eventviewer.EventViewerEvent;
@@ -13,14 +11,14 @@ public class ReflectionEventListener<T> implements EventListener<T>{
 
 	// Method Reference Soon
 	//For nonstatic with instance
-	public ReflectionEventListener(EventViewer eventvwr, String event_name, String method_name, @Nonnull Object instance,
+	public ReflectionEventListener(EventViewer eventvwr, String event_name, String method_name, Object instance,
 			Class<?>... param_classes) throws NullPointerException{
 		this(eventvwr,event_name,method_name,instance.getClass(),param_classes);
 		this.instance=instance;
 	}
 
 	//For static
-	public ReflectionEventListener(EventViewer eventvwr, String event_name, String method_name, @Nonnull Class<?> clazz,
+	public ReflectionEventListener(EventViewer eventvwr, String event_name, String method_name, Class<?> clazz,
 			Class<?>... param_classes) throws NullPointerException{
 		super();
 		this.event_name = event_name;
@@ -67,3 +65,4 @@ public class ReflectionEventListener<T> implements EventListener<T>{
 	}
 	
 }
+

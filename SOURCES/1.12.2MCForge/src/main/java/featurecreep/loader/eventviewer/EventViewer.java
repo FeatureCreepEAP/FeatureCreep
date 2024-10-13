@@ -8,8 +8,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-
 import featurecreep.loader.eventviewer.events.BasicAwareEvent;
 import featurecreep.loader.eventviewer.events.BiAwareEvent;
 import featurecreep.loader.eventviewer.events.MonoAwareEvent;
@@ -99,14 +97,14 @@ public class EventViewer {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Deprecated
-	public EventListener<?> registerListener(String event_name, String method_name, @Nonnull Object instance,
+	public EventListener<?> registerListener(String event_name, String method_name, Object instance,
 			Class<?>... param_classes) {
 		return this.registerListener(new ReflectionEventListener(this, event_name, method_name, instance, param_classes));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Deprecated
-	public EventListener<?> registerStaticReflectionListener(String event_name, String method_name, @Nonnull Class<?> instance,
+	public EventListener<?> registerStaticReflectionListener(String event_name, String method_name, Class<?> instance,
 			Class<?>... param_classes) {
 		return this.registerListener(new ReflectionEventListener(this, event_name, method_name, instance, param_classes));
 	}
@@ -137,3 +135,4 @@ public class EventViewer {
 	}
 
 }
+
