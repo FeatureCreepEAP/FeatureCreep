@@ -1,13 +1,21 @@
 package featurecreep.api.io;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class BasicIO {
@@ -61,8 +69,84 @@ public class BasicIO {
 	public static Set deImmutaliseSet(Set set) {
 	Set ret = new LinkedHashSet();
 	ret.addAll(set);
-	return ret;
-		
+	return ret;	
 	}
+	
+    /**
+     * Converts a byte array to a string using UTF-8 encoding.
+     *
+     * @param bytes The byte array to convert.
+     * @return The converted string.
+     */
+    public static String byteArrayToString(byte[] bytes) {
+        String string = null;
+		try {
+			string = new String(bytes, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return string;
+    }
+    
+    /**
+     * Converts a String to a byte-array using UTF-8 encoding.
+     *
+     * @param bytes The String to convert.
+     * @return The converted byte[].
+     */
+    public static byte[] stringToByteArray(String str) {
+        return str.getBytes(StandardCharsets.UTF_8);
+    }
+   
+    //https://www.baeldung.com/convert-input-stream-to-string
+    public static String inputstreamToString(InputStream stream) {
 
+
+        try {
+			StringBuilder textBuilder = new StringBuilder();
+			try (Reader reader = new BufferedReader(new InputStreamReader
+			  (stream, StandardCharsets.UTF_8))) {
+			    int c = 0;
+			    while ((c = reader.read()) != -1) {
+			        textBuilder.append((char) c);
+			    }
+			}
+			return textBuilder.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    return null;
+    
+    
+    }
+    
+    /**
+     * Converts an input stream to byte array
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    public static byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+            
+            return byteArrayOutputStream.toByteArray();
+        }
+    }
+    
+    
+	public static Supplier<InputStream> inputStreamSupplierFromBytes(byte[] bytes) {
+		return () -> new ByteArrayInputStream(bytes);
+	}
+    
+    
+    
 }

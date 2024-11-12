@@ -1,14 +1,12 @@
 package featurecreep.api.bg.items;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
 import featurecreep.api.bg.blocks.FCBlockAPI;
@@ -39,29 +37,13 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 			System.out.print(node.toJSONString(false));
 		}
 
-		try {
 
-			File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId()
-					+ "/models/item/" + this.getUnlocName() + ".json");
+			String file_name = "assets/" + this.getModId()
+			+ "/models/item/" + this.getUnlocName() + ".json";
+			PackLoader.entries.put(file_name, node.asBytes());
+		
 
-			if (!myObj.exists()) {
-
-				if (FeatureCreep.debug_mode) {
-					System.out.println(myObj.toString());
-				}
-
-				myObj.getParentFile().mkdirs();
-
-				FileWriter myWriter = new FileWriter(myObj);
-				myWriter.write(node.toJSONString(true));
-				myWriter.close();
-
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 
 	}
 

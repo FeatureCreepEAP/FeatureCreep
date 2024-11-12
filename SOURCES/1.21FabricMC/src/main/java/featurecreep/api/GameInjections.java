@@ -16,6 +16,7 @@ import com.asbestosstar.assistremapper.remapper.JarRemapper;
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.FabricDirs;
 import featurecreep.api.bg.BGSide;
+import featurecreep.api.bg.FCPackLoad;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.platform.super_.SuperLoader;
@@ -209,12 +210,7 @@ public class GameInjections {
 				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
 				code.addNew("featurecreep/api/bg/FCPackLoad");
 				code.addOpcode(Opcode.DUP);// Luckily this one was the example in javassist
-				code.addNew("java/io/File");
-				code.addOpcode(Opcode.DUP);
-				code.addGetstatic("featurecreep/api/bg/datapacks/DataPackLoader", "datapacklocation",
-						"Ljava/lang/String;");
-				code.addInvokespecial("java/io/File", "<init>", "(Ljava/lang/String;)V");
-				code.addInvokespecial("featurecreep/api/bg/FCPackLoad", "<init>", "(Ljava/io/File;)V");
+				code.addInvokespecial("featurecreep/api/bg/FCPackLoad", "<init>", "()V");
 				code.addInvokeinterface("java/util/Set", "add", "(Ljava/lang/Object;)Z", 2); // providers.add(new
 																								// featurecreep.api.bg.FCPackLoad(new
 																								// java.io.File(featurecreep.api.bg.datapacks.DataPackLoader.datapacklocation)));
@@ -286,5 +282,6 @@ public class GameInjections {
 		return basicClass;
 
 	}
-
+	
+	
 }

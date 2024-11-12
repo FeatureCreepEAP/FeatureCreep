@@ -1,14 +1,15 @@
 package featurecreep.api.bg.orespawn;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.io.BasicIO;
 import game.BiomeGenerationSettings;
 import game.Block;
 import game.BuiltInRegistries;
@@ -28,30 +29,30 @@ public class OrespawnBasicFeatureParser {
 	// Loads the contents from %GAMEDIR%/orespawn/config/
 	public static void spawnOresFromDefaultConfig() {
 
-		String orespawn_dir = new String(FeatureCreep.gamepath.toString() + ("/orespawn/config/"));
-		File file = new File(orespawn_dir);
-
-		String contents[] = file.list();
-		if (FeatureCreep.debug_mode) {
-			System.out.println("List of files and directories in the specified directory:");
-		}
-		// I need to make this multicore
-
-		if (contents != null) {
-			for (int i = 0; i < contents.length; i++) {
-
-				if (FeatureCreep.debug_mode) {
-					System.out.println("FeatureCreep is trying to load " + contents[i]);
-
-					System.out.println(orespawn_dir + contents[i] + "/");
-				}
-				splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
-
-			}
-
-		} else {
-			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
-		}
+//		String orespawn_dir = new String(FeatureCreep.gamepath.toString() + ("/orespawn/config/"));
+//		File file = new File(orespawn_dir);
+//
+//		String contents[] = file.list();
+//		if (FeatureCreep.debug_mode) {
+//			System.out.println("List of files and directories in the specified directory:");
+//		}
+//		// I need to make this multicore
+//
+//		if (contents != null) {
+//			for (int i = 0; i < contents.length; i++) {
+//
+//				if (FeatureCreep.debug_mode) {
+//					System.out.println("FeatureCreep is trying to load " + contents[i]);
+//
+//					System.out.println(orespawn_dir + contents[i] + "/");
+//				}
+//				splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
+//
+//			}
+//
+//		} else {
+//			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
+//		}
 
 	}
 
@@ -86,6 +87,26 @@ public class OrespawnBasicFeatureParser {
 
 	}
 
+	public static void registerFromStream(InputStream stream) {
+		try {
+			ModelNode binarynode = new ModelNode();
+			binarynode.readExternal(stream);
+			splitOS3Basic(binarynode);
+		} catch (java.io.InvalidObjectException e) {
+			splitOS3Basic(DMRStringtoNode(BasicIO.inputstreamToString(stream)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static ModelNode DMRStringtoNode(String string) {
+		ModelNode node = new ModelNode();
+		node = ModelNode.fromString(string);
+		return node;
+	}
+	
+	
 	public static void parseOS3Basic(ModelNode node, String name) {
 
 		if (node.get("enabled").asBoolean() == true) {

@@ -1,9 +1,13 @@
 package featurecreep;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.logging.Logger;
+import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoader;
 
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
@@ -20,6 +24,9 @@ import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.bg.ui.FCCreativeTabs;
+import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.Mod;
+import featurecreep.api.clausewitz.mod.ModuleClausewitzModLoader;
 import featurecreep.api.parsers.DataParseContent;
 import featurecreep.api.platform.super_.SuperLoader;
 import featurecreep.content.FCBlocks;
@@ -27,6 +34,7 @@ import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
+import featurecreep.loader.filesystem.DirectoryReader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
 import game.CommandOriginStack;
 import javassist.ClassPool;
@@ -59,6 +67,8 @@ public class FeatureCreep {
 	public static MappingConverter mappings_converter = GameInjections.mappings_converter;
 public static JarRemapper remapper = GameInjections.remapper;
 public static boolean main_init =false;
+public static ModuleClausewitzModLoader clausewitz_module_modloader = new ModuleClausewitzModLoader();
+public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = new FileSystemClausewitzModLoader();
 
 
 
@@ -79,6 +89,17 @@ public static boolean main_init =false;
 		loader.setMainTransformer(new RemappingClassFileTransformer(loader));
 		loader.getTransformers().addAll(GameInjections.cargador.getTransformers());
 		loader.loadMods();
+		
+		try {
+			clausewitz_filesystem_modloader.search(new DirectoryReader(gamepath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Module mod:loader.getModules()) {
+			clausewitz_module_modloader.search(mod);
+		}
+		
 		loader.runMods();// Soon I got to load before transforming and then run now
 		DataParseContent.parseContent();
 		PackLoader.loadPacks(loader.getModules());
@@ -88,6 +109,15 @@ public static boolean main_init =false;
 		}
 
 	}
+	
+	
+	public static List<Mod> getClausewitzMods(){
+		ArrayList<Mod> list = new ArrayList<Mod>();
+		list.addAll(clausewitz_module_modloader.getMods());
+		list.addAll(clausewitz_filesystem_modloader.getMods());
+		return list;
+	}
+	
 
 
 	// TOCHANGE
