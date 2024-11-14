@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleLoadException;
+import org.jboss.modules.ResourceLoader;
 
 import featurecreep.api.io.BasicIO;
-import featurecreep.loader.filesystem.FileSystem;
+import featurecreep.loader.utils.ResourceLoaderObtainer;
 
+//Only works with LOCAL files, not non-local ones. The ResourceLoader needs to be an IteratableResourceLoader
 public class WithoutModFileModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 
 	public ArrayList<Mod> mods = new ArrayList<Mod>();
@@ -41,74 +43,74 @@ public class WithoutModFileModuleClausewitzModLoader implements ClausewitzModLoa
 	public Map<String, ModFile> setupModFile(Module search) {
 		// TODO Auto-generated method stub
 		Map<String, ModFile> files = new HashMap<String, ModFile>();
+		
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(search)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
 
-		try {
-			search.globResources("").forEachRemaining((res) -> {
+					if (res.getName().endsWith(".mod")) {
+						InputStream stream;
+						try {
+							stream = res.getURL().openStream();
 
-				if (res.getName().endsWith(".mod")) {
-					InputStream stream;
-					try {
-						stream = res.getURL().openStream();
+							ModFile fil = ModFile.parseModFile(BasicIO.inputstreamToString(stream));
 
-						ModFile fil = ModFile.parseModFile(BasicIO.inputstreamToString(stream));
-
-						if (fil.getPath() != null) {
-							if (fil.getPath().isEmpty() || fil.getPath().equals("/")) {
+							if (fil.getPath() != null) {
+								if (fil.getPath().isEmpty() || fil.getPath().equals("/")) {
+									files.put(res.getName(), fil);
+								}
+							} else if (fil.getArchive() == null) {
+								fil.setPath("");
 								files.put(res.getName(), fil);
 							}
-						} else if (fil.getArchive() == null) {
-							fil.setPath("");
-							files.put(res.getName(), fil);
+
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 
-				}
+				});
 
 			}
-
-			);
-		} catch (ModuleLoadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
+		
+		
 		return files;
 
 	}
-
-	public FileSystem getFileSystem(FileSystem searchfs, String path, ModFile file) {
-		String folder = ClausewitzModLoader.getFolderName(path);
-		String modpath = file.getPath();
-		if (modpath != null) {
-			if (!modpath.endsWith("/") && !modpath.isEmpty()) {
-				modpath = modpath + "/";
-			}
-
-			String without_mod;
-			if (modpath.startsWith("mod/")) {
-				without_mod = modpath.substring(4);
-			} else {
-				without_mod = modpath;
-			}
-
-			String dir = folder + without_mod;
-			if (searchfs.has(dir)) { // Prioritise relative
-				return searchfs.createSubFileSystem(dir);
-			} else if (searchfs.has(folder + modpath)) {
-				return searchfs.createSubFileSystem(folder + modpath);
-			} else if (searchfs.has(without_mod)) {// Search the root folder now
-				return searchfs.createSubFileSystem(without_mod);
-			} else if (searchfs.has(modpath)) {
-				return searchfs.createSubFileSystem(modpath);
-			}
-
-		}
-		return null;
-
-	}
+//
+//	public FileSystem getFileSystem(FileSystem searchfs, String path, ModFile file) {
+//		String folder = ClausewitzModLoader.getFolderName(path);
+//		String modpath = file.getPath();
+//		if (modpath != null) {
+//			if (!modpath.endsWith("/") && !modpath.isEmpty()) {
+//				modpath = modpath + "/";
+//			}
+//
+//			String without_mod;
+//			if (modpath.startsWith("mod/")) {
+//				without_mod = modpath.substring(4);
+//			} else {
+//				without_mod = modpath;
+//			}
+//
+//			String dir = folder + without_mod;
+//			if (searchfs.has(dir)) { // Prioritise relative
+//				return searchfs.createSubFileSystem(dir);
+//			} else if (searchfs.has(folder + modpath)) {
+//				return searchfs.createSubFileSystem(folder + modpath);
+//			} else if (searchfs.has(without_mod)) {// Search the root folder now
+//				return searchfs.createSubFileSystem(without_mod);
+//			} else if (searchfs.has(modpath)) {
+//				return searchfs.createSubFileSystem(modpath);
+//			}
+//
+//		}
+//		return null;
+//
+//	}
 
 }

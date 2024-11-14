@@ -19,6 +19,7 @@
 package featurecreep.loader.finder;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -48,7 +49,6 @@ import org.jboss.modules.ResourceLoader;
 
 import featurecreep.loader.filesystem.FileSystem;
 import featurecreep.loader.filesystem.PhilKatzZip;
-import javassist.NotFoundException;
 
 /**
  *
@@ -170,7 +170,7 @@ public class FileSystemResourceLoader extends AbstractResourceLoader implements 
 			}
 		}
 		
-		}catch (NotFoundException e) {
+		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return null;//I dont think this will happen
 		}
@@ -220,6 +220,7 @@ public class FileSystemResourceLoader extends AbstractResourceLoader implements 
 
 	public Resource getResource(String name) {
 		name = PathUtils.canonicalize(PathUtils.relativize(name));
+		if(!fs.has(name)) {return null;}
 		return new FileSystemEntryResource(name, relativePath, fs);
 	}
 
@@ -233,10 +234,8 @@ public class FileSystemResourceLoader extends AbstractResourceLoader implements 
 				directory = this.directory;
 				if (directory == null) {
 					directory = new ArrayList<>();
-					for (Map.Entry<String, byte[]> entry : fs.getEntries(startName)) {
-						if (entry != null) {
-							directory.add(entry.getKey());
-						}
+					for (String entry : fs.getFilenames(startName)) {
+							directory.add(entry);
 					}
 					this.directory = directory;
 				}
@@ -358,8 +357,7 @@ public class FileSystemResourceLoader extends AbstractResourceLoader implements 
 	public static void extractJarPaths(FileSystem fs, String relativePath, final Collection<String> index) {
 		index.add("");
 
-		for (Map.Entry<String, byte[]> jarEntry : fs.getMap().entrySet()) {
-			final String name = jarEntry.getKey();
+		for (String name : fs.getFilenames("")) {
 			final int idx = name.lastIndexOf('/');
 
 			if (idx == -1) {

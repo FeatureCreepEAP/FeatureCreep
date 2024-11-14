@@ -1,6 +1,5 @@
 package featurecreep.unsupported;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,24 +36,15 @@ public class SpongeMixinUtils {
 					PhilKatzZip zip = new PhilKatzZip(arc);
 					for (Map.Entry<String, byte[]> entry : zip.getMap().entrySet()) {
 						String nombre = entry.getKey();
-						byte[] entryBytes = entry.getValue();
-
-						ByteArrayInputStream bits = new ByteArrayInputStream(entryBytes);
-						if (bits != null) {
-
 							if (nombre.endsWith(".class")) {
 								all_classes.add(nombre.replace("/", ".").substring(0, nombre.length() - 6));
 							} else if (nombre.endsWith(".json")) {
-
-								ModelNode node = ModelNode.fromJSONStream(bits);
+								ModelNode node = ModelNode.fromJSONStream(zip.getStream(nombre));
 								if (node.has("package")) {
 									paquetes.add(node.get("package").asString());
 								}
 
-							}
-
-						}
-
+							}	
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

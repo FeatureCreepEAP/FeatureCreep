@@ -1,6 +1,5 @@
 package featurecreep.api.bg.resource_packs;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import com.google.gson.JsonObject;
 import featurecreep.api.annotations.Internal;
 import featurecreep.api.annotations.Vainilla;
 import game.CombinedPackResources;
+import game.GSONHelperChatDeserialiser;
 import game.IResourcePack;
 import game.PackMCMetaReader;
 import game.PackSources;
@@ -148,11 +148,12 @@ public interface VainillaResourcePack extends IResourcePack {
 	@Override
 	@Vainilla
 	public default <T> T parseMetadata(PackMCMetaReader<T> var1) throws IOException {
-		Gson gson = new Gson();
-		JsonObject obj = new JsonObject();
-		gson.fromJson(getPackMCMetaInfo().asJSON(), JsonObject.class);
-
-		return var1.fromJson(obj);
+        Gson gson = new Gson();
+        JsonObject obj = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
+        if (!obj.has(var1.getKey())) {
+            return null;
+        }
+		return var1.fromJson(GSONHelperChatDeserialiser.getObject(obj, var1.getKey()));
 	}
 
 	public FCPackMCMeta getPackMCMetaInfo();

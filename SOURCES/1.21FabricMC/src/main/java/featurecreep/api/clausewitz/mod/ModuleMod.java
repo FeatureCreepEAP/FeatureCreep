@@ -1,16 +1,19 @@
 package featurecreep.api.clausewitz.mod;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleLoadException;
+import org.jboss.modules.ResourceLoader;
 
 import featurecreep.api.io.BasicIO;
-import javassist.NotFoundException;
+import featurecreep.loader.utils.ResourceLoaderObtainer;
 
+//Only works with LOCAL files, not non-local ones. The ResourceLoader needs to be an IteratableResourceLoader
 public class ModuleMod implements Mod {
 
 	public ModFile modfile;
@@ -39,7 +42,7 @@ public class ModuleMod implements Mod {
 		this(fs, null, relative_path);
 	}
 
-	public Module getFileSystem() {
+	public Module getModule() {
 		return mod;
 	}
 
@@ -66,7 +69,7 @@ public class ModuleMod implements Mod {
 	}
 
 	@Override
-	public byte[] get(String name) throws IOException, NotFoundException {
+	public byte[] get(String name) throws IOException, FileNotFoundException {
 		// TODO Auto-generated method stub
 		InputStream stream = getStream(name);
 		if (name != null) {
@@ -84,32 +87,31 @@ public class ModuleMod implements Mod {
 	}
 
 	@Override
-	public InputStream getStream(String name) throws IOException, NotFoundException {
+	public InputStream getStream(String name) throws IOException, FileNotFoundException {
 		// TODO Auto-generated method stub
 
 		List<InputStream> str = new ArrayList<InputStream>();
-
-		try {
-			mod.globResources(name).forEachRemaining((res) -> {
-				if (res.getName().equals(name)) {
-					try {
-						str.add(res.openStream());
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						str.add(null);
-						e.printStackTrace();
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(mod)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
+					if (res.getName().equals(name)) {
+						try {
+							str.add(res.openStream());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							str.add(null);
+							e.printStackTrace();
+						}
 					}
-				}
 
-			});
-		} catch (ModuleLoadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new IOException();
+				});
+
+			}
 		}
 
 		if (str.isEmpty()) {
-			throw new NotFoundException(name);
+			throw new FileNotFoundException(name);
 		} else {
 			InputStream stream = str.get(0);// There should only be one
 			if (stream != null) {
@@ -125,16 +127,15 @@ public class ModuleMod implements Mod {
 		// TODO Auto-generated method stub
 		List<String> str = new ArrayList<String>();
 
-		try {
-			mod.globResources(name).forEachRemaining((res) -> {
-				if (res.getName().equals(name)) {
-					str.add(res.getName());
-				}
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(mod)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
+						str.add(res.getName());
 
-			});
-		} catch (ModuleLoadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				});
+
+			}
 		}
 		return str;
 	}

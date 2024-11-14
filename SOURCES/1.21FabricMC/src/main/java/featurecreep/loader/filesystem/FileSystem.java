@@ -1,6 +1,7 @@
 package featurecreep.loader.filesystem;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -15,40 +16,33 @@ import java.util.Map;
 import java.util.jar.Attributes;
 
 import featurecreep.loader.utils.JavaUtils;
-import javassist.NotFoundException;
 
 public interface FileSystem {
 
+	/**
+	 * Try to avoid using this as it takes up memory. Use getFileNameInstead
+	 * @return
+	 */
 	public Map<String, byte[]> getMap();
 
-	public default byte[] get(String file) throws NotFoundException, IOException {
+	public default byte[] get(String file) throws FileNotFoundException, IOException {
 		byte[] ret = getMap().get(file);
 		if (ret == null) {
-			throw new NotFoundException(file);
+			throw new FileNotFoundException(file);
 		}
 		return ret;
 	}
 
-	public default InputStream getStream(String file) throws NotFoundException, IOException {
+	public default InputStream getStream(String file) throws FileNotFoundException, IOException {
 		return new ByteArrayInputStream(get(file));
 	}
 
 	public default boolean has(String file) {
-		return getMap().containsKey(file);
+		return getFilenames(file).contains(file);
 	}
 
-	public default int getFileSize(String file) throws NotFoundException, IOException {
+	public default int getFileSize(String file) throws FileNotFoundException, IOException {
 		return get(file).length;
-	}
-
-	public default Collection<Map.Entry<String, byte[]>> getEntries(String prefix) {
-		Collection<Map.Entry<String, byte[]>> result = new ArrayList<>();
-		for (Map.Entry<String, byte[]> entryName : getMap().entrySet()) {
-			if (entryName.getKey().startsWith(prefix)) {
-				result.add(entryName);
-			}
-		}
-		return result;
 	}
 
 	public default Collection<String> getFilenames(String prefix) {
@@ -295,7 +289,7 @@ public interface FileSystem {
 	 * @param original file name you want to check in multirelease for
 	 * @return
 	 */
-	public default String getMultiReleaseName(String original) throws NotFoundException {
+	public default String getMultiReleaseName(String original) throws FileNotFoundException {
 		if (JavaUtils.isJavaVersionNewerThan8()) {
 			int i = JavaUtils.getMajorJavaVersion();
 			while (i > 8) {
@@ -307,20 +301,20 @@ public interface FileSystem {
 			}
 		}
 		if (!has(original)) {
-			throw new NotFoundException(original);
+			throw new FileNotFoundException(original);
 		}
 		return original;
 	}
 
-	public default byte[] getMultiRelease(String file) throws NotFoundException, IOException {
-		byte[] ret = getMap().get(getMultiReleaseName(file));
+	public default byte[] getMultiRelease(String file) throws FileNotFoundException, IOException {
+		byte[] ret = get(getMultiReleaseName(file));
 		if (ret == null) {
-			throw new NotFoundException(file);
+			throw new FileNotFoundException(file);
 		}
 		return ret;
 	}
 
-	public default InputStream getMultiReleaseStream(String file) throws NotFoundException, IOException {
+	public default InputStream getMultiReleaseStream(String file) throws FileNotFoundException, IOException {
 		return new ByteArrayInputStream(getMultiRelease(file));
 	}
 

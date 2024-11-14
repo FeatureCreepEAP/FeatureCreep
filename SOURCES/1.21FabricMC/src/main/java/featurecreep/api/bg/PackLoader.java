@@ -54,6 +54,7 @@ public class PackLoader implements VainillaResourcePack{
 	@Override
 	public Supplier<InputStream> getStream(String location) {
 		// TODO Auto-generated method stub
+		System.out.println(location);
 		byte[] get = entries.get(location);
 		if (get != null) {
 			return BasicIO.inputStreamSupplierFromBytes(get);

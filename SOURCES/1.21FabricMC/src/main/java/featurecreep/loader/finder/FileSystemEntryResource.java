@@ -18,6 +18,7 @@
 
 package featurecreep.loader.finder;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,7 +26,6 @@ import java.net.URL;
 import org.jboss.modules.Resource;
 
 import featurecreep.loader.filesystem.FileSystem;
-import javassist.NotFoundException;
 
 public class FileSystemEntryResource implements Resource {
 	private final String relativePath;
@@ -50,7 +50,7 @@ public class FileSystemEntryResource implements Resource {
 		this.nonMultiReleaseName = entryName;
 		try {
 			this.entryName = fs.getMultiReleaseName(entryName);
-		} catch (NotFoundException e) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 		}
@@ -87,7 +87,7 @@ public class FileSystemEntryResource implements Resource {
 	public InputStream openStream() throws IOException {
 		try {
 			return fs.getStream(getFullEntryName());
-		} catch (NotFoundException | IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -98,7 +98,7 @@ public class FileSystemEntryResource implements Resource {
 	public long getSize() {
 		try {
 			return fs.getFileSize(getFullEntryName());
-		} catch (NotFoundException | IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

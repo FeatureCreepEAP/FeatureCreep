@@ -87,22 +87,39 @@ public class OrespawnBasicFeatureParser {
 
 	}
 
-	public static void registerFromStream(InputStream stream) {
+	/**
+	 * Register from JSON or DMR Plaintext InputStream
+	 * @param stream
+	 * @param is_json is JSON  rather than DMR Plaintext
+	 */
+	public static void registerFromStream(InputStream stream, boolean is_json) {
 		try {
-			ModelNode binarynode = new ModelNode();
+			ModelNode binarynode;
+			if(is_json) {
+				binarynode= ModelNode.fromJSONStream(stream);
+			}else {
+				binarynode = new ModelNode();
 			binarynode.readExternal(stream);
+			}
 			splitOS3Basic(binarynode);
 		} catch (java.io.InvalidObjectException e) {
-			splitOS3Basic(DMRStringtoNode(BasicIO.inputstreamToString(stream)));
+			splitOS3Basic(DMRStringtoNode(BasicIO.inputstreamToString(stream),is_json));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static ModelNode DMRStringtoNode(String string) {
-		ModelNode node = new ModelNode();
-		node = ModelNode.fromString(string);
+	/**
+	 * Parses a Plaintext DMR String or JSON String
+	 * @param string
+	 * @param is_json Is JSON rather than DMR plaintext
+	 * @return
+	 */
+	public static ModelNode DMRStringtoNode(String string, boolean is_json) {
+		ModelNode node;
+		if(is_json) {node = ModelNode.fromJSONString(string);}
+		else {node = ModelNode.fromString(string);}
 		return node;
 	}
 	

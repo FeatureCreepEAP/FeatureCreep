@@ -41,7 +41,7 @@ public class FCPackLoad implements ResourcePackProvider {
 								ResourcePackInfo.InsertionPosition.TOP.inverse(), true));// I need to check that this
 																							// also does client stuff
 				if (info != null) {
-					System.out.println("Adding FCDatapack");
+					System.out.println("Adding FCDatapack "+pack.getName());
 					consumer.accept(info);
 				}
 			}

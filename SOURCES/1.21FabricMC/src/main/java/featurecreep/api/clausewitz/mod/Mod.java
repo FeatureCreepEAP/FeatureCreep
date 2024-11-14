@@ -1,11 +1,10 @@
 package featurecreep.api.clausewitz.mod;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import javassist.NotFoundException;
 
 /**
  * Clausewitz/HOI4 mod
@@ -22,9 +21,9 @@ public interface Mod {
 
 	public void setName(String name);
 
-	public byte[] get(String name) throws NotFoundException, IOException;
+	public byte[] get(String name) throws FileNotFoundException, IOException;
 
-	public InputStream getStream(String name) throws NotFoundException, IOException;
+	public InputStream getStream(String name) throws FileNotFoundException, IOException;
 
 	/**
 	 * A list of all the files/directories. Directories should end in /

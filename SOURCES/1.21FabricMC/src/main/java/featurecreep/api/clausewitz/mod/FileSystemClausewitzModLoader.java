@@ -1,5 +1,6 @@
 package featurecreep.api.clausewitz.mod;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import java.util.Map;
 import featurecreep.api.io.BasicIO;
 import featurecreep.loader.filesystem.FileSystem;
 import featurecreep.loader.filesystem.PhilKatzZip;
-import javassist.NotFoundException;
 
 public class FileSystemClausewitzModLoader implements ClausewitzModLoader<FileSystem> {
 
@@ -52,9 +52,14 @@ public class FileSystemClausewitzModLoader implements ClausewitzModLoader<FileSy
 	public Map<String, ModFile> setupModFile(FileSystem search) {
 		// TODO Auto-generated method stub
 		Map<String, ModFile> files = new HashMap<String, ModFile>();
-		for (Map.Entry<String, byte[]> entry : search.getMap().entrySet()) {
-			if (entry.getKey().endsWith(".mod")) {
-				files.put(entry.getKey(), ModFile.parseModFile(BasicIO.byteArrayToString(entry.getValue())));
+		for (String name : search.getFilenames("")) {
+			if (name.endsWith(".mod")) {
+				try {
+					files.put(name, ModFile.parseModFile(BasicIO.byteArrayToString(search.get(name))));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -105,7 +110,7 @@ public class FileSystemClausewitzModLoader implements ClausewitzModLoader<FileSy
 
 				try {
 					return new PhilKatzZip(searchfs.getStream(folder + archive), uri);
-				} catch (IOException | NotFoundException e) {
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return null;
@@ -125,7 +130,7 @@ public class FileSystemClausewitzModLoader implements ClausewitzModLoader<FileSy
 
 				try {
 					return new PhilKatzZip(searchfs.getStream(archive), uri);
-				} catch (IOException | NotFoundException e) {
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return null;

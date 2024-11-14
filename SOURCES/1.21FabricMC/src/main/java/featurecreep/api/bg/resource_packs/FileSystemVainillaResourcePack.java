@@ -9,7 +9,6 @@ import org.jboss.dmr.ModelNode;
 
 import featurecreep.api.bg.PackLoader;
 import featurecreep.loader.filesystem.FileSystem;
-import javassist.NotFoundException;
 
 public class FileSystemVainillaResourcePack implements VainillaResourcePack {
 
@@ -34,7 +33,7 @@ public class FileSystemVainillaResourcePack implements VainillaResourcePack {
 		InputStream stream;
 		try {
 			stream = fs.getStream(location);
-		} catch (NotFoundException | IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			return null;

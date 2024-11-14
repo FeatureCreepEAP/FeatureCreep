@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -100,28 +99,19 @@ public class BasicIO {
         return str.getBytes(StandardCharsets.UTF_8);
     }
    
-    //https://www.baeldung.com/convert-input-stream-to-string
     public static String inputstreamToString(InputStream stream) {
-
-
-        try {
-			StringBuilder textBuilder = new StringBuilder();
-			try (Reader reader = new BufferedReader(new InputStreamReader
-			  (stream, StandardCharsets.UTF_8))) {
-			    int c = 0;
-			    while ((c = reader.read()) != -1) {
-			        textBuilder.append((char) c);
-			    }
-			}
-			return textBuilder.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    return null;
-    
-    
+        StringBuilder textBuilder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                textBuilder.append(line).append(System.lineSeparator()); // Add line break if needed
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return textBuilder.toString();
     }
+    
     
     /**
      * Converts an input stream to byte array

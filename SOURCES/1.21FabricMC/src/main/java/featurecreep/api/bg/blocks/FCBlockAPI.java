@@ -1,8 +1,5 @@
 package featurecreep.api.bg.blocks;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -18,6 +15,7 @@ import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
+import featurecreep.api.io.BasicIO;
 import game.Block;
 import game.ItemStack;
 import game.LivingEntity;
@@ -161,7 +159,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 		String file_name = "assets/" + this.getModId()
 		+ "/models/item/" + this.getUnlocName() + ".json";
-		PackLoader.entries.put(file_name, node.asBytes());
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
 
 
 		// Block Model Generation
@@ -180,7 +178,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 		file_name = "assets/" + this.getModId()
 		+ "/models/block/" + this.getUnlocName() + ".json";
-		PackLoader.entries.put(file_name, block_node.asBytes());
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(block_node.toJSONString(false)));
 
 
 		// Blockstates
@@ -191,7 +189,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 		file_name = "assets/" + this.getModId()
 		+ "/blockstates/" + this.getUnlocName() + ".json";
-		PackLoader.entries.put(file_name, blockstate.asBytes());
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(blockstate.toJSONString(false)));
 
 	}
 

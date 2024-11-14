@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import org.jboss.dmr.ModelNode;
+import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleLoadException;
+import org.jboss.modules.ResourceLoader;
 
 import featurecreep.api.bg.PackLoader;
+import featurecreep.loader.utils.ResourceLoaderObtainer;
 
-
+// Only works with LOCAL files, not non-local ones. The ResourceLoader needs to be an IteratableResourceLoader
 public class ModuleVainillaResourcePack implements VainillaResourcePack {
 
 	public Module mod;
@@ -22,34 +24,34 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 	public ModuleVainillaResourcePack(Module mod, String overlay) {
 		this.overlay = overlay;
 		this.mod = mod;
+		ResourceLoaderObtainer.getResourceLoaders(mod);
 	}
 
 	public ModuleVainillaResourcePack(Module mod) {
 		this(mod, "");
 	}
 
-
-
 	@Override
 	public Supplier<InputStream> getStream(String location) {
 		List<InputStream> str = new ArrayList<InputStream>();
 
-		try {
-			mod.globResources(location).forEachRemaining((res) -> {
-				if (res.getName().equals(location)) {
-					try {
-						str.add(res.openStream());
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						str.add(null);
-						e.printStackTrace();
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(mod)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
+					if (res.getName().equals(location)) {
+						try {
+							str.add(res.openStream());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							str.add(null);
+							e.printStackTrace();
+						}
 					}
-				}
 
-			});
-		} catch (ModuleLoadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				});
+
+			}
 		}
 
 		if (str.isEmpty()) {
@@ -57,7 +59,7 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 		} else {
 			InputStream stream = str.get(0);// There should only be one
 			if (stream != null) {
-				return ()-> stream;
+				return () -> stream;
 			} else {
 				return null;
 			}
@@ -68,28 +70,39 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 	public Collection<String> getEntries(String prefix) {
 		List<String> str = new ArrayList<String>();
 
-		try {
-			mod.globResources(prefix).forEachRemaining((res) -> {
-				if (res.getName().equals(prefix)) {
-					str.add(res.getName());
-				}
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(mod)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
+					if (res.getName().startsWith(prefix)) {
+						str.add(res.getName());
 
-			});
-		} catch (ModuleLoadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					}
+				});
+
+			}
 		}
+
 		return str;
 	}
 
 	@Override
 	public FCPackMCMeta getPackMCMetaInfo() {
-		try {
-			return FCPackMCMeta.fromModelNode(ModelNode.fromJSONStream(this.getStream("pack.mcmeta").get()));
-		} catch (IOException e) {
-			//e.printStackTrace();
-			return new FCPackMCMeta(PackLoader.pack_version,getPackName());
+		Supplier<InputStream> stream = getStream("pack.mcmeta");
+		if (stream != null) {
+			InputStream gotten = stream.get();
+			if (gotten != null) {
+				try {
+					return FCPackMCMeta.fromModelNode(ModelNode.fromJSONStream(gotten));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+
+		return new FCPackMCMeta(PackLoader.pack_version, getPackName());
+
 	}
 
 	@Override

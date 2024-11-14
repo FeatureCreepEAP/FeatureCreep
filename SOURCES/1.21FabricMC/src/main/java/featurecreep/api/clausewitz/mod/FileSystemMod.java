@@ -1,12 +1,12 @@
 package featurecreep.api.clausewitz.mod;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import featurecreep.loader.filesystem.FileSystem;
-import javassist.NotFoundException;
 
 public class FileSystemMod implements Mod {
 
@@ -60,23 +60,23 @@ public class FileSystemMod implements Mod {
 	}
 
 	@Override
-	public byte[] get(String name) throws NotFoundException, IOException {
+	public byte[] get(String name) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		if (filesystem.has(name)) {
 			return filesystem.get(name);
 		} else {
-			throw new NotFoundException(name);
+			throw new FileNotFoundException(name);
 		}
 
 	}
 
 	@Override
-	public InputStream getStream(String name) throws NotFoundException, IOException {
+	public InputStream getStream(String name) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		if (filesystem.has(name)) {
 			return filesystem.getStream(name);
 		} else {
-			throw new NotFoundException(name);
+			throw new FileNotFoundException(name);
 		}
 
 	}

@@ -7,12 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleLoadException;
 import org.jboss.modules.ModuleLoader;
+import org.jboss.modules.ResourceLoader;
 
 import featurecreep.api.io.BasicIO;
+import featurecreep.loader.utils.ResourceLoaderObtainer;
 
+//Only works with LOCAL files, not non-local ones. The ResourceLoader needs to be an IteratableResourceLoader
 public class ModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 
 	public ArrayList<Mod> mods = new ArrayList<Mod>();
@@ -32,7 +35,7 @@ public class ModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 			if (file.getPath() != null) {
 				String relative = getRelativeDir(module, path, file);
 				String name = getName(file, path);
-				Mod mod = new ModuleMod(module,file,relative);
+				Mod mod = new ModuleMod(module, file, relative);
 				mod.setName(name);
 				mods.add(mod);
 			}
@@ -50,33 +53,33 @@ public class ModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 	public Map<String, ModFile> setupModFile(Module search) {
 		// TODO Auto-generated method stub
 		Map<String, ModFile> files = new HashMap<String, ModFile>();
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(search)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
 
-		try {
-			search.globResources("").forEachRemaining((res) -> {
+					if (res.getName().endsWith(".mod")) {
+						InputStream stream;
+						try {
+							stream = res.getURL().openStream();
 
-				if (res.getName().endsWith(".mod")) {
-					InputStream stream;
-					try {
-						stream = res.getURL().openStream();
+							ModFile fil = ModFile.parseModFile(BasicIO.inputstreamToString(stream));
+							files.put(res.getName(), fil);
 
-						ModFile fil = ModFile.parseModFile(BasicIO.inputstreamToString(stream));
-						files.put(res.getName(), fil);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 
-				}
+				});
 
 			}
-
-			);
-		} catch (ModuleLoadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
+		
+		
+		
 		return files;
 
 	}
@@ -111,23 +114,21 @@ public class ModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 	}
 
 	public boolean has(Module mod, String path) {
-	ArrayList<String> names = new ArrayList<String>();
-			try {
-				mod.globResources("").forEachRemaining((res) -> {
-					if(res.getName().equals(path)) {
+		ArrayList<String> names = new ArrayList<String>();
+		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(mod)) {
+			if (rl instanceof IterableResourceLoader) {
+				IterableResourceLoader iter = (IterableResourceLoader) rl;
+				iter.iterateResources("", true).forEachRemaining((res) -> {
+					if (res.getName().equals(path)) {
 						names.add(res.getName());
 					}
-					
-				}
 
-						
-						);
-			} catch (ModuleLoadException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				});
+
 			}
-			
+		}
 		return names.contains(path);
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package featurecreep.api.clausewitz.mod;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,16 +40,22 @@ public class WithoutModFileFileSystemClausewitzModLoader implements ClausewitzMo
 	public Map<String, ModFile> setupModFile(FileSystem search) {
 		// TODO Auto-generated method stub
 		Map<String, ModFile> files = new HashMap<String, ModFile>();
-		for (Map.Entry<String, byte[]> entry : search.getMap().entrySet()) {
-			if (entry.getKey().endsWith(".mod")&&!entry.getKey().contains("/")) {
-				ModFile fil = ModFile.parseModFile(BasicIO.byteArrayToString(entry.getValue()));
+		for (String name : search.getFilenames("")) {
+			if (name.endsWith(".mod")&&!name.contains("/")) {
+				ModFile fil = null;
+				try {
+					fil = ModFile.parseModFile(BasicIO.byteArrayToString(search.get(name)));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			if(fil.getPath()!=null) {
 			if(fil.getPath().isEmpty()||fil.getPath().equals("/")) {
-				files.put(entry.getKey(), fil);
+				files.put(name, fil);
 			}
 			}else if(fil.getArchive()==null){
 				fil.setPath("");
-				files.put(entry.getKey(), fil);
+				files.put(name, fil);
 			}
 			}
 		}

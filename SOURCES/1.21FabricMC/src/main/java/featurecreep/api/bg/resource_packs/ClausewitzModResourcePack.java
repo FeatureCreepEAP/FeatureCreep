@@ -2,8 +2,11 @@ package featurecreep.api.bg.resource_packs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,14 +15,17 @@ import java.util.function.Supplier;
 
 import co.phoenixlab.dds.Dds;
 import co.phoenixlab.dds.DdsImageDecoder;
+import featurecreep.FeatureCreep;
 import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.clausewitz.mod.Mod;
+import featurecreep.api.hashing.Md5;
 import featurecreep.api.io.BasicIO;
 import featurecreep.api.parsers.ParseDMRItem;
-import javassist.NotFoundException;
 
 public class ClausewitzModResourcePack implements VainillaResourcePack {
+
+	public static File pngcaches = new File(FeatureCreep.gamepath.toString() + "/cachesfc/dds2png/");
 
 	public Mod mod;
 	public Map<String, byte[]> entries = new HashMap<String, byte[]>();
@@ -46,6 +52,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 	 */
 	public void refresh() {
 		// TODO allow for custom item locations
+		pngcaches.mkdirs();
 		for (String entry : mod.getTechnologiesInterfaceGFXLocations()) {
 			String name = getFileName(entry);
 			if (isFileNameBGType(name) && name.endsWith(".dds")) {
@@ -96,7 +103,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 		for (String entry : mod.getEntries("orespawn/config/")) { // Part of FC BG
 			if (entry.endsWith(".dmr") || entry.endsWith(".json")) {
 				InputStream stream = this.getModStream(entry).get();
-				OrespawnBasicFeatureParser.registerFromStream(stream);
+				OrespawnBasicFeatureParser.registerFromStream(stream, entry.endsWith(".json"));
 				try {
 					stream.close();
 				} catch (IOException e) {
@@ -111,9 +118,28 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 	 * Puts an entry
 	 */
 	public void putDDSEntryAsPNG(String vainilla_path, String dds_entry) {
+
 		try {
-			entries.put(vainilla_path, convertDDSToPNG(mod.get(dds_entry)));
-		} catch (NotFoundException | IOException e) {
+			byte[] dds = mod.get(dds_entry);
+			File png = new File(pngcaches.getCanonicalPath()+"/" + Md5.getHashFromBytesAsString(dds) + ".png");// Nesecito
+																												// ser
+																												// mas
+																												// rapida
+			if (!png.exists()) {
+				png.createNewFile();
+				byte[] png_bytes = convertDDSToPNG(dds);
+				entries.put(vainilla_path, png_bytes);
+				System.out.println(
+						"Convirtando DDS a PNG. Las cargas futuras serán más rápidas " + png.getCanonicalPath());
+				FileOutputStream fos = new FileOutputStream(png.getCanonicalPath());
+				// Write the byte array to the file
+				fos.write(png_bytes);
+				fos.close();
+			} else {
+				entries.put(vainilla_path, BasicIO.convertInputStreamToByteArray(new FileInputStream(png)));
+			}
+
+		} catch (IOException | NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -149,7 +175,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 		byte[] stream;
 		try {
 			stream = mod.get(location);
-		} catch (NotFoundException | IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			return null;
@@ -169,7 +195,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 		InputStream stream;
 		try {
 			stream = mod.getStream(location);
-		} catch (NotFoundException | IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			return null;
@@ -189,7 +215,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 		InputStream stream;
 		try {
 			stream = mod.getStream(location);
-		} catch (NotFoundException | IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			return null;
@@ -214,8 +240,10 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 	public Collection<String> getEntries(String prefix) {
 		// TODO Auto-generated method stub
 		ArrayList<String> strs = new ArrayList<String>();
-		for(String str:entries.keySet()) {
-			if(str.startsWith(prefix)) {strs.add(str);}
+		for (String str : entries.keySet()) {
+			if (str.startsWith(prefix)) {
+				strs.add(str);
+			}
 		}
 		return strs;
 	}

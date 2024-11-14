@@ -27,6 +27,8 @@ import featurecreep.api.bg.ui.FCCreativeTabs;
 import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
 import featurecreep.api.clausewitz.mod.Mod;
 import featurecreep.api.clausewitz.mod.ModuleClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileFileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileModuleClausewitzModLoader;
 import featurecreep.api.parsers.DataParseContent;
 import featurecreep.api.platform.super_.SuperLoader;
 import featurecreep.content.FCBlocks;
@@ -69,6 +71,8 @@ public static JarRemapper remapper = GameInjections.remapper;
 public static boolean main_init =false;
 public static ModuleClausewitzModLoader clausewitz_module_modloader = new ModuleClausewitzModLoader();
 public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = new FileSystemClausewitzModLoader();
+public static WithoutModFileModuleClausewitzModLoader clausewitz_module_modloader_no_modfile = new WithoutModFileModuleClausewitzModLoader();
+public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_modloader_no_modfile = new WithoutModFileFileSystemClausewitzModLoader();
 
 
 
@@ -98,6 +102,7 @@ public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = ne
 		}
 		for(Module mod:loader.getModules()) {
 			clausewitz_module_modloader.search(mod);
+			clausewitz_module_modloader_no_modfile.search(mod);//Maybe try to make one 1 work in the future
 		}
 		
 		loader.runMods();// Soon I got to load before transforming and then run now
@@ -115,6 +120,8 @@ public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = ne
 		ArrayList<Mod> list = new ArrayList<Mod>();
 		list.addAll(clausewitz_module_modloader.getMods());
 		list.addAll(clausewitz_filesystem_modloader.getMods());
+		list.addAll(clausewitz_module_modloader_no_modfile.getMods());
+		list.addAll(clausewitz_filesystem_modloader_no_modfile.getMods());
 		return list;
 	}
 	

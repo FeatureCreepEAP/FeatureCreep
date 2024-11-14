@@ -14,6 +14,7 @@ import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.world.FCWorld;
+import featurecreep.api.io.BasicIO;
 import game.Item;
 import game.ItemStack;
 import game.LivingEntity;
@@ -40,7 +41,7 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 
 			String file_name = "assets/" + this.getModId()
 			+ "/models/item/" + this.getUnlocName() + ".json";
-			PackLoader.entries.put(file_name, node.asBytes());
+			PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
 		
 
 	

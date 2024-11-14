@@ -11,6 +11,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
@@ -377,8 +378,8 @@ public interface FCLoaderBasic {
 		URL url = res.getURL();
 		String string = url.toString();
 		try {
-			this.getModuleLoadingMap().put(string, new ModuleLoadingMapEntry(string, new FileSystemResourceLoader(new PhilKatzZip(string))));
-		} catch (IOException e) {
+			this.getModuleLoadingMap().put(string, new ModuleLoadingMapEntry(string, new FileSystemResourceLoader(new PhilKatzZip(res.openStream(),res.getURL().toURI()))));
+		} catch (IOException | URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
