@@ -1,8 +1,5 @@
 package featurecreep.api.bg.datapacks;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;
@@ -17,9 +14,6 @@ import game.GenerationPlacement;
 import game.RegistryKey;
 import game.RegistryKeys;
 import game.ResourceLocation;
-import game.StageGeneration.Feature;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 
 public class OreFeatureGenerator {
 
@@ -76,11 +70,15 @@ public class OreFeatureGenerator {
 PackLoader.entries.put(configedfile, BasicIO.stringToByteArray(configured.toJSONString(false)));
 PackLoader.entries.put(placedfile, BasicIO.stringToByteArray(placed.toJSONString(false)));
 
-//https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
-			RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
-					ResourceLocation.fromSeperated("orespawn", configs.get(i).name));
 
-			BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), Feature.UNDERGROUND_ORES, MY_ORE_PF);
+
+
+//https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
+RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
+		ResourceLocation.fromSeperated("orespawn", configs.get(i).name));
+OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
+
+
 
 		}
 

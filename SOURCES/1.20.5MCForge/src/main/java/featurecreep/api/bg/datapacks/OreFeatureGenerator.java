@@ -12,7 +12,6 @@ import featurecreep.api.bg.orespawn.OreSpawnBasicConfig;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import game.BuiltInRegistries;
 import game.GenerationPlacement;
-import game.RegistryEntry;
 import game.RegistryKey;
 import game.RegistryKeys;
 import game.ResourceLocation;
@@ -89,26 +88,26 @@ public class OreFeatureGenerator {
 			OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 //BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, MY_ORE_PF);
 
-			ModelNode biomemodifier = new ModelNode();
-			biomemodifier.get("type").set("forge:add_features");
-			biomemodifier.get("biomes").set("#minecraft:is_overworld");
-			biomemodifier.get("features").set("orespawn:" + configs.get(i).name);
-			biomemodifier.get("step").set("underground_ores");
+//			ModelNode biomemodifier = new ModelNode();
+//			biomemodifier.get("type").set("forge:add_features");
+//			biomemodifier.get("biomes").set("#minecraft:is_overworld");
+//			biomemodifier.get("features").set("orespawn:" + configs.get(i).name);
+//			biomemodifier.get("step").set("underground_ores");
 
-			File modifier = new File(DataPackLoader.datapacklocation + "data/featurecreep/forge/biome_modifier/"
-					+ biomemodifier.hashCode() + ".json");// Gotta also change this to base64
-			modifier.getParentFile().mkdirs();
-			modifier.deleteOnExit();
-
-			try {
-				FileWriter configwriter = new FileWriter(modifier);
-				configwriter.write(biomemodifier.toJSONString(false));
-				configwriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+//			File modifier = new File(DataPackLoader.datapacklocation + "data/featurecreep/forge/biome_modifier/"
+//					+ biomemodifier.hashCode() + ".json");// Gotta also change this to base64
+//			modifier.getParentFile().mkdirs();
+//			modifier.deleteOnExit();
+//
+//			try {
+//				FileWriter configwriter = new FileWriter(modifier);
+//				configwriter.write(biomemodifier.toJSONString(false));
+//				configwriter.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
 		}
 
 	}

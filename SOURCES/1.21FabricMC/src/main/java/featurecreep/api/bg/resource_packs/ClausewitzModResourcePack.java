@@ -141,7 +141,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
                 if (!png.exists()) {
                     byte[] png_bytes = convertDDSToPNG(dds);
                     entries.put(vainilla_path, png_bytes);
-                    System.out.println("Converting DDS to PNG. Future loads will be faster " + png.getCanonicalPath());
+                    System.out.println("Convertando DDS a PNG. Las cargas futuras serán más rápidas " + png.getCanonicalPath());
                     try (FileOutputStream fos = new FileOutputStream(png.getCanonicalPath())) {
                         fos.write(png_bytes);
                     }
