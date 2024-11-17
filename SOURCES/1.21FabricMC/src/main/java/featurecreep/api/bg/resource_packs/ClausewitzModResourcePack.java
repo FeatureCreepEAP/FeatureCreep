@@ -9,8 +9,8 @@ import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 import java.util.function.Supplier;
 
 import co.phoenixlab.dds.Dds;
@@ -25,356 +25,330 @@ import featurecreep.api.parsers.ParseDMRItem;
 
 public class ClausewitzModResourcePack implements VainillaResourcePack {
 
-	public static File pngcaches = new File(FeatureCreep.gamepath.toString() + "/cachesfc/dds2png/");
+    public static File pngcaches = new File(FeatureCreep.gamepath.toString() + "/cachesfc/dds2png/");
 
-	public Mod mod;
-	public Map<String, byte[]> entries = new HashMap<String, byte[]>();
+    public Mod mod;
+    // Use ConcurrentHashMap for thread safety
+    public Map<String, byte[]> entries = new ConcurrentHashMap<>();
 
-	public ClausewitzModResourcePack(Mod mod) {
-		this.mod = mod;
-		refresh();
-	}
+    // Map for per-file locks to prevent race conditions
+    private final ConcurrentMap<String, Object> fileLocks = new ConcurrentHashMap<>();
 
-	@Override
-	public Supplier<InputStream> getStream(String location) {
-		// TODO Auto-generated method stub
-		byte[] get = entries.get(location);
-		if (get != null) {
-			return BasicIO.inputStreamSupplierFromBytes(get);
-		}
+    public ClausewitzModResourcePack(Mod mod) {
+        this.mod = mod;
+        refresh();
+    }
 
-		return null;
-	}
+    @Override
+    public Supplier<InputStream> getStream(String location) {
+        byte[] get = entries.get(location);
+        if (get != null) {
+            return BasicIO.inputStreamSupplierFromBytes(get);
+        }
+        return null;
+    }
 
-	/**
-	 * Converts the files from the Clausewitz and FeatureCreep formats to Minecraft
-	 * ones
-	 */
-	public void refresh() {
-		// TODO allow for custom item locations
-		pngcaches.mkdirs();
-		for (String entry : mod.getTechnologiesInterfaceGFXLocations()) {
-			String name = getFileName(entry);
-			if (isFileNameBGType(name) && name.endsWith(".dds")) {
-				String ns = getNameSpaceFromDDSFileName(name);
-				String rl = getNameSpaceFromDDSFileName(name);
-				putDDSEntryAsPNG("assets/" + ns + "/textures/item/" + rl + ".png", entry);// iirc older versions it may
-																							// be items rather than
-																							// item?
-			}
-		}
-		for (String entry : mod.getTerrainsInterfaceGFXLocations()) {
-			String name = getFileName(entry);
-			if (isFileNameBGType(name) && name.endsWith(".dds")) {
-				String ns = getNameSpaceFromDDSFileName(name);
-				String rl = getNameSpaceFromDDSFileName(name);
-				putDDSEntryAsPNG("assets/" + ns + "/textures/block/" + rl + ".png", entry);// iirc older versions it may
-																							// be blocks rather than
-																							// block?
-			}
-		}
+    /**
+     * Converts the files from the Clausewitz and FeatureCreep formats to Minecraft
+     * ones
+     */
+    public void refresh() {
+        pngcaches.mkdirs();
+        ExecutorService executor = Executors.newFixedThreadPool(4);
 
-		for (String entry : mod.getArmourModelsGFXLocations()) {
-			String name = getFileName(entry);
-			if (name.endsWith(".png")) {
-				String ns = getNameSpaceFromDDSFileName(name);
-				String rl = getNameSpaceFromDDSFileName(name);
-				entries.put("assets/" + ns + "/textures/models/armor/" + rl + ".png", getModBytes(entry));// iirc older
-																											// versions
-																											// it may be
-																											// blocks
-																											// rather
-																											// than
-																											// block?
-			}
-		}
+        for (String entry : mod.getTechnologiesInterfaceGFXLocations()) {
+            final String entryFinal = entry;
+            executor.submit(() -> {
+                String name = getFileName(entryFinal);
+                if (isFileNameBGType(name) && name.endsWith(".dds")) {
+                    String ns = getNameSpaceFromDDSFileName(name);
+                    String rl = getLocationFromDDSFileName(name);
+                    putDDSEntryAsPNG("assets/" + ns + "/textures/item/" + rl + ".png", entryFinal);
+                }
+            });
+        }
 
-		for (String entry : mod.getEntries("datafiedcontents/items/")) { // Part of FC BG
-			if (entry.endsWith(".dmr") || entry.endsWith(".json")) {// DMR Items
-				InputStream stream = this.getModStream(entry).get();
-				ParseDMRItem.registerFromStream(stream);
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		for (String entry : mod.getEntries("orespawn/config/")) { // Part of FC BG
-			if (entry.endsWith(".dmr") || entry.endsWith(".json")) {
-				InputStream stream = this.getModStream(entry).get();
-				OrespawnBasicFeatureParser.registerFromStream(stream, entry.endsWith(".json"));
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+        for (String entry : mod.getTerrainsInterfaceGFXLocations()) {
+            final String entryFinal = entry;
+            executor.submit(() -> {
+                String name = getFileName(entryFinal);
+                if (isFileNameBGType(name) && name.endsWith(".dds")) {
+                    String ns = getNameSpaceFromDDSFileName(name);
+                    String rl = getLocationFromDDSFileName(name);
+                    putDDSEntryAsPNG("assets/" + ns + "/textures/block/" + rl + ".png", entryFinal);
+                }
+            });
+        }
 
-	}
+        for (String entry : mod.getArmourModelsGFXLocations()) {
+            final String entryFinal = entry;
+            executor.submit(() -> {
+                String name = getFileName(entryFinal);
+                if (name.endsWith(".png")) {
+                    String ns = getNameSpaceFromDDSFileName(name);
+                    String rl = getLocationFromDDSFileName(name);
+                    entries.put("assets/" + ns + "/textures/models/armor/" + rl + ".png", getModBytes(entryFinal));
+                }
+            });
+        }
 
-	/**
-	 * Puts an entry
-	 */
-	public void putDDSEntryAsPNG(String vainilla_path, String dds_entry) {
+        for (String entry : mod.getEntries("datafiedcontents/items/")) { // Part of FC BG
+            if (entry.endsWith(".dmr") || entry.endsWith(".json")) { // DMR Items
+                final String entryFinal = entry;
+                executor.submit(() -> {
+                    try (InputStream stream = this.getModStream(entryFinal).get()) {
+                        ParseDMRItem.registerFromStream(stream);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        }
 
-		try {
-			byte[] dds = mod.get(dds_entry);
-			File png = new File(pngcaches.getCanonicalPath()+"/" + Md5.getHashFromBytesAsString(dds) + ".png");// Nesecito
-																												// ser
-																												// mas
-																												// rapida
-			if (!png.exists()) {
-				png.createNewFile();
-				byte[] png_bytes = convertDDSToPNG(dds);
-				entries.put(vainilla_path, png_bytes);
-				System.out.println(
-						"Convirtando DDS a PNG. Las cargas futuras serán más rápidas " + png.getCanonicalPath());
-				FileOutputStream fos = new FileOutputStream(png.getCanonicalPath());
-				// Write the byte array to the file
-				fos.write(png_bytes);
-				fos.close();
-			} else {
-				entries.put(vainilla_path, BasicIO.convertInputStreamToByteArray(new FileInputStream(png)));
-			}
+        for (String entry : mod.getEntries("orespawn/config/")) { // Part of FC BG
+            if (entry.endsWith(".dmr") || entry.endsWith(".json")) {
+                final String entryFinal = entry;
+                executor.submit(() -> {
+                    try (InputStream stream = this.getModStream(entryFinal).get()) {
+                        OrespawnBasicFeatureParser.registerFromStream(stream, entryFinal.endsWith(".json"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        }
 
-		} catch (IOException | NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+        executor.shutdown();
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static byte[] convertDDSToPNG(byte[] dds_bytes) {
-		Dds dds = new Dds();
-		byte[] ret = null;
-		try {
-			dds.read(dds_bytes);
-			DdsImageDecoder decoder = new DdsImageDecoder();
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			decoder.convertToPNG(dds, outputStream);
-			ret = outputStream.toByteArray();
-			outputStream.flush();
-			outputStream.close();
+    /**
+     * Puts an entry
+     */
+    public void putDDSEntryAsPNG(String vainilla_path, String dds_entry) {
+        try {
+            byte[] dds = mod.get(dds_entry);
+            String hashString = Md5.getHashFromBytesAsString(dds);
+            File png = new File(pngcaches.getCanonicalPath() + "/" + hashString + ".png");
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ret;
-	}
+            Object lock = fileLocks.computeIfAbsent(hashString, k -> new Object());
 
-	/**
-	 * Similar to getStream on vanilla but the normal getStream here does the
-	 * conversion
-	 * 
-	 * @param location
-	 * @return
-	 */
-	public byte[] getModBytes(String location) {
-		byte[] stream;
-		try {
-			stream = mod.get(location);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			return null;
-		}
+            synchronized (lock) {
+                if (!png.exists()) {
+                    byte[] png_bytes = convertDDSToPNG(dds);
+                    entries.put(vainilla_path, png_bytes);
+                    System.out.println("Converting DDS to PNG. Future loads will be faster " + png.getCanonicalPath());
+                    try (FileOutputStream fos = new FileOutputStream(png.getCanonicalPath())) {
+                        fos.write(png_bytes);
+                    }
+                } else {
+                    entries.put(vainilla_path, BasicIO.convertInputStreamToByteArray(new FileInputStream(png)));
+                }
+            }
 
-		return stream;
-	}
+        } catch (IOException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Similar to getStream on vanilla but the normal getStream here does the
-	 * conversion
-	 * 
-	 * @param location
-	 * @return
-	 */
-	public Supplier<InputStream> getModStream(String location) {
-		InputStream stream;
-		try {
-			stream = mod.getStream(location);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			return null;
-		}
+    public static byte[] convertDDSToPNG(byte[] dds_bytes) {
+        Dds dds = new Dds();
+        byte[] ret = null;
+        try {
+            dds.read(dds_bytes);
+            DdsImageDecoder decoder = new DdsImageDecoder();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            decoder.convertToPNG(dds, outputStream);
+            ret = outputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
 
-		return () -> stream;
-	}
+    /**
+     * Similar to getStream on vanilla but the normal getStream here does the
+     * conversion
+     * 
+     * @param location
+     * @return
+     */
+    public byte[] getModBytes(String location) {
+        try {
+            return mod.get(location);
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
-	/**
-	 * Similar to getStream on vanilla but the normal getStream here does the
-	 * conversion
-	 * 
-	 * @param location
-	 * @return
-	 */
-	public InputStream getUnsuppliedModStream(String location) {
-		InputStream stream;
-		try {
-			stream = mod.getStream(location);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			return null;
-		}
+    /**
+     * Similar to getStream on vanilla but the normal getStream here does the
+     * conversion
+     * 
+     * @param location
+     * @return
+     */
+    public Supplier<InputStream> getModStream(String location) {
+        try {
+            InputStream stream = mod.getStream(location);
+            return () -> stream;
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
-		return stream;
-	}
+    /**
+     * Similar to getStream on vanilla but the normal getStream here does the
+     * conversion
+     * 
+     * @param location
+     * @return
+     */
+    public InputStream getUnsuppliedModStream(String location) {
+        try {
+            return mod.getStream(location);
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
-	@Override
-	public Supplier<InputStream> getPackPng() {
-		// TODO Auto-generated method stub
-		if (mod.hasModFile()) {
-			if (mod.getModFile().getPicture() != null) {
-				return getStream(mod.getModFile().picture);
-			}
+    @Override
+    public Supplier<InputStream> getPackPng() {
+        if (mod.hasModFile()) {
+            if (mod.getModFile().getPicture() != null) {
+                return getStream(mod.getModFile().picture);
+            }
+        }
+        return null;
+    }
 
-		}
-		return null;
-	}
+    @Override
+    public Collection<String> getEntries(String prefix) {
+        ArrayList<String> strs = new ArrayList<>();
+        for (String str : entries.keySet()) {
+            if (str.startsWith(prefix)) {
+                strs.add(str);
+            }
+        }
+        return strs;
+    }
 
-	@Override
-	public Collection<String> getEntries(String prefix) {
-		// TODO Auto-generated method stub
-		ArrayList<String> strs = new ArrayList<String>();
-		for (String str : entries.keySet()) {
-			if (str.startsWith(prefix)) {
-				strs.add(str);
-			}
-		}
-		return strs;
-	}
+    @Override
+    public FCPackMCMeta getPackMCMetaInfo() {
+        return new FCPackMCMeta(PackLoader.pack_version, "");
+    }
 
-	@Override
-	public FCPackMCMeta getPackMCMetaInfo() {
-		// TODO Auto-generated method stub
-		return new FCPackMCMeta(PackLoader.pack_version, "");
-	}
+    @Override
+    public String getPackName() {
+        String name = mod.getName();
+        if (PackLoader.packLoaderFCHasPack(name)) {
+            name = name + "_clausewitz";
+        }
+        return name;
+    }
 
-	@Override
-	public String getPackName() {
-		// TODO Auto-generated method stub
-		String name = mod.getName();
-		if (PackLoader.packLoaderFCHasPack(name)) {
-			name = name + "_clausewitz";
-		}
-		return name;
-	}
+    @Override
+    public void closeStreams() {
+        // No streams to close in this implementation
+    }
 
-	@Override
-	public void closeStreams() {
-		// TODO Auto-generated method stub
+    public static boolean isItemGFX(String location) {
+        if (location.startsWith("assets/")) {
+            String[] dirs = location.split("/");
+            if (dirs.length == 4) {
+                return dirs[2].equals("textures") && dirs[3].equals("item");
+            }
+        }
+        return false;
+    }
 
-	}
+    public static boolean isBlockGFX(String location) {
+        if (location.startsWith("assets/")) {
+            String[] dirs = location.split("/");
+            if (dirs.length == 4) {
+                return dirs[2].equals("textures") && dirs[3].equals("block");
+            }
+        }
+        return false;
+    }
 
-	public static boolean isItemGFX(String location) {
-		// TODO Auto-generated method stub
-		if (location.startsWith("assets/")) {
-			String[] dirs = location.split("/");
-			if (dirs.length == 4) {
-				if (dirs[2].equals("textures") && dirs[3].equals("item")) {
-					return true;
-				} // Isnt it items in some versions? Need to make that a costant somewhere
-			}
-		}
+    public static boolean isArmourGFX(String location) {
+        if (location.startsWith("assets/")) {
+            String[] dirs = location.split("/");
+            if (dirs.length == 5) {
+                return dirs[2].equals("textures") && dirs[3].equals("models") && dirs[4].equals("armor");
+            }
+        }
+        return false;
+    }
 
-		return false;
-	}
+    /**
+     * Gets only the file name and removes the folder name
+     * 
+     * @param full_path the full path with the folder name
+     * @return
+     */
+    public static String getFileName(String full_path) {
+        if (full_path.endsWith("/")) {
+            return "";
+        }
+        File fil = new File(full_path);
+        return fil.getName();
+    }
 
-	public static boolean isBlockGFX(String location) {
-		// TODO Auto-generated method stub
-		if (location.startsWith("assets/")) {
-			String[] dirs = location.split("/");
-			if (dirs.length == 4) {
-				if (dirs[2].equals("textures") && dirs[3].equals("block")) {
-					return true;
-				} // Isnt it blocks in some versions? Need to make that a costant somewhere
-			}
-		}
+    /**
+     * Checks if the file name contains the Unicode characters for "!" or "§".
+     * 
+     * @param file_name the file name to check
+     * @return true if the file name contains either "!" (Unicode \u0021) or "§"
+     *         (Unicode \u00A7), false otherwise
+     */
+    public static boolean isFileNameBGType(String file_name) {
+        return file_name.contains("\u0021") || file_name.contains("\u00A7");
+    }
 
-		return false;
-	}
+    /**
+     * Gets the namespace and resource location from the DDS file name divided by §
+     * or !
+     * 
+     * @param file_name
+     * @return String array where index 0 is the namespace and index 1 is the
+     *         location
+     */
+    public static String[] getNameSpaceAndLocationFromDDSFileName(String file_name) {
+        String result = file_name.substring(0, file_name.length() - 4);
+        if (result.contains("\u0021")) { // Unicode for "!"
+            return result.split("\u0021");
+        } else {
+            return result.split("\u00A7"); // Unicode for "§"
+        }
+    }
 
-	public static boolean isArmourGFX(String location) {
-		// TODO Auto-generated method stub
-		if (location.startsWith("assets/")) {
-			String[] dirs = location.split("/");
-			if (dirs.length == 5) {
-				if (dirs[2].equals("textures") && dirs[3].equals("models") && dirs[3].equals("armor")) {
-					return true;
-				}
-			}
-		}
+    /**
+     * Gets the namespace from the DDS file name divided by § or !
+     * 
+     * @param file_name
+     * @return
+     */
+    public static String getNameSpaceFromDDSFileName(String file_name) {
+        return getNameSpaceAndLocationFromDDSFileName(file_name)[0];
+    }
 
-		return false;
-	}
+    /**
+     * Gets the location from the DDS file name divided by § or !
+     * 
+     * @param file_name
+     * @return
+     */
+    public static String getLocationFromDDSFileName(String file_name) {
+        return getNameSpaceAndLocationFromDDSFileName(file_name)[1];
+    }
 
-	/**
-	 * Gets only the file name and removes the folder name
-	 * 
-	 * @param full_path the full path with the folder name
-	 * @return
-	 */
-	public static String getFileName(String full_path) {
-		if (full_path.endsWith("/")) {
-			return "";
-		}
-		File fil = new File(full_path);
-		return fil.getName();
-	}
 
-	/**
-	 * Checks if the file name contains the Unicode characters for "!" or "§".
-	 * 
-	 * @param file_name the file name to check
-	 * @return true if the file name contains either "!" (Unicode \u0021) or "§"
-	 *         (Unicode \u00A7), false otherwise
-	 */
-	public static boolean isFileNameBGType(String file_name) {
-		// Check for the presence of "!" (Unicode \u0021) or "§" (Unicode \u00A7)
-		return file_name.contains("\u0021") || file_name.contains("\u00A7");
-	}
-
-	/**
-	 * gets the name space and resource location from the place file name of dds
-	 * items divided by § or !
-	 * 
-	 * @param file_name
-	 * @return 0 is the namespace and 1 is the location
-	 */
-	public static String[] getNameSpaceAndLocationFromDDSFileName(String file_name) {
-		// Remove the dds file extension
-		String result = file_name.substring(0, file_name.length() - 4);
-
-		// Check if the string contains either "!" or "§" and split accordingly
-		if (result.contains("\u0021")) { // Unicode for "!"
-			return result.split("\u0021");
-		} else {
-			return result.split("\u00A7");// Unicode for "§"
-		}
-	}
-
-	/**
-	 * gets the name space from the place file name of dds items divided by § or !
-	 * 
-	 * @param file_name
-	 * @return
-	 */
-	public static String getNameSpaceFromDDSFileName(String file_name) {
-		return getNameSpaceAndLocationFromDDSFileName(file_name)[0];
-	}
-
-	/**
-	 * gets the name space from the place file name of dds items divided by § or !
-	 * 
-	 * @param file_name
-	 * @return
-	 */
-	public static String getLocationFromDDSFileName(String file_name) {
-		return getNameSpaceAndLocationFromDDSFileName(file_name)[1];
-	}
+//TODO. make it so orespawn and datafied items are able to be removed in a pack and make an isEmptyOverride to check for that\
 
 }

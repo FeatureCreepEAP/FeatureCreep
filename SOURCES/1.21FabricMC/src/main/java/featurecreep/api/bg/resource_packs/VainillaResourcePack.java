@@ -69,10 +69,12 @@ public interface VainillaResourcePack extends IResourcePack {
 
 	@Internal
 	public static ResourceInputSupplier<InputStream> desdeSupplierNormal(Supplier<InputStream> supplier) {
+		if(supplier == null) {return null;}
+		InputStream stream=supplier.get(); 
+		if(stream == null) {return null;}
 		ResourceInputSupplier<InputStream> ret = () -> {
-			return supplier.get();
+			return stream;
 		};
-
 		return ret;
 	}
 
@@ -92,14 +94,15 @@ public interface VainillaResourcePack extends IResourcePack {
 	@Override
 	@Vainilla
 	public default void findResources(ResourceType dir, String namespace, String object_type, ResourceOutput output) {
+		
 
 		String namespacelocation = dir.getDirectory() + "/" + namespace + "/";// this.appendOverlayPrefix(dir.getDirectory()
 																				// + "/" + namespace + "/"); TODO,
 																				// support subpacks better
-		String search_path = this.appendOverlayPrefix(namespacelocation + "/" + object_type + "/");
+		String search_path = this.appendOverlayPrefix(namespacelocation + object_type + "/");
 		for (String entry : getEntries(search_path)) {
 			if (!entry.endsWith("/")) {
-				String file_name_no_dir = entry.substring(namespacelocation.length());
+				String file_name_no_dir = entry.substring(namespacelocation.length());				
 				ResourceLocation lv = ResourceLocation.fromSeperated(namespace, file_name_no_dir);
 				output.accept(lv, desdeSupplierNormal(getStream(entry)));
 			}
@@ -119,24 +122,32 @@ public interface VainillaResourcePack extends IResourcePack {
 	/**
 	 * The namespaces/modids/pack prefixes. e.g. assets/prefix/textures/postfix.png
 	 * 
-	 * @return
+	 * @return A set of unique prefixes (namespaces).
 	 */
 	public default Set<String> getPackPrefixes() {
-		Set<String> prefixes = new HashSet<>();
+	    Set<String> prefixes = new HashSet<>();
 
-		// Get all entries with an empty prefix to retrieve the root-level entries
-		Collection<String> entries = getEntries("");
+	    // Get all entries with an empty prefix to retrieve the root-level entries
+	    Collection<String> entries = getEntries("");
 
-		for (String entry : entries) {
-			// Check if the entry is a directory and starts with "assets/" or "data/"
-			if (entry.endsWith("/") && (entry.startsWith("assets/") || entry.startsWith("data/"))) {
-				// Extract the prefix, which is the first two segments
-				String prefix = entry.substring(0, entry.indexOf('/', entry.indexOf('/') + 1) + 1);
-				prefixes.add(prefix); // Add the unique prefix to the set
-			}
-		}
+	    for (String entry : entries) {
+	        // Check if the entry starts with "assets/" or "data/"
+	        if (entry.startsWith("assets/") || entry.startsWith("data/")) {
+	            // Remove "assets/" or "data/" prefix
+	            String withoutPrefix = entry.startsWith("assets/") ? entry.substring(7) : entry.substring(5);
+	            // Extract the prefix, which is the segment before the next '/'
+	            int slashIndex = withoutPrefix.indexOf('/');
+	            if (slashIndex != -1) {
+	                String prefix = withoutPrefix.substring(0, slashIndex);
+	                prefixes.add(prefix); // Add the unique prefix to the set
+	            } else {
+	                // If there's no additional '/', the entire string is the prefix
+	                prefixes.add(withoutPrefix);
+	            }
+	        }
+	    }
 
-		return prefixes;
+	    return prefixes;
 	}
 
 	@Override
@@ -235,6 +246,11 @@ public interface VainillaResourcePack extends IResourcePack {
 		};
 	}
 
+	public default boolean isEmpty() {
+		return getEntries("assets/").isEmpty()&&getEntries("data/").isEmpty();
+	}
+	
+	
 	@Internal
 	@FunctionalInterface
 	public static interface Loader extends ResourcePackInfo.Loader {

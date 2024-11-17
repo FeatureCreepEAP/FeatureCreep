@@ -4,11 +4,15 @@ package featurecreep.api.bg;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.jar.Manifest;
 
+import com.google.common.collect.ImmutableSet;
+
 import featurecreep.FeatureCreep;
+import featurecreep.api.anti_encapsulation.GoogleCommonsImmutableMutaliser;
 import featurecreep.api.bg.resource_packs.VainillaResourcePack;
 import featurecreep.api.platform.super_.SuperLoader;
 import game.ResourcePackInfo;
@@ -18,13 +22,16 @@ import game.ResourceType;
 
 public class FCPackLoad implements ResourcePackProvider {
 
+	public static FCPackLoad INSTANCE = new FCPackLoad();
+	
+	
 	@Override
 	public void loadPacks(Consumer<ResourcePackInfo> consumer) {
 		// TODO Auto-generated method stub
 
 		for (Entry<String, VainillaResourcePack> entry : PackLoader.packs.entrySet()) {
 			VainillaResourcePack pack = entry.getValue();
-			if (!isNative(pack)) {
+			if (!isNative(pack) && !pack.isEmpty()) {
 
 				ResourcePackInfo info = ResourcePackInfo.register(pack.getInfo(), pack.getLoader(),
 						ResourceType.SERVER_DATA, // No longer
@@ -40,9 +47,29 @@ public class FCPackLoad implements ResourcePackProvider {
 						new ResourcePackPositioningAndRequirnmentSetting(true,
 								ResourcePackInfo.InsertionPosition.TOP.inverse(), true));// I need to check that this
 																							// also does client stuff
+				
+				
+				
+				ResourcePackInfo clientinfo = ResourcePackInfo.register(pack.getInfo(), pack.getLoader(),
+						ResourceType.CLIENT_RESOURCES, // No longer
+						// need to
+						// worry
+						// about
+						// pack
+						// version
+						// and its
+						// fast
+						// moving
+						// eh!
+						new ResourcePackPositioningAndRequirnmentSetting(true,
+								ResourcePackInfo.InsertionPosition.TOP.inverse(), true));// I need to check that this
+																							// also does client stuff
+				
+				
 				if (info != null) {
 					System.out.println("Adding FCDatapack "+pack.getName());
 					consumer.accept(info);
+					consumer.accept(clientinfo);
 				}
 			}
 
@@ -134,5 +161,17 @@ public class FCPackLoad implements ResourcePackProvider {
 
 		return false;
 	}
+	
+	
+	public static void updateProviders(Set<ResourcePackProvider> providers) {
+		if(providers instanceof ImmutableSet) {//I doubt it will be anything but regularimmutbleset
+			GoogleCommonsImmutableMutaliser.addToRegularImmutableSet(INSTANCE, providers);
+		}else {//Sometimes,like with FabricAPI, the type is changed, such as by fabric api, lets hope its not immutable
+			providers.add(INSTANCE);
+		}
+		
+		
+	}
+	
 
 }

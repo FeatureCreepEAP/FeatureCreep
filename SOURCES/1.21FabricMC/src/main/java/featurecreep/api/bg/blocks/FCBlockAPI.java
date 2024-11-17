@@ -125,22 +125,22 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	public default void registerModels() {
 
 		if (getSingleSided()) {
-			this.setDownTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setEastTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setNorthTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setParticleTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setSouthTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setUpTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setWestTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
+			this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName());
 
 		} else {
-			this.setDownTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_down");
-			this.setEastTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_east");
-			this.setNorthTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_north");
-			this.setParticleTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_particle");
-			this.setSouthTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_south");
-			this.setUpTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_up");
-			this.setWestTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_west");
+			this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_down");
+			this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_east");
+			this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_north");
+			this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_particle");
+			this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_south");
+			this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_up");
+			this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_west");
 
 		}
 

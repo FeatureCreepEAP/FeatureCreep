@@ -134,5 +134,5 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 		// TODO Auto-generated method stub
 		return getStream("pack.png");
 	}
-
+	
 }
