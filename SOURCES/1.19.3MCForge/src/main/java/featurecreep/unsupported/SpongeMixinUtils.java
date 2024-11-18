@@ -1,18 +1,13 @@
 package featurecreep.unsupported;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
 
 import org.jboss.dmr.ModelNode;
@@ -20,6 +15,7 @@ import org.spongepowered.asm.service.MixinService;
 
 import featurecreep.FeatureCreep;
 import featurecreep.api.GameInjections;
+import featurecreep.loader.filesystem.PhilKatzZip;
 import featurecreep.loader.utils.ClassPathUtils;
 
 public class SpongeMixinUtils {
@@ -35,53 +31,26 @@ public class SpongeMixinUtils {
 					|| archivos.contains("riftmod.json") || archivos.contains("litemod.json")
 					|| archivos.contains("quilt.mod.json") || archivos.contains("fabric.mod.json")) { // Nesesito volver
 																										// a ecribir
-					
-							
-							
-							
-							 try (JarInputStream jarStream = new JarInputStream(new FileInputStream(new File(arc)))) {  
-					                JarEntry entry;  
-					                while ((entry = jarStream.getNextJarEntry()) != null) {  
-					                	ByteArrayOutputStream bos = new ByteArrayOutputStream();
-										byte[] buffer = new byte[1024];
-										int bytesRead;
-										while ((bytesRead = jarStream.read(buffer)) != -1) {
-											bos.write(buffer, 0, bytesRead);
-										}
-										byte[] entryBytes = bos.toByteArray();
-					                	
-					                	ByteArrayInputStream bits = new ByteArrayInputStream(entryBytes);
-					                	if (bits != null) {
-					                		
-					                		if (entry.getName().endsWith(".class")) {
-					    						all_classes.add(entry.getName().replace("/", ".").substring(0, entry.getName().length() - 6));
-					    					} else if (entry.getName().endsWith(".json")) {
-					                		
-											ModelNode node = ModelNode.fromJSONStream(bits);
-											if (node.has("package")) {
-												paquetes.add(node.get("package").asString());
-											}
 
-										}
-					                	
-					                	
-					                }
-					                
-							 }  
-							
-							
-							 } catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
+				try {
+					PhilKatzZip zip = new PhilKatzZip(arc);
+					for (Map.Entry<String, byte[]> entry : zip.getMap().entrySet()) {
+						String nombre = entry.getKey();
+							if (nombre.endsWith(".class")) {
+								all_classes.add(nombre.replace("/", ".").substring(0, nombre.length() - 6));
+							} else if (nombre.endsWith(".json")) {
+								ModelNode node = ModelNode.fromJSONStream(zip.getStream(nombre));
+								if (node.has("package")) {
+									paquetes.add(node.get("package").asString());
+								}
 
+							}	
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-					
-				
 			}
 
 		}
@@ -114,10 +83,10 @@ public class SpongeMixinUtils {
 
 			// TODO Auto-generated catch block
 			if (!completa.contains(clase) && !MixinService.getService().getClassTracker().isClassLoaded(clase)) {
-			completa.add(clase);
+				completa.add(clase);
 			}
 			for (String paquete : paquetes) {
-				if (clase.startsWith(paquete)) {// una manera mejor probelmente existe por subpaquetes			
+				if (clase.startsWith(paquete)) {// una manera mejor probelmente existe por subpaquetes
 					completa.remove(clase);
 				}
 			}
@@ -133,6 +102,3 @@ public class SpongeMixinUtils {
 	}
 
 }
-
-
-

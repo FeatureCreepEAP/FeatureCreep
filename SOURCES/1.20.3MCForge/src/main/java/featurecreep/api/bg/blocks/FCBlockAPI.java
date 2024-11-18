@@ -126,22 +126,22 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	public default void registerModels() {
 
 		if (getSingleSided()) {
-			this.setDownTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setEastTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setNorthTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setParticleTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setSouthTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setUpTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
-			this.setWestTextureName(this.getModId() + ":blocks/" + this.getUnlocName());
+			this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName());
 
 		} else {
-			this.setDownTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_down");
-			this.setEastTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_east");
-			this.setNorthTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_north");
-			this.setParticleTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_particle");
-			this.setSouthTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_south");
-			this.setUpTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_up");
-			this.setWestTextureName(this.getModId() + ":blocks/" + this.getUnlocName() + "_west");
+			this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_down");
+			this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_east");
+			this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_north");
+			this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_particle");
+			this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_south");
+			this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_up");
+			this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_west");
 
 		}
 
@@ -153,30 +153,15 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		node.get("parent").set(this.getModId() + ":block/" + this.getUnlocName());
 		// node.get("textures").get("layer0").set(public_modid + ":items/" +
 		// public_name); Not needed in Blocks
+
 		if (FeatureCreep.debug_mode) {
 			System.out.print(node.toJSONString(false));
 		}
-		try {
 
-			File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId()
-					+ "/models/item/" + this.getUnlocName() + ".json");
+		String file_name = "assets/" + this.getModId()
+		+ "/models/item/" + this.getUnlocName() + ".json";
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
 
-			if (!myObj.exists()) {
-				if (FeatureCreep.debug_mode) {
-					System.out.println(myObj.toString());
-				}
-				myObj.getParentFile().mkdirs();
-
-				FileWriter myWriter = new FileWriter(myObj);
-				myWriter.write(node.toJSONString(true));
-				myWriter.close();
-
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		// Block Model Generation
 
@@ -190,56 +175,23 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		block_node.get("textures").get("up").set(this.getUpTextureName());
 		block_node.get("textures").get("west").set(this.getWestTextureName());
 
-		System.out.print(block_node.toJSONString(false));
 
-		try {
 
-			File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId()
-					+ "/models/block/" + this.getUnlocName() + ".json");
+		file_name = "assets/" + this.getModId()
+		+ "/models/block/" + this.getUnlocName() + ".json";
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(block_node.toJSONString(false)));
 
-			if (!myObj.exists()) {
-
-				System.out.println(myObj.toString());
-				myObj.getParentFile().mkdirs();
-
-				FileWriter myWriter = new FileWriter(myObj);
-				myWriter.write(block_node.toJSONString(true));
-				myWriter.close();
-
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		// Blockstates
 
 		ModelNode blockstate = new ModelNode();
 		blockstate.get("variants").get("").get("model").set(this.getModId() + ":block/" + this.getUnlocName());
 
-		System.out.print(blockstate.toJSONString(false));
 
-		try {
+		file_name = "assets/" + this.getModId()
+		+ "/blockstates/" + this.getUnlocName() + ".json";
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(blockstate.toJSONString(false)));
 
-			File myObj = new File(featurecreep.api.bg.PackLoader.fc_pack_location + "/assets/" + this.getModId()
-					+ "/blockstates/" + this.getUnlocName() + ".json");
-
-			if (!myObj.exists()) {
-
-				System.out.println(myObj.toString());
-				myObj.getParentFile().mkdirs();
-
-				FileWriter myWriter = new FileWriter(myObj);
-				myWriter.write(blockstate.toJSONString(true));
-				myWriter.close();
-
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public default Block get() {

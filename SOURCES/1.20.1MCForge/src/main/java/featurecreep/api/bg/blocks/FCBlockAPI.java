@@ -123,81 +123,77 @@ extends BlockOrItem<T> {
         this.holder().unimat = mat;
     }
 
-    @Override
-    default public void registerModels() {
-        if (this.getSingleSided()) {
-            this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName());
-            this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName());
-            this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName());
-            this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName());
-            this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName());
-            this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName());
-            this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName());
-        } else {
-            this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_down");
-            this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_east");
-            this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_north");
-            this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_particle");
-            this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_south");
-            this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_up");
-            this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_west");
-        }
-        ModelNode node = new ModelNode();
-        node.get("parent").set(this.getModId() + ":block/" + this.getUnlocName());
-        System.out.print(node.toJSONString(false));
-        try {
-            File myObj = new File(PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/models/item/" + this.getUnlocName() + ".json");
-            if (!myObj.exists()) {
-                System.out.println(myObj.toString());
-                myObj.getParentFile().mkdirs();
-                FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write(node.toJSONString(true));
-                myWriter.close();
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        ModelNode block_node = new ModelNode();
-        block_node.get("parent").set("minecraft:block/cube");
-        block_node.get("textures").get("down").set(this.getDownTextureName());
-        block_node.get("textures").get("east").set(this.getEastTextureName());
-        block_node.get("textures").get("north").set(this.getNorthTextureName());
-        block_node.get("textures").get("particle").set(this.getParticleTextureName());
-        block_node.get("textures").get("south").set(this.getSouthTextureName());
-        block_node.get("textures").get("up").set(this.getUpTextureName());
-        block_node.get("textures").get("west").set(this.getWestTextureName());
-        System.out.print(block_node.toJSONString(false));
-        try {
-            File myObj = new File(PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/models/block/" + this.getUnlocName() + ".json");
-            if (!myObj.exists()) {
-                System.out.println(myObj.toString());
-                myObj.getParentFile().mkdirs();
-                FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write(block_node.toJSONString(true));
-                myWriter.close();
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        ModelNode blockstate = new ModelNode();
-        blockstate.get("variants").get("").get("model").set(this.getModId() + ":block/" + this.getUnlocName());
-        System.out.print(blockstate.toJSONString(false));
-        try {
-            File myObj = new File(PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/blockstates/" + this.getUnlocName() + ".json");
-            if (!myObj.exists()) {
-                System.out.println(myObj.toString());
-                myObj.getParentFile().mkdirs();
-                FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write(blockstate.toJSONString(true));
-                myWriter.close();
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+   	@Override
+	public default void registerModels() {
+
+		if (getSingleSided()) {
+			this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName());
+			this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName());
+
+		} else {
+			this.setDownTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_down");
+			this.setEastTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_east");
+			this.setNorthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_north");
+			this.setParticleTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_particle");
+			this.setSouthTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_south");
+			this.setUpTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_up");
+			this.setWestTextureName(this.getModId() + ":block/" + this.getUnlocName() + "_west");
+
+		}
+
+		// Item Generation
+
+		// I could just do a long string but i will need to use this format for some
+		// other things so may as well start
+		ModelNode node = new ModelNode();
+		node.get("parent").set(this.getModId() + ":block/" + this.getUnlocName());
+		// node.get("textures").get("layer0").set(public_modid + ":items/" +
+		// public_name); Not needed in Blocks
+
+		if (FeatureCreep.debug_mode) {
+			System.out.print(node.toJSONString(false));
+		}
+
+		String file_name = "assets/" + this.getModId()
+		+ "/models/item/" + this.getUnlocName() + ".json";
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
+
+
+		// Block Model Generation
+
+		ModelNode block_node = new ModelNode();
+		block_node.get("parent").set("minecraft:block/cube");
+		block_node.get("textures").get("down").set(this.getDownTextureName());
+		block_node.get("textures").get("east").set(this.getEastTextureName());
+		block_node.get("textures").get("north").set(this.getNorthTextureName());
+		block_node.get("textures").get("particle").set(this.getParticleTextureName());
+		block_node.get("textures").get("south").set(this.getSouthTextureName());
+		block_node.get("textures").get("up").set(this.getUpTextureName());
+		block_node.get("textures").get("west").set(this.getWestTextureName());
+
+
+
+		file_name = "assets/" + this.getModId()
+		+ "/models/block/" + this.getUnlocName() + ".json";
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(block_node.toJSONString(false)));
+
+
+		// Blockstates
+
+		ModelNode blockstate = new ModelNode();
+		blockstate.get("variants").get("").get("model").set(this.getModId() + ":block/" + this.getUnlocName());
+
+
+		file_name = "assets/" + this.getModId()
+		+ "/blockstates/" + this.getUnlocName() + ".json";
+		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(blockstate.toJSONString(false)));
+
+	}
 
     @Override
     default public Block get() {

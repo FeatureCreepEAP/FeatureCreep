@@ -3,6 +3,7 @@ package featurecreep.api.hashing;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -10,6 +11,32 @@ public class Sha256 implements Hash {
 
 	public static String getHashFromFileAsString(File file) throws NoSuchAlgorithmException, IOException {
 		return bytesToHex(calculateFileHash(file));
+	}
+	
+	public static String getHashFromInputStreamAsString(InputStream stream) throws NoSuchAlgorithmException, IOException {
+		return bytesToHex(calculateSteamHash(stream));
+	}
+	
+	public static String getHashFromBytesAsString(byte[] bytes) throws NoSuchAlgorithmException, IOException {
+		return bytesToHex(calculateBytesHash(bytes));
+	}
+
+	public static byte[] calculateSteamHash(InputStream stream) throws IOException, NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+		byte[] buffer = new byte[1024];
+		int read;
+		while ((read = stream.read(buffer)) != -1) {
+			md.update(buffer, 0, read);
+		}
+
+		return md.digest();
+	}
+
+	public static byte[] calculateBytesHash(byte[] bytes) throws IOException, NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(bytes);
+		return md.digest();
 	}
 
 	public static byte[] calculateFileHash(File file) throws IOException, NoSuchAlgorithmException {

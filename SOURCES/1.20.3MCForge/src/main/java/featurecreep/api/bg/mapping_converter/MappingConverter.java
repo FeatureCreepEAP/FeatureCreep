@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -11,13 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.zip.GZIPInputStream;
 
 import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.assistremapper.mappings.PDMEMappings;
 
 import featurecreep.FeatureCreep;
+import featurecreep.loader.filesystem.PhilKatzZip;
 
 public class MappingConverter {
 
@@ -35,20 +37,24 @@ public class MappingConverter {
 					if (url.getProtocol().equals("jar")) {
 						String jarPath = url.getPath().substring(0, url.getPath().indexOf('!')); // 去除 jar:file: 和 !
 																									// 后的部分
-						try (JarInputStream jar = new JarInputStream(new URL(jarPath).openStream())) {
-							JarEntry entry;
-							while ((entry = jar.getNextJarEntry()) != null) {
-								if (entry.getName().startsWith("fci") && !entry.isDirectory()
-										&& entry.getName().endsWith(".pdme.gz")) {
-									// 使用 classLoader 来获取输入流，以便正确处理缓存等
-									InputStream inputStream = MappingConverter.class.getClassLoader()
-											.getResourceAsStream(entry.getName());
-									if (inputStream != null) {
-										pairs.put(entry.getName(), inputStream);
+						
+							try {
+								PhilKatzZip jar = new PhilKatzZip(new URI(jarPath).toURL());
+								for (String fil:jar.getFilenames("fci")) {
+									if (fil.endsWith(".pdme.gz")) {
+										// 使用 classLoader 来获取输入流，以便正确处理缓存等
+										InputStream inputStream = MappingConverter.class.getClassLoader()
+												.getResourceAsStream(fil);
+										if (inputStream != null) {
+											pairs.put(fil, inputStream);
+										}
 									}
 								}
+							} catch (URISyntaxException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						}
+						
 
 					} else {
 						fcjar = new JarFile(FeatureCreep.loader.getFeatureCreepJar());

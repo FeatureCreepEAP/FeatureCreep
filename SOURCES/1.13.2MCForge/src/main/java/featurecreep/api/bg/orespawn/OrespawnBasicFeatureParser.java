@@ -24,26 +24,7 @@ import game.WorldDecorationGenerator;
 
 public class OrespawnBasicFeatureParser {
     public static void spawnOresFromDefaultConfig() {
-        String string1 = new String(FeatureCreep.gamepath.toString() + "/orespawn/config/");
-        File file2 = new File(string1);
-        String[] contents = file2.list();
-       
-       if(FeatureCreep.debug_mode) {
-        System.out.println("List of files and directories in the specified directory:");
-       }
-       
-        if (contents != null) {
-            for (int i = 0; i < contents.length; ++i) {
-            if(FeatureCreep.debug_mode) {
-                System.out.println("FeatureCreep is trying to load " + contents[i]);
-                System.out.println(string1 + contents[i] + "/");
-            }
-                splitOS3Basic(getModelNodesFromFile(string1 + contents[i] + "/"));
-            }
-        }
-        else {
-            FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
-        }
+
     }
     
     public static ModelNode getModelNodesFromFile(String string) {
@@ -75,6 +56,44 @@ public class OrespawnBasicFeatureParser {
             parseOS3Basic(rowNode.get(0), rowNode.asString().split("\"")[1]);
         }
     }
+    
+    
+    /**
+	 * Register from JSON or DMR Plaintext InputStream
+	 * @param stream
+	 * @param is_json is JSON  rather than DMR Plaintext
+	 */
+	public static void registerFromStream(InputStream stream, boolean is_json) {
+		try {
+			ModelNode binarynode;
+			if(is_json) {
+				binarynode= ModelNode.fromJSONStream(stream);
+			}else {
+				binarynode = new ModelNode();
+			binarynode.readExternal(stream);
+			}
+			splitOS3Basic(binarynode);
+		} catch (java.io.InvalidObjectException e) {
+			splitOS3Basic(DMRStringtoNode(BasicIO.inputstreamToString(stream),is_json));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Parses a Plaintext DMR String or JSON String
+	 * @param string
+	 * @param is_json Is JSON rather than DMR plaintext
+	 * @return
+	 */
+	public static ModelNode DMRStringtoNode(String string, boolean is_json) {
+		ModelNode node;
+		if(is_json) {node = ModelNode.fromJSONString(string);}
+		else {node = ModelNode.fromString(string);}
+		return node;
+	}
+    
     
     public static void parseOS3Basic(ModelNode modelNode, String string) {
         if (modelNode.get("enabled").asBoolean()) {

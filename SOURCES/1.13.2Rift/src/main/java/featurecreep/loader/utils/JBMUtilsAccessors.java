@@ -2,6 +2,7 @@ package featurecreep.loader.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
@@ -91,12 +92,11 @@ public class JBMUtilsAccessors {
 	}
 
 	public static JarFile getJarFile(final File name, final boolean verify) throws IOException {
-		if (JavaUtils.isJavaVersionNewerThan8()) {
+//		if (JavaUtils.isJavaVersionNewerThan8()) {
 //			return new JarFile(name, verify, JarFile.OPEN_READ, JarFile.runtimeVersion());
-			return new JarFile(name, verify, JarFile.OPEN_READ);//TODO when we make loader a seperate project make it the J9 one
-		} else {
+//		} else {
 			return new JarFile(name, verify, JarFile.OPEN_READ);
-		}
+	//	}
 	}
 
 	public static LocalLoader getSystemLocalLoader() {

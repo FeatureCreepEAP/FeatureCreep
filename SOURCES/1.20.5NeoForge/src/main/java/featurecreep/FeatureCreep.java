@@ -60,6 +60,10 @@ public class FeatureCreep {
 	public static MappingConverter mappings_converter = GameInjections.mappings_converter;
 public static JarRemapper remapper = GameInjections.remapper;
 public static boolean main_init =false;
+public static ModuleClausewitzModLoader clausewitz_module_modloader = new ModuleClausewitzModLoader();
+public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = new FileSystemClausewitzModLoader();
+public static WithoutModFileModuleClausewitzModLoader clausewitz_module_modloader_no_modfile = new WithoutModFileModuleClausewitzModLoader();
+public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_modloader_no_modfile = new WithoutModFileFileSystemClausewitzModLoader();
 	
 	
 //TODO Make Packages Needed list all forge packages as its not linear like Fabric
@@ -85,6 +89,19 @@ public static boolean main_init =false;
 		loader.setMainTransformer(new RemappingClassFileTransformer(loader));
 		loader.getTransformers().addAll(GameInjections.cargador.getTransformers());
 		loader.loadMods();
+		
+		
+		try {
+			clausewitz_filesystem_modloader.search(new DirectoryReader(gamepath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Module mod:loader.getModules()) {
+			clausewitz_module_modloader.search(mod);
+			clausewitz_module_modloader_no_modfile.search(mod);//Maybe try to make one 1 work in the future
+		}
+		
 		loader.runMods();// Soon I got to load before transforming and then run now
 		DataParseContent.parseContent();
 		PackLoader.loadPacks(loader.getModules());
@@ -95,6 +112,18 @@ public static boolean main_init =false;
 
 
 	}
+	
+		public static List<Mod> getClausewitzMods(){
+		ArrayList<Mod> list = new ArrayList<Mod>();
+		list.addAll(clausewitz_module_modloader.getMods());
+		list.addAll(clausewitz_filesystem_modloader.getMods());
+		list.addAll(clausewitz_module_modloader_no_modfile.getMods());
+		list.addAll(clausewitz_filesystem_modloader_no_modfile.getMods());
+		return list;
+	}
+	
+	
+	
 
 	// TOCHANGE
 	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {

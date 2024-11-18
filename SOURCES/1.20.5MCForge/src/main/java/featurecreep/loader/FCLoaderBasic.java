@@ -11,6 +11,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
@@ -41,10 +42,11 @@ import org.jboss.modules.ModuleSpec;
 import org.jboss.modules.Resource;
 
 import featurecreep.loader.eventviewer.EventViewer;
+import featurecreep.loader.filesystem.PhilKatzZip;
 import featurecreep.loader.finder.FCFileSystemClassPathFinder;
 import featurecreep.loader.finder.ModuleLoadingMap;
-import featurecreep.loader.finder.PKZipResourceLoader;
 import featurecreep.loader.finder.ModuleLoadingMap.ModuleLoadingMapEntry;
+import featurecreep.loader.finder.FileSystemResourceLoader;
 import featurecreep.loader.utils.ArrayCombiner;
 import featurecreep.loader.utils.JBMUtilsAccessors;
 
@@ -375,7 +377,12 @@ public interface FCLoaderBasic {
 		// TODO Auto-generated method stub
 		URL url = res.getURL();
 		String string = url.toString();
-		this.getModuleLoadingMap().put(string, new ModuleLoadingMapEntry(string, new PKZipResourceLoader(url)));
+		try {
+			this.getModuleLoadingMap().put(string, new ModuleLoadingMapEntry(string, new FileSystemResourceLoader(new PhilKatzZip(res.openStream(),res.getURL().toURI()))));
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return this.loadModule(string, true);
 	}
 

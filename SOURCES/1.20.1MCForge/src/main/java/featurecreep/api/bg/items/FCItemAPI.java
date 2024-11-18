@@ -31,20 +31,9 @@ extends BlockOrItem<T> {
         ModelNode node = new ModelNode();
         node.get("parent").set("minecraft:item/generated");
         node.get("textures").get("layer0").set(this.getModId() + ":item/" + this.getUnlocName());
-        System.out.print(node.toJSONString(false));
-        try {
-            File myObj = new File(PackLoader.fc_pack_location + "/assets/" + this.getModId() + "/models/item/" + this.getUnlocName() + ".json");
-            if (!myObj.exists()) {
-                System.out.println(myObj.toString());
-                myObj.getParentFile().mkdirs();
-                FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write(node.toJSONString(true));
-                myWriter.close();
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+String file_name = "assets/" + this.getModId()
+			+ "/models/item/" + this.getUnlocName() + ".json";
+			PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
     }
 
     @Override

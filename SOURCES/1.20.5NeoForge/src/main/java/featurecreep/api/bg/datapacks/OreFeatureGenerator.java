@@ -1,17 +1,16 @@
 package featurecreep.api.bg.datapacks;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;
 
+import featurecreep.FeatureCreep;
+import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.orespawn.OreSpawnBasicConfig;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
+import featurecreep.api.io.BasicIO;
 import game.BuiltInRegistries;
 import game.GenerationPlacement;
-import game.RegistryEntry;
 import game.RegistryKey;
 import game.RegistryKeys;
 import game.ResourceLocation;
@@ -55,57 +54,31 @@ public class OreFeatureGenerator {
 			type.get("type").set("minecraft:biome");
 			placed.get("placement").add(type);
 
-			System.out.println(configured.toJSONString(false));
-			System.out.println(placed.toJSONString(false));
+			if (FeatureCreep.debug_mode) {
+				System.out.println(configured.toJSONString(false));
+				System.out.println(placed.toJSONString(false));
+			}
 
-			File configedfile = new File(DataPackLoader.datapacklocation + "/data/" + "orespawn"
+			
+			
+			
+			String configedfile = new String("data/" + "orespawn"
 					+ "/worldgen/configured_feature/" + configs.get(i).name + ".json");
-			File placedfile = new File(DataPackLoader.datapacklocation + "/data/" + "orespawn"
+			String placedfile = new String("data/" + "orespawn"
 					+ "/worldgen/placed_feature/" + configs.get(i).name + ".json");
 
-			configedfile.getParentFile().mkdirs();
-			placedfile.getParentFile().mkdirs();
+PackLoader.entries.put(configedfile, BasicIO.stringToByteArray(configured.toJSONString(false)));
+PackLoader.entries.put(placedfile, BasicIO.stringToByteArray(placed.toJSONString(false)));
 
-			try {
-				FileWriter configwriter = new FileWriter(configedfile);
-				configwriter.write(configured.toJSONString(false));
-				configwriter.close();
-				FileWriter placedwriter = new FileWriter(placedfile);
-				placedwriter.write(placed.toJSONString(false));
-				placedwriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
-			configedfile.deleteOnExit();
-			placedfile.deleteOnExit();
+
 
 //https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
-			RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
-					new ResourceLocation("orespawn", configs.get(i).name));
-			OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
-//BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, MY_ORE_PF);
+RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
+		ResourceLocation.fromSeperated("orespawn", configs.get(i).name));
+OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 
-			ModelNode biomemodifier = new ModelNode();
-			biomemodifier.get("type").set("forge:add_features");
-			biomemodifier.get("biomes").set("#minecraft:is_overworld");
-			biomemodifier.get("features").set("orespawn:" + configs.get(i).name);
-			biomemodifier.get("step").set("underground_ores");
 
-			File modifier = new File(DataPackLoader.datapacklocation + "data/featurecreep/forge/biome_modifier/"
-					+ biomemodifier.hashCode() + ".json");// Gotta also change this to base64
-			modifier.getParentFile().mkdirs();
-			modifier.deleteOnExit();
-
-			try {
-				FileWriter configwriter = new FileWriter(modifier);
-				configwriter.write(biomemodifier.toJSONString(false));
-				configwriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 		}
 

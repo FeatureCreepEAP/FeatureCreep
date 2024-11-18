@@ -54,6 +54,12 @@ public class PluginFalso implements IMixinConfigPlugin{
 	@Override
 	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+		// TODO Auto-generated method stub
 		if(GameInjections.debug_mode)
 			System.out.println("clase para transformacion: " + targetClassName);
 		
@@ -85,35 +91,35 @@ public class PluginFalso implements IMixinConfigPlugin{
 		
 		
 		if(targetClass.fields!=null)
-			targetClass.fields.removeAll(targetClass.fields);
+			targetClass.fields.clear();
 		
 		if(targetClass.methods!=null)
-			targetClass.methods.removeAll(targetClass.methods);
+			targetClass.methods.clear();
 		
 		if(targetClass.invisibleAnnotations!=null)
-			targetClass.invisibleAnnotations.removeAll(targetClass.invisibleAnnotations);
+			targetClass.invisibleAnnotations.clear();
 		
 		if(targetClass.visibleAnnotations!=null)
-			targetClass.visibleAnnotations.removeAll(targetClass.visibleAnnotations);
+			targetClass.visibleAnnotations.clear();
 		
 		if(targetClass.innerClasses!=null)
-			targetClass.innerClasses.removeAll(targetClass.innerClasses);
+			targetClass.innerClasses.clear();
 		
 		if(targetClass.attrs!=null)
-			targetClass.attrs.removeAll(targetClass.attrs);
+			targetClass.attrs.clear();
 		
 		if(targetClass.interfaces!=null)
-			targetClass.interfaces.removeAll(targetClass.interfaces);
+			targetClass.interfaces.clear();
 		
 		if(targetClass.invisibleTypeAnnotations!=null)
-			targetClass.invisibleTypeAnnotations.removeAll(targetClass.invisibleTypeAnnotations);
+			targetClass.invisibleTypeAnnotations.clear();
 		
 	
 		if(targetClass.visibleTypeAnnotations!=null)
-			targetClass.visibleTypeAnnotations.removeAll(targetClass.visibleTypeAnnotations);
+			targetClass.visibleTypeAnnotations.clear();
 
 		if(targetClass.permittedSubclasses!=null)
-			targetClass.permittedSubclasses.removeAll(targetClass.permittedSubclasses);
+			targetClass.permittedSubclasses.clear();
 		
 		
 		
@@ -133,12 +139,6 @@ public class PluginFalso implements IMixinConfigPlugin{
 //		}
 		
 		}
-		
-	}
-
-	@Override
-	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-		// TODO Auto-generated method stub
 		
 	}
 

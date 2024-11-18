@@ -23,10 +23,11 @@ import org.jboss.modules.ModuleSpec;
 import org.jboss.modules.ResourceLoader;
 
 import featurecreep.loader.eventviewer.EventViewer;
+import featurecreep.loader.filesystem.PhilKatzZip;
 import featurecreep.loader.finder.ModuleLoadingMap;
 import featurecreep.loader.finder.ModuleLoadingMap.ModuleLoadingMapEntry;
 import featurecreep.loader.finder.NeedsFCLoaderBasic;
-import featurecreep.loader.finder.PKZipResourceLoader;
+import featurecreep.loader.finder.FileSystemResourceLoader;
 import featurecreep.loader.finder.PathResourceLoader;
 import featurecreep.loader.utils.JBMUtilsAccessors;
 
@@ -419,7 +420,7 @@ public class FCLoaderBasicR8 extends ModuleLoader implements FCLoaderBasic  {
 			//TODO allow for other resource detecters
 			if (file.isFile()) {
 				
-					ResourceLoader rl = new PKZipResourceLoader(url);
+					ResourceLoader rl = new FileSystemResourceLoader(new PhilKatzZip(file.getCanonicalPath()));
 					this.getModuleLoadingMap().put(url_as_string, new ModuleLoadingMapEntry(url_as_string,rl));
 					
 			}else {
