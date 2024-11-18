@@ -46,11 +46,6 @@ public class FeatureCreepMCInit implements BiomeAdder, InitializationListener, C
 	public void registerBiomes() {
 		// TODO Auto-generated method stub
      	FeatureCreep.onInitialise();
-//FeatureCreepMC.registerItems();
-//FeatureCreepMC.registerBlocks();     	
-
-     	Client.getInstance().getLocalResourcePackRepository().addPackFinder(new FCPackLoad(new File(PackLoader.fc_pack_location)));
-
 	}
 
 	@Override

@@ -33,7 +33,6 @@ import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.FieldInfo;
 import javassist.bytecode.MethodInfo;
 import javassist.bytecode.Opcode;
-import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.versions.mcp.MCPVersion;
 
 public class GameInjections {

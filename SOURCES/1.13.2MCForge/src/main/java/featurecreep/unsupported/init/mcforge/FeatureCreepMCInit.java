@@ -1,12 +1,8 @@
 package featurecreep.unsupported.init.mcforge;
 
-import java.io.File;
 import java.nio.file.Path;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.bg.FCPackLoad;
-import featurecreep.api.bg.PackLoader;
-import game.Client;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,8 +53,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 	        // like automatically subscribing an entire class to an event bus
 	        // or using static methods to listen to events,
 	        // feel free to check out the Forge wiki!
-	     	Client.getInstance().getLocalResourcePackRepository().addPackFinder(new FCPackLoad(new File(PackLoader.fc_pack_location)));
-
 
 	    }
 	    

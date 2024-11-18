@@ -26,10 +26,12 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
 import javassist.ClassPool;
+import javassist.bytecode.AccessFlag;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.FieldInfo;
 import javassist.bytecode.MethodInfo;
 import javassist.bytecode.Opcode;
 import net.minecraftforge.versions.mcp.MCPVersion;
@@ -96,6 +98,8 @@ public class GameInjections {
 			return TitleScreenInjection(buff);
 		} else if (nombre.equals(reverse_mappings.getClassMappedName("game.GameConfig"))) {
 			return GameOptionsInjection(buff);
+		}  else if (nombre.equals(reverse_mappings.getClassMappedName("game.ResourcePackManager"))) {
+			return transformresourcemanager(buff);
 		} else if (nombre.equals(reverse_mappings.getClassMappedName("game.Item"))) {
 			return itemInjection(buff);
 		}
@@ -128,7 +132,7 @@ public class GameInjections {
 
 				code.addAload(0);
 				code.addGetfield(file.getName().replace(".", "/"), packs, "Ljava/util/List;");
-				code.addLdc("fcpack_" + Integer.toString(PackLoader.pack_version));
+				code.addLdc("fcpack_" + Integer.toString(texture_pack_version));
 				code.addInvokeinterface("java/util/List", "add", "(Ljava/lang/Object;)Z", 2);
 				code.addOpcode(Opcode.POP);
 
@@ -179,6 +183,51 @@ public class GameInjections {
 
 		return buff;
 
+	}
+
+	public static ByteBuffer transformresourcemanager(ByteBuffer basicClass) {
+		// TODO Auto-generated method stub
+//game.ResourcePackManager.reloadPacksFromFinders()V
+		// game.ResourcePackManager.providers:Ljava/util/Set;
+
+		try {
+			ClassFile file = ClassFileUtils.classFileFromByteBuffer(basicClass);
+			String target = reverse_mappings.getDefMappedName("game.ResourcePackManager.reloadPacksFromFinders()V");
+			String providers = reverse_mappings.getVarMappedName("game.ResourcePackManager.providers:Ljava/util/Set;");
+
+			// initialise
+			MethodInfo def = ClassFileUtils.getMethodInfoWithDescriptor(file, target, "()V");
+			if (def != null) {
+				CodeAttribute coat = def.getCodeAttribute();
+				Bytecode code = new Bytecode(file.getConstPool());
+
+code.addAload(0);
+				code.addAload(0);
+				code.addGetfield(file.getName().replace(".", "/"), providers, "Ljava/util/Set;");
+				code.addInvokestatic("featurecreep/api/bg/FCPackLoad", "updateProviders", "(Ljava/util/Set;)V");				
+	
+				code.addOpcode(Opcode.POP);
+
+				code.addGetstatic("java/lang/System", "out", "Ljava/io/PrintStream;");
+				code.addLdc("Testing JA On Resource Manager");
+				code.addInvokevirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V"); // System.out.println("Testing
+//																									// JA");
+
+				coat.iterator().begin();
+				coat.iterator().insert(code.get());
+
+				FieldInfo provs = ClassFileUtils.getFieldInfoWithDescriptor(file, providers, "Ljava/util/Set;");
+				provs.setAccessFlags(AccessFlag.PUBLIC);
+				
+				return ClassFileUtils.classFileToByteBuffer(file);
+			}
+
+		} catch (IOException | BadBytecode e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return basicClass;
 	}
 
 	/**

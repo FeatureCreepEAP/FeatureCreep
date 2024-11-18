@@ -1,8 +1,6 @@
 package featurecreep.api.bg.datapacks;
 
 import featurecreep.FeatureCreep;
-import featurecreep.api.bg.FCPackLoad;
-import game.Client;
 
 public class DataPackLoader {
 
@@ -12,10 +10,6 @@ public class DataPackLoader {
 	public static void onInitialise(){
 		CraftZoneLoader.saveCraftNodes();
 		CraftZoneLoader.saveMeltNodes();
-
-     	Client.getInstance().getLocalResourcePackRepository().addPackFinder(FCPackLoad.INSTANC E);
-
-
 	}
 
 	
