@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;
-
+import java.io.InputStream;
+import featurecreep.api.io.BasicIO;
 import dangerzone.DangerZoneBase;
 import dangerzone.blocks.Block;
 import dangerzone.blocks.Blocks;

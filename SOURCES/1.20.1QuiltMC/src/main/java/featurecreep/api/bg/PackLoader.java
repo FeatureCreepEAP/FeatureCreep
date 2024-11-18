@@ -34,7 +34,7 @@ public class PackLoader implements VainillaResourcePack{
 		packs.put(pack_name, INSTANCE);
 		for(Mod mod:FeatureCreep.getClausewitzMods()) {
 			ClausewitzModResourcePack pack = new ClausewitzModResourcePack(mod);
-			packs.put(pack.getName(), pack);
+			packs.put(pack.getPackName(), pack);
 		}
 		for(Module mod:FeatureCreep.loader.getModules()) {
 			packs.put(mod.getName(),new ModuleVainillaResourcePack(mod));
@@ -113,3 +113,4 @@ public class PackLoader implements VainillaResourcePack{
 	}
 
 }
+

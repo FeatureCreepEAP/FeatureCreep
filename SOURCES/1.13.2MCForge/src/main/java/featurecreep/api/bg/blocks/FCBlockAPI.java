@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.jboss.dmr.ModelNode;
+import featurecreep.FeatureCreep;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
@@ -18,6 +19,8 @@ import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 import game.LivingEntity;
 import game.Player;
 

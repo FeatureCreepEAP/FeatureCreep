@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;
-
+import java.io.InputStream;
+import featurecreep.api.io.BasicIO;
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.registries.GameRegistries;
 import game.Biome;

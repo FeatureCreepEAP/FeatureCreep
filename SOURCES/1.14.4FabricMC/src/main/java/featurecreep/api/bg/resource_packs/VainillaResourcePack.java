@@ -1,0 +1,243 @@
+package featurecreep.api.bg.resource_packs;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import featurecreep.api.annotations.Internal;
+import featurecreep.api.annotations.Vainilla;
+import game.GSONHelperChatDeserialiser;
+import game.IResourcePack;
+import game.PackMCMetaReader;
+import game.ResourceLocation;
+import game.ResourceType;
+
+public interface VainillaResourcePack extends IResourcePack {
+
+	public static String METADATA_PATH_SUFFIX = ".mcmeta";
+	public static String PACK_METADATA_NAME = "pack.mcmeta";
+
+	/**
+	 * Returns a Supplier for an inputstream
+	 * 
+	 * @param location Location of the file in the pack
+	 * @return
+	 */
+	public Supplier<InputStream> getStream(String location);
+
+	/**
+	 * Gets the pack.png for the resource pack. It should be in png format. It null
+	 * if none found
+	 * 
+	 * @return
+	 */
+	public Supplier<InputStream> getPackPng();
+
+
+	@Internal
+	public static String toPath(FCResourceType arg, String namespace, String path) {
+		return String.format(Locale.ROOT, "%s/%s/%s", arg.getDirectory(), namespace, path);
+	}
+
+	/**
+	 * Returns a collection of all the paths. Folders should end with /
+	 * 
+	 * @param prefix based on the MC Resource Pack Structure the location to include
+	 *               Files/Directories from
+	 * @return
+	 */
+	public Collection<String> getEntries(String prefix);
+
+	/**
+	 * The namespaces/modids/pack prefixes. e.g. assets/prefix/textures/postfix.png
+	 * 
+	 * @return A set of unique prefixes (namespaces).
+	 */
+	public default Set<String> getPackPrefixes() {
+		Set<String> prefixes = new HashSet<>();
+
+		// Get all entries with an empty prefix to retrieve the root-level entries
+		Collection<String> entries = getEntries("");
+
+		for (String entry : entries) {
+			// Check if the entry starts with "assets/" or "data/"
+			if (entry.startsWith("assets/") || entry.startsWith("data/")) {
+				// Remove "assets/" or "data/" prefix
+				String withoutPrefix = entry.startsWith("assets/") ? entry.substring(7) : entry.substring(5);
+				// Extract the prefix, which is the segment before the next '/'
+				int slashIndex = withoutPrefix.indexOf('/');
+				if (slashIndex != -1) {
+					String prefix = withoutPrefix.substring(0, slashIndex);
+					prefixes.add(prefix); // Add the unique prefix to the set
+				} else {
+					// If there's no additional '/', the entire string is the prefix
+					prefixes.add(withoutPrefix);
+				}
+			}
+		}
+
+		return prefixes;
+	}
+
+	@Override
+	@Vainilla
+	public default Set<String> getNamespaces(ResourceType var1) {
+		return getPackPrefixes();
+	}
+
+	@Override
+	@Vainilla
+	public default <T> T parseMetadata(PackMCMetaReader<T> var1) throws IOException {
+		Gson gson = new Gson();
+		JsonObject obj = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
+		if (!obj.has(var1.getKey())) {
+			return null;
+		}
+		return var1.fromJson(GSONHelperChatDeserialiser.getObject(obj, var1.getKey()));
+	}
+
+	public FCPackMCMeta getPackMCMetaInfo();
+
+	/**
+	 * Resource Pack Name
+	 * 
+	 * @return
+	 */
+	public String getPackName();
+
+	@Vainilla
+	@Override
+	public default String getName() {
+		return getPackName();
+	}
+
+	@Vainilla
+	@Override
+	public default void close() {
+		closeStreams();
+	}
+
+	/**
+	 * Close the ResourcePack and all its streams
+	 */
+	public void closeStreams();
+
+	/**
+	 * For Minecraft 1.13+ the Resource Packs have a feature called overlays which
+	 * are like subpacks, this is the prefix for those
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public default String getOverlay() {
+		return "";
+	}
+
+	/**
+	 * For Minecraft 1.13+ the Resource Packs have a feature called overlays which
+	 * are like subpacks, this adds the prefix for those
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public default String appendOverlayPrefix(String string) {
+		if (this.getOverlay().isEmpty()) {
+			return string;
+		}
+		return this.getOverlay() + "/" + string;
+	}
+
+	/**
+	 * Checks if a resource Exists
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public default boolean hasResource(String resource) {
+		return this.getEntries(resource).contains(resource);
+	}
+
+	public default VainillaResourcePack getVainillaResourcePack(String overley) {
+		return this;
+	}
+
+	public default boolean isEmpty() {
+		return getEntries("assets/").isEmpty() && getEntries("data/").isEmpty();
+	}
+
+	@Vainilla
+	@Override
+	public default boolean contains(ResourceType arg0, ResourceLocation arg1) {
+		// TODO Auto-generated method stub
+		try {
+			return openResourcePackAsStream(arg0,arg1)!=null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return false;
+		}
+	}
+
+	
+	@Vainilla
+	@Override
+	public default Collection<ResourceLocation> findResources(ResourceType dir, String namespace, int arg2,
+			Predicate<String> arg3) {
+		// TODO Auto-generated method stub
+
+		ArrayList<ResourceLocation> ret = new ArrayList<ResourceLocation>();
+		String namespacelocation = dir.getDirectory() + "/" + namespace + "/";// this.appendOverlayPrefix(dir.getDirectory()
+		// + "/" + namespace + "/"); TODO,
+		// support subpacks better
+		for (String entry : getEntries(namespacelocation)) {
+			if (!entry.endsWith("/")) {
+				String file_name_no_dir = entry.substring(namespacelocation.length());
+				ResourceLocation lv = new ResourceLocation(namespace, file_name_no_dir);
+				ret.add(lv);
+			}
+		}
+
+		return ret;
+	
+	
+	
+	}
+	
+	
+
+	@Vainilla
+	@Override
+	public default InputStream getRootResourceStream(String name) throws IOException {
+		// TODO Auto-generated method stub
+		if (name.equals("pack.png")) {
+			Supplier<InputStream> sup = getPackPng();
+			if (sup != null) {
+				return sup.get();
+			} else {
+				return null;
+			}
+		}
+
+		return this.getStream(name).get();
+	
+	}
+
+	@Vainilla
+	@Override
+	public default InputStream openResourcePackAsStream(ResourceType arg0, ResourceLocation arg1) throws IOException {
+		// TODO Auto-generated method stub
+		FCResourceType type = FCResourceType.checkBuiltIn(arg0.getDirectory());
+		String path = toPath(type, arg1.getNamespace(), arg1.getPath());
+		return getStream(this.appendOverlayPrefix(path)).get();
+	}
+
+}

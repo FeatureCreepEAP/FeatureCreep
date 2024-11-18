@@ -20,6 +20,8 @@ import game.Item;
 import game.ItemStack;
 import game.LivingEntity;
 import game.Player;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 
 public interface FCItemAPI<T> extends BlockOrItem<T> {
 

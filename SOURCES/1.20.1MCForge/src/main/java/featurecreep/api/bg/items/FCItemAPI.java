@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.jboss.dmr.ModelNode;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 
 public interface FCItemAPI<T>
 extends BlockOrItem<T> {

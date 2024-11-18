@@ -19,6 +19,8 @@ import game.Item;
 import game.ItemStack;
 import game.LivingEntity;
 import game.Player;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 
 public interface FCItemAPI<T> extends BlockOrItem<T> {
 
@@ -27,11 +29,16 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 
 
 @Override
- public default void registerModels() {
+public default void registerModels() {
+
+   //I could just do a long string but i will need to use this format for some other things so may as well start 
+   ModelNode node = new ModelNode();
+   node.get("parent").set("item/generated");
+   node.get("textures").get("layer0").set(this.getModId() + ":items/" + this.getUnlocName());
 String file_name = "assets/" + this.getModId()
 			+ "/models/item/" + this.getUnlocName() + ".json";
 			PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
-  }
+ }
   
   
   

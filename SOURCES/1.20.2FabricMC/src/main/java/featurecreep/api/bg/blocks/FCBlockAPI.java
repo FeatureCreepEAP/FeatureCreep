@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.jboss.dmr.ModelNode;
+import featurecreep.FeatureCreep;
 
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
@@ -19,6 +20,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
 import game.ItemStack;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 import game.LivingEntity;
 import game.Player;
 

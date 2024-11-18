@@ -1,14 +1,16 @@
 package featurecreep.api.bg.orespawn;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.InputStream;
+import featurecreep.api.io.BasicIO;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.io.BasicIO;
 import game.BiomeGenerationSettings;
 import game.Block;
 import game.BuiltInRegistries;

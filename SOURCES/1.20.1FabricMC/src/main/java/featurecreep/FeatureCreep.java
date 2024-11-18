@@ -1,10 +1,13 @@
 package featurecreep;
 
 import java.io.File;
-import java.lang.instrument.Instrumentation;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.logging.Logger;
+import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoader;
 
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
@@ -20,6 +23,11 @@ import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.bg.ui.FCCreativeTabs;
+import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.Mod;
+import featurecreep.api.clausewitz.mod.ModuleClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileFileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileModuleClausewitzModLoader;
 import featurecreep.api.parsers.DataParseContent;
 import featurecreep.api.platform.super_.SuperLoader;
 import featurecreep.content.FCBlocks;
@@ -27,13 +35,11 @@ import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
-import featurecreep.mixin.CoreMod;
-import featurecreep.unsupported.ModuleRemapper;
+import featurecreep.loader.filesystem.DirectoryReader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
 import game.CommandDispatcher;
 import game.CommandOriginStack;
 import javassist.ClassPool;
-import net.fabricmc.loader.api.FabricLoader;
 
 public class FeatureCreep {
 

@@ -5,7 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.InputStream;
+import featurecreep.api.io.BasicIO;
 import org.jboss.dmr.ModelNode;
 
 import com.mojang.serialization.Codec;

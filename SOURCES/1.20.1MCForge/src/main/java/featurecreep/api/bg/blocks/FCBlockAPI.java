@@ -18,6 +18,10 @@ import game.ItemStack;
 import game.LivingEntity;
 import game.Player;
 import java.io.File;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
+import featurecreep.FeatureCreep;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

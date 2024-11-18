@@ -1,13 +1,23 @@
 package featurecreep;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.logging.Logger;
+import org.jboss.modules.Module;
+import java.io.IOException;
+import featurecreep.loader.filesystem.DirectoryReader;
 import org.jboss.modules.ModuleLoader;
 
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
-
+import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.Mod;
+import featurecreep.api.clausewitz.mod.ModuleClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileFileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileModuleClausewitzModLoader;
 import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.GameInjections;
@@ -16,6 +26,11 @@ import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
 import featurecreep.api.bg.ui.FCCreativeTabs;
+import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.Mod;
+import featurecreep.api.clausewitz.mod.ModuleClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileFileSystemClausewitzModLoader;
+import featurecreep.api.clausewitz.mod.WithoutModFileModuleClausewitzModLoader;
 import featurecreep.api.parsers.DataParseContent;
 import featurecreep.api.platform.super_.SuperLoader;
 import featurecreep.content.FCBlocks;
@@ -23,6 +38,7 @@ import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
 import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
+import featurecreep.loader.filesystem.DirectoryReader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
 import javassist.ClassPool;
 

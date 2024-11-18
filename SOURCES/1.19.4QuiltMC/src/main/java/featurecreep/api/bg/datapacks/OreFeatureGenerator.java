@@ -75,7 +75,7 @@ PackLoader.entries.put(placedfile, BasicIO.stringToByteArray(placed.toJSONString
 
 //https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
 RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
-		ResourceLocation.fromSeperated("orespawn", configs.get(i).name));
+		new ResourceLocation("orespawn", configs.get(i).name));
 OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 
 
@@ -85,3 +85,4 @@ OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 	}
 
 }
+

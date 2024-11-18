@@ -1,17 +1,19 @@
 package featurecreep.api.bg.orespawn;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.io.InputStream;
+import featurecreep.api.io.BasicIO;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
+import featurecreep.api.io.BasicIO;
 import game.Block;
 import game.DecoratorComponent;
 import game.MineralDepositFeatureGenerator;

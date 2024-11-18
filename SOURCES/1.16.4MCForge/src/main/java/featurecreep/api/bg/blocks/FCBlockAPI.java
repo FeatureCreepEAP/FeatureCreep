@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import featurecreep.FeatureCreep;
 
 import org.jboss.dmr.ModelNode;
 
@@ -23,6 +24,9 @@ import game.Block;
 import game.ItemStack;
 import game.LivingEntity;
 import game.Player;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
+
 
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 

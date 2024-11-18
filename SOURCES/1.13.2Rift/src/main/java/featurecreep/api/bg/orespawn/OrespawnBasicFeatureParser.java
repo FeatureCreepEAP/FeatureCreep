@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.jboss.dmr.ModelNode;
-
+import java.io.InputStream;
+import featurecreep.api.io.BasicIO;
 import featurecreep.FeatureCreep;
 import game.Biome;
 import game.Biomes;

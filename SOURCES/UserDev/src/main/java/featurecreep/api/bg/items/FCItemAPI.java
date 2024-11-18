@@ -8,6 +8,8 @@ import org.jboss.dmr.ModelNode;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 
 public interface FCItemAPI<T> extends BlockOrItem<T> {
 

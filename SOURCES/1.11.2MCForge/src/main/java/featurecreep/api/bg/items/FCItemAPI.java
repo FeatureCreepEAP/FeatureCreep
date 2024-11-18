@@ -16,7 +16,8 @@ import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
-
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 
 public interface FCItemAPI<T> extends BlockOrItem<T> {
 

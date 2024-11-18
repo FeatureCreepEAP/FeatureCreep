@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.jboss.dmr.ModelNode;
+import featurecreep.FeatureCreep;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
@@ -17,6 +18,8 @@ import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import game.Block;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 import game.ItemStack;
 import game.LivingEntity;
 import game.Player;
@@ -152,10 +155,6 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		node.get("parent").set(this.getModId() + ":block/" + this.getUnlocName());
 		// node.get("textures").get("layer0").set(public_modid + ":items/" +
 		// public_name); Not needed in Blocks
-
-		if (FeatureCreep.debug_mode) {
-			System.out.print(node.toJSONString(false));
-		}
 
 		String file_name = "assets/" + this.getModId()
 		+ "/models/item/" + this.getUnlocName() + ".json";

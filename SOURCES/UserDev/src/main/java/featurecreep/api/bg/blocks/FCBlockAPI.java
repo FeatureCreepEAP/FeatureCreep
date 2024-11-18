@@ -1,6 +1,7 @@
 package featurecreep.api.bg.blocks;
 
 import java.util.ArrayList;
+import featurecreep.FeatureCreep;
 
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
@@ -10,6 +11,8 @@ import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
+import featurecreep.api.io.BasicIO;
+import featurecreep.api.bg.PackLoader;
 
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
