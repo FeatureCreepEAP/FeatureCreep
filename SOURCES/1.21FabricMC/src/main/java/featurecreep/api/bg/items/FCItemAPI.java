@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.jboss.dmr.ModelNode;
+import featurecreep.api.bg.VersionDependentContstants;
 
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.PackLoader;
@@ -34,7 +35,7 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
 		// other things so may as well start
 		ModelNode node = new ModelNode();
 		node.get("parent").set("minecraft:item/generated");
-		node.get("textures").get("layer0").set(this.getModId() + ":item/" + this.getUnlocName());
+		node.get("textures").get("layer0").set(this.getModId() + ":"+VersionDependentContstants.ITEM_TEXTURE_LOCATION+"/" + this.getUnlocName());
 
 		if (FeatureCreep.debug_mode) {
 			System.out.print(node.toJSONString(false));

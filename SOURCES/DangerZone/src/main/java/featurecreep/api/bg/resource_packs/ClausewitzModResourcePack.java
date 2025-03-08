@@ -17,6 +17,7 @@ import co.phoenixlab.dds.Dds;
 import co.phoenixlab.dds.DdsImageDecoder;
 import featurecreep.FeatureCreep;
 import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.VersionDependentContstants;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.clausewitz.mod.Mod;
 import featurecreep.api.hashing.Md5;
@@ -63,7 +64,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
                 if (isFileNameBGType(name) && name.endsWith(".dds")) {
                     String ns = getNameSpaceFromDDSFileName(name);
                     String rl = getLocationFromDDSFileName(name);
-                    putDDSEntryAsPNG("assets/" + ns + "/textures/item/" + rl + ".png", entryFinal);
+                    putDDSEntryAsPNG("assets/" + ns + "/textures/"+VersionDependentContstants.ITEM_TEXTURE_LOCATION+"/" + rl + ".png", entryFinal);
                 }
             });
         }
@@ -75,7 +76,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
                 if (isFileNameBGType(name) && name.endsWith(".dds")) {
                     String ns = getNameSpaceFromDDSFileName(name);
                     String rl = getLocationFromDDSFileName(name);
-                    putDDSEntryAsPNG("assets/" + ns + "/textures/block/" + rl + ".png", entryFinal);
+                    putDDSEntryAsPNG("assets/" + ns + "/textures/"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + rl + ".png", entryFinal);
                 }
             });
         }
@@ -352,3 +353,4 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 //TODO. make it so orespawn and datafied items are able to be removed in a pack and make an isEmptyOverride to check for that\
 
 }
+

@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
 import org.jboss.dmr.ModelNode;
 import featurecreep.api.io.BasicIO;
 import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.VersionDependentContstants;
+
 
 public interface FCItemAPI<T>
 extends BlockOrItem<T> {
@@ -32,7 +34,7 @@ extends BlockOrItem<T> {
     default public void registerModels() {
         ModelNode node = new ModelNode();
         node.get("parent").set("minecraft:item/generated");
-        node.get("textures").get("layer0").set(this.getModId() + ":item/" + this.getUnlocName());
+		node.get("textures").get("layer0").set(this.getModId() + ":"+VersionDependentContstants.ITEM_TEXTURE_LOCATION+"/" + this.getUnlocName());
 String file_name = "assets/" + this.getModId()
 			+ "/models/item/" + this.getUnlocName() + ".json";
 			PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));

@@ -3,6 +3,7 @@ package featurecreep.api.bg.items;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import featurecreep.api.bg.VersionDependentContstants;
 
 import org.jboss.dmr.ModelNode;
 
@@ -30,7 +31,7 @@ public interface FCItemAPI<T> extends BlockOrItem<T> {
     //I could just do a long string but i will need to use this format for some other things so may as well start 
     ModelNode node = new ModelNode();
     node.get("parent").set("item/generated");
-    node.get("textures").get("layer0").set(this.getModId() + ":items/" + this.getUnlocName());
+		node.get("textures").get("layer0").set(this.getModId() + ":"+VersionDependentContstants.ITEM_TEXTURE_LOCATION+"/" + this.getUnlocName());
 String file_name = "assets/" + this.getModId()
 			+ "/models/item/" + this.getUnlocName() + ".json";
 			PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));

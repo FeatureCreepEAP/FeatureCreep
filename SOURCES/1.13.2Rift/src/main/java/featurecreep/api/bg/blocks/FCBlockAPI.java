@@ -23,6 +23,8 @@ import game.LivingEntity;
 import game.Player;
 import featurecreep.api.io.BasicIO;
 import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.VersionDependentContstants;
+
 
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
@@ -97,22 +99,22 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
     // TODO Auto-generated method stub
 
     if (getSingleSided()) {
-      this.setDownTextureName    (this.getModId() + ":blocks/" + this.getUnlocName());
-      this.setEastTextureName (this.getModId() + ":blocks/" + this.getUnlocName());
-      this.setNorthTextureName  (this.getModId() + ":blocks/" + this.getUnlocName());
-      this.setParticleTextureName  (this.getModId() + ":blocks/" + this.getUnlocName());
-      this.setSouthTextureName  (this.getModId() + ":blocks/" + this.getUnlocName());
-      this.setUpTextureName  (this.getModId() + ":blocks/" + this.getUnlocName());
-      this.setWestTextureName  (this.getModId() + ":blocks/" + this.getUnlocName());
+      this.setDownTextureName    (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+      this.setEastTextureName (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+      this.setNorthTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+      this.setParticleTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+      this.setSouthTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+      this.setUpTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+      this.setWestTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
 
     } else {
-    	this.setDownTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_down");
-    	this.setEastTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_east");
-    	this.setNorthTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_north");
-    	this.setParticleTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_particle");
-    	this.setSouthTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_south");
-    	this.setUpTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_up");
-    	this.setWestTextureName( this.getModId() + ":blocks/" + this.getUnlocName() + "_west");
+    	this.setDownTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_down");
+    	this.setEastTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_east");
+    	this.setNorthTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_north");
+    	this.setParticleTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_particle");
+    	this.setSouthTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_south");
+    	this.setUpTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_up");
+    	this.setWestTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_west");
 
     }
 
