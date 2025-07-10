@@ -1,13 +1,7 @@
 # FeatureCreep
 
-A mod which adds many features from older mods to other versions and loads mods.
+NOTE: WE ARE CURRENTLY CHANGING BUILD ENV and MAPPINGS
 
-THIS IS ONLY FOR DISPLAYING THE DEV ENVIORNMENT, FOR RELEASES PLEASE USE ONE OF THE FOLLOWING SITES
-https://featurecreepmc.downwithamerica.com
-https://featurecreepdz.downwithamerica.com
-https://featurecreepmc.minecraftmoddevelopment.com
-https://featurecreepdz.minecraftmoddevelopment.com
+Git Group: https://pagure.io/projects/FeatureCreep/
 
-Please Use a Branch for the correct version you want.
-
-NOTE: WE ARE CURRENTLY CHANGING BUILD ENV and MAPPINGS, NOT ALL VERSIONS MAY APPEAR ATM BUT WILL ALL BE ADDED BACK
+For new versions you will see the source code in the SFPMS folder. However FeatureCreep is being modularised so much of the code is being dividied across multiple repos. The Binaries for FeatureCreep API for Minecraft can only be built under a UNIX based system and does not work on Windows unless you use WSL. You must also have the mappings setup correctly. This process will soon be simplified.
