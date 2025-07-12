@@ -4,10 +4,10 @@ import org.jboss.dmr.ModelNode;
 
 import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.items.tools.ToolsAPI;
+import featurecreep.api.bg.parsers.ParseDMRItem;
 import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
-import featurecreep.api.parsers.ParseDMRItem;
 import game.Item;
 
 public class FCItemAsDMR<FCItemAsDMR> implements DMRItem<FCItemAsDMR>

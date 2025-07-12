@@ -6,9 +6,9 @@ import featurecreep.api.bg.items.datafied.dmr.FCItemAsDMR;
 import featurecreep.api.bg.items.tools.FCHoe;
 import featurecreep.api.bg.items.tools.FCToolMaterial;
 import featurecreep.api.bg.items.tools.ToolsAPI;
+import featurecreep.api.bg.parsers.ParseDMRItem;
 import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import featurecreep.api.parsers.ParseDMRItem;
 import featurecreep.content.FCItems;
 import game.Item;
 
