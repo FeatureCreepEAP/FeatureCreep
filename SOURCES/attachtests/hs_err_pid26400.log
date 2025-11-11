@@ -1,0 +1,1284 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fea4e2970c5, pid=26400, tid=0x00007fea345ff640
+#
+# JRE version: OpenJDK Runtime Environment (8.0_412-b08) (build 1.8.0_412-b08)
+# Java VM: OpenJDK 64-Bit Server VM (25.412-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libc.so.6+0x970c5]  _int_free+0x1b5
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://access.redhat.com/support/cases/
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fea483c8000):  JavaThread "JNA Cleaner" daemon [_thread_in_native, id=26427, stack(0x00007fea34500000,0x00007fea34600000)]
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00007feab0b6c918
+
+Registers:
+RAX=0x00007fea483f93b0, RBX=0x00000000687735b0, RCX=0x0000000006877359, RDX=0x0000000000000001
+RSP=0x00007fea345fe680, RBP=0x00007fea48000020, RSI=0x00007fe9b00008d0, RDI=0x00007fea48000020
+R8 =0x00007fe9ec00657a, R9 =0x00000000000001c5, R10=0x00007fea390183fb, R11=0x00007fea4da1a3b0
+R12=0x00007fea483f9360, R13=0x00007feab0b6c910, R14=0x00007fea345fe7b0, R15=0x00007fea483c8000
+RIP=0x00007fea4e2970c5, EFLAGS=0x0000000000010202, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007fea345fe680)
+0x00007fea345fe680:   00007fea371662f0 0000000000000000
+0x00007fea345fe690:   00007fea345fe718 0000000039007ffd
+0x00007fea345fe6a0:   00007fea39007ffd 00000000ffffffff
+0x00007fea345fe6b0:   ffffffffffffffff a409c2afb2442400
+0x00007fea345fe6c0:   0000000772431da8 ffffffffffffff80
+0x00007fea345fe6d0:   0000000000000000 0000000000000000
+0x00007fea345fe6e0:   00007fea373a6f78 00007fea345fe7b0
+0x00007fea345fe6f0:   00007fea483c8000 00007fea4e299d35
+0x00007fea345fe700:   00007fea37177f98 0000000000000000
+0x00007fea345fe710:   00007fea345fe798 00007fea373a6f78
+0x00007fea345fe720:   00007fea345fe788 00007fea39018427
+0x00007fea345fe730:   00007fea345fe7d8 00007fea483c8000
+0x00007fea345fe740:   00007fea345fe880 00007fea345fe748
+0x00007fea345fe750:   0000000000000000 00007fea345fe7b0
+0x00007fea345fe760:   00007fea373a87a0 0000000000000000
+0x00007fea345fe770:   00007fea373a6f78 0000000000000000
+0x00007fea345fe780:   00007fea345fe7a8 00007fea345fe7f8
+0x00007fea345fe790:   00007fea39007ffd 00000007723b57a8
+0x00007fea345fe7a0:   00007fea39011a58 00007fea483f9370
+0x00007fea345fe7b0:   0000000000000009 00007fea345fe7b8
+0x00007fea345fe7c0:   00007fea3740be5f 00007fea345fe810
+0x00007fea345fe7d0:   00007fea37591c28 0000000000000000
+0x00007fea345fe7e0:   00007fea3740be78 00007fea345fe7a8
+0x00007fea345fe7f0:   00007fea345fe808 00007fea345fe868
+0x00007fea345fe800:   00007fea39007ffd 00007fea483f9370
+0x00007fea345fe810:   0000000000000001 0000000000000009
+0x00007fea345fe820:   00000007723b89a8 00007fea345fe818
+0x00007fea345fe830:   00007fea375932dc 00007fea345fe880
+0x00007fea345fe840:   00007fea375933c0 0000000000000000
+0x00007fea345fe850:   00007fea37593338 00007fea345fe808
+0x00007fea345fe860:   00007fea345fe880 00007fea345fe8c8
+0x00007fea345fe870:   00007fea39008042 0000000000000000 
+
+Instructions: (pc=0x00007fea4e2970c5)
+0x00007fea4e2970a5:   1c 01 00 00 00 48 8b 45 60 4d 8d 2c 1c 4c 39 e0
+0x00007fea4e2970b5:   0f 84 f5 05 00 00 f6 45 04 02 0f 84 fb 05 00 00
+0x00007fea4e2970c5:   49 8b 45 08 a8 01 0f 84 0f 06 00 00 49 89 c7 49
+0x00007fea4e2970d5:   83 e7 f8 48 83 f8 10 0f 86 6e 04 00 00 4c 39 bd 
+
+Register to memory mapping:
+
+RAX=0x00007fea483f93b0 is an unknown value
+RBX=0x00000000687735b0 is an unknown value
+RCX=0x0000000006877359 is an unknown value
+RDX=0x0000000000000001 is an unknown value
+RSP=0x00007fea345fe680 is pointing into the stack for thread: 0x00007fea483c8000
+RBP=0x00007fea48000020 is an unknown value
+RSI=0x00007fe9b00008d0 is an unknown value
+RDI=0x00007fea48000020 is an unknown value
+R8 =0x00007fe9ec00657a is an unknown value
+R9 =0x00000000000001c5 is an unknown value
+R10=0x00007fea390183fb is at code_begin+859 in an Interpreter codelet
+method entry point (kind = native)  [0x00007fea390180a0, 0x00007fea39018a40]  2464 bytes
+R11=0x00007fea4da1a3b0: <offset 0xa1a3b0> in /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/server/libjvm.so at 0x00007fea4d000000
+R12=0x00007fea483f9360 is an unknown value
+R13=0x00007feab0b6c910 is an unknown value
+R14=0x00007fea345fe7b0 is pointing into the stack for thread: 0x00007fea483c8000
+R15=0x00007fea483c8000 is a thread
+
+
+Stack: [0x00007fea34500000,0x00007fea34600000],  sp=0x00007fea345fe680,  free space=1017k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x970c5]  _int_free+0x1b5
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  com.sun.jna.Native.free(J)V+0
+j  com.sun.jna.Memory.free(J)V+7
+j  com.sun.jna.Memory$MemoryDisposer.run()V+4
+j  com.sun.jna.internal.Cleaner$CleanerRef.clean()V+15
+j  com.sun.jna.internal.Cleaner$1.run()V+22
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007fe9e8001000 JavaThread "Attach Listener" daemon [_thread_blocked, id=26428, stack(0x00007fea34100000,0x00007fea34200000)]
+=>0x00007fea483c8000 JavaThread "JNA Cleaner" daemon [_thread_in_native, id=26427, stack(0x00007fea34500000,0x00007fea34600000)]
+  0x00007fea483c5000 JavaThread "process reaper" daemon [_thread_blocked, id=26426, stack(0x00007fea4c6c6000,0x00007fea4c6ff000)]
+  0x00007fea48144800 JavaThread "Service Thread" daemon [_thread_blocked, id=26423, stack(0x00007fea3499e000,0x00007fea34a9e000)]
+  0x00007fea4812f800 JavaThread "C1 CompilerThread3" daemon [_thread_blocked, id=26422, stack(0x00007fea34a9f000,0x00007fea34b9f000)]
+  0x00007fea4812d800 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=26421, stack(0x00007fea34ba0000,0x00007fea34ca0000)]
+  0x00007fea4812b800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=26420, stack(0x00007fea34ca1000,0x00007fea34da1000)]
+  0x00007fea48129000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=26419, stack(0x00007fea34da2000,0x00007fea34ea2000)]
+  0x00007fea4811a800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=26418, stack(0x00007fea34ea2000,0x00007fea34fa2000)]
+  0x00007fea480ee800 JavaThread "Finalizer" daemon [_thread_blocked, id=26417, stack(0x00007fea34fa2000,0x00007fea350a2000)]
+  0x00007fea480ea000 JavaThread "Reference Handler" daemon [_thread_blocked, id=26416, stack(0x00007fea350a2000,0x00007fea351a2000)]
+  0x00007fea4804c000 JavaThread "main" [_thread_in_Java, id=26406, stack(0x00007fea4e500000,0x00007fea4e600000)]
+
+Other Threads:
+  0x00007fea480e0000 VMThread [stack: 0x00007fea351a3000,0x00007fea352a3000] [id=26415]
+  0x00007fea48147000 WatcherThread [stack: 0x00007fea3489e000,0x00007fea3499e000] [id=26424]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+heap address: 0x00000006cb000000, size: 3920 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x00000007c0000000
+
+Heap:
+ PSYoungGen      total 73728K, used 4045K [0x000000076e580000, 0x0000000773780000, 0x00000007c0000000)
+  eden space 63488K, 3% used [0x000000076e580000,0x000000076e7f1350,0x0000000772380000)
+  from space 10240K, 15% used [0x0000000772380000,0x0000000772502198,0x0000000772d80000)
+  to   space 10240K, 0% used [0x0000000772d80000,0x0000000772d80000,0x0000000773780000)
+ ParOldGen       total 167936K, used 16K [0x00000006cb000000, 0x00000006d5400000, 0x000000076e580000)
+  object space 167936K, 0% used [0x00000006cb000000,0x00000006cb004000,0x00000006d5400000)
+ Metaspace       used 6942K, capacity 7146K, committed 7296K, reserved 1056768K
+  class space    used 731K, capacity 803K, committed 896K, reserved 1048576K
+
+Card table byte_map: [0x00007fea38857000,0x00007fea39000000] byte_map_base: 0x00007fea351ff000
+
+Marking Bits: (ParMarkBitMap*) 0x00007fea4e0846c0
+ Begin Bits: [0x00007fe9f0580000, 0x00007fe9f42c0000)
+ End Bits:   [0x00007fe9f42c0000, 0x00007fe9f8000000)
+
+Polling page: 0x00007fea4e9c5000
+
+CodeCache: size=245760Kb used=2355Kb max_used=2357Kb free=243404Kb
+ bounds [0x00007fea39000000, 0x00007fea39270000, 0x00007fea48000000]
+ total_blobs=789 nmethods=471 adapters=231
+ compilation: enabled
+
+Compilation events (250 events):
+Event: 0.267 Thread 0x00007fea4812f800  340       3       java.util.Collections$UnmodifiableCollection$1::hasNext (10 bytes)
+Event: 0.267 Thread 0x00007fea4812f800 nmethod 340 0x00007fea391c0110 code [0x00007fea391c0280, 0x00007fea391c04a8]
+Event: 0.267 Thread 0x00007fea4812f800  339  s    3       java.lang.StringBuffer::toString (36 bytes)
+Event: 0.267 Thread 0x00007fea4812f800 nmethod 339 0x00007fea391c2e10 code [0x00007fea391c2fa0, 0x00007fea391c3448]
+Event: 0.267 Thread 0x00007fea4812f800  324       1       java.lang.invoke.LambdaForm::arity (5 bytes)
+Event: 0.267 Thread 0x00007fea4812f800 nmethod 324 0x00007fea391c2b50 code [0x00007fea391c2ca0, 0x00007fea391c2db0]
+Event: 0.268 Thread 0x00007fea4812b800  341       4       java.lang.String::replace (127 bytes)
+Event: 0.268 Thread 0x00007fea4812f800  342       3       jdk.internal.org.objectweb.asm.ByteVector::<init> (13 bytes)
+Event: 0.268 Thread 0x00007fea4812f800 nmethod 342 0x00007fea391c26d0 code [0x00007fea391c2840, 0x00007fea391c2a90]
+Event: 0.268 Thread 0x00007fea4812f800  343       3       jdk.internal.org.objectweb.asm.ByteVector::enlarge (51 bytes)
+Event: 0.269 Thread 0x00007fea4812f800 nmethod 343 0x00007fea391c2150 code [0x00007fea391c22c0, 0x00007fea391c25e8]
+Event: 0.269 Thread 0x00007fea4812f800  344       3       jdk.internal.org.objectweb.asm.ByteVector::putByteArray (49 bytes)
+Event: 0.269 Thread 0x00007fea4812f800 nmethod 344 0x00007fea391c3a50 code [0x00007fea391c3be0, 0x00007fea391c3f18]
+Event: 0.269 Thread 0x00007fea4812f800  345       3       java.lang.invoke.MethodType$ConcurrentWeakInternSet::get (54 bytes)
+Event: 0.270 Thread 0x00007fea4812f800 nmethod 345 0x00007fea391c4010 code [0x00007fea391c4240, 0x00007fea391c4ef8]
+Event: 0.270 Thread 0x00007fea4812f800  346       3       jdk.internal.org.objectweb.asm.ByteVector::putInt (74 bytes)
+Event: 0.270 Thread 0x00007fea4812f800 nmethod 346 0x00007fea391c5490 code [0x00007fea391c5600, 0x00007fea391c5888]
+Event: 0.270 Thread 0x00007fea4812f800  347       1       java.lang.invoke.MethodTypeForm::basicType (5 bytes)
+Event: 0.270 Thread 0x00007fea4812f800 nmethod 347 0x00007fea391c1e90 code [0x00007fea391c1fe0, 0x00007fea391c20f0]
+Event: 0.270 Thread 0x00007fea4812f800  348       3       java.lang.invoke.MemberName::getReferenceKind (12 bytes)
+Event: 0.271 Thread 0x00007fea4812f800 nmethod 348 0x00007fea391c5a10 code [0x00007fea391c5b60, 0x00007fea391c5cd0]
+Event: 0.271 Thread 0x00007fea4812f800  349       3       java.lang.invoke.MethodType::insertParameterTypes (106 bytes)
+Event: 0.271 Thread 0x00007fea4812d800  350       4       java.lang.String::equals (81 bytes)
+Event: 0.272 Thread 0x00007fea4812f800 nmethod 349 0x00007fea391c6190 code [0x00007fea391c6440, 0x00007fea391c7748]
+Event: 0.272 Thread 0x00007fea4812f800  351       3       jdk.internal.org.objectweb.asm.ClassWriter::put122 (15 bytes)
+Event: 0.273 Thread 0x00007fea4812f800 nmethod 351 0x00007fea391c81d0 code [0x00007fea391c8360, 0x00007fea391c8558]
+Event: 0.273 Thread 0x00007fea4812d800 nmethod 350 0x00007fea391cb410 code [0x00007fea391cb560, 0x00007fea391cb6d8]
+Event: 0.274 Thread 0x00007fea4812f800  352       3       sun.invoke.util.Wrapper::forBasicType (16 bytes)
+Event: 0.274 Thread 0x00007fea4812f800 nmethod 352 0x00007fea391c9a90 code [0x00007fea391c9c00, 0x00007fea391c9e68]
+Event: 0.274 Thread 0x00007fea4812f800  353       3       jdk.internal.org.objectweb.asm.ClassWriter::newClass (9 bytes)
+Event: 0.274 Thread 0x00007fea4812b800 nmethod 341 0x00007fea391c9190 code [0x00007fea391c9300, 0x00007fea391c9878]
+Event: 0.274 Thread 0x00007fea4812f800 nmethod 353 0x00007fea391c8d90 code [0x00007fea391c8f00, 0x00007fea391c90a8]
+Event: 0.275 Thread 0x00007fea4812f800  354       3       java.lang.invoke.MemberName::initResolved (53 bytes)
+Event: 0.275 Thread 0x00007fea4812d800  355       4       java.util.concurrent.ConcurrentHashMap::setTabAt (19 bytes)
+Event: 0.275 Thread 0x00007fea4812f800 nmethod 354 0x00007fea391c89d0 code [0x00007fea391c8b40, 0x00007fea391c8d10]
+Event: 0.275 Thread 0x00007fea4812f800  357       3       java.lang.invoke.MethodType::parameterCount (6 bytes)
+Event: 0.275 Thread 0x00007fea4812f800 nmethod 357 0x00007fea391cb090 code [0x00007fea391cb200, 0x00007fea391cb370]
+Event: 0.275 Thread 0x00007fea4812d800 nmethod 355 0x00007fea391c87d0 code [0x00007fea391c8900, 0x00007fea391c8978]
+Event: 0.275 Thread 0x00007fea4812f800  358       3       sun.invoke.util.BytecodeDescriptor::unparseSig (75 bytes)
+Event: 0.277 Thread 0x00007fea4812f800 nmethod 358 0x00007fea391cc390 code [0x00007fea391cc680, 0x00007fea391cde48]
+Event: 0.277 Thread 0x00007fea4812f800  359       3       java.io.BufferedReader::readLine (6 bytes)
+Event: 0.277 Thread 0x00007fea4812f800 nmethod 359 0x00007fea391cbfd0 code [0x00007fea391cc140, 0x00007fea391cc2e8]
+Event: 0.277 Thread 0x00007fea48129000  360       4       java.lang.String::<init> (82 bytes)
+Event: 0.277 Thread 0x00007fea4812f800  362       3       java.util.ArrayList::indexOf (67 bytes)
+Event: 0.278 Thread 0x00007fea4812f800 nmethod 362 0x00007fea391ca7d0 code [0x00007fea391ca980, 0x00007fea391cae68]
+Event: 0.278 Thread 0x00007fea4812f800  361       3       java.util.ArrayList::contains (14 bytes)
+Event: 0.278 Thread 0x00007fea4812f800 nmethod 361 0x00007fea391cbbd0 code [0x00007fea391cbd40, 0x00007fea391cbf28]
+Event: 0.278 Thread 0x00007fea4812f800  363       3       java.nio.Buffer::position (40 bytes)
+Event: 0.278 Thread 0x00007fea4812f800 nmethod 363 0x00007fea391ca2d0 code [0x00007fea391ca440, 0x00007fea391ca708]
+Event: 0.278 Thread 0x00007fea4812b800  364   !   4       java.io.BufferedReader::readLine (304 bytes)
+Event: 0.279 Thread 0x00007fea48129000 nmethod 360 0x00007fea391d1b90 code [0x00007fea391d1d00, 0x00007fea391d2038]
+Event: 0.280 Thread 0x00007fea4812f800  365 %     3       sun.nio.cs.UTF_8$Decoder::decodeArrayLoop @ 73 (691 bytes)
+Event: 0.287 Thread 0x00007fea4812f800 nmethod 365% 0x00007fea391d2250 code [0x00007fea391d2c20, 0x00007fea391d9808]
+Event: 0.287 Thread 0x00007fea4812f800  370       3       java.util.Arrays::copyOf (19 bytes)
+Event: 0.287 Thread 0x00007fea4812f800 nmethod 370 0x00007fea391d15d0 code [0x00007fea391d1760, 0x00007fea391d1a88]
+Event: 0.287 Thread 0x00007fea4812f800  366       3       java.lang.StringCoding::safeTrim (24 bytes)
+Event: 0.288 Thread 0x00007fea4812f800 nmethod 366 0x00007fea391d0dd0 code [0x00007fea391d0f60, 0x00007fea391d1428]
+Event: 0.288 Thread 0x00007fea4812f800  367   !   3       java.lang.StringCoding$StringEncoder::encode (179 bytes)
+Event: 0.290 Thread 0x00007fea4812f800 nmethod 367 0x00007fea391df1d0 code [0x00007fea391df540, 0x00007fea391e1218]
+Event: 0.290 Thread 0x00007fea4812f800  373       3       java.lang.String::replace (127 bytes)
+Event: 0.290 Thread 0x00007fea4812f800 nmethod 373 0x00007fea391d01d0 code [0x00007fea391d0380, 0x00007fea391d0a30]
+Event: 0.290 Thread 0x00007fea4812f800  376       3       java.io.ByteArrayOutputStream::ensureCapacity (16 bytes)
+Event: 0.290 Thread 0x00007fea4812f800 nmethod 376 0x00007fea391cfd90 code [0x00007fea391cff00, 0x00007fea391d00e8]
+Event: 0.291 Thread 0x00007fea4812f800  377  s    3       java.io.ByteArrayOutputStream::write (32 bytes)
+Event: 0.291 Thread 0x00007fea4812f800 nmethod 377 0x00007fea391cf650 code [0x00007fea391cf7e0, 0x00007fea391cfbc8]
+Event: 0.291 Thread 0x00007fea4812f800  378       3       java.io.DataOutputStream::incCount (20 bytes)
+Event: 0.291 Thread 0x00007fea4812f800 nmethod 378 0x00007fea391cb850 code [0x00007fea391cb9c0, 0x00007fea391cbb50]
+Event: 0.291 Thread 0x00007fea4812f800  374       1       java.lang.Short::shortValue (5 bytes)
+Event: 0.291 Thread 0x00007fea4812f800 nmethod 374 0x00007fea391cf390 code [0x00007fea391cf4e0, 0x00007fea391cf5f0]
+Event: 0.291 Thread 0x00007fea4812f800  379       3       sun.misc.ProxyGenerator$ConstantPool::getUtf8 (18 bytes)
+Event: 0.291 Thread 0x00007fea4812f800 nmethod 379 0x00007fea391cee90 code [0x00007fea391cf020, 0x00007fea391cf298]
+Event: 0.291 Thread 0x00007fea4812f800  380       3       sun.misc.ProxyGenerator$ConstantPool::getValue (91 bytes)
+Event: 0.292 Thread 0x00007fea4812f800 nmethod 380 0x00007fea391e2410 code [0x00007fea391e26a0, 0x00007fea391e3838]
+Event: 0.292 Thread 0x00007fea4812f800  383       3       java.io.DataOutputStream::writeShort (35 bytes)
+Event: 0.293 Thread 0x00007fea4812f800 nmethod 383 0x00007fea391e40d0 code [0x00007fea391e4260, 0x00007fea391e4618]
+Event: 0.293 Thread 0x00007fea4812f800  381       3       sun.misc.ProxyGenerator$ConstantPool$Entry::<init> (5 bytes)
+Event: 0.293 Thread 0x00007fea4812f800 nmethod 381 0x00007fea391e4750 code [0x00007fea391e48c0, 0x00007fea391e4ad0]
+Event: 0.293 Thread 0x00007fea4812f800  382       3       java.io.DataOutputStream::writeByte (14 bytes)
+Event: 0.293 Thread 0x00007fea4812f800 nmethod 382 0x00007fea391e4bd0 code [0x00007fea391e4d40, 0x00007fea391e5008]
+Event: 0.293 Thread 0x00007fea4812f800  375       1       sun.misc.ProxyGenerator::access$300 (5 bytes)
+Event: 0.293 Thread 0x00007fea4812f800 nmethod 375 0x00007fea391e5110 code [0x00007fea391e5260, 0x00007fea391e5350]
+Event: 0.293 Thread 0x00007fea4812f800  371       3       java.lang.reflect.Array::newInstance (6 bytes)
+Event: 0.293 Thread 0x00007fea4812f800 nmethod 371 0x00007fea391e53d0 code [0x00007fea391e5540, 0x00007fea391e56a8]
+Event: 0.293 Thread 0x00007fea4812f800  368       3       java.lang.StringCoding::access$300 (8 bytes)
+Event: 0.294 Thread 0x00007fea4812f800 nmethod 368 0x00007fea391e5750 code [0x00007fea391e5900, 0x00007fea391e5e28]
+Event: 0.294 Thread 0x00007fea4812f800  369   !   3       java.lang.StringCoding::encode (120 bytes)
+Event: 0.295 Thread 0x00007fea4812f800 nmethod 369 0x00007fea391e6090 code [0x00007fea391e63e0, 0x00007fea391e7e98]
+Event: 0.296 Thread 0x00007fea4812f800  385       3       java.net.URLStreamHandler::parseURL (1193 bytes)
+Event: 0.297 Thread 0x00007fea48129000  389       4       java.lang.CharacterDataLatin1::toLowerCase (39 bytes)
+Event: 0.298 Thread 0x00007fea48129000 nmethod 389 0x00007fea391eba90 code [0x00007fea391ebbe0, 0x00007fea391ebcb8]
+Event: 0.306 Thread 0x00007fea4812f800 nmethod 385 0x00007fea391ebd90 code [0x00007fea391ec8e0, 0x00007fea391f6448]
+Event: 0.306 Thread 0x00007fea4812f800  388       3       java.net.URL::<init> (8 bytes)
+Event: 0.307 Thread 0x00007fea4812f800 nmethod 388 0x00007fea391eb710 code [0x00007fea391eb880, 0x00007fea391eba08]
+Event: 0.307 Thread 0x00007fea4812f800  384       3       sun.net.www.protocol.file.Handler::parseURL (18 bytes)
+Event: 0.307 Thread 0x00007fea4812f800 nmethod 384 0x00007fea391eb210 code [0x00007fea391eb380, 0x00007fea391eb5f8]
+Event: 0.307 Thread 0x00007fea4812f800  387       1       java.security.CodeSource::getLocation (5 bytes)
+Event: 0.307 Thread 0x00007fea4812f800 nmethod 387 0x00007fea391eaf50 code [0x00007fea391eb0a0, 0x00007fea391eb1b0]
+Event: 0.307 Thread 0x00007fea4812f800  386       1       java.net.URLClassLoader::access$000 (5 bytes)
+Event: 0.307 Thread 0x00007fea4812f800 nmethod 386 0x00007fea391eac90 code [0x00007fea391eade0, 0x00007fea391eaed0]
+Event: 0.310 Thread 0x00007fea4812b800 nmethod 364 0x00007fea391ff350 code [0x00007fea391ff540, 0x00007fea392008b0]
+Event: 0.399 Thread 0x00007fea4812d800  390       4       java.util.concurrent.ConcurrentHashMap::tabAt (21 bytes)
+Event: 0.400 Thread 0x00007fea4812d800 nmethod 390 0x00007fea391e9390 code [0x00007fea391e94c0, 0x00007fea391e9518]
+Event: 0.402 Thread 0x00007fea4812f800  392       3       sun.misc.ProxyGenerator$ConstantPool$IndirectEntry::hashCode (15 bytes)
+Event: 0.402 Thread 0x00007fea4812f800 nmethod 392 0x00007fea391e9050 code [0x00007fea391e91a0, 0x00007fea391e9310]
+Event: 0.402 Thread 0x00007fea4812f800  391       3       sun.misc.ProxyGenerator$ConstantPool::getIndirect (67 bytes)
+Event: 0.403 Thread 0x00007fea4812f800 nmethod 391 0x00007fea391ea090 code [0x00007fea391ea260, 0x00007fea391ea9b8]
+Event: 0.403 Thread 0x00007fea4812f800  393       3       sun.misc.ProxyGenerator$ConstantPool$IndirectEntry::equals (49 bytes)
+Event: 0.403 Thread 0x00007fea4812f800 nmethod 393 0x00007fea391e9a10 code [0x00007fea391e9b80, 0x00007fea391e9fd0]
+Event: 0.403 Thread 0x00007fea4812f800  399       3       java.util.ArrayList$Itr::hasNext (20 bytes)
+Event: 0.403 Thread 0x00007fea4812f800 nmethod 399 0x00007fea391fef50 code [0x00007fea391ff0c0, 0x00007fea391ff290]
+Event: 0.403 Thread 0x00007fea4812f800  398  s    3       java.io.DataOutputStream::write (14 bytes)
+Event: 0.403 Thread 0x00007fea4812f800 nmethod 398 0x00007fea391fe850 code [0x00007fea391fe9e0, 0x00007fea391fee08]
+Event: 0.403 Thread 0x00007fea4812f800  396       3       java.util.ArrayList$Itr::next (66 bytes)
+Event: 0.403 Thread 0x00007fea4812f800 nmethod 396 0x00007fea391fdf90 code [0x00007fea391fe140, 0x00007fea391fe5e8]
+Event: 0.403 Thread 0x00007fea4812f800  397       3       java.util.ArrayList$Itr::checkForComodification (23 bytes)
+Event: 0.404 Thread 0x00007fea4812f800 nmethod 397 0x00007fea391fdb10 code [0x00007fea391fdc80, 0x00007fea391fdea8]
+Event: 0.404 Thread 0x00007fea4812f800  394       3       sun.misc.ProxyGenerator$ConstantPool$IndirectEntry::<init> (21 bytes)
+Event: 0.404 Thread 0x00007fea4812f800 nmethod 394 0x00007fea391fd5d0 code [0x00007fea391fd740, 0x00007fea391fd9b0]
+Event: 0.404 Thread 0x00007fea4812f800  395       3       sun.misc.ProxyGenerator$ConstantPool$IndirectEntry::<init> (21 bytes)
+Event: 0.404 Thread 0x00007fea4812f800 nmethod 395 0x00007fea391fd0d0 code [0x00007fea391fd240, 0x00007fea391fd4b0]
+Event: 0.404 Thread 0x00007fea4812f800  402       3       java.io.DataOutputStream::writeUTF (435 bytes)
+Event: 0.405 Thread 0x00007fea4812f800 nmethod 402 0x00007fea39201350 code [0x00007fea39201680, 0x00007fea39203568]
+Event: 0.405 Thread 0x00007fea4812f800  400       3       sun.misc.ProxyGenerator$ConstantPool::addEntry (46 bytes)
+Event: 0.405 Thread 0x00007fea4812f800 nmethod 400 0x00007fea391fc890 code [0x00007fea391fca40, 0x00007fea391fcef8]
+Event: 0.405 Thread 0x00007fea4812f800  401       3       sun.misc.ProxyGenerator$ConstantPool::getClass (21 bytes)
+Event: 0.406 Thread 0x00007fea4812f800 nmethod 401 0x00007fea39204550 code [0x00007fea39204720, 0x00007fea39204c28]
+Event: 0.406 Thread 0x00007fea4812f800  403  s    3       java.io.DataOutputStream::write (16 bytes)
+Event: 0.406 Thread 0x00007fea4812f800 nmethod 403 0x00007fea39204f10 code [0x00007fea392050a0, 0x00007fea392054e8]
+Event: 0.406 Thread 0x00007fea4812f800  404  s    1       java.io.ByteArrayOutputStream::size (5 bytes)
+Event: 0.406 Thread 0x00007fea4812f800 nmethod 404 0x00007fea39205650 code [0x00007fea392057a0, 0x00007fea39205a10]
+Event: 0.406 Thread 0x00007fea4812f800  406       1       java.lang.reflect.Field::getModifiers (5 bytes)
+Event: 0.406 Thread 0x00007fea4812f800 nmethod 406 0x00007fea39205e10 code [0x00007fea39205f60, 0x00007fea39206070]
+Event: 0.408 Thread 0x00007fea4812f800  407       3       sun.net.util.IPAddressUtil::checkHostString (53 bytes)
+Event: 0.408 Thread 0x00007fea4812f800 nmethod 407 0x00007fea392060d0 code [0x00007fea392062e0, 0x00007fea39206d38]
+Event: 0.409 Thread 0x00007fea4812d800  408       4       java.lang.String::lastIndexOf (151 bytes)
+Event: 0.409 Thread 0x00007fea4812f800  409       3       java.util.LinkedHashMap$LinkedHashIterator::hasNext (13 bytes)
+Event: 0.409 Thread 0x00007fea4812f800 nmethod 409 0x00007fea39207190 code [0x00007fea39207300, 0x00007fea392074b0]
+Event: 0.409 Thread 0x00007fea4812f800  410       3       java.util.LinkedHashMap$LinkedHashIterator::nextNode (54 bytes)
+Event: 0.410 Thread 0x00007fea4812f800 nmethod 410 0x00007fea39207510 code [0x00007fea392076a0, 0x00007fea392079b8]
+Event: 0.411 Thread 0x00007fea4812f800  411       3       java.util.Arrays::copyOf (13 bytes)
+Event: 0.411 Thread 0x00007fea4812d800 nmethod 408 0x00007fea3920ad50 code [0x00007fea3920aec0, 0x00007fea3920b138]
+Event: 0.411 Thread 0x00007fea4812f800 nmethod 411 0x00007fea39208bd0 code [0x00007fea39208d40, 0x00007fea39208f48]
+Event: 0.411 Thread 0x00007fea4812f800  413       1       java.util.HashMap$Node::getKey (5 bytes)
+Event: 0.411 Thread 0x00007fea4812f800 nmethod 413 0x00007fea39208910 code [0x00007fea39208a60, 0x00007fea39208b70]
+Event: 0.412 Thread 0x00007fea4812f800  415       3       java.lang.reflect.Modifier::isPublic (12 bytes)
+Event: 0.412 Thread 0x00007fea4812f800 nmethod 415 0x00007fea39208590 code [0x00007fea39208700, 0x00007fea39208890]
+Event: 0.412 Thread 0x00007fea4812f800  414       1       java.lang.reflect.Method::getDeclaringClass (5 bytes)
+Event: 0.412 Thread 0x00007fea4812f800 nmethod 414 0x00007fea392082d0 code [0x00007fea39208420, 0x00007fea39208530]
+Event: 0.413 Thread 0x00007fea4812f800  416       3       java.util.WeakHashMap::maskNull (12 bytes)
+Event: 0.413 Thread 0x00007fea4812f800 nmethod 416 0x00007fea39207f50 code [0x00007fea392080c0, 0x00007fea39208250]
+Event: 0.413 Thread 0x00007fea4812f800  417       3       java.util.WeakHashMap::hash (28 bytes)
+Event: 0.413 Thread 0x00007fea4812f800 nmethod 417 0x00007fea3920a8d0 code [0x00007fea3920aa40, 0x00007fea3920ac88]
+Event: 0.413 Thread 0x00007fea4812f800  418       3       java.util.WeakHashMap::getTable (9 bytes)
+Event: 0.413 Thread 0x00007fea4812f800 nmethod 418 0x00007fea39207b10 code [0x00007fea39207c80, 0x00007fea39207e28]
+Event: 0.413 Thread 0x00007fea4812f800  419   !   3       java.util.WeakHashMap::expungeStaleEntries (139 bytes)
+Event: 0.414 Thread 0x00007fea4812f800 nmethod 419 0x00007fea3920b3d0 code [0x00007fea3920b5a0, 0x00007fea3920c0a8]
+Event: 0.414 Thread 0x00007fea4812f800  420       3       java.util.WeakHashMap::indexFor (6 bytes)
+Event: 0.414 Thread 0x00007fea4812f800 nmethod 420 0x00007fea3920a250 code [0x00007fea3920a3a0, 0x00007fea3920a4d0]
+Event: 0.414 Thread 0x00007fea4812f800  421       1       java.lang.reflect.Method::getModifiers (5 bytes)
+Event: 0.414 Thread 0x00007fea4812b800  424       4       java.util.HashMap::getNode (148 bytes)
+Event: 0.414 Thread 0x00007fea4812f800 nmethod 421 0x00007fea39209f90 code [0x00007fea3920a0e0, 0x00007fea3920a1f0]
+Event: 0.414 Thread 0x00007fea4812f800  423       1       java.lang.reflect.Method::getReturnType (5 bytes)
+Event: 0.414 Thread 0x00007fea4812f800 nmethod 423 0x00007fea39209cd0 code [0x00007fea39209e20, 0x00007fea39209f30]
+Event: 0.414 Thread 0x00007fea4812f800  425       3       com.sun.jna.Function::convertArgument (888 bytes)
+Event: 0.416 Thread 0x00007fea4812b800 nmethod 424 0x00007fea39209710 code [0x00007fea39209880, 0x00007fea39209ad8]
+Event: 0.423 Thread 0x00007fea4812f800 nmethod 425 0x00007fea3920f510 code [0x00007fea3920ffe0, 0x00007fea392186c8]
+Event: 0.423 Thread 0x00007fea4812f800  428       3       java.lang.Integer::valueOf (32 bytes)
+Event: 0.423 Thread 0x00007fea4812f800 nmethod 428 0x00007fea3920ee90 code [0x00007fea3920f020, 0x00007fea3920f370]
+Event: 0.423 Thread 0x00007fea4812f800  431       3       com.sun.jna.Function::isPrimitiveArray (23 bytes)
+Event: 0.423 Thread 0x00007fea4812f800 nmethod 431 0x00007fea3920e7d0 code [0x00007fea3920e960, 0x00007fea3920ed78]
+Event: 0.423 Thread 0x00007fea4812f800  430       3       com.sun.jna.Native::getNativeSize (262 bytes)
+Event: 0.423 Thread 0x00007fea48129000  434       4       java.util.HashMap::get (23 bytes)
+Event: 0.425 Thread 0x00007fea4812f800 nmethod 430 0x00007fea3920c850 code [0x00007fea3920cb60, 0x00007fea3920e208]
+Event: 0.425 Thread 0x00007fea4812f800  426       3       java.lang.reflect.Method::equals (69 bytes)
+Event: 0.425 Thread 0x00007fea4812f800 nmethod 426 0x00007fea3921ccd0 code [0x00007fea3921ce80, 0x00007fea3921d7e8]
+Event: 0.425 Thread 0x00007fea4812f800  427   !   3       com.sun.jna.Native::isSupportedNativeType (27 bytes)
+Event: 0.426 Thread 0x00007fea4812f800 nmethod 427 0x00007fea3921d910 code [0x00007fea3921daa0, 0x00007fea3921dd98]
+Event: 0.426 Thread 0x00007fea4812f800  432       3       java.lang.reflect.Method::isVarArgs (5 bytes)
+Event: 0.426 Thread 0x00007fea4812f800 nmethod 432 0x00007fea3921de50 code [0x00007fea3921dfc0, 0x00007fea3921e1f0]
+Event: 0.426 Thread 0x00007fea4812f800  433       3       java.lang.reflect.Executable::isVarArgs (17 bytes)
+Event: 0.426 Thread 0x00007fea4812f800 nmethod 433 0x00007fea3921e290 code [0x00007fea3921e400, 0x00007fea3921e668]
+Event: 0.426 Thread 0x00007fea4812f800  435   !   3       com.sun.jna.Library$Handler::invoke (394 bytes)
+Event: 0.426 Thread 0x00007fea48129000 nmethod 434 0x00007fea392215d0 code [0x00007fea39221740, 0x00007fea392219d8]
+Event: 0.431 Thread 0x00007fea4812f800 nmethod 435 0x00007fea39221c50 code [0x00007fea39222180, 0x00007fea392257e8]
+Event: 0.431 Thread 0x00007fea4812f800  441       3       com.sun.jna.Function::invoke (548 bytes)
+Event: 0.434 Thread 0x00007fea4812f800 nmethod 441 0x00007fea39227890 code [0x00007fea39227d40, 0x00007fea3922b478]
+Event: 0.434 Thread 0x00007fea4812f800  437       3       java.util.WeakHashMap::get (77 bytes)
+Event: 0.435 Thread 0x00007fea4812f800 nmethod 437 0x00007fea39220410 code [0x00007fea39220600, 0x00007fea39220ea8]
+Event: 0.435 Thread 0x00007fea4812f800  436       3       java.util.WeakHashMap::eq (19 bytes)
+Event: 0.435 Thread 0x00007fea4812f800 nmethod 436 0x00007fea3921ff50 code [0x00007fea392200c0, 0x00007fea39220348]
+Event: 0.435 Thread 0x00007fea4812f800  429       1       java.lang.Integer::intValue (5 bytes)
+Event: 0.435 Thread 0x00007fea4812f800 nmethod 429 0x00007fea392093d0 code [0x00007fea39209520, 0x00007fea39209630]
+Event: 0.435 Thread 0x00007fea4812f800  439       3       java.lang.reflect.Method::hashCode (19 bytes)
+Event: 0.435 Thread 0x00007fea4812f800 nmethod 439 0x00007fea3921f6d0 code [0x00007fea3921f860, 0x00007fea3921fde8]
+Event: 0.435 Thread 0x00007fea4812f800  438       3       com.sun.jna.VarArgsChecker$RealVarArgsChecker::isVarArgs (5 bytes)
+Event: 0.436 Thread 0x00007fea4812f800 nmethod 438 0x00007fea3921f150 code [0x00007fea3921f2c0, 0x00007fea3921f5d0]
+Event: 0.436 Thread 0x00007fea4812f800  443       3       com.sun.jna.Function::isVarArgs (8 bytes)
+Event: 0.436 Thread 0x00007fea4812f800 nmethod 443 0x00007fea3921eb50 code [0x00007fea3921ecc0, 0x00007fea3921f010]
+Event: 0.436 Thread 0x00007fea4812f800  440       3       java.lang.Boolean::equals (29 bytes)
+Event: 0.436 Thread 0x00007fea4812f800 nmethod 440 0x00007fea3922d2d0 code [0x00007fea3922d440, 0x00007fea3922d8b0]
+Event: 0.436 Thread 0x00007fea4812f800  442       3       com.sun.jna.Function::invoke (769 bytes)
+Event: 0.440 Thread 0x00007fea48129000  449       4       java.lang.Integer::valueOf (32 bytes)
+Event: 0.441 Thread 0x00007fea48129000 nmethod 449 0x00007fea3921e810 code [0x00007fea3921e960, 0x00007fea3921ea58]
+Event: 0.441 Thread 0x00007fea48129000  450       4       com.sun.jna.Function::convertArgument (888 bytes)
+Event: 0.441 Thread 0x00007fea4812f800 nmethod 442 0x00007fea39230690 code [0x00007fea39230f60, 0x00007fea39236f98]
+Event: 0.441 Thread 0x00007fea4812f800  445       3       com.sun.jna.Function::fixedArgs (8 bytes)
+Event: 0.441 Thread 0x00007fea4812f800 nmethod 445 0x00007fea3922fc50 code [0x00007fea3922fe00, 0x00007fea39230448]
+Event: 0.441 Thread 0x00007fea4812f800  447       3       featurecreep.attach.AttachLinux::restartableWrite (30 bytes)
+Event: 0.441 Thread 0x00007fea4812f800 nmethod 447 0x00007fea3922f6d0 code [0x00007fea3922f860, 0x00007fea3922fb18]
+Event: 0.441 Thread 0x00007fea4812f800  448   !   3       featurecreep.attach.$Proxy0::write (63 bytes)
+Event: 0.442 Thread 0x00007fea4812f800 nmethod 448 0x00007fea3923a690 code [0x00007fea3923a8e0, 0x00007fea3923ba98]
+Event: 0.442 Thread 0x00007fea4812f800  446       3       com.sun.jna.VarArgsChecker$RealVarArgsChecker::fixedArgs (19 bytes)
+Event: 0.442 Thread 0x00007fea4812f800 nmethod 446 0x00007fea3922ed50 code [0x00007fea3922ef00, 0x00007fea3922f508]
+Event: 0.446 Thread 0x00007fea4812d800  451       4       com.sun.jna.Native::getNativeSize (262 bytes)
+Event: 0.446 Thread 0x00007fea4812b800  452       4       java.lang.reflect.Method::equals (69 bytes)
+Event: 0.447 Thread 0x00007fea48129000 nmethod 450 0x00007fea3922e210 code [0x00007fea3922e3c0, 0x00007fea3922e8b8]
+Event: 0.447 Thread 0x00007fea4812b800 nmethod 452 0x00007fea3923ca50 code [0x00007fea3923cba0, 0x00007fea3923cc78]
+Event: 0.447 Thread 0x00007fea4812d800 nmethod 451 0x00007fea3922dbd0 code [0x00007fea3922dd60, 0x00007fea3922dfb8]
+Event: 0.450 Thread 0x00007fea48129000  453       4       com.sun.jna.Function::invoke (548 bytes)
+Event: 0.471 Thread 0x00007fea4812b800  454   !   4       java.util.WeakHashMap::expungeStaleEntries (139 bytes)
+Event: 0.471 Thread 0x00007fea4812b800 nmethod 454 0x00007fea3923e450 code [0x00007fea3923e5a0, 0x00007fea3923e638]
+Event: 0.474 Thread 0x00007fea4812d800  455   !   4       com.sun.jna.Library$Handler::invoke (394 bytes)
+Event: 0.474 Thread 0x00007fea4812b800  456       4       java.util.WeakHashMap::get (77 bytes)
+Event: 0.480 Thread 0x00007fea4812b800 nmethod 456 0x00007fea3923ead0 code [0x00007fea3923ec60, 0x00007fea3923f1a8]
+Event: 0.480 Thread 0x00007fea4812b800  457       4       java.lang.reflect.Method::hashCode (19 bytes)
+Event: 0.483 Thread 0x00007fea4812d800 nmethod 455 0x00007fea3923fe10 code [0x00007fea3923ffe0, 0x00007fea392408b8]
+Event: 0.483 Thread 0x00007fea4812d800  458       4       com.sun.jna.Function::invoke (769 bytes)
+Event: 0.485 Thread 0x00007fea4812b800 nmethod 457 0x00007fea3923f710 code [0x00007fea3923f880, 0x00007fea3923fc08]
+Event: 0.485 Thread 0x00007fea4812b800  459       4       featurecreep.attach.AttachLinux::restartableWrite (30 bytes)
+Event: 0.486 Thread 0x00007fea4812d800 nmethod 458 0x00007fea39243390 code [0x00007fea39243540, 0x00007fea39243928]
+Event: 0.486 Thread 0x00007fea4812d800  460   !   4       featurecreep.attach.$Proxy0::write (63 bytes)
+Event: 0.490 Thread 0x00007fea4812d800 nmethod 460 0x00007fea39243d90 code [0x00007fea39243f60, 0x00007fea392446a8]
+Event: 0.491 Thread 0x00007fea4812b800 nmethod 459 0x00007fea39244b50 code [0x00007fea39244d20, 0x00007fea392455c8]
+Event: 0.493 Thread 0x00007fea48129000 nmethod 453 0x00007fea392488d0 code [0x00007fea39248b20, 0x00007fea3924a0d8]
+Event: 0.493 Thread 0x00007fea4812d800  461       4       java.lang.Boolean::equals (29 bytes)
+Event: 0.493 Thread 0x00007fea4812b800  462 %     4       com.sun.jna.Function::invoke @ 124 (548 bytes)
+Event: 0.494 Thread 0x00007fea4812d800 nmethod 461 0x00007fea391e8dd0 code [0x00007fea391e8f20, 0x00007fea391e8fb8]
+Event: 0.496 Thread 0x00007fea48129000  463       4       com.sun.jna.Function::isVarArgs (8 bytes)
+Event: 0.496 Thread 0x00007fea4812d800  464       4       com.sun.jna.Function::fixedArgs (8 bytes)
+Event: 0.496 Thread 0x00007fea48129000 nmethod 463 0x00007fea3923e810 code [0x00007fea3923e960, 0x00007fea3923e9d8]
+Event: 0.497 Thread 0x00007fea4812d800 nmethod 464 0x00007fea39241950 code [0x00007fea39241aa0, 0x00007fea39241b18]
+Event: 0.504 Thread 0x00007fea4812b800 nmethod 462% 0x00007fea39241e90 code [0x00007fea39242060, 0x00007fea39242bd8]
+Event: 0.505 Thread 0x00007fea48129000  465       4       com.sun.jna.Function::invoke (548 bytes)
+Event: 0.547 Thread 0x00007fea48129000 nmethod 465 0x00007fea3924af50 code [0x00007fea3924b1a0, 0x00007fea3924c718]
+Event: 0.701 Thread 0x00007fea4812f800  466 %     3       featurecreep.attach.AttachLinux::writeSocket @ 6 (76 bytes)
+Event: 0.701 Thread 0x00007fea4812f800 nmethod 466% 0x00007fea3923cd50 code [0x00007fea3923cfa0, 0x00007fea3923dc38]
+Event: 0.704 Thread 0x00007fea4812f800  467       3       featurecreep.attach.AttachLinux::writeSocket (76 bytes)
+Event: 0.705 Thread 0x00007fea4812f800 nmethod 467 0x00007fea39247310 code [0x00007fea39247560, 0x00007fea39248178]
+Event: 0.828 Thread 0x00007fea4812d800  468 %     4       featurecreep.attach.AttachLinux::writeSocket @ 6 (76 bytes)
+Event: 0.830 Thread 0x00007fea4812d800 nmethod 468% 0x00007fea39241550 code [0x00007fea392416a0, 0x00007fea39241808]
+
+GC Heap History (2 events):
+Event: 5.457 GC heap before
+{Heap before GC invocations=1 (full 0):
+ PSYoungGen      total 73728K, used 63488K [0x000000076e580000, 0x0000000773780000, 0x00000007c0000000)
+  eden space 63488K, 100% used [0x000000076e580000,0x0000000772380000,0x0000000772380000)
+  from space 10240K, 0% used [0x0000000772d80000,0x0000000772d80000,0x0000000773780000)
+  to   space 10240K, 0% used [0x0000000772380000,0x0000000772380000,0x0000000772d80000)
+ ParOldGen       total 167936K, used 0K [0x00000006cb000000, 0x00000006d5400000, 0x000000076e580000)
+  object space 167936K, 0% used [0x00000006cb000000,0x00000006cb000000,0x00000006d5400000)
+ Metaspace       used 6937K, capacity 7146K, committed 7296K, reserved 1056768K
+  class space    used 731K, capacity 803K, committed 896K, reserved 1048576K
+Event: 5.461 GC heap after
+Heap after GC invocations=1 (full 0):
+ PSYoungGen      total 73728K, used 1544K [0x000000076e580000, 0x0000000773780000, 0x00000007c0000000)
+  eden space 63488K, 0% used [0x000000076e580000,0x000000076e580000,0x0000000772380000)
+  from space 10240K, 15% used [0x0000000772380000,0x0000000772502198,0x0000000772d80000)
+  to   space 10240K, 0% used [0x0000000772d80000,0x0000000772d80000,0x0000000773780000)
+ ParOldGen       total 167936K, used 16K [0x00000006cb000000, 0x00000006d5400000, 0x000000076e580000)
+  object space 167936K, 0% used [0x00000006cb000000,0x00000006cb004000,0x00000006d5400000)
+ Metaspace       used 6937K, capacity 7146K, committed 7296K, reserved 1056768K
+  class space    used 731K, capacity 803K, committed 896K, reserved 1048576K
+}
+
+Deoptimization events (3 events):
+Event: 0.267 Thread 0x00007fea4804c000 Uncommon trap: reason=loop_limit_check action=maybe_recompile pc=0x00007fea3919bdfc method=java.lang.String.equals(Ljava/lang/Object;)Z @ 56
+Event: 0.287 Thread 0x00007fea4804c000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fea391c97b8 method=java.lang.String.replace(CC)Ljava/lang/String; @ 26
+Event: 0.493 Thread 0x00007fea4804c000 Uncommon trap: reason=null_check action=make_not_entrant pc=0x00007fea39249e80 method=com.sun.jna.Function.invoke(Ljava/lang/reflect/Method;[Ljava/lang/Class;Ljava/lang/Class;[Ljava/lang/Object;Ljava/util/Map;)Ljava/lang/Object; @ 207
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (9 events):
+Event: 0.022 Thread 0x00007fea4804c000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.defineClass(Ljava/lang/String;[BII)Ljava/lang/Class; name or signature does not match> (0x000000076e587ce0) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8
+Event: 0.022 Thread 0x00007fea4804c000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x000000076e587fc8) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah
+Event: 0.171 Thread 0x00007fea4804c000 Exception <a 'java/security/PrivilegedActionException'> (0x000000076e8d6880) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah8u412-b08/hotspot/src/share/vm/prims/jvm.cpp, line 1521]
+Event: 0.171 Thread 0x00007fea4804c000 Exception <a 'java/security/PrivilegedActionException'> (0x000000076e8d6a90) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah8u412-b08/hotspot/src/share/vm/prims/jvm.cpp, line 1521]
+Event: 0.172 Thread 0x00007fea4804c000 Exception <a 'java/security/PrivilegedActionException'> (0x000000076e8d9b78) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah8u412-b08/hotspot/src/share/vm/prims/jvm.cpp, line 1521]
+Event: 0.172 Thread 0x00007fea4804c000 Exception <a 'java/security/PrivilegedActionException'> (0x000000076e8d9d88) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah8u412-b08/hotspot/src/share/vm/prims/jvm.cpp, line 1521]
+Event: 0.251 Thread 0x00007fea4804c000 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x000000076eaf6290) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah8u412-b08/hotspot/src/share/vm/prims/methodHandles.cpp, line 1194]
+Event: 0.253 Thread 0x00007fea4804c000 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x000000076eb03a10) thrown at [/builddir/build/BUILD/java-1.8.0-openjdk-portable-1.8.0.412.b08-2.el8.x86_64/shenandoah8u412-b08/hotspot/src/share/vm/prims/methodHandles.cpp, line 1194]
+Event: 0.493 Thread 0x00007fea4804c000 Implicit null exception at 0x00007fea392493ea to 0x00007fea39249e51
+
+Events (250 events):
+Event: 0.268 loading class java/lang/invoke/InnerClassLambdaMetafactory$ForwardingMethodGenerator done
+Event: 0.268 loading class java/lang/invoke/InnerClassLambdaMetafactory$1
+Event: 0.268 loading class java/lang/invoke/InnerClassLambdaMetafactory$1 done
+Event: 0.269 loading class java/lang/invoke/DirectMethodHandle$Special
+Event: 0.269 loading class java/lang/invoke/DirectMethodHandle$Special done
+Event: 0.270 loading class java/lang/UNIXProcess$1
+Event: 0.270 loading class java/lang/UNIXProcess$1 done
+Event: 0.270 loading class java/util/concurrent/Executor
+Event: 0.271 loading class java/util/concurrent/Executor done
+Event: 0.271 loading class java/util/concurrent/ThreadFactory
+Event: 0.271 loading class java/util/concurrent/ThreadFactory done
+Event: 0.272 loading class java/util/concurrent/Executors
+Event: 0.272 loading class java/util/concurrent/Executors done
+Event: 0.272 loading class java/util/concurrent/ThreadPoolExecutor
+Event: 0.272 loading class java/util/concurrent/AbstractExecutorService
+Event: 0.272 loading class java/util/concurrent/ExecutorService
+Event: 0.272 loading class java/util/concurrent/ExecutorService done
+Event: 0.272 loading class java/util/concurrent/AbstractExecutorService done
+Event: 0.272 loading class java/util/concurrent/ThreadPoolExecutor done
+Event: 0.272 loading class java/util/concurrent/ThreadPoolExecutor$AbortPolicy
+Event: 0.272 loading class java/util/concurrent/RejectedExecutionHandler
+Event: 0.272 loading class java/util/concurrent/RejectedExecutionHandler done
+Event: 0.272 loading class java/util/concurrent/ThreadPoolExecutor$AbortPolicy done
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue
+Event: 0.273 loading class java/util/concurrent/BlockingQueue
+Event: 0.273 loading class java/util/concurrent/BlockingQueue done
+Event: 0.273 loading class java/util/AbstractQueue
+Event: 0.273 loading class java/util/AbstractQueue done
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue done
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue$TransferStack
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue$Transferer
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue$Transferer done
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue$TransferStack done
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue$TransferStack$SNode
+Event: 0.273 loading class java/util/concurrent/SynchronousQueue$TransferStack$SNode done
+Event: 0.273 loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject
+Event: 0.273 loading class java/util/concurrent/locks/Condition
+Event: 0.273 loading class java/util/concurrent/locks/Condition done
+Event: 0.273 loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject done
+Event: 0.274 loading class java/lang/UNIXProcess$ProcessPipeOutputStream
+Event: 0.274 loading class java/lang/UNIXProcess$ProcessPipeOutputStream done
+Event: 0.275 loading class java/lang/UNIXProcess$ProcessPipeInputStream
+Event: 0.275 loading class java/lang/UNIXProcess$ProcessPipeInputStream done
+Event: 0.276 loading class java/util/concurrent/ThreadPoolExecutor$Worker
+Event: 0.276 loading class java/util/concurrent/ThreadPoolExecutor$Worker done
+Event: 0.276 Thread 0x00007fea483c5000 Thread added: 0x00007fea483c5000
+Event: 0.278 loading class java/lang/ProcessBuilder$NullInputStream
+Event: 0.278 loading class java/lang/ProcessBuilder$NullInputStream done
+Event: 0.278 loading class java/lang/ProcessBuilder$NullOutputStream
+Event: 0.278 loading class java/lang/ProcessBuilder$NullOutputStream done
+Event: 0.278 loading class java/util/concurrent/locks/LockSupport
+Event: 0.278 loading class java/util/concurrent/locks/LockSupport done
+Event: 0.282 loading class com/sun/jna/internal/Cleaner
+Event: 0.282 loading class com/sun/jna/internal/Cleaner done
+Event: 0.282 loading class com/sun/jna/internal/Cleaner$1
+Event: 0.282 loading class com/sun/jna/internal/Cleaner$1 done
+Event: 0.283 loading class com/sun/jna/internal/Cleaner$Cleanable
+Event: 0.283 loading class com/sun/jna/internal/Cleaner$Cleanable done
+Event: 0.283 Thread 0x00007fea483c8000 Thread added: 0x00007fea483c8000
+Event: 0.283 loading class com/sun/jna/NativeLibrary$NativeLibraryDisposer
+Event: 0.283 loading class com/sun/jna/NativeLibrary$NativeLibraryDisposer done
+Event: 0.284 loading class com/sun/jna/internal/Cleaner$CleanerRef
+Event: 0.284 loading class com/sun/jna/internal/Cleaner$CleanerRef done
+Event: 0.284 loading class java/lang/reflect/Proxy
+Event: 0.284 loading class java/lang/reflect/Proxy done
+Event: 0.284 loading class java/lang/reflect/WeakCache
+Event: 0.285 loading class java/lang/reflect/WeakCache done
+Event: 0.285 loading class java/lang/reflect/Proxy$KeyFactory
+Event: 0.285 loading class java/util/function/BiFunction
+Event: 0.285 loading class java/util/function/BiFunction done
+Event: 0.285 loading class java/lang/reflect/Proxy$KeyFactory done
+Event: 0.285 loading class java/lang/reflect/Proxy$ProxyClassFactory
+Event: 0.285 loading class java/lang/reflect/Proxy$ProxyClassFactory done
+Event: 0.285 loading class java/lang/reflect/WeakCache$CacheKey
+Event: 0.285 loading class java/lang/reflect/WeakCache$CacheKey done
+Event: 0.285 loading class java/lang/reflect/Proxy$Key1
+Event: 0.285 loading class java/lang/reflect/Proxy$Key1 done
+Event: 0.285 loading class java/lang/reflect/WeakCache$Factory
+Event: 0.285 loading class java/util/function/Supplier
+Event: 0.285 loading class java/util/function/Supplier done
+Event: 0.285 loading class java/lang/reflect/WeakCache$Factory done
+Event: 0.285 loading class sun/misc/ProxyGenerator
+Event: 0.286 loading class sun/misc/ProxyGenerator done
+Event: 0.286 loading class sun/misc/ProxyGenerator$ConstantPool
+Event: 0.286 loading class sun/misc/ProxyGenerator$ConstantPool done
+Event: 0.286 loading class sun/misc/ProxyGenerator$ProxyMethod
+Event: 0.286 loading class sun/misc/ProxyGenerator$ProxyMethod done
+Event: 0.286 loading class featurecreep/attach/AttachLinux$CLib$Stat64
+Event: 0.286 loading class featurecreep/attach/AttachLinux$CLib$Stat64 done
+Event: 0.287 loading class featurecreep/attach/AttachLinux$CLib$SockAddrUn
+Event: 0.287 loading class featurecreep/attach/AttachLinux$CLib$SockAddrUn done
+Event: 0.287 loading class sun/misc/ProxyGenerator$PrimitiveTypeInfo
+Event: 0.287 loading class sun/misc/ProxyGenerator$PrimitiveTypeInfo done
+Event: 0.287 Thread 0x00007fea4804c000 Uncommon trap: trap_request=0xffffff65 fr.pc=0x00007fea391c97b8
+Event: 0.287 Thread 0x00007fea4804c000 DEOPT PACKING pc=0x00007fea391c97b8 sp=0x00007fea4e5fd8b0
+Event: 0.287 Thread 0x00007fea4804c000 DEOPT UNPACKING pc=0x00007fea3904547a sp=0x00007fea4e5fd858 mode 2
+Event: 0.287 loading class sun/misc/ProxyGenerator$MethodInfo
+Event: 0.287 loading class sun/misc/ProxyGenerator$MethodInfo done
+Event: 0.287 loading class sun/misc/ProxyGenerator$ConstantPool$ValueEntry
+Event: 0.288 loading class sun/misc/ProxyGenerator$ConstantPool$Entry
+Event: 0.288 loading class sun/misc/ProxyGenerator$ConstantPool$Entry done
+Event: 0.288 loading class sun/misc/ProxyGenerator$ConstantPool$ValueEntry done
+Event: 0.288 loading class java/io/DataOutputStream
+Event: 0.288 loading class java/io/DataOutput
+Event: 0.288 loading class java/io/DataOutput done
+Event: 0.288 loading class java/io/DataOutputStream done
+Event: 0.288 loading class sun/misc/ProxyGenerator$ConstantPool$IndirectEntry
+Event: 0.288 loading class sun/misc/ProxyGenerator$ConstantPool$IndirectEntry done
+Event: 0.288 loading class sun/misc/ProxyGenerator$FieldInfo
+Event: 0.288 loading class sun/misc/ProxyGenerator$FieldInfo done
+Event: 0.288 loading class sun/misc/ProxyGenerator$ExceptionTableEntry
+Event: 0.288 loading class sun/misc/ProxyGenerator$ExceptionTableEntry done
+Event: 0.291 loading class java/lang/reflect/WeakCache$CacheValue
+Event: 0.291 loading class java/lang/reflect/WeakCache$Value
+Event: 0.291 loading class java/lang/reflect/WeakCache$Value done
+Event: 0.291 loading class java/lang/reflect/WeakCache$CacheValue done
+Event: 0.292 loading class java/lang/reflect/UndeclaredThrowableException
+Event: 0.292 loading class java/lang/reflect/UndeclaredThrowableException done
+Event: 0.292 loading class java/lang/reflect/Proxy$1
+Event: 0.292 loading class java/lang/reflect/Proxy$1 done
+Event: 0.292 loading class com/sun/jna/internal/ReflectionUtils
+Event: 0.292 loading class com/sun/jna/internal/ReflectionUtils done
+Event: 0.293 loading class java/lang/AssertionError
+Event: 0.293 loading class java/lang/AssertionError done
+Event: 0.293 loading class java/lang/reflect/TypeVariable
+Event: 0.293 loading class java/lang/reflect/TypeVariable done
+Event: 0.293 loading class java/lang/reflect/AnnotatedType
+Event: 0.293 loading class java/lang/reflect/AnnotatedType done
+Event: 0.294 loading class java/lang/TypeNotPresentException
+Event: 0.294 loading class java/lang/TypeNotPresentException done
+Event: 0.294 loading class com/sun/jna/Function
+Event: 0.294 loading class com/sun/jna/Function done
+Event: 0.295 loading class com/sun/jna/MethodParameterContext
+Event: 0.295 loading class com/sun/jna/MethodParameterContext done
+Event: 0.295 loading class com/sun/jna/FunctionParameterContext
+Event: 0.295 loading class com/sun/jna/FunctionParameterContext done
+Event: 0.296 loading class com/sun/jna/VarArgsChecker
+Event: 0.296 loading class com/sun/jna/VarArgsChecker done
+Event: 0.296 loading class com/sun/jna/VarArgsChecker$RealVarArgsChecker
+Event: 0.296 loading class com/sun/jna/VarArgsChecker$RealVarArgsChecker done
+Event: 0.296 loading class com/sun/jna/VarArgsChecker$NoVarArgsChecker
+Event: 0.296 loading class com/sun/jna/VarArgsChecker$NoVarArgsChecker done
+Event: 0.297 loading class com/sun/jna/Library$Handler$FunctionInfo
+Event: 0.297 loading class com/sun/jna/Library$Handler$FunctionInfo done
+Event: 0.297 loading class com/sun/jna/Function$PostCallRead
+Event: 0.297 loading class com/sun/jna/Function$PostCallRead done
+Event: 0.298 Thread 0x00007fe9e8001000 Thread added: 0x00007fe9e8001000
+Event: 0.399 loading class com/sun/jna/Structure$FieldOrder
+Event: 0.399 loading class com/sun/jna/Structure$FieldOrder done
+Event: 0.399 loading class sun/reflect/annotation/AnnotationParser
+Event: 0.400 loading class sun/reflect/annotation/AnnotationParser done
+Event: 0.400 loading class sun/reflect/generics/parser/SignatureParser
+Event: 0.400 loading class sun/reflect/generics/parser/SignatureParser done
+Event: 0.400 loading class sun/reflect/generics/tree/TypeArgument
+Event: 0.400 loading class sun/reflect/generics/tree/TypeTree
+Event: 0.400 loading class sun/reflect/generics/tree/Tree
+Event: 0.400 loading class sun/reflect/generics/tree/Tree done
+Event: 0.400 loading class sun/reflect/generics/tree/TypeTree done
+Event: 0.400 loading class sun/reflect/generics/tree/TypeArgument done
+Event: 0.400 loading class sun/reflect/generics/tree/SimpleClassTypeSignature
+Event: 0.400 loading class sun/reflect/generics/tree/FieldTypeSignature
+Event: 0.400 loading class sun/reflect/generics/tree/BaseType
+Event: 0.400 loading class sun/reflect/generics/tree/TypeSignature
+Event: 0.400 loading class sun/reflect/generics/tree/ReturnType
+Event: 0.400 loading class sun/reflect/generics/tree/ReturnType done
+Event: 0.400 loading class sun/reflect/generics/tree/TypeSignature done
+Event: 0.400 loading class sun/reflect/generics/tree/BaseType done
+Event: 0.400 loading class sun/reflect/generics/tree/FieldTypeSignature done
+Event: 0.400 loading class sun/reflect/generics/tree/SimpleClassTypeSignature done
+Event: 0.400 loading class sun/reflect/generics/tree/ClassTypeSignature
+Event: 0.400 loading class sun/reflect/generics/tree/ClassTypeSignature done
+Event: 0.400 loading class sun/reflect/generics/scope/ClassScope
+Event: 0.400 loading class sun/reflect/generics/scope/Scope
+Event: 0.400 loading class sun/reflect/generics/scope/Scope done
+Event: 0.400 loading class sun/reflect/generics/scope/AbstractScope
+Event: 0.400 loading class sun/reflect/generics/scope/AbstractScope done
+Event: 0.400 loading class sun/reflect/generics/scope/ClassScope done
+Event: 0.400 loading class sun/reflect/generics/factory/CoreReflectionFactory
+Event: 0.401 loading class sun/reflect/generics/factory/GenericsFactory
+Event: 0.401 loading class sun/reflect/generics/factory/GenericsFactory done
+Event: 0.401 loading class sun/reflect/generics/factory/CoreReflectionFactory done
+Event: 0.401 loading class sun/reflect/generics/visitor/Reifier
+Event: 0.401 loading class sun/reflect/generics/visitor/TypeTreeVisitor
+Event: 0.401 loading class sun/reflect/generics/visitor/TypeTreeVisitor done
+Event: 0.401 loading class sun/reflect/generics/visitor/Reifier done
+Event: 0.401 loading class java/lang/reflect/GenericArrayType
+Event: 0.401 loading class java/lang/reflect/GenericArrayType done
+Event: 0.401 loading class sun/reflect/annotation/AnnotationType$1
+Event: 0.401 loading class sun/reflect/annotation/AnnotationType$1 done
+Event: 0.401 loading class java/lang/annotation/Retention
+Event: 0.401 loading class java/lang/annotation/Retention done
+Event: 0.401 loading class java/lang/annotation/Inherited
+Event: 0.401 loading class java/lang/annotation/Inherited done
+Event: 0.401 loading class java/lang/annotation/Documented
+Event: 0.401 loading class java/lang/annotation/Documented done
+Event: 0.401 loading class java/lang/annotation/RetentionPolicy
+Event: 0.401 loading class java/lang/annotation/RetentionPolicy done
+Event: 0.401 loading class sun/reflect/annotation/AnnotationTypeMismatchExceptionProxy
+Event: 0.402 loading class sun/reflect/annotation/ExceptionProxy
+Event: 0.402 loading class sun/reflect/annotation/ExceptionProxy done
+Event: 0.402 loading class sun/reflect/annotation/AnnotationTypeMismatchExceptionProxy done
+Event: 0.402 loading class sun/reflect/annotation/AnnotationParser$1
+Event: 0.402 loading class sun/reflect/annotation/AnnotationParser$1 done
+Event: 0.402 loading class sun/reflect/annotation/AnnotationInvocationHandler
+Event: 0.402 loading class sun/reflect/annotation/AnnotationInvocationHandler done
+Event: 0.403 loading class java/lang/annotation/Target
+Event: 0.403 loading class java/lang/annotation/Target done
+Event: 0.404 loading class java/util/Collections$EmptyIterator
+Event: 0.404 loading class java/util/Collections$EmptyIterator done
+Event: 0.405 loading class java/util/LinkedList$ListItr
+Event: 0.405 loading class java/util/LinkedList$ListItr done
+Event: 0.405 loading class com/sun/jna/Structure$LayoutInfo
+Event: 0.405 loading class com/sun/jna/Structure$LayoutInfo done
+Event: 0.405 loading class com/sun/jna/Structure$StructField
+Event: 0.405 loading class com/sun/jna/Structure$StructField done
+Event: 0.406 loading class sun/reflect/UnsafeLongFieldAccessorImpl
+Event: 0.406 loading class sun/reflect/UnsafeLongFieldAccessorImpl done
+Event: 0.406 loading class com/sun/jna/Union
+Event: 0.406 loading class com/sun/jna/Union done
+Event: 0.406 loading class sun/reflect/UnsafeIntegerFieldAccessorImpl
+Event: 0.406 loading class sun/reflect/UnsafeIntegerFieldAccessorImpl done
+Event: 0.407 loading class com/sun/jna/Memory$SharedMemory
+Event: 0.407 loading class com/sun/jna/Memory$SharedMemory done
+Event: 0.407 loading class com/sun/jna/WeakMemoryHolder
+Event: 0.407 loading class com/sun/jna/WeakMemoryHolder done
+Event: 0.407 loading class com/sun/jna/Memory$MemoryDisposer
+Event: 0.407 loading class com/sun/jna/Memory$MemoryDisposer done
+Event: 0.408 loading class com/sun/jna/NativeString
+Event: 0.408 loading class com/sun/jna/NativeString done
+Event: 0.408 loading class com/sun/jna/NativeString$StringMemory
+Event: 0.408 loading class com/sun/jna/NativeString$StringMemory done
+Event: 0.409 loading class com/sun/jna/Structure$StructureSet
+Event: 0.409 loading class com/sun/jna/Structure$StructureSet done
+Event: 0.409 loading class com/sun/jna/Structure$ByReference
+Event: 0.409 loading class com/sun/jna/Structure$ByReference done
+Event: 0.410 loading class sun/reflect/UnsafeShortFieldAccessorImpl
+Event: 0.410 loading class sun/reflect/UnsafeShortFieldAccessorImpl done
+Event: 0.410 loading class sun/reflect/UnsafeObjectFieldAccessorImpl
+Event: 0.410 loading class sun/reflect/UnsafeObjectFieldAccessorImpl done
+Event: 0.440 loading class com/sun/jna/TypeMapper
+Event: 0.440 loading class com/sun/jna/TypeMapper done
+Event: 0.493 Thread 0x00007fea4804c000 Uncommon trap: trap_request=0xfffffff4 fr.pc=0x00007fea39249e80
+Event: 0.493 Thread 0x00007fea4804c000 DEOPT PACKING pc=0x00007fea39249e80 sp=0x00007fea4e5fe490
+Event: 0.493 Thread 0x00007fea4804c000 DEOPT UNPACKING pc=0x00007fea3904547a sp=0x00007fea4e5fe408 mode 2
+Event: 0.854 Thread 0x00007fea4804c000 DEOPT PACKING pc=0x00007fea3923d9c0 sp=0x00007fea4e5fe5a0
+Event: 0.854 Thread 0x00007fea4804c000 DEOPT UNPACKING pc=0x00007fea390474c4 sp=0x00007fea4e5fe370 mode 0
+Event: 4.058 Executing VM operation: EnableBiasedLocking
+Event: 4.059 Executing VM operation: EnableBiasedLocking done
+Event: 5.456 Executing VM operation: ParallelGCFailedAllocation
+Event: 5.461 Executing VM operation: ParallelGCFailedAllocation done
+
+
+Dynamic libraries:
+6cb000000-6d5400000 rw-p 00000000 00:00 0 
+6d5400000-76e580000 ---p 00000000 00:00 0 
+76e580000-773780000 rw-p 00000000 00:00 0 
+773780000-7c0000000 ---p 00000000 00:00 0 
+7c0000000-7c00e0000 rw-p 00000000 00:00 0 
+7c00e0000-800000000 ---p 00000000 00:00 0 
+5650d3400000-5650d3401000 r-xp 00000000 fd:01 135879040                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/bin/java
+5650d3600000-5650d3601000 r--p 00000000 fd:01 135879040                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/bin/java
+5650d3601000-5650d3602000 rw-p 00001000 fd:01 135879040                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/bin/java
+5650d40da000-5650d40fb000 rw-p 00000000 00:00 0                          [heap]
+7fe9b0000000-7fe9b0098000 rw-p 00000000 00:00 0 
+7fe9b0098000-7fe9b4000000 ---p 00000000 00:00 0 
+7fe9b4000000-7fe9b4021000 rw-p 00000000 00:00 0 
+7fe9b4021000-7fe9b8000000 ---p 00000000 00:00 0 
+7fe9b8000000-7fe9b8021000 rw-p 00000000 00:00 0 
+7fe9b8021000-7fe9bc000000 ---p 00000000 00:00 0 
+7fe9bc000000-7fe9bc021000 rw-p 00000000 00:00 0 
+7fe9bc021000-7fe9c0000000 ---p 00000000 00:00 0 
+7fe9c0000000-7fe9c02d4000 rw-p 00000000 00:00 0 
+7fe9c02d4000-7fe9c4000000 ---p 00000000 00:00 0 
+7fe9c4000000-7fe9c4021000 rw-p 00000000 00:00 0 
+7fe9c4021000-7fe9c8000000 ---p 00000000 00:00 0 
+7fe9c8000000-7fe9c816c000 rw-p 00000000 00:00 0 
+7fe9c816c000-7fe9cc000000 ---p 00000000 00:00 0 
+7fe9cc000000-7fe9cc09c000 rw-p 00000000 00:00 0 
+7fe9cc09c000-7fe9d0000000 ---p 00000000 00:00 0 
+7fe9d0000000-7fe9d0145000 rw-p 00000000 00:00 0 
+7fe9d0145000-7fe9d4000000 ---p 00000000 00:00 0 
+7fe9d6a00000-7fe9e3f30000 r--p 00000000 fd:01 683                        /usr/lib/locale/locale-archive
+7fe9e4000000-7fe9e4021000 rw-p 00000000 00:00 0 
+7fe9e4021000-7fe9e8000000 ---p 00000000 00:00 0 
+7fe9e8000000-7fe9e8021000 rw-p 00000000 00:00 0 
+7fe9e8021000-7fe9ec000000 ---p 00000000 00:00 0 
+7fe9ec000000-7fe9ec021000 rw-p 00000000 00:00 0 
+7fe9ec021000-7fe9f0000000 ---p 00000000 00:00 0 
+7fe9f0580000-7fe9f8000000 rw-p 00000000 00:00 0 
+7fe9f8000000-7fe9f8021000 rw-p 00000000 00:00 0 
+7fe9f8021000-7fe9fc000000 ---p 00000000 00:00 0 
+7fe9fc000000-7fe9fc021000 rw-p 00000000 00:00 0 
+7fe9fc021000-7fea00000000 ---p 00000000 00:00 0 
+7fea00000000-7fea00021000 rw-p 00000000 00:00 0 
+7fea00021000-7fea04000000 ---p 00000000 00:00 0 
+7fea08000000-7fea08021000 rw-p 00000000 00:00 0 
+7fea08021000-7fea0c000000 ---p 00000000 00:00 0 
+7fea10000000-7fea10021000 rw-p 00000000 00:00 0 
+7fea10021000-7fea14000000 ---p 00000000 00:00 0 
+7fea18000000-7fea18021000 rw-p 00000000 00:00 0 
+7fea18021000-7fea1c000000 ---p 00000000 00:00 0 
+7fea20000000-7fea20021000 rw-p 00000000 00:00 0 
+7fea20021000-7fea24000000 ---p 00000000 00:00 0 
+7fea28000000-7fea28021000 rw-p 00000000 00:00 0 
+7fea28021000-7fea2c000000 ---p 00000000 00:00 0 
+7fea2f400000-7fea2f41e000 r-xp 00000000 fd:03 539578382                  /home/rhel/.cache/JNA/temp/jna1666067698060216918.tmp (deleted)
+7fea2f41e000-7fea2f61d000 ---p 0001e000 fd:03 539578382                  /home/rhel/.cache/JNA/temp/jna1666067698060216918.tmp (deleted)
+7fea2f61d000-7fea2f61e000 rw-p 0001d000 fd:03 539578382                  /home/rhel/.cache/JNA/temp/jna1666067698060216918.tmp (deleted)
+7fea2f61e000-7fea2f61f000 rw-p 00000000 00:00 0 
+7fea2f800000-7fea2f802000 r-xp 00000000 fd:01 320153                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libsystemconf.so
+7fea2f802000-7fea2fa01000 ---p 00002000 fd:01 320153                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libsystemconf.so
+7fea2fa01000-7fea2fa02000 r--p 00001000 fd:01 320153                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libsystemconf.so
+7fea2fa02000-7fea2fa03000 rw-p 00000000 00:00 0 
+7fea2fc00000-7fea2fc09000 r-xp 00000000 fd:01 320144                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libmanagement.so
+7fea2fc09000-7fea2fe08000 ---p 00009000 fd:01 320144                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libmanagement.so
+7fea2fe08000-7fea2fe09000 r--p 00008000 fd:01 320144                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libmanagement.so
+7fea2fe09000-7fea2fe0a000 rw-p 00000000 00:00 0 
+7fea30000000-7fea30021000 rw-p 00000000 00:00 0 
+7fea30021000-7fea34000000 ---p 00000000 00:00 0 
+7fea34100000-7fea34103000 ---p 00000000 00:00 0 
+7fea34103000-7fea34200000 rw-p 00000000 00:00 0 
+7fea34200000-7fea34219000 r-xp 00000000 fd:01 320146                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnet.so
+7fea34219000-7fea34418000 ---p 00019000 fd:01 320146                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnet.so
+7fea34418000-7fea34419000 r--p 00018000 fd:01 320146                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnet.so
+7fea34419000-7fea3441a000 rw-p 00019000 fd:01 320146                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnet.so
+7fea34500000-7fea34503000 ---p 00000000 00:00 0 
+7fea34503000-7fea34600000 rw-p 00000000 00:00 0 
+7fea34600000-7fea34612000 r-xp 00000000 fd:01 320147                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnio.so
+7fea34612000-7fea34812000 ---p 00012000 fd:01 320147                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnio.so
+7fea34812000-7fea34813000 r--p 00012000 fd:01 320147                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnio.so
+7fea34813000-7fea34814000 rw-p 00013000 fd:01 320147                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libnio.so
+7fea3489d000-7fea3489e000 ---p 00000000 00:00 0 
+7fea3489e000-7fea3499e000 rw-p 00000000 00:00 0 
+7fea3499e000-7fea349a1000 ---p 00000000 00:00 0 
+7fea349a1000-7fea34a9e000 rw-p 00000000 00:00 0 
+7fea34a9e000-7fea34a9f000 ---p 00000000 00:00 0 
+7fea34a9f000-7fea34aa2000 ---p 00000000 00:00 0 
+7fea34aa2000-7fea34b9f000 rw-p 00000000 00:00 0 
+7fea34b9f000-7fea34ba0000 ---p 00000000 00:00 0 
+7fea34ba0000-7fea34ba3000 ---p 00000000 00:00 0 
+7fea34ba3000-7fea34ca0000 rw-p 00000000 00:00 0 
+7fea34ca0000-7fea34ca1000 ---p 00000000 00:00 0 
+7fea34ca1000-7fea34ca4000 ---p 00000000 00:00 0 
+7fea34ca4000-7fea34da1000 rw-p 00000000 00:00 0 
+7fea34da1000-7fea34da2000 ---p 00000000 00:00 0 
+7fea34da2000-7fea34da5000 ---p 00000000 00:00 0 
+7fea34da5000-7fea34ea2000 rw-p 00000000 00:00 0 
+7fea34ea2000-7fea34ea5000 ---p 00000000 00:00 0 
+7fea34ea5000-7fea34fa2000 rw-p 00000000 00:00 0 
+7fea34fa2000-7fea34fa5000 ---p 00000000 00:00 0 
+7fea34fa5000-7fea350a2000 rw-p 00000000 00:00 0 
+7fea350a2000-7fea350a5000 ---p 00000000 00:00 0 
+7fea350a5000-7fea351a2000 rw-p 00000000 00:00 0 
+7fea351a2000-7fea351a3000 ---p 00000000 00:00 0 
+7fea351a3000-7fea36dbe000 rw-p 00000000 00:00 0 
+7fea36dbe000-7fea36f90000 r--s 044cd000 fd:01 205505118                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/rt.jar
+7fea36f90000-7fea375d0000 rw-p 00000000 00:00 0 
+7fea375d0000-7fea37790000 ---p 00000000 00:00 0 
+7fea37790000-7fea37f38000 rw-p 00000000 00:00 0 
+7fea37f38000-7fea37f39000 ---p 00000000 00:00 0 
+7fea37f39000-7fea38039000 rw-p 00000000 00:00 0 
+7fea38039000-7fea3803a000 ---p 00000000 00:00 0 
+7fea3803a000-7fea3813a000 rw-p 00000000 00:00 0 
+7fea3813a000-7fea3813b000 ---p 00000000 00:00 0 
+7fea3813b000-7fea3823b000 rw-p 00000000 00:00 0 
+7fea3823b000-7fea3823c000 ---p 00000000 00:00 0 
+7fea3823c000-7fea3838e000 rw-p 00000000 00:00 0 
+7fea3838e000-7fea38857000 ---p 00000000 00:00 0 
+7fea38857000-7fea388a9000 rw-p 00000000 00:00 0 
+7fea388a9000-7fea38d71000 ---p 00000000 00:00 0 
+7fea38d71000-7fea38d9b000 rw-p 00000000 00:00 0 
+7fea38d9b000-7fea38fff000 ---p 00000000 00:00 0 
+7fea38fff000-7fea39000000 rw-p 00000000 00:00 0 
+7fea39000000-7fea39270000 rwxp 00000000 00:00 0 
+7fea39270000-7fea48000000 ---p 00000000 00:00 0 
+7fea48000000-7fea48bae000 rw-p 00000000 00:00 0 
+7fea48bae000-7fea4c000000 ---p 00000000 00:00 0 
+7fea4c040000-7fea4c04a000 rw-p 00000000 00:00 0 
+7fea4c04a000-7fea4c400000 ---p 00000000 00:00 0 
+7fea4c400000-7fea4c41c000 r-xp 00000000 fd:01 320157                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libzip.so
+7fea4c41c000-7fea4c61b000 ---p 0001c000 fd:01 320157                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libzip.so
+7fea4c61b000-7fea4c61c000 r--p 0001b000 fd:01 320157                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libzip.so
+7fea4c61c000-7fea4c61d000 rw-p 00000000 00:00 0 
+7fea4c6c6000-7fea4c6c9000 ---p 00000000 00:00 0 
+7fea4c6c9000-7fea4c6ff000 rw-p 00000000 00:00 0 
+7fea4c6ff000-7fea4c700000 ---p 00000000 00:00 0 
+7fea4c700000-7fea4c800000 rw-p 00000000 00:00 0 
+7fea4c800000-7fea4c82b000 r-xp 00000000 fd:01 320136                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libjava.so
+7fea4c82b000-7fea4ca2b000 ---p 0002b000 fd:01 320136                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libjava.so
+7fea4ca2b000-7fea4ca2c000 r--p 0002b000 fd:01 320136                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libjava.so
+7fea4ca2c000-7fea4ca2d000 rw-p 0002c000 fd:01 320136                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libjava.so
+7fea4ca2d000-7fea4ca2e000 rw-p 00000000 00:00 0 
+7fea4ca33000-7fea4ca44000 r--s 00212000 fd:01 205505109                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/jsse.jar
+7fea4ca44000-7fea4ca48000 r--s 001c7000 fd:03 1110974107                 /home/rhel/.m2/repository/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar
+7fea4ca48000-7fea4ca4a000 r--s 0001c000 fd:03 1618131087                 /home/rhel/.m2/repository/org/ow2/asm/asm/9.2/asm-9.2.jar
+7fea4ca4a000-7fea4caff000 rw-p 00000000 00:00 0 
+7fea4caff000-7fea4cb00000 ---p 00000000 00:00 0 
+7fea4cb00000-7fea4cc00000 rw-p 00000000 00:00 0 
+7fea4cc00000-7fea4cc0e000 r-xp 00000000 fd:01 320155                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libverify.so
+7fea4cc0e000-7fea4ce0d000 ---p 0000e000 fd:01 320155                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libverify.so
+7fea4ce0d000-7fea4ce0f000 r--p 0000d000 fd:01 320155                     /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/libverify.so
+7fea4ce0f000-7fea4ce10000 rw-p 00000000 00:00 0 
+7fea4ce10000-7fea4ce11000 r--s 00006000 fd:03 1080729567                 /home/rhel/.m2/repository/mx/kenzie/mimic/1.1.0/mimic-1.1.0.jar
+7fea4ce11000-7fea4ce13000 r--s 0000a000 fd:03 1082571873                 /home/rhel/.m2/repository/mx/kenzie/mirror/5.0.3/mirror-5.0.3.jar
+7fea4ce13000-7fea4ce14000 r--s 00002000 fd:03 5179394                    /home/rhel/.m2/repository/com/asbestosstar/structurelib/0.0.1/structurelib-0.0.1.jar
+7fea4ce14000-7fea4ce16000 r--s 00004000 fd:03 1611176313                 /home/rhel/.m2/repository/io/kaitai/kaitai-struct-runtime/0.10/kaitai-struct-runtime-0.10.jar
+7fea4ce16000-7fea4ce17000 r--s 00003000 fd:03 14159279                   /home/rhel/.m2/repository/com/asbestosstar/cpio-java/0.0.1/cpio-java-0.0.1.jar
+7fea4ce17000-7fea4ce19000 r--s 0000a000 fd:03 564286518                  /home/rhel/.m2/repository/com/asbestosstar/rpm-java/0.0.1/rpm-java-0.0.1.jar
+7fea4ce19000-7fea4ce1b000 r--s 00008000 fd:03 1610616460                 /home/rhel/.m2/repository/org/jboss/staxmapper/1.4.0.Final/staxmapper-1.4.0.Final.jar
+7fea4ce1b000-7fea4ce1d000 r--s 00005000 fd:03 27550                      /home/rhel/.m2/repository/com/asbestosstar/dnf-java/0.0.1/dnf-java-0.0.1.jar
+7fea4ce1d000-7fea4ce26000 r--s 00074000 fd:03 1610616453                 /home/rhel/.m2/repository/org/jboss/modules/jboss-modules/1.12.2.Final/jboss-modules-1.12.2.Final.jar
+7fea4ce26000-7fea4ceff000 rw-p 00000000 00:00 0 
+7fea4ceff000-7fea4cf00000 ---p 00000000 00:00 0 
+7fea4cf00000-7fea4d000000 rw-p 00000000 00:00 0 
+7fea4d000000-7fea4dda5000 r-xp 00000000 fd:01 205505089                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/server/libjvm.so
+7fea4dda5000-7fea4dfa4000 ---p 00da5000 fd:01 205505089                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/server/libjvm.so
+7fea4dfa4000-7fea4e044000 r--p 00da4000 fd:01 205505089                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/server/libjvm.so
+7fea4e044000-7fea4e06e000 rw-p 00e44000 fd:01 205505089                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/amd64/server/libjvm.so
+7fea4e06e000-7fea4e0a1000 rw-p 00000000 00:00 0 
+7fea4e0a1000-7fea4e0a2000 r--s 00001000 fd:03 5849554                    /home/rhel/.m2/repository/com/asbestosstar/shadowassist/0.0.1/shadowassist-0.0.1.jar
+7fea4e0a2000-7fea4e0a4000 r--s 00014000 fd:03 1097187575                 /home/rhel/.m2/repository/com/asbestosstar/assistremapper/1.1/assistremapper-1.1.jar
+7fea4e0a4000-7fea4e0a6000 r--s 00008000 fd:03 1612699953                 /home/rhel/.m2/repository/com/github/vincentzhang96/DDS4J/v1.0.2/DDS4J-v1.0.2.jar
+7fea4e0a6000-7fea4e0a9000 r--s 00026000 fd:03 11267833                   /home/rhel/.m2/repository/ar/com/hjg/pngj/2.1.0/pngj-2.1.0.jar
+7fea4e0a9000-7fea4e0ac000 r--s 00013000 fd:03 1611455784                 /home/rhel/.m2/repository/com/asbestosstar/featurecreep-loader/4.0pre19/featurecreep-loader-4.0pre19.jar
+7fea4e0ac000-7fea4e0ad000 r--s 00003000 fd:03 1611538679                 /home/rhel/.m2/repository/io/smallrye/common/smallrye-common-cpu/1.13.2/smallrye-common-cpu-1.13.2.jar
+7fea4e0ad000-7fea4e0b4000 r--s 0003f000 fd:03 542114549                  /home/rhel/.m2/repository/org/wildfly/common/wildfly-common/1.5.1.Final/wildfly-common-1.5.1.Final.jar
+7fea4e0b4000-7fea4e0bd000 r--s 00062000 fd:03 59695495                   /home/rhel/.m2/repository/org/jboss/logmanager/jboss-logmanager/2.1.18.Final/jboss-logmanager-2.1.18.Final.jar
+7fea4e0bd000-7fea4e0ff000 rw-p 00000000 00:00 0 
+7fea4e0ff000-7fea4e100000 ---p 00000000 00:00 0 
+7fea4e100000-7fea4e200000 rw-p 00000000 00:00 0 
+7fea4e200000-7fea4e228000 r--p 00000000 fd:01 202914938                  /usr/lib64/libc.so.6
+7fea4e228000-7fea4e39d000 r-xp 00028000 fd:01 202914938                  /usr/lib64/libc.so.6
+7fea4e39d000-7fea4e3f5000 r--p 0019d000 fd:01 202914938                  /usr/lib64/libc.so.6
+7fea4e3f5000-7fea4e3f6000 ---p 001f5000 fd:01 202914938                  /usr/lib64/libc.so.6
+7fea4e3f6000-7fea4e3fa000 r--p 001f5000 fd:01 202914938                  /usr/lib64/libc.so.6
+7fea4e3fa000-7fea4e3fc000 rw-p 001f9000 fd:01 202914938                  /usr/lib64/libc.so.6
+7fea4e3fc000-7fea4e457000 rw-p 00000000 00:00 0 
+7fea4e457000-7fea4e4ff000 rw-p 00000000 00:00 0 
+7fea4e4ff000-7fea4e500000 ---p 00000000 00:00 0 
+7fea4e500000-7fea4e503000 ---p 00000000 00:00 0 
+7fea4e503000-7fea4e600000 rw-p 00000000 00:00 0 
+7fea4e600000-7fea4e618000 r-xp 00000000 fd:01 205505283                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/lib/amd64/jli/libjli.so
+7fea4e618000-7fea4e817000 ---p 00018000 fd:01 205505283                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/lib/amd64/jli/libjli.so
+7fea4e817000-7fea4e818000 r--p 00017000 fd:01 205505283                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/lib/amd64/jli/libjli.so
+7fea4e818000-7fea4e819000 rw-p 00000000 00:00 0 
+7fea4e819000-7fea4e81a000 r--s 00003000 fd:03 542114529                  /home/rhel/.m2/repository/io/smallrye/common/smallrye-common-ref/1.13.2/smallrye-common-ref-1.13.2.jar
+7fea4e81a000-7fea4e81c000 r--s 00003000 fd:03 542132153                  /home/rhel/.m2/repository/io/smallrye/common/smallrye-common-os/1.13.2/smallrye-common-os-1.13.2.jar
+7fea4e81c000-7fea4e81e000 r--s 00002000 fd:03 1611538624                 /home/rhel/.m2/repository/io/smallrye/common/smallrye-common-constraint/1.13.2/smallrye-common-constraint-1.13.2.jar
+7fea4e81e000-7fea4e829000 r--s 000b8000 fd:03 3106367                    /home/rhel/.m2/repository/org/javassist/javassist/3.30.2-GA/javassist-3.30.2-GA.jar
+7fea4e829000-7fea4e892000 rw-p 00000000 00:00 0 
+7fea4e892000-7fea4e893000 r--p 00000000 fd:01 202914943                  /usr/lib64/librt.so.1
+7fea4e893000-7fea4e894000 r-xp 00001000 fd:01 202914943                  /usr/lib64/librt.so.1
+7fea4e894000-7fea4e895000 r--p 00002000 fd:01 202914943                  /usr/lib64/librt.so.1
+7fea4e895000-7fea4e896000 r--p 00002000 fd:01 202914943                  /usr/lib64/librt.so.1
+7fea4e896000-7fea4e897000 rw-p 00003000 fd:01 202914943                  /usr/lib64/librt.so.1
+7fea4e897000-7fea4e8a4000 r--p 00000000 fd:01 201349618                  /usr/lib64/libm.so.6
+7fea4e8a4000-7fea4e914000 r-xp 0000d000 fd:01 201349618                  /usr/lib64/libm.so.6
+7fea4e914000-7fea4e970000 r--p 0007d000 fd:01 201349618                  /usr/lib64/libm.so.6
+7fea4e970000-7fea4e971000 r--p 000d8000 fd:01 201349618                  /usr/lib64/libm.so.6
+7fea4e971000-7fea4e972000 rw-p 000d9000 fd:01 201349618                  /usr/lib64/libm.so.6
+7fea4e972000-7fea4e974000 rw-p 00000000 00:00 0 
+7fea4e974000-7fea4e975000 r--p 00000000 fd:01 201349617                  /usr/lib64/libdl.so.2
+7fea4e975000-7fea4e976000 r-xp 00001000 fd:01 201349617                  /usr/lib64/libdl.so.2
+7fea4e976000-7fea4e977000 r--p 00002000 fd:01 201349617                  /usr/lib64/libdl.so.2
+7fea4e977000-7fea4e978000 r--p 00002000 fd:01 201349617                  /usr/lib64/libdl.so.2
+7fea4e978000-7fea4e979000 rw-p 00003000 fd:01 201349617                  /usr/lib64/libdl.so.2
+7fea4e979000-7fea4e97a000 r--p 00000000 fd:01 202914941                  /usr/lib64/libpthread.so.0
+7fea4e97a000-7fea4e97b000 r-xp 00001000 fd:01 202914941                  /usr/lib64/libpthread.so.0
+7fea4e97b000-7fea4e97c000 r--p 00002000 fd:01 202914941                  /usr/lib64/libpthread.so.0
+7fea4e97c000-7fea4e97d000 r--p 00002000 fd:01 202914941                  /usr/lib64/libpthread.so.0
+7fea4e97d000-7fea4e97e000 rw-p 00003000 fd:01 202914941                  /usr/lib64/libpthread.so.0
+7fea4e97e000-7fea4e97f000 r--s 00007000 fd:03 1611538652                 /home/rhel/.m2/repository/io/smallrye/common/smallrye-common-net/1.13.2/smallrye-common-net-1.13.2.jar
+7fea4e97f000-7fea4e981000 r--s 0000d000 fd:03 59695411                   /home/rhel/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar
+7fea4e981000-7fea4e987000 r--s 000f6000 fd:01 205505108                  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.412.b08-2.el9.x86_64/jre/lib/jfr.jar
+7fea4e987000-7fea4e98f000 rw-s 00000000 fd:01 264748                     /tmp/hsperfdata_rhel/26400
+7fea4e98f000-7fea4e992000 rw-p 00000000 00:00 0 
+7fea4e992000-7fea4e994000 r--p 00000000 fd:01 202914935                  /usr/lib64/ld-linux-x86-64.so.2
+7fea4e994000-7fea4e9ba000 r-xp 00002000 fd:01 202914935                  /usr/lib64/ld-linux-x86-64.so.2
+7fea4e9ba000-7fea4e9c5000 r--p 00028000 fd:01 202914935                  /usr/lib64/ld-linux-x86-64.so.2
+7fea4e9c5000-7fea4e9c6000 r--p 00000000 00:00 0 
+7fea4e9c6000-7fea4e9c8000 r--p 00033000 fd:01 202914935                  /usr/lib64/ld-linux-x86-64.so.2
+7fea4e9c8000-7fea4e9ca000 rw-p 00035000 fd:01 202914935                  /usr/lib64/ld-linux-x86-64.so.2
+7fff0419c000-7fff041bd000 rw-p 00000000 00:00 0                          [stack]
+7fff041e6000-7fff041ea000 r--p 00000000 00:00 0                          [vvar]
+7fff041ea000-7fff041ec000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 
+java_command: attachtests.AgentAttachTest
+java_class_path (initial): /home/rhel/git/FeatureCreep/SOURCES/attachtests/target/classes:/home/rhel/git/featurecreep-api/target/classes:/home/rhel/.m2/repository/org/javassist/javassist/3.30.2-GA/javassist-3.30.2-GA.jar:/home/rhel/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/home/rhel/.m2/repository/org/jboss/logmanager/jboss-logmanager/2.1.18.Final/jboss-logmanager-2.1.18.Final.jar:/home/rhel/.m2/repository/org/wildfly/common/wildfly-common/1.5.1.Final/wildfly-common-1.5.1.Final.jar:/home/rhel/.m2/repository/io/smallrye/common/smallrye-common-constraint/1.13.2/smallrye-common-constraint-1.13.2.jar:/home/rhel/.m2/repository/io/smallrye/common/smallrye-common-net/1.13.2/smallrye-common-net-1.13.2.jar:/home/rhel/.m2/repository/io/smallrye/common/smallrye-common-os/1.13.2/smallrye-common-os-1.13.2.jar:/home/rhel/.m2/repository/io/smallrye/common/smallrye-common-ref/1.13.2/smallrye-common-ref-1.13.2.jar:/home/rhel/.m2/repository/io/smallrye/common/smallrye-common-cpu/1.13.2/smallrye-common-cpu-1.13.2.jar:/home/rhel/.m2/repository/com/asbestosstar/featurecreep-loader/4.0pre19/featurecreep-loader-4.0pre19.jar:/home/rhel/.m2/repository/org/jboss/modules/jboss-modules/1.12.2.Final/jboss-modules-1.12.2.Final.jar:/home/rhel/.m2/repository/ar/com/hjg/pngj/2.1.0/pngj-2.1.0.jar:/home/rhel/.m2/repository/com/github/vincentzhang96/DDS4J/v1.0.2/DDS4J-v1.0.2.jar:/home/rhel/.m2/repository/com/asbestosstar/assistremapper/1.1/assistremapper-1.1.jar:/home/rhel/.m2/repository/com/asbestosstar/shadowassist/0.0.1/shadowassist-0.0.1.jar:/home/rhel/.m2/repository/com/asbestosstar/dnf-java/0.0.1/dnf-java-0.0.1.jar:/home/rhel/.m2/repository/org/jboss/staxmapper/1.4.0.Final/staxmapper-1.4.0.Final.jar:/home/rhel/.m2/repository/com/asbestosstar/rpm-java/0.0.1/rpm-java-0.0.1.jar:/home/rhel/.m2/repository/com/asbestosstar/cpio-java/0.0.1/cpio-java-0.0.1.jar:/home/rhel/.m2/repository/io/kaitai/kaitai-struct-runtime/0.10/kaitai-struct-runtime-0.10.jar:/
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/home/rhel/.local/bin:/home/rhel/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin
+USERNAME=rhel
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xb9e990], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xb9e990], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x966780], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x966780], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x966780], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x966780], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x966ab0], sa_mask[0]=00000000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x966a00], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.so+0x966a00], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.so+0x966a00], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x966a00], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:Red Hat Enterprise Linux release 9.4 (Plow)
+
+uname:Linux 5.14.0-427.20.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Thu May 23 16:37:13 EDT 2024 x86_64
+libc:glibc 2.34 NPTL 2.34 
+rlimit: STACK 8192k, CORE 0k, NPROC 62440, NOFILE 1048576, AS infinity
+load average:1.88 2.13 1.64
+
+/proc/meminfo:
+MemTotal:       16051556 kB
+MemFree:         3299904 kB
+MemAvailable:    6363704 kB
+Buffers:            3456 kB
+Cached:          3388352 kB
+SwapCached:            0 kB
+Active:          9536476 kB
+Inactive:        2209264 kB
+Active(anon):    8562912 kB
+Inactive(anon):        0 kB
+Active(file):     973564 kB
+Inactive(file):  2209264 kB
+Unevictable:         344 kB
+Mlocked:             344 kB
+SwapTotal:       4194300 kB
+SwapFree:        4194300 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:             14888 kB
+Writeback:             0 kB
+AnonPages:       8219592 kB
+Mapped:          1025716 kB
+Shmem:            208720 kB
+KReclaimable:     221488 kB
+Slab:             381040 kB
+SReclaimable:     221488 kB
+SUnreclaim:       159552 kB
+KernelStack:       31152 kB
+PageTables:        68276 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    12220076 kB
+Committed_AS:   20483276 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:       69576 kB
+VmallocChunk:          0 kB
+Percpu:             5792 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:   3721216 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+Unaccepted:            0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:      203928 kB
+DirectMap2M:    16510976 kB
+
+container (cgroup) information:
+container_type: cgroupv2
+cpu_cpuset_cpus: failed
+cpu_memory_nodes: failed
+active_processor_count: 8
+cpu_quota: -2
+cpu_period: -2
+cpu_shares: -2
+memory_limit_in_bytes: -1
+memory_and_swap_limit_in_bytes: -1
+memory_soft_limit_in_bytes: 0
+memory_usage_in_bytes: 3965718528
+memory_max_usage_in_bytes: -2
+
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, ht, tsc, tscinvbit, tscinv
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 1197.218
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 1197.219
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 1197.220
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 1197.249
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 1197.221
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 3300.000
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 1822.748
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i7-3615QM CPU @ 2.30GHz
+stepping	: 9
+microcode	: 0x21
+cpu MHz		: 3300.000
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds mmio_unknown
+bogomips	: 4589.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 16051556k(3299904k free), swap 4194300k(4194300k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.412-b08) for linux-amd64 JRE (1.8.0_412-b08), built on Apr  9 2024 21:37:29 by "mockbuild" with gcc 8.5.0 20210514 (Red Hat 8.5.0-18)
+
+time: Tue Jul 15 23:16:41 2025
+timezone: CST
+elapsed time: 5.605239 seconds (0d 0h 0m 5s)
+
