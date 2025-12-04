@@ -3,24 +3,50 @@
   <groupId>featurecreep</groupId>
   <artifactId>featurecreep-bootstrap</artifactId>
   <version>0.0.1-SNAPSHOT</version>
- <build>
-  <plugins>
-    <!-- other plugins omitted -->
-    <plugin>
-      <artifactId>maven-jar-plugin</artifactId>
-      <version>2.4</version>
-      <configuration>
-        <archive>
-       
-        </archive>
-      </configuration> 
-    </plugin>
-  </plugins>
-</build>
+  <build>
+    <plugins>
+      <!-- other plugins omitted -->
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Premain-Class>asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+              <Agent-Class>asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+              <Can-Redefine-Classes>true</Can-Redefine-Classes>
+              <Can-Retransform-Classes>true</Can-Retransform-Classes>
+              <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
  <properties>
  	<maven.compiler.target>11</maven.compiler.target>
  	 	<maven.compiler.source>11</maven.compiler.source>
  </properties>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
   <repositories>
     <repository>
@@ -51,7 +77,20 @@
  		<artifactId>javassist</artifactId>
  		<version>3.30.2-GA</version>
  	</dependency>
- 	 	<dependency>
+ 	
+ 	
+ 	 	 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>featurecreep-api</artifactId>
+    <version>5am0</version>
+</dependency>
+ 	
+ 	
+ 	
+ 	
+ 	      <!-- Do not include these in fat jar -->
+ 	 <dependency>
  		<groupId>org.ow2.asm</groupId>
  		<artifactId>asm</artifactId>
  		<version>9.6</version>
@@ -344,6 +383,7 @@
     <version>10.1.10</version>
 </dependency>
  	
- 	
+ 	 	      <!-- End of Do not include these in fat jar -->
+
    </dependencies>
 </project>

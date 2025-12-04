@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.instrument.Instrumentation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -20,6 +21,7 @@ import java.util.jar.JarInputStream;
 
 import org.objectweb.asm.tree.ClassNode;
 
+import asbestosstar.bootstrap.BootstrapCommon;
 import cpw.mods.modlauncher.api.IEnvironment;
 import cpw.mods.modlauncher.api.IModuleLayerManager;
 import cpw.mods.modlauncher.api.IModuleLayerManager.Layer;
@@ -32,7 +34,7 @@ import cpw.mods.modlauncher.api.TransformerVoteResult;
 
 public class CPWTransformer implements ITransformationService  {
 
-	public static int launchplugin = obtainirLaunchPlugin();
+	public static boolean init_agent=BootstrapCommon.initDefault();
 	ModuleLayer layer;
 	public static IModuleLayerManager layer_manager;
 	public static boolean actividades_launch = false;
@@ -40,39 +42,6 @@ public class CPWTransformer implements ITransformationService  {
 	public static Method def;
 	public static File mod_jar;
 
-	public static int obtainirLaunchPlugin() {
-		// TODO Auto-generated method stub
-		try {
-
-			Enumeration<URL> resources = CPWTransformer.class.getClassLoader().getResources("META-INF/jarjar/");
-
-			if (resources.hasMoreElements()) {
-
-				URL url = resources.nextElement();
-				if (url.getProtocol().equals("jar")) {
-
-					String jarPath = url.getPath().substring(0, url.getPath().indexOf('!')); // 去除 jar:file: 和 ! 后的部分
-					actividadesStream(new URL(jarPath).openStream());
-
-				}else {
-					File carpetera_mods = new File(Paths.get(System.getProperty("user.dir")).toString() + "/mods/");
-					for (File potencial : carpetera_mods.listFiles()) {
-						if(!potencial.isDirectory() && potencial.getName().endsWith(".jar")) {
-						actividadesStream(new FileInputStream(potencial));
-						}
-						
-					}
-				
-				}
-
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
-	}
 
 	
 	public static void actividadesStream(InputStream stream) {
