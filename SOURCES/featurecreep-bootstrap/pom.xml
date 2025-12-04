@@ -21,6 +21,71 @@
           </archive>
         </configuration>
       </plugin>
+      
+      
+      
+      <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.5.1</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <createDependencyReducedPom>false</createDependencyReducedPom>
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <!-- Exclude entire groups -->
+                            <exclude>org.ow2.asm:*</exclude>
+                            <exclude>com.mojang:*</exclude>
+                            <exclude>io.netty:*</exclude>
+                            <exclude>net.java.dev.jna:*</exclude>
+                            <exclude>org.apache.commons:*</exclude>
+                            <exclude>org.apache.httpcomponents:*</exclude>
+                            <exclude>org.apache.logging.log4j:*</exclude>
+                            <exclude>org.lwjgl:*</exclude>
+                            <exclude>net.minecraftforge:*</exclude>
+                            <exclude>cpw.mods:*</exclude>
+                            
+                            <!-- Exclude individual artifacts -->
+                            <exclude>ca.weblite:java-objc-bridge</exclude>
+                            <exclude>com.github.oshi:oshi-core</exclude>
+                            <exclude>com.google.guava:failureaccess</exclude>
+                            <exclude>com.google.code.gson:gson</exclude>
+                            <exclude>com.ibm.icu:icu4j</exclude>
+                            <exclude>commons-codec:commons-codec</exclude>
+                            <exclude>commons-io:commons-io</exclude>
+                            <exclude>commons-logging:commons-logging</exclude>
+                            <exclude>it.unimi.dsi:fastutil</exclude>
+                            <exclude>net.sf.jopt-simple:jopt-simple</exclude>
+                            <exclude>org.jcraft:jorbis</exclude>
+                            <exclude>org.joml:joml</exclude>
+                        </excludes>
+                    </filter>
+                </filters>
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <manifestEntries>
+                            <Premain-Class>asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+                            <Agent-Class>asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                            <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+                        </manifestEntries>
+                    </transformer>
+                </transformers>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+      
+      
+      
     </plugins>
   </build>
 
@@ -83,7 +148,7 @@
 <dependency>
     <groupId>com.asbestosstar</groupId>
     <artifactId>featurecreep-api</artifactId>
-    <version>5am0</version>
+    <version>5am2</version>
 </dependency>
  	
  	
@@ -94,278 +159,333 @@
  		<groupId>org.ow2.asm</groupId>
  		<artifactId>asm</artifactId>
  		<version>9.6</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.ow2.asm</groupId>
  		<artifactId>asm-analysis</artifactId>
  		<version>9.6</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.ow2.asm</groupId>
  		<artifactId>asm-commons</artifactId>
  		<version>9.6</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.ow2.asm</groupId>
  		<artifactId>asm-tree</artifactId>
  		<version>9.6</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.ow2.asm</groupId>
  		<artifactId>asm-util</artifactId>
  		<version>9.6</version>
+ 		<scope>provided</scope>
  	</dependency>
 <!-- https://mvnrepository.com/artifact/net.minecraftforge/eventbus -->
 <dependency>
     <groupId>net.minecraftforge</groupId>
     <artifactId>eventbus</artifactId>
     <version>6.2.6</version>
+    <scope>provided</scope>
 </dependency>
 
  	<dependency>
  		<groupId>ca.weblite</groupId>
  		<artifactId>java-objc-bridge</artifactId>
  		<version>1.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.github.oshi</groupId>
  		<artifactId>oshi-core</artifactId>
  		<version>6.4.10</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.google.guava</groupId>
  		<artifactId>failureaccess</artifactId>
  		<version>1.0.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.google.code.gson</groupId>
  		<artifactId>gson</artifactId>
  		<version>2.10.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.ibm.icu</groupId>
  		<artifactId>icu4j</artifactId>
  		<version>73.2</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>authlib</artifactId>
  		<version>6.0.54</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>blocklist</artifactId>
  		<version>1.0.10</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>brigadier</artifactId>
  		<version>1.2.9</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>datafixerupper</artifactId>
  		<version>7.0.14</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>logging</artifactId>
  		<version>1.2.7</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>patchy</artifactId>
  		<version>2.2.10</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>com.mojang</groupId>
  		<artifactId>text2speech</artifactId>
  		<version>1.17.9</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>commons-codec</groupId>
  		<artifactId>commons-codec</artifactId>
  		<version>1.16.0</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>commons-io</groupId>
  		<artifactId>commons-io</artifactId>
  		<version>2.15.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>commons-logging</groupId>
  		<artifactId>commons-logging</artifactId>
  		<version>1.2</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-buffer</artifactId>
  		<version>4.1.97.Final</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-codec</artifactId>
  		<version>4.1.97.Final</version>
+ <scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-common</artifactId>
  		<version>4.1.97.Final</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-handler</artifactId>
  		<version>4.1.97.Final</version>
+ 	<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-resolver</artifactId>
  		<version>4.1.97.Final</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-transport-classes-epoll</artifactId>
  		<version>4.1.97.Final</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-transport-native-unix-common</artifactId>
  		<version>4.1.97.Final</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>io.netty</groupId>
  		<artifactId>netty-transport</artifactId>
  		<version>4.1.97.Final</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>it.unimi.dsi</groupId>
  		<artifactId>fastutil</artifactId>
  		<version>8.5.12</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.java.dev.jna</groupId>
  		<artifactId>jna-platform</artifactId>
  		<version>5.14.0</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.java.dev.jna</groupId>
  		<artifactId>jna</artifactId>
  		<version>5.14.0</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.sf.jopt-simple</groupId>
  		<artifactId>jopt-simple</artifactId>
  		<version>5.0.4</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.commons</groupId>
  		<artifactId>commons-compress</artifactId>
  		<version>1.26.0</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.commons</groupId>
  		<artifactId>commons-lang3</artifactId>
  		<version>3.14.0</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.httpcomponents</groupId>
  		<artifactId>httpclient</artifactId>
  		<version>4.5.13</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.httpcomponents</groupId>
  		<artifactId>httpcore</artifactId>
  		<version>4.4.16</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.logging.log4j</groupId>
  		<artifactId>log4j-api</artifactId>
  		<version>2.22.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.logging.log4j</groupId>
  		<artifactId>log4j-core</artifactId>
  		<version>2.22.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.apache.logging.log4j</groupId>
  		<artifactId>log4j-slf4j2-impl</artifactId>
  		<version>2.22.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.jcraft</groupId>
  		<artifactId>jorbis</artifactId>
  		<version>0.0.17</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.joml</groupId>
  		<artifactId>joml</artifactId>
  		<version>1.10.5</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl-freetype</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl-jemalloc</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl-openal</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl-opengl</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl-stb</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl-tinyfd</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>org.lwjgl</groupId>
  		<artifactId>lwjgl</artifactId>
  		<version>3.3.3</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.minecraftforge</groupId>
  		<artifactId>modlauncher</artifactId>
  		<version>10.2.1</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.minecraftforge</groupId>
  		<artifactId>fmlcore</artifactId>
  		<version>1.20.6-50.0.4</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.minecraftforge</groupId>
  		<artifactId>javafmllanguage</artifactId>
  		<version>1.20.6-50.0.4</version>
+ 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.minecraftforge</groupId>
  		<artifactId>lowcodelanguage</artifactId>
  		<version>1.20.6-50.0.4</version>
+<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.minecraftforge</groupId>
  		<artifactId>mclanguage</artifactId>
  		<version>1.20.6-50.0.4</version>
+ 	<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.minecraftforge</groupId>
  		<artifactId>fmlloader</artifactId>
  		<version>1.20.6-50.0.4</version>
+ 	<scope>provided</scope>
  	</dependency>
 
  	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
@@ -373,6 +493,7 @@
     <groupId>cpw.mods</groupId>
     <artifactId>securejarhandler</artifactId>
     <version>1.0.1</version>
+    <scope>provided</scope>
 </dependency>
 
  	
@@ -381,6 +502,7 @@
     <groupId>cpw.mods</groupId>
     <artifactId>modlauncher</artifactId>
     <version>10.1.10</version>
+    <scope>provided</scope>
 </dependency>
  	
  	 	      <!-- End of Do not include these in fat jar -->
