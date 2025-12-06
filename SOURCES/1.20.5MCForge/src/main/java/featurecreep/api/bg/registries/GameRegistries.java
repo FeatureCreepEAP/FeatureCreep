@@ -3,13 +3,13 @@
  */
 package featurecreep.api.bg.registries;
 
-import game.Biome;
-import game.Block;
-import game.BuiltInRegistries;
-import game.CreativeTab;
-import game.CreativeTabs;
-import game.Item;
-import game.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 
 /**
  * @author rhel
@@ -21,35 +21,35 @@ public class GameRegistries {
 
 	public static Item getItemFromGameRegistries(String registry_name)// We also need a Number ID version of this
 	{
-		return BuiltInRegistries.ITEMS.get(new ResourceLocation(registry_name));
+		return BuiltInRegistries.ITEM.get(new ResourceLocation(registry_name));
 	}
 
 	public static Item getItemFromGameRegistries(int id) {
-		return Item.byID(id);
+		return Item.byId(id);
 	}
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name) {
-		return BuiltInRegistries.ITEMS.containsRL(new ResourceLocation(registry_name));
+		return BuiltInRegistries.ITEM.containsKey(new ResourceLocation(registry_name));
 	}
 
 	public static Block getBlockFromGameRegistries(String registry_name)// We also need a Number ID version of this
 	{
-		return BuiltInRegistries.block.get(new ResourceLocation(registry_name));
+		return BuiltInRegistries.BLOCK.get(new ResourceLocation(registry_name));
 	}
 
 	public static Block getBlockFromGameRegistries(int id) {
-		return BuiltInRegistries.block.byId(id);// May not work
+		return BuiltInRegistries.BLOCK.byId(id);// May not work
 	}
 
 	public static boolean BlockKeyExistsInRegistry(String registry_name) {
-		return BuiltInRegistries.block.containsRL(new ResourceLocation(registry_name));
+		return BuiltInRegistries.BLOCK.containsKey(new ResourceLocation(registry_name));
 	}
 
-	public static CreativeTab getItemGroupByName(String name) {
-		for (int t = 0; t < CreativeTabs.asList().size(); t++) {
+	public static CreativeModeTab getItemGroupByName(String name) {
+		for (int t = 0; t < CreativeModeTabs.allTabs().size(); t++) {
 
-			if (CreativeTabs.asList().get(t).getUnlocalisedName().getString().equals(name)) {
-				return CreativeTabs.asList().get(t);
+			if (CreativeModeTabs.allTabs().get(t).getDisplayName().getString().equals(name)) {
+				return CreativeModeTabs.allTabs().get(t);
 			}
 
 		}
@@ -57,8 +57,8 @@ public class GameRegistries {
 		return null;
 	}
 
-	public static CreativeTab getItemGroupByID(int id) {
-		for (int t = 0; t < CreativeTabs.asList().size(); t++) {
+	public static CreativeModeTab getItemGroupByID(int id) {
+		for (int t = 0; t < CreativeModeTabs.allTabs().size(); t++) {
 
 			// if (ItemGroups.getGroups().get(t).getIndex() == id) {
 			// return ItemGroups.getGroups().get(t);

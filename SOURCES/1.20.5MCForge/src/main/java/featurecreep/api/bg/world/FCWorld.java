@@ -1,18 +1,18 @@
 package featurecreep.api.bg.world;
 
-import game.World;
+import net.minecraft.world.level.Level;
 
 public class FCWorld {
 
-	World world;
+	Level world;
 
 	// the FC varient in this case is the wrapper, may make interfaces and others
 	// soon but for now no, could maybe make it both, but still not now
-	public FCWorld(World worl) {
+	public FCWorld(Level worl) {
 		this.world = worl;
 	}
 
-	public World get() {
+	public Level get() {
 		return world;
 	}
 

@@ -14,7 +14,7 @@ import org.jboss.modules.ModuleLoader;
 import com.asbestosstar.assistremapper.Mappings;
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
-import asbestosstar.fcdnf.FCDNF;
+//import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.bg.BGSide;
 import featurecreep.api.bg.mapping_converter.ActiveMapping;
 import featurecreep.api.bg.mapping_converter.MappingConverter;
@@ -68,7 +68,7 @@ public class GameInjections {
 			BGSide.getExecutionSide());
 
 	public static ModuleLoader cargadormod = cargador.getLoader();
-	public static FCDNF fcdnf = new FCDNF();
+	//public static FCDNF fcdnf = new FCDNF();
 	public static MappingConverter mappings_converter = new MappingConverter();
 	public static JarRemapper remapper = new JarRemapper(mappings.getMappings().getReverse(), classpool,
 			temp_mapping_location);

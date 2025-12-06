@@ -148,7 +148,7 @@
 <dependency>
     <groupId>com.asbestosstar</groupId>
     <artifactId>featurecreep-api</artifactId>
-    <version>5am2</version>
+    <version>5am3</version>
 </dependency>
  	
  	

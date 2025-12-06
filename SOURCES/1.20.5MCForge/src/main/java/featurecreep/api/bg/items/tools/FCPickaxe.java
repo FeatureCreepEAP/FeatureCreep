@@ -1,10 +1,10 @@
 package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import game.Item;
-import game.Pickaxe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PickaxeItem;
 
-public class FCPickaxe extends Pickaxe implements ToolsAPI<FCPickaxe> {
+public class FCPickaxe extends PickaxeItem implements ToolsAPI<FCPickaxe> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();
 
@@ -15,7 +15,7 @@ public class FCPickaxe extends Pickaxe implements ToolsAPI<FCPickaxe> {
 
 	public FCPickaxe(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material,
 			int attackDamage, int attackSpeed) {
-		super(material, new Item.Info());
+		super(material, new Properties());
 		initialise(id, modid, name, group, material, attackDamage, attackSpeed);
 	}
 

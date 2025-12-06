@@ -2,7 +2,7 @@ package featurecreep.api.bg.items.vanilla;
 
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.FCCreativeTabs;
-import game.Item;
+import net.minecraft.world.item.Item;
 
 /**
  * TRY TO AVOID THIS CLASS, USE IN THE WRONG CIRCUMSTANCES CAN LEAD TO CRASH/MOD
@@ -30,7 +30,7 @@ public class VanillaItem implements FCItemAPI<VanillaItem> {
 															// Yay it works on 1.13 and newer, we will need to check
 															// about 1.19.3 though, 1.19.3 does not work but i can put a
 															// generic tab. Soon I will make a porting tab though
-		setNumberID(item.getID(item));// Will just be 0 in some versions most likely
+		setNumberID(item.getId(item));// Will just be 0 in some versions most likely
 	}
 
 	public VanillaItem(FCItemAPI item, String registry_name) // As a backup or for ported items

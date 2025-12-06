@@ -1,15 +1,11 @@
-
 package featurecreep.api.bg.items.armour;
 
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.ItemFieldHolder;
-import featurecreep.api.bg.items.armour.FCArmourMaterial;
-import featurecreep.api.bg.items.armour.FCArmourSlot;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import game.Armour;
-import game.Item;
+import net.minecraft.world.item.ArmorItem;
 
-public class FCArmour extends Armour implements FCItemAPI<FCArmour> {
+public class FCArmour extends ArmorItem implements FCItemAPI<FCArmour> {
 	public ItemFieldHolder holder = new ItemFieldHolder();
 	public FCArmourMaterial fcmaterial;
 	public FCArmourSlot slot;
@@ -21,7 +17,7 @@ public class FCArmour extends Armour implements FCItemAPI<FCArmour> {
 
 	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material,
 			FCArmourSlot slot) {
-		super(material.get(), slot.getSlot(), new Item.Info());
+		super(material.get(), slot.getSlot(), new Properties());
 		this.initialise(id, modid, name, group);
 		this.setSlot(slot);
 		this.setFCMaterial(material);

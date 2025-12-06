@@ -1,6 +1,6 @@
 package featurecreep.api.bg.orespawn;
 
-import game.Block;
+import net.minecraft.world.level.block.Block;
 
 public class OreSpawnBasicConfig {
 

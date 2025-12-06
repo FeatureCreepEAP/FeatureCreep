@@ -8,13 +8,10 @@ import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.jboss.modules.Module;
-import java.io.IOException;
-import featurecreep.loader.filesystem.DirectoryReader;
 import org.jboss.modules.ModuleLoader;
 
 import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
-import asbestosstar.fcdnf.FCDNF;
 import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.GameInjections;
 import featurecreep.api.bg.BGSide;
@@ -39,10 +36,7 @@ import featurecreep.loader.FCLoaderBasicR8;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.loader.filesystem.DirectoryReader;
 import featurecreep.unsupported.RemappingClassFileTransformer;
-import game.CommandDispatcher;
-import game.CommandOriginStack;
 import javassist.ClassPool;
-import net.minecraftforge.registries.GameData;
 
 public class FeatureCreep {
 
@@ -68,7 +62,7 @@ public class FeatureCreep {
 	public static FCLoaderBasic loader = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true,
 			BGSide.getExecutionSide());
 	public static ModuleLoader modloader = loader.getLoader();
-	public static FCDNF fcdnf = GameInjections.fcdnf;
+	//public static FCDNF fcdnf = GameInjections.fcdnf; TODO allow later
 	public static MappingConverter mappings_converter = GameInjections.mappings_converter;
 public static JarRemapper remapper = GameInjections.remapper;
 public static boolean main_init =false;
@@ -90,7 +84,7 @@ public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_
 			if(!main_init) {
 			main_init=true;
 
-		GameData.unfreezeData();
+	//	GameData.unfreezeData();
 		System.out.println("Running FC on " + io.smallrye.common.os.OS.current() + " with Process ID "
 				+ io.smallrye.common.os.Process.getProcessId());
 		FCCreativeTabs.onInitialise();
@@ -139,23 +133,23 @@ public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_
 	
 	
 	
-
-	// TOCHANGE
-	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {
-		dispatcher.register(CommandDispatcher.literal("fcdnf").executes(context -> {
-			// Code to execute when the command is executed
-
-			// fcdnf.parseArgs(context.getInput().replace("/", "").split(" ")) ;
-			System.out.println("Running Command");
-			fcdnf.parseArgs(new String[] { "dnf", "install", "featurecreep" });
-
-			for (String arg : context.getInput().replace("/", "").split(" ")) {
-				System.out.println(arg);
-			}
-
-			return 1;
-		}));
-
-	}
+//
+//	// TOCHANGE
+//	public static void registerFCDNF(com.mojang.brigadier.CommandDispatcher<CommandOriginStack> dispatcher) {
+//		dispatcher.register(CommandDispatcher.literal("fcdnf").executes(context -> {
+//			// Code to execute when the command is executed
+//
+//			// fcdnf.parseArgs(context.getInput().replace("/", "").split(" ")) ;
+//			System.out.println("Running Command");
+//			fcdnf.parseArgs(new String[] { "dnf", "install", "featurecreep" });
+//
+//			for (String arg : context.getInput().replace("/", "").split(" ")) {
+//				System.out.println(arg);
+//			}
+//
+//			return 1;
+//		}));
+//
+//	}
 
 }

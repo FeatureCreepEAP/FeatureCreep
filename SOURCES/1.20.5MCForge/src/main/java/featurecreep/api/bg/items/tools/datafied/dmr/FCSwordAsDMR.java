@@ -10,7 +10,7 @@ import featurecreep.api.bg.registries.UniversalRegistryGettersAndSetters;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.parsers.ParseDMRItem;
 import featurecreep.content.FCItems;
-import game.Item;
+import net.minecraft.world.item.Item;
 
 public class FCSwordAsDMR extends FCItemAsDMR<FCSwordAsDMR> implements ToolsAPI<FCSwordAsDMR> {
 

@@ -1,12 +1,12 @@
 package featurecreep.api.soundeffects;
 
-import game.RegistryEntry;
-import game.SoundPoolComponent;
+import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 
 public interface AbstractSoundEffect {
 
-	public SoundPoolComponent get();
+	public SoundEvent get();
 	
-	public RegistryEntry<SoundPoolComponent> getEntry();
+	public Holder<SoundEvent> getEntry();
 
 }

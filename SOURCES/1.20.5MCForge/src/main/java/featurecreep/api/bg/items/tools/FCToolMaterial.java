@@ -2,26 +2,26 @@ package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
-import game.Block;
-import game.BlockTags;
-import game.Item;
-import game.ItemConvertible;
-import game.RegistryTagKey;
-import game.ToolMaterial;
-import game.ToolRepairIngredient;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
-public class FCToolMaterial implements ToolMaterial {
+public class FCToolMaterial implements Tier {
 
 	public int harvest;
 	public int durability;
 	public int speed;
 	public int attack;
 	public int enchantness;
-	public ToolRepairIngredient repair;
+	public Ingredient repair;
 	public Item repair_item;
 
 	private FCToolMaterial(int harvestLevel, int maxUses, int efficiency, int damage, int enchantability,
-			ToolRepairIngredient repairMaterial) {
+			Ingredient repairMaterial) {
 		harvest = harvestLevel;
 		durability = maxUses;
 		speed = (int) efficiency;
@@ -72,50 +72,50 @@ public class FCToolMaterial implements ToolMaterial {
 	}
 
 	// TODO make these return stuff eventually and public
-	private ToolRepairIngredient getToolRepairIngredient() {
+	private Ingredient getToolRepairIngredient() {
 		// TODO Auto-generated method stub
 		return repair;
 	}
 
-	private ItemConvertible getToolRepairItem() {
+	private ItemLike getToolRepairItem() {
 		// TODO Auto-generated method stub
 		return repair_item;
 	}
 
 	@Override
-	public float getAttackDamage() {
+	public float getAttackDamageBonus() {
 		// TODO Auto-generated method stub
 		return this.getToolAttackDamage();
 	}
 
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		// TODO Auto-generated method stub
 		return this.getToolEnchantability();
 	}
 
 	@Override
-	public ToolRepairIngredient getRepairIngredient() {
+	public Ingredient getRepairIngredient() {
 		// TODO Auto-generated method stub
 //return this.getToolRepairIngredient();
 		return getToolRepairIngredient();
 	}
 
 	@Override
-	public int getMaxUses() {
+	public int getUses() {
 		// TODO Auto-generated method stub
 		return this.getToolMaxUses();
 	}
 
 	@Override
-	public float getEfficiency() {
+	public float getSpeed() {
 		// TODO Auto-generated method stub
 		return this.getToolEfficiency();
 	}
 
 	@Override
-	public RegistryTagKey<Block> getInverseTag() {
+	public TagKey<Block> getIncorrectBlocksForDrops() {
 		// TODO Auto-generated method stub
 	
 		if(getToolHarvestLevel() == 0) {

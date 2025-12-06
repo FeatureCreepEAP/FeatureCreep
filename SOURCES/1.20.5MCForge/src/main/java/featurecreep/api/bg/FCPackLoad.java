@@ -1,5 +1,18 @@
-
 package featurecreep.api.bg;
+
+import featurecreep.FeatureCreep;
+import featurecreep.api.anti_encapsulation.GoogleCommonsImmutableMutaliser;
+import featurecreep.api.bg.resource_packs.VainillaResourcePack;
+import featurecreep.api.platform.super_.SuperLoader;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.Pack.Position;
+import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.server.packs.repository.RepositorySource;
+import net.minecraft.server.packs.PathPackResources.PathResourcesSupplier;
+import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackSelectionConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,30 +24,22 @@ import java.util.jar.Manifest;
 
 import com.google.common.collect.ImmutableSet;
 
-import featurecreep.FeatureCreep;
-import featurecreep.api.anti_encapsulation.GoogleCommonsImmutableMutaliser;
-import featurecreep.api.bg.resource_packs.VainillaResourcePack;
-import featurecreep.api.platform.super_.SuperLoader;
-import game.ResourcePackInfo;
-import game.ResourcePackPositioningAndRequirnmentSetting;
-import game.ResourcePackProvider;
-import game.ResourceType;
-
-public class FCPackLoad implements ResourcePackProvider {
+public class FCPackLoad implements RepositorySource {
 
 	public static FCPackLoad INSTANCE = new FCPackLoad();
 	
 	
 	@Override
-	public void loadPacks(Consumer<ResourcePackInfo> consumer) {
+	public void loadPacks(Consumer<Pack> consumer) {
 		// TODO Auto-generated method stub
 
 		for (Entry<String, VainillaResourcePack> entry : PackLoader.packs.entrySet()) {
 			VainillaResourcePack pack = entry.getValue();
 			if (!isNative(pack) && !pack.isEmpty()) {
 
-				ResourcePackInfo info = ResourcePackInfo.register(pack.getInfo(), pack.getLoader(),
-						ResourceType.SERVER_DATA, // No longer
+				PackLocationInfo loc = new PackLocationInfo(pack.getPackName(), (Component)null, PackSource.BUILT_IN, java.util.Optional.empty());
+				Pack packInfo = Pack.readMetaAndCreate(loc, pack.getLoader(),
+						PackType.SERVER_DATA, // No longer
 						// need to
 						// worry
 						// about
@@ -44,14 +49,15 @@ public class FCPackLoad implements ResourcePackProvider {
 						// fast
 						// moving
 						// eh!
-						new ResourcePackPositioningAndRequirnmentSetting(true,
-								ResourcePackInfo.InsertionPosition.TOP.inverse(), true));// I need to check that this
+						new PackSelectionConfig(true,
+								Position.TOP.opposite(), true));// I need to check that this
 																							// also does client stuff
 				
 				
 				
-				ResourcePackInfo clientinfo = ResourcePackInfo.register(pack.getInfo(), pack.getLoader(),
-						ResourceType.CLIENT_RESOURCES, // No longer
+				PackLocationInfo clientLoc = new PackLocationInfo(pack.getPackName(), (Component)null, PackSource.BUILT_IN, java.util.Optional.empty());
+				Pack clientInfo = Pack.readMetaAndCreate(clientLoc, pack.getLoader(),
+						PackType.CLIENT_RESOURCES, // No longer
 						// need to
 						// worry
 						// about
@@ -61,15 +67,15 @@ public class FCPackLoad implements ResourcePackProvider {
 						// fast
 						// moving
 						// eh!
-						new ResourcePackPositioningAndRequirnmentSetting(true,
-								ResourcePackInfo.InsertionPosition.TOP.inverse(), true));// I need to check that this
+						new PackSelectionConfig(true,
+								Position.TOP.opposite(), true));// I need to check that this
 																							// also does client stuff
 				
 				
-				if (info != null) {
-					System.out.println("Adding FCDatapack "+pack.getName());
-					consumer.accept(info);
-					consumer.accept(clientinfo);
+				if (packInfo != null) {
+					System.out.println("Adding FCDatapack "+pack.getPackName());
+					consumer.accept(packInfo);
+					consumer.accept(clientInfo);
 				}
 			}
 
@@ -163,7 +169,7 @@ public class FCPackLoad implements ResourcePackProvider {
 	}
 	
 	
-	public static void updateProviders(Set<ResourcePackProvider> providers) {
+	public static void updateProviders(Set<RepositorySource> providers) {
 		if(providers instanceof ImmutableSet) {//I doubt it will be anything but regularimmutbleset
 			GoogleCommonsImmutableMutaliser.addToRegularImmutableSet(INSTANCE, providers);
 		}else {//Sometimes,like with FabricAPI, the type is changed, such as by fabric api, lets hope its not immutable

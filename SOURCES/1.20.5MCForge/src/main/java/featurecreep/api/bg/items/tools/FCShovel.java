@@ -1,10 +1,9 @@
 package featurecreep.api.bg.items.tools;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import game.Item;
-import game.Spade;
+import net.minecraft.world.item.ShovelItem;
 
-public class FCShovel extends Spade implements ToolsAPI<FCShovel> {
+public class FCShovel extends ShovelItem implements ToolsAPI<FCShovel> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();
 
@@ -15,7 +14,7 @@ public class FCShovel extends Spade implements ToolsAPI<FCShovel> {
 
 	public FCShovel(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material,
 			int attackDamage, int attackSpeed) {
-		super(material, new Item.Info());
+		super(material, new Properties());
 		initialise(id, modid, name, group, material, attackDamage, attackSpeed);
 	}
 

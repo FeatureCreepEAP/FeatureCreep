@@ -1,7 +1,8 @@
 package featurecreep.api.bg.registries;
 
-import game.CreativeTab.Entries;
-import game.Item;
+import featurecreep.api.bg.blocks.FCBlockAPI;
+import featurecreep.api.bg.items.FCItemAPI;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,20 +18,18 @@ public class FCForgeRegistries {
 
 		for (int i = 0; i < FCRegistries.ITEMS.size(); i++) {
 
-			if (event.getTab() == FCRegistries.ITEMS.get(i).getDefaultCreativeTab()) {
-				Entries entries = (Entries)(event);
-				entries.add(FCRegistries.ITEMS.get(i).get());
-				System.out.println("Adding to ItemGroup" + FCRegistries.ITEMS.get(i).getFCRegistryName());
+			if (event.getTab() == ((FCItemAPI)FCRegistries.ITEMS.get(i)).getDefaultCreativeTab()) {
+				event.accept(((FCItemAPI)FCRegistries.ITEMS.get(i)).get());
+				System.out.println("Adding to ItemGroup" + ((FCItemAPI)FCRegistries.ITEMS.get(i)).getFCRegistryName());
 			}
 
 		}
 
 		for (int b = 0; b < FCRegistries.BLOCKS.size(); b++) {
 
-			if (event.getTab() == FCRegistries.BLOCKS.get(b).getDefaultCreativeTab()) {
-				Entries entries = (Entries)(event);
-				entries.add(FCRegistries.BLOCKS.get(b).get());
-				System.out.println("Adding to ItemGroup" + FCRegistries.BLOCKS.get(b).getFCRegistryName());
+			if (event.getTab() == ((FCBlockAPI)FCRegistries.BLOCKS.get(b)).getDefaultCreativeTab()) {
+				event.accept(((FCBlockAPI)FCRegistries.BLOCKS.get(b)).get());
+				System.out.println("Adding to ItemGroup" + ((FCBlockAPI)FCRegistries.BLOCKS.get(b)).getFCRegistryName());
 			}
 
 		}

@@ -4,15 +4,16 @@ import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import game.Block;
-import game.BlockPos;
-import game.BlockPropertiesData;
-import game.Item;
-import game.ItemStack;
-import game.Player;
-import game.PlayerStatisticList;
-import game.TileEntity;
-import game.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import io.smallrye.common.constraint.Nullable;
 
 public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
@@ -26,16 +27,16 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	public FCBlock(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops) {
-		super(Block.Info.normal().hardness(strength / 10));// Need to add material again soon
+		super(Properties.of().destroyTime(strength / 10f));// Need to add material again soon
 		initialise(id, modid, name, group, material, strength, drops);
 
 	}
 
 	@Override
-	public void onMinedSucessfully(World world, Player player, BlockPos pos, BlockPropertiesData state, @Nullable TileEntity blockEntity,
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity,
 			ItemStack stack) {
-		player.incrementStat(PlayerStatisticList.MINED.getOrCreateStat(this));
-		player.addExhaustion(0.005f);
+		player.awardStat(Stats.BLOCK_MINED.get(this));
+		player.causeFoodExhaustion(0.005f);
 
 		for (int i = 0; i < getDropArrayObjects().length; i++) {
 			if (getDropArrayObjects()[i].getTool.equals(ToolTypes.BLANK)) {
@@ -57,7 +58,7 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 				} else {
 					System.out.print("Wrong Tool Used For This Array, you need an instance of"
 							+ getDropArrayObjects()[i].getTool.get.getCanonicalName() + "But instead got"
-							+ player.getActiveItem().getClass().getName());
+							+ player.getUseItem().getClass().getName());
 				}
 
 			}
@@ -66,20 +67,20 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	}
 
-	private void getDrops(World world, BlockPos pos, BlockDropArrayObject loot) {
+	private void getDrops(Level world, BlockPos pos, BlockDropArrayObject loot) {
 
 		if (loot instanceof featurecreep.api.bg.blocks.drop.SelfBlockDropArrayObject) {
 			System.out.println("Dropping Self");
-			Block.drop(world, pos, new ItemStack(this));
+			Block.popResource(world, pos, new ItemStack(this));
 		} else {
 			for (int t = 0; t < loot.drop.size(); t++) {
 				System.out.println("Right tool used");
 				if (loot.drop.get(t) instanceof Block) {
-					Block.drop(world, pos, new ItemStack((Block) loot.drop.get(t)));
+					Block.popResource(world, pos, new ItemStack((Block) loot.drop.get(t)));
 					// Block.dropStacks(state, world, pos, blockEntity, player, new
 					// ItemStack((Block) getDropArrayObjects()[i].drop.get(t)));
 				} else {
-					Block.drop(world, pos, new ItemStack((Item) loot.drop.get(t)));
+					Block.popResource(world, pos, new ItemStack((Item) loot.drop.get(t)));
 					// Block.dropStacks(state, world, pos, blockEntity, player, new ItemStack((Item)
 					// getDropArrayObjects()[i].drop.get(t)));
 				} // Gotta do entites soon

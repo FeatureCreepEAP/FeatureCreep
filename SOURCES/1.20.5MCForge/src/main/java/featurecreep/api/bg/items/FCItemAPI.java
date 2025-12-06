@@ -17,10 +17,10 @@ import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.world.FCWorld;
-import game.Item;
-import game.ItemStack;
-import game.LivingEntity;
-import game.Player;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import featurecreep.api.io.BasicIO;
 import featurecreep.api.bg.PackLoader;
 
@@ -95,12 +95,12 @@ String file_name = "assets/" + this.getModId()
 
 	@Override
 	public default void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {
-		get().onCreated(ic.toStack(1), worl.get());
+		get().onCraftedPostProcess(ic.toStack(1), worl.get());
 	};
 
 	@Override
 	public default void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {
-		get().onUpdate(ic.toStack(1), worl.get(), e.get(), 0, false);
+		get().inventoryTick(ic.toStack(1), worl.get(), e.get(), 0, false);
 	}
 
 	// @Overridepublic default boolean executeOnLeftClick(AbstractEntity holder,
@@ -108,13 +108,13 @@ String file_name = "assets/" + this.getModId()
 	@Override
 	public default boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {
 		Player ent = (Player) holder.get();
-		get().onItemRightClick(worl.get(), ent, ent.getActiveHand());
+		get().use(worl.get(), ent, ent.getUsedItemHand());
 		return true;
 	}
 
 	@Override
 	public default boolean executeAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount) {
-		get().onHit(get().getStackForRender(), (LivingEntity) ent.get(), (LivingEntity) ent.get());
+		get().hurtEnemy(get().getDefaultInstance(), (LivingEntity) ent.get(), (LivingEntity) ent.get());
 		return true;
 	}
 
@@ -126,7 +126,7 @@ String file_name = "assets/" + this.getModId()
 	@Override
 	public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block,
 			int side) {
-		get().getStackForRender().mineBlock(worl.get(), block.get().getDefaultState(), pos, p.get());
+		get().getDefaultInstance().mineBlock(worl.get(), block.get().defaultBlockState(), pos, p.get());
 	}
 
 	@Override
@@ -137,7 +137,7 @@ String file_name = "assets/" + this.getModId()
 			try {
 				Method meth = LivingEntity.class.getDeclaredMethod("method_6098", ItemStack.class, int.class);
 				meth.setAccessible(true);
-				meth.invoke(ent, get().getStackForRender(), 0);// Maybe? not sure about this, use may be better
+				meth.invoke(ent, get().getDefaultInstance(), 0);// Maybe? not sure about this, use may be better
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException e1) {
 				// TODO Auto-generated catch block
@@ -150,7 +150,7 @@ String file_name = "assets/" + this.getModId()
 
 	@Override
 	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {
-		get().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos,
+		get().mineBlock(toStack(1), ent.getWorld().get(), block.get().defaultBlockState(), pos,
 				(LivingEntity) ent.get());
 	};
 

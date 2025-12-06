@@ -1,15 +1,12 @@
 package featurecreep.api.bg.blocks;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import featurecreep.api.bg.VersionDependentContstants;
 
 import org.jboss.dmr.ModelNode;
-import featurecreep.FeatureCreep;
 
+import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.VersionDependentContstants;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
@@ -18,12 +15,11 @@ import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
-import game.Block;
 import featurecreep.api.io.BasicIO;
-import featurecreep.api.bg.PackLoader;
-import game.ItemStack;
-import game.LivingEntity;
-import game.Player;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
@@ -101,11 +97,11 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		return holder().leftname;
 	}
 
-	public default featurecreep.api.bg.blocks.drop.BlockDropArrayObject[] getDropArrayObjects() {
+	public default BlockDropArrayObject[] getDropArrayObjects() {
 		return holder().drop_arrays;
 	}
 
-	public default void setDropArrayObjects(featurecreep.api.bg.blocks.drop.BlockDropArrayObject[] array) {
+	public default void setDropArrayObjects(BlockDropArrayObject[] array) {
 		holder().drop_arrays = array;
 	}
 
@@ -125,28 +121,42 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		holder().unimat = mat;
 	}
 
-		@Override
+	@Override
 	public default void registerModels() {
 
-    if (getSingleSided()) {
-      this.setDownTextureName    (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
-      this.setEastTextureName (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
-      this.setNorthTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
-      this.setParticleTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
-      this.setSouthTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
-      this.setUpTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
-      this.setWestTextureName  (this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName());
+		if (getSingleSided()) {
+			this.setDownTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
+			this.setEastTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
+			this.setNorthTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
+			this.setParticleTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
+			this.setSouthTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
+			this.setUpTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
+			this.setWestTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName());
 
-    } else {
-    	this.setDownTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_down");
-    	this.setEastTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_east");
-    	this.setNorthTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_north");
-    	this.setParticleTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_particle");
-    	this.setSouthTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_south");
-    	this.setUpTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_up");
-    	this.setWestTextureName( this.getModId() + ":"+VersionDependentContstants.BLOCK_TEXTURE_LOCATION+"/" + this.getUnlocName() + "_west");
+		} else {
+			this.setDownTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_down");
+			this.setEastTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_east");
+			this.setNorthTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_north");
+			this.setParticleTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_particle");
+			this.setSouthTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_south");
+			this.setUpTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_up");
+			this.setWestTextureName(this.getModId() + ":" + VersionDependentContstants.BLOCK_TEXTURE_LOCATION + "/"
+					+ this.getUnlocName() + "_west");
 
-    }
+		}
 
 		// Item Generation
 
@@ -157,10 +167,8 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		// node.get("textures").get("layer0").set(public_modid + ":items/" +
 		// public_name); Not needed in Blocks
 
-		String file_name = "assets/" + this.getModId()
-		+ "/models/item/" + this.getUnlocName() + ".json";
+		String file_name = "assets/" + this.getModId() + "/models/item/" + this.getUnlocName() + ".json";
 		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(node.toJSONString(false)));
-
 
 		// Block Model Generation
 
@@ -174,21 +182,15 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		block_node.get("textures").get("up").set(this.getUpTextureName());
 		block_node.get("textures").get("west").set(this.getWestTextureName());
 
-
-
-		file_name = "assets/" + this.getModId()
-		+ "/models/block/" + this.getUnlocName() + ".json";
+		file_name = "assets/" + this.getModId() + "/models/block/" + this.getUnlocName() + ".json";
 		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(block_node.toJSONString(false)));
-
 
 		// Blockstates
 
 		ModelNode blockstate = new ModelNode();
 		blockstate.get("variants").get("").get("model").set(this.getModId() + ":block/" + this.getUnlocName());
 
-
-		file_name = "assets/" + this.getModId()
-		+ "/blockstates/" + this.getUnlocName() + ".json";
+		file_name = "assets/" + this.getModId() + "/blockstates/" + this.getUnlocName() + ".json";
 		PackLoader.entries.put(file_name, BasicIO.stringToByteArray(blockstate.toJSONString(false)));
 
 	}
@@ -244,12 +246,12 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 	@Override
 	public default void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl) {
-		get().asItem().onCreated(ic.toStack(1), worl.get());
+		get().asItem().onCraftedPostProcess(ic.toStack(1), worl.get());
 	};
 
 	@Override
 	public default void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl) {
-		get().asItem().onUpdate(ic.toStack(1), worl.get(), e.get(), 0, false);
+		get().asItem().inventoryTick(ic.toStack(1), worl.get(), e.get(), 0, false);
 	}
 
 	// @Overridepublic default boolean executeOnLeftClick(AbstractEntity holder,
@@ -257,13 +259,13 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	@Override
 	public default boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl) {
 		Player ent = (Player) holder.get();
-		get().asItem().onItemRightClick(worl.get(), ent, ent.getActiveHand());
+		get().asItem().use(worl.get(), ent, ent.getUsedItemHand());
 		return true;
 	}
 
 	@Override
 	public default boolean executeAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount) {
-		get().asItem().onHit(toStack(1), (LivingEntity) ent.get(), (LivingEntity) ent.get());
+		get().asItem().hurtEnemy(toStack(1), (LivingEntity) ent.get(), (LivingEntity) ent.get());
 		return true;
 	}
 
@@ -275,11 +277,11 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	@Override
 	public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block,
 			int side) {
-		get().asItem().onBlockLeftClick(toStack(1), worl.get(), block.get().getDefaultState(), pos, p.get());
+		get().asItem().mineBlock(toStack(1), worl.get(), block.get().defaultBlockState(), pos, p.get());
 	}
 
 	@Override
-	public default void executeOnFoodEaten(AbstractEntity e) {
+	public default void executeOnFoodEaten(AbstractEntity e) {//TODO fix this method
 		LivingEntity ent;
 		if (e instanceof LivingEntity) {
 			ent = (LivingEntity) e;
@@ -299,7 +301,7 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 	@Override
 	public default void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid) {
-		get().asItem().onBlockLeftClick(toStack(1), ent.getWorld().get(), block.get().getDefaultState(), pos,
+		get().asItem().mineBlock(toStack(1), ent.getWorld().get(), block.get().defaultBlockState(), pos,
 				(LivingEntity) ent.get());
 	};
 

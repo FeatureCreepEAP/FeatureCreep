@@ -1,6 +1,6 @@
 package featurecreep.api.bg.items.armour;
 
-import game.Armour;
+import net.minecraft.world.item.ArmorItem.Type;
 
 public class FCArmourSlot {
 
@@ -14,17 +14,17 @@ public class FCArmourSlot {
 		location = value;
 	}
 
-	public Armour.ArmourPeice getSlot() {
+	public Type getSlot() {
 		if (this.location.equals("HELMET")) {
-			return Armour.ArmourPeice.HELMET;
+			return Type.HELMET;
 		} else if (this.location.equals("TUBIC")) {
-			return Armour.ArmourPeice.TUNIC;
+			return Type.CHESTPLATE;
 		} else if (this.location.equals("LEGGINGS")) {
-			return Armour.ArmourPeice.LEGGINGS;
+			return Type.LEGGINGS;
 		} else if (this.location.equals("BOOTS")) {
-			return Armour.ArmourPeice.BOOTS;
+			return Type.BOOTS;
 		} else {
-			return Armour.ArmourPeice.HELMET; // Head is Default. I soon got to find a better way to register custom
+			return Type.HELMET; // Head is Default. I soon got to find a better way to register custom
 												// locations when i get more time
 
 		}

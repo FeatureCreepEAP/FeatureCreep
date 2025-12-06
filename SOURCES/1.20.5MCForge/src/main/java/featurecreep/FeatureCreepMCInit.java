@@ -6,11 +6,7 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import featurecreep.api.bg.registries.FCForgeRegistries;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -40,12 +36,12 @@ public class FeatureCreepMCInit {
 
 		// MOD_BUS.addListener(this::loadcomplete);
 
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(FCForgeRegistries::onRegisterCreativeTabs);
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(FCForgeRegistries::onRegisterCreativeTabs);
 
 		// Most other events are fired on Forge's bus.
 		// If we want to use annotations to register event listeners,
 		// we need to register our object like this!
-		MinecraftForge.EVENT_BUS.register(this);
+	//	MinecraftForge.EVENT_BUS.register(this);
 
 		// For more information on how to deal with events in Forge,
 		// like automatically subscribing an entire class to an event bus
@@ -55,10 +51,10 @@ public class FeatureCreepMCInit {
 	}
 
 	// Thank you enchanting commands
-	@SubscribeEvent
-	public void registerCommands(RegisterCommandsEvent e) {
-		FeatureCreep.registerFCDNF(e.getDispatcher());
-	}
+//	@SubscribeEvent
+//	public void registerCommands(RegisterCommandsEvent e) {
+//		FeatureCreep.registerFCDNF(e.getDispatcher());
+//	}
 
 //	    private void commonSetup(final FMLCommonSetupEvent event) {	    	
 

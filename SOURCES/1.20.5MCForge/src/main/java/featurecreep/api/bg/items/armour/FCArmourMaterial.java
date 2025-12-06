@@ -7,28 +7,29 @@ import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
-import game.Armour;
-import game.ArmourMaterial;
-import game.BuiltInRegistries;
-import game.DivisionDesigner;
-import game.GameRegistriesInterface;
-import game.RegistryEntry;
-import game.ResourceLocation;
-import game.SoundPoolComponent;
-import game.ToolRepairIngredient;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ArmorItem.Type;
+import net.minecraft.world.item.ArmorMaterial.Layer;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class FCArmourMaterial {
 	public int durability;
 	public ArmourProtectionValuesArray protection;
 	public int enchantability;
-	public ToolRepairIngredient repair;
+	public Ingredient repair;
 	public int toughness;
 	public String name;
 	public int knockback_resistance;
 	public AbstractSoundEffect sound;
 
 	public FCArmourMaterial(int durability, ArmourProtectionValuesArray protection, int enchantability,
-			ToolRepairIngredient repair, String name, int toughness, int knockback_resistance,
+			Ingredient repair, String name, int toughness, int knockback_resistance,
 			AbstractSoundEffect sound) {
 		this.durability = durability;
 		this.protection = protection;
@@ -99,21 +100,21 @@ public class FCArmourMaterial {
 		return 1;
 	}
 
-	public int getDurability(DivisionDesigner var1) {
+	public int getDurability(EquipmentSlot var1) {
 		return this.durability;
 	}
 
-	public int getProtectionAmount(DivisionDesigner var1) {
-		if (var1.equals(DivisionDesigner.HEAD)) {
+	public int getProtectionAmount(EquipmentSlot var1) {
+		if (var1.equals(EquipmentSlot.HEAD)) {
 			return this.protection.getHelmetProtectionValue();
 		}
-		if (var1.equals(DivisionDesigner.CHEST)) {
+		if (var1.equals(EquipmentSlot.CHEST)) {
 			return this.protection.getChestplateProtectionValue();
 		}
-		if (var1.equals(DivisionDesigner.LEGS)) {
+		if (var1.equals(EquipmentSlot.LEGS)) {
 			return this.protection.getLeggingsProtectionValue();
 		}
-		if (var1.equals(DivisionDesigner.FEET)) {
+		if (var1.equals(EquipmentSlot.FEET)) {
 			return this.protection.getBootsProtectionValue();
 		}
 		return this.protection.getHelmetProtectionValue();
@@ -121,15 +122,15 @@ public class FCArmourMaterial {
 
 
 	
-	public RegistryEntry<ArmourMaterial> get() {
-		RegistryEntry<SoundPoolComponent> vainilla_sound = this.sound.getEntry();
-        List<ArmourMaterial.ArmourLayer> $$7 = List.of(new ArmourMaterial.ArmourLayer(new ResourceLocation(name)));
-        EnumMap<Armour.ArmourPeice, Integer> $$8 = new EnumMap<Armour.ArmourPeice, Integer>(Armour.ArmourPeice.class);
-        for (Armour.ArmourPeice $$9 : Armour.ArmourPeice.values()) {
-            $$8.put($$9, this.getProtectionAmount($$9.getDivisionDesigner()));
+	public Holder<ArmorMaterial> get() {
+		Holder<SoundEvent> vainilla_sound = this.sound.getEntry();
+        List<Layer> $$7 = List.of(new Layer(new ResourceLocation(name)));
+        EnumMap<Type, Integer> $$8 = new EnumMap<Type, Integer>(Type.class);
+        for (Type $$9 : Type.values()) {
+            $$8.put($$9, this.getProtectionAmount($$9.getSlot()));
         }
-        ArmourMaterial mat = new ArmourMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7, this.getFCToughness(), this.getFCKnockBackResistance());
-        return GameRegistriesInterface.registerReference(BuiltInRegistries.ARMOUR_MATERIAL, new ResourceLocation(name), mat);
+        ArmorMaterial mat = new ArmorMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7, (float)this.getFCToughness(), (float)this.getFCKnockBackResistance());
+        return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, new ResourceLocation(name), mat);
         
         
 	}

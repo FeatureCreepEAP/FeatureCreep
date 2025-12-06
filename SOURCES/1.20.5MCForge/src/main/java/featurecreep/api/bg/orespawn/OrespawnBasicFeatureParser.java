@@ -10,24 +10,43 @@ import featurecreep.api.io.BasicIO;
 import org.jboss.dmr.ModelNode;
 
 import featurecreep.FeatureCreep;
-import game.BiomeGenerationSettings;
-import game.Block;
-import game.BuiltInRegistries;
-import game.GenerationPlacement;
-import game.RegistryKey;
-import game.ResourceLocation;
-import game.StageGeneration.Feature;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.BiomeGenerationSettings.Builder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class OrespawnBasicFeatureParser {
 
 	public static List<OreSpawnBasicConfig> configs = new ArrayList<OreSpawnBasicConfig>();
 
-	public static List<RegistryKey<GenerationPlacement>> placed = new ArrayList<RegistryKey<GenerationPlacement>>();
+	public static List<ResourceKey<PlacedFeature>> placed = new ArrayList<ResourceKey<PlacedFeature>>();
 
 	// I gotta rewrite all of the Orespawn Module including this part once I get
 	// more time
 	// Loads the contents from %GAMEDIR%/orespawn/config/
 	public static void spawnOresFromDefaultConfig() {
+		String orespawn_dir = new String(FeatureCreep.gamepath.toString() + "/orespawn/config/");
+		File file = new File(orespawn_dir);
+		String[] contents = file.list();
+		if (FeatureCreep.debug_mode) {
+			System.out.println("List of files and directories in the specified directory:");
+		}
+
+		if (contents != null) {
+			for(int i = 0; i < contents.length; ++i) {
+				if (FeatureCreep.debug_mode) {
+					System.out.println("FeatureCreep is trying to load " + contents[i]);
+					System.out.println(orespawn_dir + contents[i] + "/");
+				}
+
+				splitOS3Basic(getModelNodesFromFile(orespawn_dir + contents[i] + "/"));
+			}
+		} else {
+			FeatureCreep.LOGGER.info("No OreSpawn Configs Found");
+		}
 
 	}
 
@@ -116,7 +135,7 @@ public class OrespawnBasicFeatureParser {
 			replace_registry_names = getCorrectNameSpace(replace_registry_names);
 
 			String[] block_identifier = replace_registry_names.split(":");
-			Block replacedBlock = BuiltInRegistries.block
+			Block replacedBlock = BuiltInRegistries.BLOCK
 					.get(new ResourceLocation(block_identifier[0], block_identifier[1]));
 
 			String new_block = node.get("blocks").get(0).get("name").asString();// I needa Do this as a List eventually
@@ -126,7 +145,7 @@ public class OrespawnBasicFeatureParser {
 				System.out.println(getCorrectNameSpace(new_block));
 			}
 			String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
-			Block newBlock = BuiltInRegistries.block
+			Block newBlock = BuiltInRegistries.BLOCK
 					.get(new ResourceLocation(new_block_identifier[0], new_block_identifier[1]));
 
 			if (FeatureCreep.debug_mode) {
@@ -158,14 +177,13 @@ public class OrespawnBasicFeatureParser {
 		return new_string;
 	}
 
-	public static void spawnOre(BiomeGenerationSettings.Builder builder) {
+	public static void spawnOre(Builder builder) {
 
 		for (int f = 0; f < placed.size(); f++) {
 
-			builder.addFeature(Feature.UNDERGROUND_ORES, placed.get(f));
+			builder.addFeature(Decoration.UNDERGROUND_ORES, placed.get(f));
 		}
 
 	}
 
 }
-

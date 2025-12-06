@@ -1,6 +1,6 @@
 package featurecreep.api.bg.entity;
 
-import game.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 public class VanillaLivingEntity extends VanillaEntity implements AbstractLivingEntity {
 

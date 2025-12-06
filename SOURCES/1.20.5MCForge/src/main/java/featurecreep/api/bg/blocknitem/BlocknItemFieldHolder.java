@@ -1,11 +1,11 @@
 package featurecreep.api.bg.blocknitem;
 
-import game.CreativeTab;
+import net.minecraft.world.item.CreativeModeTab;
 
 public class BlocknItemFieldHolder {
 
 	public String public_modid;
 	public String public_name;
 	public int number_id;
-	public CreativeTab default_tab;
+	public CreativeModeTab default_tab;
 }

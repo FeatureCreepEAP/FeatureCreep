@@ -16,20 +16,20 @@ import com.google.gson.JsonObject;
 
 import featurecreep.api.annotations.Internal;
 import featurecreep.api.annotations.Vainilla;
-import game.CombinedPackResources;
-import game.GSONHelperChatDeserialiser;
-import game.IResourcePack;
-import game.PackMCMetaReader;
-import game.PackSources;
-import game.ResourceInputSupplier;
-import game.ResourceLocation;
-import game.ResourcePackInfo;
-import game.ResourcePackInfo.PackMcMeta;
-import game.ResourcePackLocationInfo;
-import game.ResourceType;
-import game.instantTextBoxType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.CompositePackResources;
+import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.Pack.Metadata;
+import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.server.packs.resources.IoSupplier;
+import net.minecraft.util.GsonHelper;
 
-public interface VainillaResourcePack extends IResourcePack {
+public interface VainillaResourcePack extends PackResources {
 
 	public static String METADATA_PATH_SUFFIX = ".mcmeta";
 	public static String PACK_METADATA_NAME = "pack.mcmeta";
@@ -44,7 +44,7 @@ public interface VainillaResourcePack extends IResourcePack {
 
 	@Override
 	@Vainilla
-	public default ResourceInputSupplier<InputStream> getRootResource(String... var1) {
+	public default IoSupplier<InputStream> getRootResource(String... var1) {
 		String name = String.join((CharSequence) "", var1);
 		if (name.equals("pack.png")) {
 			Supplier<InputStream> sup = getPackPng();
@@ -68,11 +68,11 @@ public interface VainillaResourcePack extends IResourcePack {
 	public Supplier<InputStream> getPackPng();
 
 	@Internal
-	public static ResourceInputSupplier<InputStream> desdeSupplierNormal(Supplier<InputStream> supplier) {
+	public static IoSupplier<InputStream> desdeSupplierNormal(Supplier<InputStream> supplier) {
 		if(supplier == null) {return null;}
 		InputStream stream=supplier.get(); 
 		if(stream == null) {return null;}
-		ResourceInputSupplier<InputStream> ret = () -> {
+		IoSupplier<InputStream> ret = () -> {
 			return stream;
 		};
 		return ret;
@@ -80,7 +80,7 @@ public interface VainillaResourcePack extends IResourcePack {
 
 	@Override
 	@Vainilla
-	public default ResourceInputSupplier<InputStream> open(ResourceType var1, ResourceLocation var2) {
+	public default IoSupplier<InputStream> getResource(PackType var1, ResourceLocation var2) {
 		FCResourceType type = FCResourceType.checkBuiltIn(var1.getDirectory());
 		String path = toPath(type, var2.getNamespace(), var2.getPath());
 		return desdeSupplierNormal(getStream(this.appendOverlayPrefix(path)));
@@ -93,8 +93,7 @@ public interface VainillaResourcePack extends IResourcePack {
 
 	@Override
 	@Vainilla
-	public default void findResources(ResourceType dir, String namespace, String object_type, ResourceOutput output) {
-		
+	public default void listResources(PackType dir, String namespace, String object_type, ResourceOutput output) {		
 
 		String namespacelocation = dir.getDirectory() + "/" + namespace + "/";// this.appendOverlayPrefix(dir.getDirectory()
 																				// + "/" + namespace + "/"); TODO,
@@ -152,28 +151,28 @@ public interface VainillaResourcePack extends IResourcePack {
 
 	@Override
 	@Vainilla
-	public default Set<String> getNamespaces(ResourceType var1) {
+	public default Set<String> getNamespaces(PackType var1) {
 		return getPackPrefixes();
 	}
 
 	@Override
 	@Vainilla
-	public default <T> T parseMetadata(PackMCMetaReader<T> var1) throws IOException {
+	public default <T> T getMetadataSection(MetadataSectionSerializer<T> var1) throws IOException {
         Gson gson = new Gson();
         JsonObject obj = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
-        if (!obj.has(var1.getKey())) {
+        if (!obj.has(var1.getMetadataSectionName())) {
             return null;
         }
-		return var1.fromJson(GSONHelperChatDeserialiser.getObject(obj, var1.getKey()));
+		return var1.fromJson(GsonHelper.getAsJsonObject(obj, var1.getMetadataSectionName()));
 	}
 
 	public FCPackMCMeta getPackMCMetaInfo();
 
 	@Override
 	@Vainilla
-	public default ResourcePackLocationInfo getInfo() {
-		return new ResourcePackLocationInfo(getPackName(), instantTextBoxType.literal(getPackName()),
-				PackSources.BUILTIN, Optional.empty());
+	public default PackLocationInfo location() {
+		return new PackLocationInfo(getPackName(), Component.literal(getPackName()),
+				PackSource.BUILT_IN, Optional.empty());
 	}
 
 	/**
@@ -185,7 +184,7 @@ public interface VainillaResourcePack extends IResourcePack {
 
 	@Vainilla
 	@Override
-	public default String getName() {
+	public default String packId() {
 		return getPackName();
 	}
 
@@ -253,30 +252,30 @@ public interface VainillaResourcePack extends IResourcePack {
 	
 	@Internal
 	@FunctionalInterface
-	public static interface Loader extends ResourcePackInfo.Loader {
+	public static interface Loader extends Pack.ResourcesSupplier {
 
 		public VainillaResourcePack getPack(String overley);
 
 		@Override
-		public default IResourcePack open(ResourcePackLocationInfo var1) {
+		public default PackResources openPrimary(PackLocationInfo var1) {
 			// TODO Auto-generated method stub
 			return getPack("");
 		}
 
 		@Override
-		public default IResourcePack openWithOverlays(ResourcePackLocationInfo var1, PackMcMeta var2) {
+		public default PackResources openFull(PackLocationInfo var1, Metadata var2) {
 			// TODO Auto-generated method stub
 
-			List<String> list = var2.comp_1584();
+			List<String> list = var2.overlays();
 			if (list.isEmpty()) {
-				return open(var1);
+				return openPrimary(var1);
 			}
 
-			ArrayList<IResourcePack> list2 = new ArrayList<IResourcePack>(list.size());
+			ArrayList<PackResources> list2 = new ArrayList<PackResources>(list.size());
 			for (String string : list) {
 				list2.add(getPack(string));
 			}
-			return new CombinedPackResources(open(var1), list2);
+			return new CompositePackResources(openPrimary(var1), list2);
 		}
 
 	}

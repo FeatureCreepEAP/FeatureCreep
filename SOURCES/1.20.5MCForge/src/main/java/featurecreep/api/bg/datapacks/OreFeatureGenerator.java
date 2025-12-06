@@ -9,11 +9,11 @@ import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.orespawn.OreSpawnBasicConfig;
 import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.io.BasicIO;
-import game.BuiltInRegistries;
-import game.GenerationPlacement;
-import game.RegistryKey;
-import game.RegistryKeys;
-import game.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class OreFeatureGenerator {
 
@@ -28,7 +28,7 @@ public class OreFeatureGenerator {
 			configured.get("config").get("size").set(configs.get(i).size);
 			ModelNode targets = new ModelNode();// Gotta change this for when we do multiple blocks and biomes and
 												// replacements
-			targets.get("state").get("Name").set(BuiltInRegistries.block.getName(configs.get(i).block).toString());
+			targets.get("state").get("Name").set(BuiltInRegistries.BLOCK.getKey(configs.get(i).block).toString());
 			targets.get("target").get("predicate_type").set("minecraft:tag_match");
 			targets.get("target").get("tag").set("minecraft:stone_ore_replaceables");
 			configured.get("config").get("targets").add(targets);
@@ -73,8 +73,8 @@ PackLoader.entries.put(placedfile, BasicIO.stringToByteArray(placed.toJSONString
 
 
 
-//https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java
-RegistryKey<GenerationPlacement> MY_ORE_PF = RegistryKey.of(RegistryKeys.GENERATION_PLACEMENT,
+//https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java  
+ResourceKey<PlacedFeature> MY_ORE_PF = ResourceKey.create(Registries.PLACED_FEATURE,
 		new ResourceLocation("orespawn", configs.get(i).name));
 OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 
@@ -85,4 +85,3 @@ OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 	}
 
 }
-
