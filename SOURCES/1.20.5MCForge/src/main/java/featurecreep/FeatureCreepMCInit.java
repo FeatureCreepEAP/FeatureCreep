@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("featurecreep")
+//@Mod("featurecreep")
 public class FeatureCreepMCInit {
 	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 //	    public static final Logger LOGGER = LogManager.getLogger();

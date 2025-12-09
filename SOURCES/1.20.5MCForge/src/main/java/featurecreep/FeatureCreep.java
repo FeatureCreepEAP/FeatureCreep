@@ -14,7 +14,6 @@ import com.asbestosstar.assistremapper.remapper.JarRemapper;
 
 import featurecreep.api.ClassPoolNewer1st;
 import featurecreep.api.GameInjections;
-import featurecreep.api.bg.BGSide;
 import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.datapacks.DataPackLoader;
 import featurecreep.api.bg.items.vanilla.VanillaItems;
@@ -32,10 +31,9 @@ import featurecreep.api.platform.super_.SuperLoader;
 import featurecreep.content.FCBlocks;
 import featurecreep.content.FCItems;
 import featurecreep.loader.FCLoaderBasic;
-import featurecreep.loader.FCLoaderBasicR8;
+import featurecreep.loader.FCTransformer;
 import featurecreep.loader.GetPackagesFromClassLoader;
 import featurecreep.loader.filesystem.DirectoryReader;
-import featurecreep.unsupported.RemappingClassFileTransformer;
 import javassist.ClassPool;
 
 public class FeatureCreep {
@@ -59,8 +57,7 @@ public class FeatureCreep {
 	public static String temp_mapping_location = GameInjections.temp_mapping_location;
 	public static Path[] dependancies = {};
 	public static Path[] modpaths = { new File(modpath).toPath(), new File(natively_mapped_mods_folder).toPath() };
-	public static FCLoaderBasic loader = new FCLoaderBasicR8(modpaths, dependancies, packages_needed, 4, true,
-			BGSide.getExecutionSide());
+	public static FCLoaderBasic loader;
 	public static ModuleLoader modloader = loader.getLoader();
 	//public static FCDNF fcdnf = GameInjections.fcdnf; TODO allow later
 	public static MappingConverter mappings_converter = GameInjections.mappings_converter;
@@ -91,14 +88,8 @@ public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_
 		VanillaItems.onInitialise();
 		FCItems.onInitialise();
 		FCBlocks.onInitialise();
-		loader.addNeededPackages(GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader());	
-				if(GameInjections.agent_mode) {
-			loader.setInstrumentation(GameInjections.instrumentation);
-		}
-		loader.setMainTransformer(new RemappingClassFileTransformer(loader));
-		loader.getTransformers().addAll(GameInjections.cargador.getTransformers());
 
-		loader.loadMods();
+
 		// loader.runAgents();
 		
 		try {

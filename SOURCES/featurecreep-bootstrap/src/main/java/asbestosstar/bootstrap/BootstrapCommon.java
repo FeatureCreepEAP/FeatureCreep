@@ -23,7 +23,11 @@ public class BootstrapCommon {
      * @return true if an Instrumentation instance was obtained
      */
     public static boolean initDefault() {
-        Instrumentation inst = BootstrapCommon.activateAgent(BootstrapCommon.getJar());
+    	if(agent_activated) {
+    		return true;
+    	}
+    	
+    	Instrumentation inst = BootstrapCommon.activateAgent(BootstrapCommon.getJar());
         return inst != null;
     }
 
