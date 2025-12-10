@@ -3,47 +3,12 @@
   <groupId>featurecreep</groupId>
   <artifactId>featurecreep-bootstrap</artifactId>
   <version>0.0.1-SNAPSHOT</version>
- 
-  <properties>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <!-- Directory to store embedded JARs -->
-    <embedded.jars.dir>${project.build.outputDirectory}/jars</embedded.jars.dir>
-  </properties>
-
   <build>
     <plugins>
-      <!-- Step 1: Copy runtime-scoped deps (or all non-provided) into resources/jars -->
+      <!-- other plugins omitted -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.6.1</version>
-        <executions>
-          <execution>
-            <id>copy-embedded-jars</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <!-- Only include dependencies NOT marked as 'provided' -->
-              <includeScope>runtime</includeScope>
-              <outputDirectory>${embedded.jars.dir}</outputDirectory>
-              <silent>true</silent>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-              <!-- Optional: exclude transitive deps if needed -->
-              <excludeTransitive>false</excludeTransitive>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- Step 2: Build the main JAR, including /jars/ folder -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>2.4</version>
         <configuration>
           <archive>
             <manifestEntries>
@@ -52,14 +17,82 @@
               <Can-Redefine-Classes>true</Can-Redefine-Classes>
               <Can-Retransform-Classes>true</Can-Retransform-Classes>
               <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
-              <!-- Optional: help your agent locate embedded JARs -->
-              <Embedded-Jars-Path>jij/</Embedded-Jars-Path>
             </manifestEntries>
           </archive>
         </configuration>
       </plugin>
+      
+      
+      
+      <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.5.1</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <createDependencyReducedPom>false</createDependencyReducedPom>
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <!-- Exclude entire groups -->
+                            <exclude>org.ow2.asm:*</exclude>
+                            <exclude>com.mojang:*</exclude>
+                            <exclude>io.netty:*</exclude>
+                            <exclude>org.apache.commons:*</exclude>
+                            <exclude>org.apache.httpcomponents:*</exclude>
+                            <exclude>org.apache.logging.log4j:*</exclude>
+                            <exclude>org.lwjgl:*</exclude>
+                            <exclude>net.minecraftforge:*</exclude>
+                            <exclude>cpw.mods:*</exclude>
+                            
+                            <!-- Exclude individual artifacts -->
+                            <exclude>ca.weblite:java-objc-bridge</exclude>
+                            <exclude>com.github.oshi:oshi-core</exclude>
+                            <exclude>com.google.guava:failureaccess</exclude>
+                            <exclude>com.google.code.gson:gson</exclude>
+                            <exclude>com.ibm.icu:icu4j</exclude>
+                            <exclude>commons-codec:commons-codec</exclude>
+                            <exclude>commons-io:commons-io</exclude>
+                            <exclude>commons-logging:commons-logging</exclude>
+                            <exclude>it.unimi.dsi:fastutil</exclude>
+                            <exclude>net.sf.jopt-simple:jopt-simple</exclude>
+                            <exclude>org.jcraft:jorbis</exclude>
+                            <exclude>org.joml:joml</exclude>
+                        </excludes>
+                    </filter>
+                </filters>
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <manifestEntries>
+                            <Premain-Class>asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+                            <Agent-Class>asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                            <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+                        </manifestEntries>
+                    </transformer>
+                </transformers>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+      
+      
+      
     </plugins>
   </build>
+
+ <properties>
+ 	<maven.compiler.target>11</maven.compiler.target>
+ 	 	<maven.compiler.source>11</maven.compiler.source>
+ </properties>
+ 
  
  
  

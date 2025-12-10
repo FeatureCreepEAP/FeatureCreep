@@ -3,30 +3,113 @@
   <groupId>com.asbestosstar</groupId>
   <artifactId>featurecreepmc-1.21.1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
+
+
+
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <!-- Directory to store embedded JARs -->
+    <embedded.jars.dir>${project.build.outputDirectory}/jars</embedded.jars.dir>
+  </properties>
+
+
+
+
+
+
  <build>
-  <plugins>
-    <!-- other plugins omitted -->
-    <plugin>
-      <artifactId>maven-jar-plugin</artifactId>
-      <version>2.4</version>
-      <configuration>
-        <archive>
-          <manifestEntries>
-         <Premain-Class>asbestosstar.FCAgent</Premain-Class>
-                     <Can-Retransform-Classes>true</Can-Retransform-Classes>
-            <Can-Redefine-Classes>true</Can-Redefine-Classes>
-          </manifestEntries>
-        </archive>
-      </configuration> 
-    </plugin>
-  </plugins>
-</build>
- <properties>
- 	<maven.compiler.target>21</maven.compiler.target>
- 	 	<maven.compiler.source>21</maven.compiler.source>
- 	 	        <fcdependencies.dir>${user.home}/fcdependencies/1.20.5MCForge</fcdependencies.dir>  
- </properties>
- 
+    <plugins>
+      <!-- other plugins omitted -->
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Premain-Class>asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+              <Agent-Class>asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+              <Can-Redefine-Classes>true</Can-Redefine-Classes>
+              <Can-Retransform-Classes>true</Can-Retransform-Classes>
+              <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      
+      
+      
+      <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.5.1</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <createDependencyReducedPom>false</createDependencyReducedPom>
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <!-- Exclude entire groups -->
+                            <exclude>org.ow2.asm:*</exclude>
+                            <exclude>com.mojang:*</exclude>
+                            <exclude>io.netty:*</exclude>
+                            <exclude>org.apache.commons:*</exclude>
+                            <exclude>org.apache.httpcomponents:*</exclude>
+                            <exclude>org.apache.logging.log4j:*</exclude>
+                            <exclude>net.java.dev.jna:*</exclude>
+                            <exclude>org.lwjgl:*</exclude>
+                            <exclude>net.minecraftforge:*</exclude>
+                            <exclude>cpw.mods:*</exclude>
+                            
+                            <!-- Exclude individual artifacts -->
+                            <exclude>ca.weblite:java-objc-bridge</exclude>
+                            <exclude>com.github.oshi:oshi-core</exclude>
+                            <exclude>com.google.guava:failureaccess</exclude>
+                            <exclude>com.google.code.gson:gson</exclude>
+                            <exclude>com.ibm.icu:icu4j</exclude>
+                            <exclude>commons-codec:commons-codec</exclude>
+                            <exclude>commons-io:commons-io</exclude>
+                            <exclude>commons-logging:commons-logging</exclude>
+                            <exclude>it.unimi.dsi:fastutil</exclude>
+                            <exclude>net.sf.jopt-simple:jopt-simple</exclude>
+                            <exclude>org.jcraft:jorbis</exclude>
+                            <exclude>org.joml:joml</exclude>
+                        </excludes>
+                    </filter>
+                </filters>
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <manifestEntries>
+                            <Premain-Class>asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+                            <Agent-Class>asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                            <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+                        </manifestEntries>
+                    </transformer>
+                </transformers>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+      
+      
+      
+    </plugins>
+  </build>
+
+
+
+
+
   <repositories>
     <repository>
       <id>MCForge</id>
@@ -50,10 +133,33 @@
     </repository>
     
     
+             <repository>
+      <id>FabricMC</id>
+      <name>FabricMC</name>
+      <url>https://maven.fabricmc.net/</url>
+    </repository>
+    
+    
+    
+    
+    
+    
+    
     
   </repositories>
  
-   <dependencies>
+  <dependencies>
+ 
+ 	
+ 	
+ 	 	 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>featurecreep-api</artifactId>
+    <version>5am3</version>
+</dependency>
+ 	
+ 	
  	
  	
  	      <!-- Do not include these in fat jar -->
@@ -243,7 +349,7 @@
  		<groupId>net.java.dev.jna</groupId>
  		<artifactId>jna-platform</artifactId>
  		<version>5.14.0</version>
- 		<scope>provided</scope>
+ 		 		<scope>provided</scope>
  	</dependency>
  	<dependency>
  		<groupId>net.java.dev.jna</groupId>
@@ -406,8 +512,26 @@
     <version>10.1.10</version>
     <scope>provided</scope>
 </dependency>
-
-
+ 	
+ 	
+ 	
+ 	
+ 	<!-- https://mvnrepository.com/artifact/net.fabricmc/fabric-loader -->
+<dependency>
+    <groupId>net.fabricmc</groupId>
+    <artifactId>fabric-loader</artifactId>
+    <version>0.17.3</version>
+    <scope>provided</scope>
+</dependency>
+ 	
+ 	
+ 	<dependency>
+    <groupId>net.neoforged.fancymodloader</groupId>
+    <artifactId>loader</artifactId>
+    <version>10.0.14</version>
+        <scope>provided</scope>
+</dependency>
+ 	
 
 
 
@@ -428,7 +552,7 @@
 <dependency>
     <groupId>unb.libraries.net.minecraftforge</groupId>
     <artifactId>forge</artifactId>
-    <version>1.20.6-50.2.1</version>
+    <version>1.21.1-52.1.2</version>
     <classifier>client</classifier>
     <scope>provided</scope>
 </dependency>
@@ -438,11 +562,10 @@
 <dependency>
     <groupId>unb.libraries.net.minecraftforge</groupId>
     <artifactId>forge</artifactId>
-    <version>1.20.6-50.2.1</version>
+    <version>1.21.1-52.1.2</version>
     <classifier>universal</classifier>
     <scope>provided</scope>
 </dependency>
-
 
 
 
@@ -453,13 +576,20 @@
  	 	      <!-- End of Do not include these in fat jar -->
 
 
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>featurecreep-loader</artifactId>
+    <version>5-pre2</version>
+</dependency>
+ 	
+
+
 
  	 	 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
 <dependency>
     <groupId>com.asbestosstar</groupId>
     <artifactId>featurecreep-api</artifactId>
     <version>5am3</version>
-        <scope>provided</scope>
 </dependency>
  	
  	
