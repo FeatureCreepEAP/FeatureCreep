@@ -139,6 +139,11 @@
       <url>https://maven.fabricmc.net/</url>
     </repository>
     
+                 <repository>
+      <id>Piston</id>
+      <name>Piston</name>
+      <url>https://piston-data.mojang.com/v1/objects/</url>
+    </repository>
     
     
     
@@ -547,26 +552,14 @@
 
 
 
-
- 	 	<!-- Minecraft -->
-<dependency>
-    <groupId>unb.libraries.net.minecraftforge</groupId>
-    <artifactId>forge</artifactId>
-    <version>1.21.10-60.0.5</version>
-    <classifier>client</classifier>
-    <scope>provided</scope>
-</dependency>
-
-
- 	 	<!-- Minecraft Forge Universal is needed because the client jar we use is from MCForge and references MCForge. THis is not needed in 1.21.11 and newer which is mojmap by default -->
-<dependency>
-    <groupId>unb.libraries.net.minecraftforge</groupId>
-    <artifactId>forge</artifactId>
-    <version>1.21.10-60.0.5</version>
-    <classifier>universal</classifier>
-    <scope>provided</scope>
-</dependency>
-
+    <!-- Minecraft Client Jar (Manual download) -->
+    <dependency>
+      <groupId>com.mojang</groupId>
+      <artifactId>client</artifactId>
+      <version>1.21.11</version> <!-- Replace with actual Minecraft version -->
+      <scope>system</scope>
+      <systemPath>${embedded.jars.dir}/client.jar</systemPath>
+    </dependency>
 
 
 
