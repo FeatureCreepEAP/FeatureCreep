@@ -1,0 +1,164 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    maven {
+        url "https://maven.minecraftforge.net/"
+        name "MCForge"
+    }
+    maven {
+        url "https://libraries.minecraft.net"
+        name "Minecraft"
+    }
+    maven {
+        url "http://res.tlauncher.org"
+        name "TLauncher"
+    }
+    maven {
+        url "https://maven.neoforged.net/"
+        name "NeoForge"
+    }
+    maven {
+        url "https://maven.fabricmc.net/"
+        name "FabricMC"
+    }
+    maven {
+        url "https://piston-data.mojang.com/v1/objects/"
+        name "Piston"
+    }
+}
+
+dependencies {
+    // Minecraft and Loader dependencies
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    
+    // FeatureCreep dependencies
+    implementation "com.asbestosstar:featurecreep-api:5am3"
+    implementation "com.asbestosstar:featurecreep-loader:5-pre2"
+    
+    // Provided dependencies (not included in final jar)
+    compileOnly "org.ow2.asm:asm:9.6"
+    compileOnly "org.ow2.asm:asm-analysis:9.6"
+    compileOnly "org.ow2.asm:asm-commons:9.6"
+    compileOnly "org.ow2.asm:asm-tree:9.6"
+    compileOnly "org.ow2.asm:asm-util:9.6"
+    compileOnly "ca.weblite:java-objc-bridge:1.1"
+    compileOnly "com.github.oshi:oshi-core:6.4.10"
+    compileOnly "com.google.guava:failureaccess:1.0.1"
+    compileOnly "com.google.code.gson:gson:2.10.1"
+    compileOnly "com.ibm.icu:icu4j:73.2"
+    compileOnly "commons-codec:commons-codec:1.16.0"
+    compileOnly "commons-io:commons-io:2.15.1"
+    compileOnly "commons-logging:commons-logging:1.2"
+    compileOnly "io.netty:netty-buffer:4.1.97.Final"
+    compileOnly "io.netty:netty-codec:4.1.97.Final"
+    compileOnly "io.netty:netty-common:4.1.97.Final"
+    compileOnly "io.netty:netty-handler:4.1.97.Final"
+    compileOnly "io.netty:netty-resolver:4.1.97.Final"
+    compileOnly "io.netty:netty-transport-classes-epoll:4.1.97.Final"
+    compileOnly "io.netty:netty-transport-native-unix-common:4.1.97.Final"
+    compileOnly "io.netty:netty-transport:4.1.97.Final"
+    compileOnly "it.unimi.dsi:fastutil:8.5.12"
+    compileOnly "net.java.dev.jna:jna-platform:5.14.0"
+    compileOnly "net.java.dev.jna:jna:5.14.0"
+    compileOnly "net.sf.jopt-simple:jopt-simple:5.0.4"
+    compileOnly "org.apache.commons:commons-compress:1.26.0"
+    compileOnly "org.apache.commons:commons-lang3:3.14.0"
+    compileOnly "org.apache.httpcomponents:httpclient:4.5.13"
+    compileOnly "org.apache.httpcomponents:httpcore:4.4.16"
+    compileOnly "org.apache.logging.log4j:log4j-api:2.22.1"
+    compileOnly "org.apache.logging.log4j:log4j-core:2.22.1"
+    compileOnly "org.apache.logging.log4j:log4j-slf4j2-impl:2.22.1"
+    compileOnly "org.jcraft:jorbis:0.0.17"
+    compileOnly "org.joml:joml:1.10.5"
+    compileOnly "org.lwjgl:lwjgl-freetype:3.3.3"
+    compileOnly "org.lwjgl:lwjgl-jemalloc:3.3.3"
+    compileOnly "org.lwjgl:lwjgl-openal:3.3.3"
+    compileOnly "org.lwjgl:lwjgl-opengl:3.3.3"
+    compileOnly "org.lwjgl:lwjgl-stb:3.3.3"
+    compileOnly "org.lwjgl:lwjgl-tinyfd:3.3.3"
+    compileOnly "org.lwjgl:lwjgl:3.3.3"
+    compileOnly "net.minecraftforge:modlauncher:10.2.1"
+    compileOnly "net.minecraftforge:fmlcore:1.20.6-50.0.4"
+    compileOnly "net.minecraftforge:javafmllanguage:1.20.6-50.0.4"
+    compileOnly "net.minecraftforge:lowcodelanguage:1.20.6-50.0.4"
+    compileOnly "net.minecraftforge:mclanguage:1.20.6-50.0.4"
+    compileOnly "net.minecraftforge:fmlloader:1.20.6-50.0.4"
+    compileOnly "cpw.mods:securejarhandler:1.0.1"
+    compileOnly "cpw.mods:modlauncher:10.1.10"
+    compileOnly "net.fabricmc:fabric-loader:0.17.3"
+    compileOnly "net.neoforged.fancymodloader:loader:10.0.14"
+    compileOnly "net.fabricmc:sponge-mixin:0.16.5+mixin.0.8.7"
+}
+
+// Custom packaging configuration
+shadowJar {
+    configurations = [project.configurations.implementation]
+    exclude 'module-info.class'
+    
+    manifest {
+        attributes(
+            'Premain-Class': 'asbestosstar.bootstrap.FeatureCreepAgent',
+            'Agent-Class': 'asbestosstar.bootstrap.FeatureCreepAgent',
+            'Can-Redefine-Classes': 'true',
+            'Can-Retransform-Classes': 'true',
+            'Automatic-Module-Name': 'featurecreep.bootstrap'
+        )
+    }
+    
+    // Exclude provided dependencies from final jar
+    project.configurations.compileOnly.resolvedDependencies.each { dependency ->
+        exclude "**/${dependency.name}/**"
+    }
+}
+
+tasks.build {
+    dependsOn shadowJar
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+    inputs.property "archivesName", project.base.archivesName
+    from("LICENSE") {
+        rename { "${it}_${inputs.properties.archivesName}"}
+    }
+}
+
+// configure the maven publication
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
+        }
+    }
+}
