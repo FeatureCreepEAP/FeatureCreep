@@ -4,7 +4,7 @@
 package featurecreep.api.bg.registries;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -21,7 +21,7 @@ public class GameRegistries {
 
 	public static Item getItemFromGameRegistries(String registry_name)// We also need a Number ID version of this
 	{
-		return BuiltInRegistries.ITEM.get(ResourceLocation.parse(registry_name)).get().value();
+		return BuiltInRegistries.ITEM.get(Identifier.parse(registry_name)).get().value();
 	}
 
 	public static Item getItemFromGameRegistries(int id) {
@@ -29,12 +29,12 @@ public class GameRegistries {
 	}
 
 	public static boolean ItemKeyExistsInRegistry(String registry_name) {
-		return BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(registry_name));
+		return BuiltInRegistries.ITEM.containsKey(Identifier.parse(registry_name));
 	}
 
 	public static Block getBlockFromGameRegistries(String registry_name)// We also need a Number ID version of this
 	{
-		return BuiltInRegistries.BLOCK.get(ResourceLocation.parse(registry_name)).get().value();
+		return BuiltInRegistries.BLOCK.get(Identifier.parse(registry_name)).get().value();
 	}
 
 	public static Block getBlockFromGameRegistries(int id) {
@@ -42,7 +42,7 @@ public class GameRegistries {
 	}
 
 	public static boolean BlockKeyExistsInRegistry(String registry_name) {
-		return BuiltInRegistries.BLOCK.containsKey(ResourceLocation.parse(registry_name));
+		return BuiltInRegistries.BLOCK.containsKey(Identifier.parse(registry_name));
 	}
 
 	public static CreativeModeTab getItemGroupByName(String name) {

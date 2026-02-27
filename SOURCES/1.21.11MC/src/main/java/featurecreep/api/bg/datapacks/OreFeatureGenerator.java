@@ -11,8 +11,8 @@ import featurecreep.api.bg.orespawn.OrespawnBasicFeatureParser;
 import featurecreep.api.io.BasicIO;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class OreFeatureGenerator {
@@ -75,7 +75,7 @@ PackLoader.entries.put(placedfile, BasicIO.stringToByteArray(placed.toJSONString
 
 //https://github.com/Ayutac/fabric-example-worldgen/blob/1.19.3/src/main/java/net/fabricmc/example/ExampleMod.java  
 ResourceKey<PlacedFeature> MY_ORE_PF = ResourceKey.create(Registries.PLACED_FEATURE,
-		ResourceLocation.fromNamespaceAndPath("orespawn", configs.get(i).name));
+		Identifier.fromNamespaceAndPath("orespawn", configs.get(i).name));
 OrespawnBasicFeatureParser.placed.add(MY_ORE_PF);
 
 

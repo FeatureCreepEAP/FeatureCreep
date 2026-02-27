@@ -9,8 +9,8 @@ import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.BlockItem;
@@ -49,7 +49,7 @@ public class UniversalRegistryGettersAndSetters {
 	}
 
 	public static void registerItem(Item item, String registry_name, CreativeModeTab default_tab, int id) {
-		ForgeRegistries.ITEMS.register(ResourceLocation.parse(registry_name), item);
+		ForgeRegistries.ITEMS.register(Identifier.parse(registry_name), item);
 	}
 
 	public static void registerItem(FCItemAPI item) {
@@ -110,15 +110,15 @@ public class UniversalRegistryGettersAndSetters {
 	}
 
 	public static void registerBlock(Block block, String registry_name, CreativeModeTab default_tab, int id) {
-		ForgeRegistries.BLOCKS.register(ResourceLocation.parse(registry_name), block);
-		ForgeRegistries.ITEMS.register(registry_name, new BlockItem(block, new Properties().setId(ResourceKey.create(BuiltInRegistries.ITEM.key(),ResourceLocation.parse(registry_name)) )));
+		ForgeRegistries.BLOCKS.register(Identifier.parse(registry_name), block);
+		ForgeRegistries.ITEMS.register(registry_name, new BlockItem(block, new Properties().setId(ResourceKey.create(BuiltInRegistries.ITEM.key(),Identifier.parse(registry_name)) )));
 	}
 
 	public static void registerBlock(FCBlockAPI block) {
 		registerBlock(block.get(), block.getFCRegistryName(), block.getDefaultCreativeTab(), block.getNumberID());
 	}
 
-	public static void vainillaRegister(Registry registry, ResourceLocation rl, Object Entry) {
+	public static void vainillaRegister(Registry registry, Identifier rl, Object Entry) {
 		if (registry.equals(BuiltInRegistries.ITEM)) {
 			ForgeRegistries.ITEMS.register(rl, (Item) Entry);
 		} else if (registry.equals(BuiltInRegistries.BLOCK)) {

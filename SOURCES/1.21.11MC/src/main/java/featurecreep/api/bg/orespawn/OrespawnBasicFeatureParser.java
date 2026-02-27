@@ -14,8 +14,8 @@ import featurecreep.FeatureCreep;
 import featurecreep.api.io.BasicIO;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.BiomeGenerationSettings.Builder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
@@ -138,7 +138,7 @@ public class OrespawnBasicFeatureParser {
 			replace_registry_names = getCorrectNameSpace(replace_registry_names);
 
 			String[] block_identifier = replace_registry_names.split(":");
-			Optional<Reference<Block>> replacedBlockRef = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(block_identifier[0], block_identifier[1]));
+			Optional<Reference<Block>> replacedBlockRef = BuiltInRegistries.BLOCK.get(Identifier.fromNamespaceAndPath(block_identifier[0], block_identifier[1]));
 
 			if (replacedBlockRef.isEmpty()) {
 			    System.out.println("No se encontró el bloque para reemplazar:" +replace_registry_names);
@@ -154,7 +154,7 @@ public class OrespawnBasicFeatureParser {
 			}
 			String[] new_block_identifier = getCorrectNameSpace(new_block).split(":");
 			Optional<Reference<Block>> newBlockBase = BuiltInRegistries.BLOCK
-					.get(ResourceLocation.fromNamespaceAndPath(new_block_identifier[0], new_block_identifier[1]));
+					.get(Identifier.fromNamespaceAndPath(new_block_identifier[0], new_block_identifier[1]));
 			
 			if (newBlockBase.isEmpty()) {
 			    System.out.println("No se encontró el bloque para reemplazar:" +replace_registry_names);

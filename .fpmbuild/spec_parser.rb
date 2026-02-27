@@ -4,9 +4,6 @@ class SpecParser
 
   $Spec
   $Location
-  $remap
-  $mappings
-  $remap_depndencies
   $actual_location #para cd
 
   def initialize(spec, location)
@@ -128,11 +125,7 @@ class SpecParser
     end
   end
 
-  def get_main_class
-    IO.readlines($Spec).each do |line|
-      return pre_validate(line.sub("Main-Class:", "")) if line.include?("Main-Class:")
-    end
-  end
+
 
   def get_description
     line_first = find_build_part_to_int(IO.readlines($Spec))
@@ -175,7 +168,6 @@ class SpecParser
     str = str.gsub("%{?requires}",    get_requires)    if str.include?("%{?requires}")
     str = str.gsub("%{?description}", get_description) if str.include?("%{?description}")
     str = str.gsub("%{?fpmbuild_location}", get_fpmbuild_location) if str.include?("%{?fpmbuild_location}")
-    str = str.gsub("%{?main-class}",  get_main_class)  if str.include?("%{?main-class}")
     str = str.gsub("%{?sources_location}", get_sources_location) if str.include?("%{?sources_location}")
     str = str.gsub("$FPM_BUILD_ROOT", get_build_root)  if str.include?("$FPM_BUILD_ROOT")
     str = str.gsub("%{?build_root}",  get_build_root)  if str.include?("%{?build_root}")
@@ -204,6 +196,88 @@ class SpecParser
     install_line
   end
 
+
+
+
+
+
+
+
+
+
+  def evaluate_condition(condition_str)
+    return true if condition_str.nil?
+
+    case condition_str.strip
+    when /^ifos\s+(\w+)/
+      target_os = $1.downcase
+      return $os == target_os
+    when /^if\s+(.+)/
+      begin
+        # Simple expression evaluation (supports &&, ||, !, parentheses)
+        RubyVM::InstructionSequence.compile("::TRUE = #{$1}").eval
+        return true
+      rescue
+        return false
+      end
+    end
+    false
+  end
+
+  def preprocess_spec(lines)
+    active_stack = [true]
+    condition_stack = []
+    new_lines = []
+    current_condition = nil
+    in_else = false
+
+    lines.each_with_index do |line, idx|
+      next_line = lines[idx+1] if idx < lines.length-1
+
+      case line.strip
+      when /^%\s*if\s*(.*)$/i
+        current_condition = $1
+        cond = evaluate_condition(current_condition)
+        condition_stack.push(current_condition)
+        active_stack.push(cond)
+        in_else = false
+      when /^%\s*else\s*$/i
+        in_else = true
+        active_stack[-1] = !active_stack[-1]
+      when /^%\s*endif\s*$/i
+        in_else = false
+        condition_stack.pop
+        active_stack.pop
+      else
+        active = active_stack.last && !in_else
+        new_lines << line if active && !line.strip.match(/^%\s*(if|else|endif)/i)
+      end
+    end
+    new_lines
+  end
+
+  def build_fpm
+    $actual_location = $Location
+    spec_array = preprocess_spec(IO.readlines($Spec))
+
+    Dir[File.join(get_build_root, '*')].each { |brf| FileUtils.rm_rf(brf) rescue nil }
+
+    line_first = find_build_part_to_int(spec_array)
+    line_last  = find_install_part_to_int(spec_array) - 1
+    current    = line_first
+
+    while current < line_last
+      execute(validate(spec_array[current]))
+      current += 1
+    end
+  end
+
+
+
+
+
+
+
   def execute(line)
     if line.include?("buildfpm_maven")
       args = line.split(" ")
@@ -216,18 +290,11 @@ class SpecParser
 
       if File.exist?(manifest)
         contenido = get_file_as_string(manifest)
-        unless contenido.include?("Main-Class :") || contenido.include?("Main-Class:")
-          manifest_text = File.read(manifest)
-          manifest_text = manifest_text.each_line.reject { |x| x.strip == "" }.join
-          File.open(manifest, 'w') { |file| file.write(manifest_text) }
-          File.open(manifest, 'a') { |file| file.puts "Main-Class: #{get_main_class.strip}" unless get_main_class.nil? }
-        end
       else
         # si no existe, créalo mínimo
         FileUtils.mkdir_p(File.join(classes_path, "META-INF"))
         File.open(manifest, 'w') do |f|
           f.puts "Manifest-Version: 1.0"
-          f.puts "Main-Class: #{get_main_class.strip}" unless get_main_class.nil?
         end
       end
 
@@ -282,16 +349,9 @@ class SpecParser
 
       if File.exist?(manifest)
         contenido = get_file_as_string(manifest)
-        unless contenido.include?("Main-Class:")
-          manifest_text = File.read(manifest)
-          manifest_text = manifest_text.each_line.reject { |x| x.strip == "" }.join
-          File.open(manifest, 'w') { |f| f.write(manifest_text) }
-          File.open(manifest, 'a') { |f| f.puts "Main-Class: #{get_main_class.strip}" unless get_main_class.nil? }
-        end
       else
         File.open(manifest, 'w') do |f|
           f.puts "Manifest-Version: 1.0"
-          f.puts "Main-Class: #{get_main_class.strip}" unless get_main_class.nil?
         end
       end
 
@@ -339,17 +399,7 @@ class SpecParser
 
       Dir[File.join(get_build_root, '*')].each { |brf| FileUtils.rm_rf(brf) rescue nil }
 
-    elsif line.include?("remap")
-      valid = validate(line)
-      args  = valid.split("(")[1].split(")")[0].split(",") # get the args
 
-      $remap = true
-      $mappings = args[0]
-      $remap_depndencies = args[1]
-      puts "remapping"
-      cmd = %(java -jar ./.fpmbuild/fpmbuild-java.jar -remap "#{File.join(get_fpm_dir, "#{get_name}-#{get_version}-#{get_release}.noarch.fpm")}" #{$mappings} #{$remap_depndencies})
-      puts cmd
-      system(cmd)
 
     elsif line.start_with?("cd")
       valid = validate(line)
@@ -367,20 +417,7 @@ class SpecParser
     end
   end
 
-  def build_fpm
-    $actual_location = $Location
-    spec_array = IO.readlines($Spec)
 
-    Dir[File.join(get_build_root, '*')].each { |brf| FileUtils.rm_rf(brf) rescue nil }
-
-    line_first = find_build_part_to_int(spec_array)
-    line_last  = find_install_part_to_int(spec_array) - 1
-    current    = line_first
-    while current < line_last
-      execute(validate(spec_array[current]))
-      current += 1
-    end
-  end
 
 end
 

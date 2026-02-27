@@ -4,10 +4,9 @@ import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.ItemFieldHolder;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.equipment.ArmorType;
 
 public class FCArmour extends Item implements FCItemAPI<FCArmour> {
     public ItemFieldHolder holder = new ItemFieldHolder();
@@ -23,7 +22,7 @@ public class FCArmour extends Item implements FCItemAPI<FCArmour> {
             FCArmourSlot slot) {
         // Usamos humanoidArmor con el Holder y ArmorType
         super(new Item.Properties()
-            .humanoidArmor(material.get(), slot.getSlot()).setId(ResourceKey.create(BuiltInRegistries.ITEM.key(),ResourceLocation.fromNamespaceAndPath(modid, name)) ) // ← Esto reemplaza ArmorItem
+            .humanoidArmor(material.get(), slot.getSlot()).setId(ResourceKey.create(BuiltInRegistries.ITEM.key(),Identifier.fromNamespaceAndPath(modid, name)) ) // ← Esto reemplaza ArmorItem
         );
         this.initialise(id, modid, name, group);
         this.slot = slot;

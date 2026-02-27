@@ -4,10 +4,11 @@ import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
+import io.smallrye.common.constraint.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -16,8 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import io.smallrye.common.constraint.Nullable;
 
 public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
@@ -30,7 +29,7 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	public FCBlock(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops) {
-		super(Properties.of().destroyTime(strength / 10f).setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(),ResourceLocation.fromNamespaceAndPath(modid,name)) ));// Need to add material again soon
+		super(Properties.of().destroyTime(strength / 10f).setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(),Identifier.fromNamespaceAndPath(modid,name)) ));// Need to add material again soon
 		initialise(id, modid, name, group, material, strength, drops);
 
 	}

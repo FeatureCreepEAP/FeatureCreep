@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 import featurecreep.api.annotations.Internal;
 import featurecreep.api.annotations.Vainilla;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.CompositePackResources;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
@@ -27,7 +27,6 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.Pack.Metadata;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.resources.IoSupplier;
-import net.minecraft.util.GsonHelper;
 
 public interface VainillaResourcePack extends PackResources {
 
@@ -80,7 +79,7 @@ public interface VainillaResourcePack extends PackResources {
 
 	@Override
 	@Vainilla
-	public default IoSupplier<InputStream> getResource(PackType var1, ResourceLocation var2) {
+	public default IoSupplier<InputStream> getResource(PackType var1, Identifier var2) {
 		FCResourceType type = FCResourceType.checkBuiltIn(var1.getDirectory());
 		String path = toPath(type, var2.getNamespace(), var2.getPath());
 		return desdeSupplierNormal(getStream(this.appendOverlayPrefix(path)));
@@ -102,7 +101,7 @@ public interface VainillaResourcePack extends PackResources {
 		for (String entry : getEntries(search_path)) {
 			if (!entry.endsWith("/")) {
 				String file_name_no_dir = entry.substring(namespacelocation.length());				
-				ResourceLocation lv = ResourceLocation.fromNamespaceAndPath(namespace, file_name_no_dir);
+Identifier lv = Identifier.fromNamespaceAndPath(namespace, file_name_no_dir);
 				output.accept(lv, desdeSupplierNormal(getStream(entry)));
 			}
 		}

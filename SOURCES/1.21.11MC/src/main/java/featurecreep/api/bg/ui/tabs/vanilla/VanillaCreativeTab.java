@@ -3,8 +3,8 @@ package featurecreep.api.bg.ui.tabs.vanilla;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 
 public class VanillaCreativeTab implements UnifiedItemGroupGetter {
@@ -56,7 +56,7 @@ public class VanillaCreativeTab implements UnifiedItemGroupGetter {
 	            return null;
 	    }
 
-	    ResourceKey<CreativeModeTab> key = ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.fromNamespaceAndPath("minecraft", tabId));
+	    ResourceKey<CreativeModeTab> key = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath("minecraft", tabId));
 	    return BuiltInRegistries.CREATIVE_MODE_TAB.get(key).get().value();
 	}
 
