@@ -1,7 +1,6 @@
 # FeatureCreep
 
-NOTE: WE ARE CURRENTLY CHANGING BUILD ENV and MAPPINGS
-
+NOTE: WE ARE CURRENTLY REWRITING FEATURECREEP FOR FEATURECREEP 6, OLD MODS WILL NO LONGER WORK, 1.20.5 WILL BE THE OLDEST VERSION SUPPORTED OF MINECRAFT. DUE TO THE SUNSET OF PAGURE [https://discussion.fedoraproject.org/t/decommissioning-of-pagure-io-anticipated-by-flock-2026/181997](https://discussion.fedoraproject.org/t/decommissioning-of-pagure-io-anticipated-by-flock-2026/181997) COMBINED WITH COMMUNITY STANDARDS, WE ARE MOVING TO GITHUB [https://github.com/FeatureCreepEAP/FeatureCreep/](https://github.com/FeatureCreepEAP/FeatureCreep/) FOR THE ORIGINAL PAGURE PLEASE SEE [https://pagure.io/FeatureCreep](https://pagure.io/FeatureCreep)
 Git Group: https://pagure.io/projects/FeatureCreep/
 
 For new versions you will see the source code in the SFPMS folder. However FeatureCreep is being modularised so much of the code is being dividied across multiple repos. The Binaries for FeatureCreep API for Minecraft can only be built under a UNIX based system and does not work on Windows unless you use WSL. You must also have the mappings setup correctly. This process will soon be simplified.
