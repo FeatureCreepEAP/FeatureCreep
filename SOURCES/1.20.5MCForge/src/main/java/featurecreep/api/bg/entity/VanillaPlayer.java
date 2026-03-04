@@ -2,6 +2,8 @@ package featurecreep.api.bg.entity;
 
 import net.minecraft.world.entity.player.Player;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class VanillaPlayer extends VanillaLivingEntity implements AbstractPlayer {
 
 	Player entity;

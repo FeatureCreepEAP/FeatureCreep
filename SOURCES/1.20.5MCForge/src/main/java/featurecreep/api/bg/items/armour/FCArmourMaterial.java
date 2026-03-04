@@ -18,6 +18,8 @@ import net.minecraft.world.item.ArmorItem.Type;
 import net.minecraft.world.item.ArmorMaterial.Layer;
 import net.minecraft.world.item.crafting.Ingredient;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCArmourMaterial {
 	public int durability;
 	public ArmourProtectionValuesArray protection;
@@ -29,8 +31,7 @@ public class FCArmourMaterial {
 	public AbstractSoundEffect sound;
 
 	public FCArmourMaterial(int durability, ArmourProtectionValuesArray protection, int enchantability,
-			Ingredient repair, String name, int toughness, int knockback_resistance,
-			AbstractSoundEffect sound) {
+			Ingredient repair, String name, int toughness, int knockback_resistance, AbstractSoundEffect sound) {
 		this.durability = durability;
 		this.protection = protection;
 		this.enchantability = enchantability;
@@ -120,22 +121,17 @@ public class FCArmourMaterial {
 		return this.protection.getHelmetProtectionValue();
 	}
 
-
-	
 	public Holder<ArmorMaterial> get() {
 		Holder<SoundEvent> vainilla_sound = this.sound.getEntry();
-        List<Layer> $$7 = List.of(new Layer(new ResourceLocation(name)));
-        EnumMap<Type, Integer> $$8 = new EnumMap<Type, Integer>(Type.class);
-        for (Type $$9 : Type.values()) {
-            $$8.put($$9, this.getProtectionAmount($$9.getSlot()));
-        }
-        ArmorMaterial mat = new ArmorMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7, (float)this.getFCToughness(), (float)this.getFCKnockBackResistance());
-        return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, new ResourceLocation(name), mat);
-        
-        
+		List<Layer> $$7 = List.of(new Layer(ResourceLocation.parse(name)));
+		EnumMap<Type, Integer> $$8 = new EnumMap<Type, Integer>(Type.class);
+		for (Type $$9 : Type.values()) {
+			$$8.put($$9, this.getProtectionAmount($$9.getSlot()));
+		}
+		ArmorMaterial mat = new ArmorMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7,
+				(float) this.getFCToughness(), (float) this.getFCKnockBackResistance());
+		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.parse(name), mat);
+
 	}
-	
-	
-	
-	
+
 }

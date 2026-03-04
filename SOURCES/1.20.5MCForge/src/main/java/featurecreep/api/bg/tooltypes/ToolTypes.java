@@ -1,11 +1,13 @@
 package featurecreep.api.bg.tooltypes;
 
+import featurecreep.api.dmr.ModelNode;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
-import org.jboss.dmr.ModelNode;
+
+@Deprecated(forRemoval = true, since = "13")
 
 public class ToolTypes {
 

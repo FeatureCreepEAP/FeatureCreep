@@ -5,9 +5,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-import org.jboss.dmr.ModelNode;
-
-import featurecreep.api.bg.PackLoader;
+import featurecreep.api.dmr.ModelNode;
 import featurecreep.loader.filesystem.FileSystem;
 
 public class FileSystemVainillaResourcePack implements VainillaResourcePack {
@@ -25,8 +23,6 @@ public class FileSystemVainillaResourcePack implements VainillaResourcePack {
 	public FileSystemVainillaResourcePack(String name, FileSystem fs) {
 		this(name, fs, "");
 	}
-
-
 
 	@Override
 	public Supplier<InputStream> getStream(String location) {
@@ -52,8 +48,8 @@ public class FileSystemVainillaResourcePack implements VainillaResourcePack {
 		try {
 			return FCPackMCMeta.fromModelNode(ModelNode.fromJSONStream(this.getStream("pack.mcmeta").get()));
 		} catch (IOException e) {
-			//e.printStackTrace();
-			return new FCPackMCMeta(PackLoader.pack_version,getPackName());
+			// e.printStackTrace();
+			return new FCPackMCMeta(41, getPackName());
 		}
 	}
 

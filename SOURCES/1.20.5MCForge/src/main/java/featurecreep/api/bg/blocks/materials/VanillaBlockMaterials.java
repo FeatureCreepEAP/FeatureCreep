@@ -1,5 +1,7 @@
 package featurecreep.api.bg.blocks.materials;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class VanillaBlockMaterials {
 
 	public static VanillaBlockMaterial AIR = new VanillaBlockMaterial();

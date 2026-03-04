@@ -1,5 +1,7 @@
 package featurecreep.api.bg.items.armour;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class ArmourProtectionValuesArray {
 
 	int helmet_protection;

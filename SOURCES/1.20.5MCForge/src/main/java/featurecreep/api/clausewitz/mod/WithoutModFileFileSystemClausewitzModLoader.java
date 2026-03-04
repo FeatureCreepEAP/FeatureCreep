@@ -20,15 +20,13 @@ public class WithoutModFileFileSystemClausewitzModLoader implements ClausewitzMo
 	 */
 	public void search(FileSystem fs, String name) {
 		Map<String, ModFile> mfs = setupModFile(fs);
-		if(mfs.isEmpty()) { //Make sure its not read by another loader
+		if (mfs.isEmpty()) { // Make sure its not read by another loader
 			Mod mod = new FileSystemMod(fs);
 			mod.setName(name);
 			mods.add(mod);
 		}
 
 	}
-
-
 
 	@Override
 	public List<Mod> getMods() {
@@ -41,7 +39,7 @@ public class WithoutModFileFileSystemClausewitzModLoader implements ClausewitzMo
 		// TODO Auto-generated method stub
 		Map<String, ModFile> files = new HashMap<String, ModFile>();
 		for (String name : search.getFilenames("")) {
-			if (name.endsWith(".mod")&&!name.contains("/")) {
+			if (name.endsWith(".mod") && !name.contains("/")) {
 				ModFile fil = null;
 				try {
 					fil = ModFile.parseModFile(BasicIO.byteArrayToString(search.get(name)));
@@ -49,14 +47,14 @@ public class WithoutModFileFileSystemClausewitzModLoader implements ClausewitzMo
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			if(fil.getPath()!=null) {
-			if(fil.getPath().isEmpty()||fil.getPath().equals("/")) {
-				files.put(name, fil);
-			}
-			}else if(fil.getArchive()==null){
-				fil.setPath("");
-				files.put(name, fil);
-			}
+				if (fil.getPath() != null) {
+					if (fil.getPath().isEmpty() || fil.getPath().equals("/")) {
+						files.put(name, fil);
+					}
+				} else if (fil.getArchive() == null) {
+					fil.setPath("");
+					files.put(name, fil);
+				}
 			}
 		}
 
@@ -89,8 +87,6 @@ public class WithoutModFileFileSystemClausewitzModLoader implements ClausewitzMo
 			} else if (searchfs.has(modpath)) {
 				return searchfs.createSubFileSystem(modpath);
 			}
-
-		
 
 		}
 		return null;

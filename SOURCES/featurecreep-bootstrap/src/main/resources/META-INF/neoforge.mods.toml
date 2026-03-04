@@ -3,12 +3,16 @@ modLoader="javafml" #mandatory
 
 
 license="Public Domain"
-
+loaderVersion="*"
 
 [[mods]] #mandatory
 
 # The modid of the mod
 modId="featurecreep" #mandatory
+
+
+[[mixins]]
+config="featurecreep.mixins.json"
 
 version="5am0" #mandatory
 

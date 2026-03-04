@@ -28,19 +28,17 @@ public class FileSystemClausewitzModLoader implements ClausewitzModLoader<FileSy
 		for (Map.Entry<String, ModFile> entry : mfs.entrySet()) {
 			String path = entry.getKey();
 			ModFile file = entry.getValue();
-			FileSystem fs = getFileSystem(searchfs ,path, file);
-			String name = getName(file,path);
-		if(fs!=null) {
-			Mod mod = new FileSystemMod(fs,file);
-			mod.setName(name);
-			mods.add(mod);
-		}
-		
+			FileSystem fs = getFileSystem(searchfs, path, file);
+			String name = getName(file, path);
+			if (fs != null) {
+				Mod mod = new FileSystemMod(fs, file);
+				mod.setName(name);
+				mods.add(mod);
+			}
+
 		}
 
 	}
-
-
 
 	@Override
 	public List<Mod> getMods() {

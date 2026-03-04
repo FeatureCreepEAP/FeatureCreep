@@ -7,12 +7,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.jboss.dmr.ModelNode;
 import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
 import org.jboss.modules.ResourceLoader;
 
-import featurecreep.api.bg.PackLoader;
+import featurecreep.api.dmr.ModelNode;
 import featurecreep.loader.utils.ResourceLoaderObtainer;
 
 // Only works with LOCAL files, not non-local ones. The ResourceLoader needs to be an IteratableResourceLoader
@@ -101,7 +100,7 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 			}
 		}
 
-		return new FCPackMCMeta(PackLoader.pack_version, getPackName());
+		return new FCPackMCMeta(41, getPackName());
 
 	}
 
@@ -134,5 +133,5 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 		// TODO Auto-generated method stub
 		return getStream("pack.png");
 	}
-	
+
 }

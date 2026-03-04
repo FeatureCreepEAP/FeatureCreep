@@ -3,6 +3,8 @@ package featurecreep.api.bg.items.tools;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.SwordItem;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCSword extends SwordItem implements ToolsAPI<FCSword> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();

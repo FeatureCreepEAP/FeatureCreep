@@ -34,6 +34,7 @@
               <Can-Redefine-Classes>true</Can-Redefine-Classes>
               <Can-Retransform-Classes>true</Can-Retransform-Classes>
               <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+              <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
             </manifestEntries>
           </archive>
         </configuration>
@@ -124,7 +125,7 @@
     <repository>
       <id>TLauncher</id>
       <name>TLauncher</name>
-      <url>http://res.tlauncher.org</url>
+      <url>https://res.tlauncher.org</url>
     </repository>  
        <repository>
       <id>NeoForge</id>
@@ -146,20 +147,20 @@
     
     
     
+                    <repository>
+      <id>jitpack</id>
+      <name>jitpack</name>
+      <url>https://jitpack.io/</url>
+    </repository>
+    
+    
+    
+    
+    
   </repositories>
  
   <dependencies>
  
- 	
- 	
- 	 	 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>featurecreep-api</artifactId>
-    <version>5am3</version>
-</dependency>
- 	
- 	
  	
  	
  	      <!-- Do not include these in fat jar -->
@@ -579,7 +580,7 @@
 <dependency>
     <groupId>com.asbestosstar</groupId>
     <artifactId>featurecreep-loader</artifactId>
-    <version>5-pre2</version>
+    <version>6.0.0-am2</version>
 </dependency>
  	
 
@@ -589,8 +590,32 @@
 <dependency>
     <groupId>com.asbestosstar</groupId>
     <artifactId>featurecreep-api</artifactId>
-    <version>5am3</version>
+    <version>6.0.0-am3</version>
 </dependency>
+ 	
+ 	
+ 	
+ 	 	 	 	<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>featurecreep-bootstrap</artifactId>
+    <version>0.0.2.9</version>
+</dependency>
+ 	
+ 	
+ 	
+<!-- Source: https://mvnrepository.com/artifact/com.github.vincentzhang96/DDS4J -->
+<dependency>
+    <groupId>com.github.vincentzhang96</groupId>
+    <artifactId>DDS4J</artifactId>
+    <version>1.0.2</version>
+</dependency>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
  	
  	
  	

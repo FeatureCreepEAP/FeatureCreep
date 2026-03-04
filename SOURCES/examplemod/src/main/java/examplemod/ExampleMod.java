@@ -1,173 +1,275 @@
 package examplemod;
 
-import org.jboss.logging.Logger.Level;
-
-import featurecreep.FeatureCreep;
-import featurecreep.api.bg.blocks.FCBlock;
-import featurecreep.api.bg.blocks.FCOre;
-import featurecreep.api.bg.blocks.FCSingleSidedOre;
-import featurecreep.api.bg.blocks.SingleSidedBlock;
-import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
-import featurecreep.api.bg.blocks.drop.BlockDropArrayObjects;
-import featurecreep.api.bg.blocks.materials.VanillaBlockMaterials;
-import featurecreep.api.bg.craftingzone.CraftingZone;
-import featurecreep.api.bg.items.FCItem;
-import featurecreep.api.bg.items.armour.ArmourProtectionValuesArray;
-import featurecreep.api.bg.items.armour.FCArmour;
-import featurecreep.api.bg.items.armour.FCArmourMaterial;
-import featurecreep.api.bg.items.armour.FCArmourSlots;
-import featurecreep.api.bg.items.datafied.dmr.FCItemAsDMR;
-import featurecreep.api.bg.items.tools.FCAxe;
-import featurecreep.api.bg.items.tools.FCHoe;
-import featurecreep.api.bg.items.tools.FCPickaxe;
-import featurecreep.api.bg.items.tools.FCShovel;
-import featurecreep.api.bg.items.tools.FCSword;
-import featurecreep.api.bg.items.tools.FCToolMaterial;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCAxeAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCHoeAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCPickaxeAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCShovelAsDMR;
-import featurecreep.api.bg.items.tools.datafied.dmr.FCSwordAsDMR;
-import featurecreep.api.bg.registries.DatafiedObjectRegistration;
-import featurecreep.api.bg.registries.FCRegistries;
-import featurecreep.api.bg.tooltypes.ToolTypes;
-import featurecreep.api.bg.ui.FCCreativeTabs;
-import featurecreep.api.soundeffects.VanillaSoundEffects;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.food.Foods;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorItem.Type;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BoatItem;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.MinecartItem;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
 
 public class ExampleMod {
 
+    public static final String MODID = "example";
 
+    /* ---------------------------------------------------------
+       BASIC ITEMS
+    ---------------------------------------------------------- */
 
-public static FCItem EXAMPLE_ITEM = new FCItem(4000, "example", "example_item", FCCreativeTabs.MISC);
-	public static FCItem EXAMPLE_ITEM_2 = new FCItem(4001, "example", "example_item_2", FCCreativeTabs.COMBAT);
+    public static final Item EXAMPLE_ITEM = new Item(new Item.Properties());
+    public static final Item EXAMPLE_ITEM_2 = new Item(new Item.Properties());
+    public static final Item EXAMPLE_GEM = new Item(new Item.Properties());
+    public static final Item EXAMPLE_STICK = new Item(new Item.Properties());
+    public static final Item EXAMPLE_FOOD = new Item(new Item.Properties().food(Foods.APPLE));
 
-	
-	
-	
-	
-	public static FCItemAsDMR DMR_EXAMPLE = new FCItemAsDMR(4002, "example", "dmr_example", FCCreativeTabs.MATERIALS);
-	public static FCItemAsDMR DMR_BINARY_EXAMPLE = new FCItemAsDMR(4003, "example", "dmr_binary_example", FCCreativeTabs.MATERIALS);
+    /* ---------------------------------------------------------
+       TOOL TIER
+    ---------------------------------------------------------- */
 
+    public static final Tier EXAMPLE_TIER = new Tier() {
+        @Override public int getUses() { return 5000; }
+        @Override public float getSpeed() { return 20.0F; }
+        @Override public float getAttackDamageBonus() { return 8.0F; }
+        @Override public int getLevel() { return 8; }
+        @Override public int getEnchantmentValue() { return 20; }
+        @Override public Ingredient getRepairIngredient() { return Ingredient.of(EXAMPLE_ITEM); }
+    };
 
-		
-		
-	//Tools		
-	public static FCToolMaterial EXAMPLE_TOOL_MATERIAL = new FCToolMaterial(8, 5000, 20, 18, 20, EXAMPLE_ITEM);
-	public static FCPickaxe EXAMPLE_PICKAXE = new FCPickaxe(4004, "example", "example_pickaxe", FCCreativeTabs.TOOLS, EXAMPLE_TOOL_MATERIAL, 0, 0); 
-	public static FCShovel EXAMPLE_SHOVEL = new FCShovel(4005, "example", "example_shovel", FCCreativeTabs.TOOLS, EXAMPLE_TOOL_MATERIAL, 0, 0);
-	public static FCHoe EXAMPLE_HOE = new FCHoe(4006, "example", "example_hoe", FCCreativeTabs.TOOLS, EXAMPLE_TOOL_MATERIAL, 0, 0);
-	public static FCSword EXAMPLE_SWORD = new FCSword(4007, "example", "example_sword", FCCreativeTabs.COMBAT, EXAMPLE_TOOL_MATERIAL, 0, 0);
-	public static FCAxe EXAMPLE_AXE = new FCAxe(4008, "example", "example_axe", FCCreativeTabs.TOOLS, EXAMPLE_TOOL_MATERIAL, 0, 0);
+    /* ---------------------------------------------------------
+       TOOLS
+    ---------------------------------------------------------- */
 
-		
+    public static final Item EXAMPLE_PICKAXE = new PickaxeItem(EXAMPLE_TIER, 1, -2.8F, new Item.Properties());
+    public static final Item EXAMPLE_SHOVEL  = new ShovelItem(EXAMPLE_TIER, 1.5F, -3.0F, new Item.Properties());
+    public static final Item EXAMPLE_HOE     = new HoeItem(EXAMPLE_TIER, -4, 0.0F, new Item.Properties());
+    public static final Item EXAMPLE_SWORD   = new SwordItem(EXAMPLE_TIER, 3, -2.4F, new Item.Properties());
+    public static final Item EXAMPLE_AXE     = new AxeItem(EXAMPLE_TIER, 5.0F, -3.0F, new Item.Properties());
 
+    /* ---------------------------------------------------------
+       ARMOR MATERIAL
+    ---------------------------------------------------------- */
 
-	//DMR Items do not currently work as repair materials
-	public static FCToolMaterial EXAPLE_DMR_TOOL_MATERIAL = new FCToolMaterial(8, 5000, 20, 18, 20, EXAMPLE_ITEM_2);
-	public static FCPickaxeAsDMR EXAPLE_DMR_PICKAXE = new FCPickaxeAsDMR(4009, "example", "example_dmr_pickaxe", FCCreativeTabs.TOOLS, EXAPLE_DMR_TOOL_MATERIAL, 0, 0); 
-	public static FCShovelAsDMR EXAPLE_DMR_SHOVEL = new FCShovelAsDMR(4010, "example", "example_dmr_shovel", FCCreativeTabs.TOOLS, EXAPLE_DMR_TOOL_MATERIAL, 0, 0);
-	public static FCHoeAsDMR EXAPLE_DMR_HOE = new FCHoeAsDMR(4011, "example", "example_dmr_hoe", FCCreativeTabs.TOOLS, EXAPLE_DMR_TOOL_MATERIAL, 0, 0);
-	public static FCSwordAsDMR EXAPLE_DMR_SWORD = new FCSwordAsDMR(4012, "example", "example_dmr_sword", FCCreativeTabs.COMBAT, EXAPLE_DMR_TOOL_MATERIAL, 0, 0);
-	public static FCAxeAsDMR EXAPLE_DMR_AXE = new FCAxeAsDMR(4013, "example", "example_dmr_axe", FCCreativeTabs.TOOLS, EXAPLE_DMR_TOOL_MATERIAL, 0, 0);
+    public static final ArmorMaterial EXAMPLE_ARMOR_MATERIAL = new ArmorMaterial() {
 
-	
-	public static FCArmourMaterial EXAMPLE_ARMOUR = new FCArmourMaterial(10, new ArmourProtectionValuesArray(5, 10, 8, 5), 20, EXAMPLE_ITEM, "example", 2, 0, VanillaSoundEffects.ARMOUR_EQUIP);
-	public static FCArmour AMETHYST_HELMET = new FCArmour(4014, "example", "example_helmet", FCCreativeTabs.COMBAT, EXAMPLE_ARMOUR, FCArmourSlots.HELMET);
-	public static FCArmour AMETHYST_CHESTPLATE = new FCArmour(4015, "example", "example_chestplate", FCCreativeTabs.COMBAT, EXAMPLE_ARMOUR, FCArmourSlots.TUBIC);
-	public static FCArmour AMETHYST_LEGGINS = new FCArmour(4016, "example", "example_leggings", FCCreativeTabs.COMBAT, EXAMPLE_ARMOUR, FCArmourSlots.LEGGINGS);
-	public static FCArmour AMETHYST_BOOTS = new FCArmour(4017, "example", "example_boots", FCCreativeTabs.COMBAT, EXAMPLE_ARMOUR, FCArmourSlots.BOOTS);
+        @Override
+        public int getDurabilityForType(Type type) {
+            return 500;
+        }
 
-	
-	public static FCBlock EXAMPLE_BLOCK = new FCBlock(900, "example", "example_block", FCCreativeTabs.BUILDING_BLOCKS, VanillaBlockMaterials.STONE, 1, new BlockDropArrayObject[] {BlockDropArrayObjects.SELF});
-	public static SingleSidedBlock EXAMPLE_SINGLE_SIDED_BLOCK = new SingleSidedBlock(901, "example", "example_single_sided_block", FCCreativeTabs.BUILDING_BLOCKS, VanillaBlockMaterials.STONE, 1, new BlockDropArrayObject[] {BlockDropArrayObjects.SELF}); //Drops itself
-	public static FCOre EXAMPLE_ORE_BLOCK = new FCOre(902, "example", "example_ore", FCCreativeTabs.BUILDING_BLOCKS, VanillaBlockMaterials.STONE, 1, new BlockDropArrayObject[] {new BlockDropArrayObject().addDrop(EXAMPLE_ITEM).setRequiredToolType(ToolTypes.PICKAXE)}, EXAMPLE_ITEM);
-	public static FCSingleSidedOre EXAMPLE_SINGLE_SIDED_ORE_BLOCK = new FCSingleSidedOre(903, "example", "example_single_sided_ore", FCCreativeTabs.BUILDING_BLOCKS, VanillaBlockMaterials.STONE, 1, new BlockDropArrayObject[] {new BlockDropArrayObject().addDrop(EXAMPLE_ITEM).setRequiredToolType(ToolTypes.PICKAXE)}, EXAMPLE_ITEM);
+        @Override
+        public int getDefenseForType(Type type) {
+            return switch (type) {
+                case HELMET -> 5;
+                case CHESTPLATE -> 10;
+                case LEGGINGS -> 8;
+                case BOOTS -> 5;
+            };
+        }
 
-	
+        @Override public int getEnchantmentValue() { return 20; }
 
-	
-	/**
-	 * @param args
-	 */
+        @Override
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_DIAMOND;
+        }
 
-	public static void main(String[] main) {
-		// TODO Auto-generated method stub
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of(EXAMPLE_ITEM);
+        }
 
-//		 String classpath = System.getProperty("java.class.path");
-//	        String[] classPathValues = classpath.split(File.pathSeparator);
-//	        for (String classPath: classPathValues) {
-//	            System.out.println(classPath);
-//	        }
-	
-		System.out.println("EXAMPLE MOD");
-	
-	
-		
-		
-		
-		
-		
-FCRegistries.registerItem(EXAMPLE_ITEM);
-FCRegistries.registerItem(EXAMPLE_ITEM_2);
+        @Override
+        public String getName() {
+            return MODID + ":example";
+        }
 
+        @Override public float getToughness() { return 2.0F; }
+        @Override public float getKnockbackResistance() { return 0.0F; }
+    };
 
+    public static final Item EXAMPLE_HELMET     = new ArmorItem(EXAMPLE_ARMOR_MATERIAL, Type.HELMET, new Item.Properties());
+    public static final Item EXAMPLE_CHESTPLATE = new ArmorItem(EXAMPLE_ARMOR_MATERIAL, Type.CHESTPLATE, new Item.Properties());
+    public static final Item EXAMPLE_LEGGINGS   = new ArmorItem(EXAMPLE_ARMOR_MATERIAL, Type.LEGGINGS, new Item.Properties());
+    public static final Item EXAMPLE_BOOTS      = new ArmorItem(EXAMPLE_ARMOR_MATERIAL, Type.BOOTS, new Item.Properties());
 
-FCRegistries.registerItem(EXAMPLE_PICKAXE);
-FCRegistries.registerItem(EXAMPLE_SHOVEL);
-FCRegistries.registerItem(EXAMPLE_HOE);
-FCRegistries.registerItem(EXAMPLE_SWORD);
-FCRegistries.registerItem(EXAMPLE_AXE);
+    /* ---------------------------------------------------------
+       VEHICLES
+    ---------------------------------------------------------- */
 
+    public static final Item EXAMPLE_MINECART =
+            new MinecartItem(AbstractMinecart.Type.RIDEABLE, new Item.Properties().stacksTo(1));
 
+    public static final Item EXAMPLE_CHEST_MINECART =
+            new MinecartItem(AbstractMinecart.Type.CHEST, new Item.Properties().stacksTo(1));
 
-DatafiedObjectRegistration.registerDMRItem(DMR_EXAMPLE);
-DatafiedObjectRegistration.registerDMRBinaryItem(DMR_BINARY_EXAMPLE);
+    public static final Item EXAMPLE_BOAT =
+            new BoatItem(false, Boat.Type.OAK, new Item.Properties().stacksTo(1));
 
-DatafiedObjectRegistration.registerDMRItem(EXAPLE_DMR_PICKAXE);
-DatafiedObjectRegistration.registerDMRItem(EXAPLE_DMR_SHOVEL);
-DatafiedObjectRegistration.registerDMRItem(EXAPLE_DMR_HOE);
-DatafiedObjectRegistration.registerDMRItem(EXAPLE_DMR_SWORD);
-DatafiedObjectRegistration.registerDMRItem(EXAPLE_DMR_AXE);
+    public static final Item EXAMPLE_CHEST_BOAT =
+            new BoatItem(true, Boat.Type.OAK, new Item.Properties().stacksTo(1));
 
+    /* ---------------------------------------------------------
+       UTILITIES
+    ---------------------------------------------------------- */
 
+    public static final Item EXAMPLE_BUCKET =
+            new BucketItem(Fluids.EMPTY, new Item.Properties().stacksTo(16));
 
+    public static final Item EXAMPLE_FLINT_AND_STEEL =
+            new FlintAndSteelItem(new Item.Properties().durability(64));
 
+    public static final Item EXAMPLE_BOW =
+            new BowItem(new Item.Properties().durability(384));
 
+    /* ---------------------------------------------------------
+       BLOCKS
+    ---------------------------------------------------------- */
 
-FCRegistries.registerItem(AMETHYST_HELMET);
-FCRegistries.registerItem(AMETHYST_CHESTPLATE);
-FCRegistries.registerItem(AMETHYST_LEGGINS);
-FCRegistries.registerItem(AMETHYST_BOOTS);
+    public static final Block EXAMPLE_BLOCK = new Block(
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops()
+    );
 
+    public static final Block EXAMPLE_ORE_BLOCK = new DropExperienceBlock(
+            UniformInt.of(0,2),
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops()
+    );
 
+    public static final Block EXAMPLE_STAIRS =
+            new StairBlock(EXAMPLE_BLOCK.defaultBlockState(),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(3.0F)
+                            .requiresCorrectToolForDrops());
 
+    public static final Block EXAMPLE_SLAB =
+            new SlabBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0F));
 
-FCRegistries.registerBlock(EXAMPLE_BLOCK);
-FCRegistries.registerBlock(EXAMPLE_SINGLE_SIDED_BLOCK);
-FCRegistries.registerBlock(EXAMPLE_ORE_BLOCK);
-FCRegistries.registerBlock(EXAMPLE_SINGLE_SIDED_ORE_BLOCK);
+    public static final Block EXAMPLE_FENCE =
+            new FenceBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0F));
 
+    public static final Block EXAMPLE_DOOR =
+            new DoorBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(3.0F)
+                    .noOcclusion(), BlockSetType.OAK);
 
-CraftingZone.addShapedCrafting(EXAMPLE_BLOCK, 1, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM, EXAMPLE_ITEM);
-CraftingZone.addMelting(EXAMPLE_ORE_BLOCK, EXAMPLE_ITEM, 1, 1, "");
-CraftingZone.addAxeCrafting(EXAMPLE_ITEM, EXAMPLE_AXE);
-CraftingZone.addHoeCrafting(EXAMPLE_ITEM, EXAMPLE_HOE);
-CraftingZone.addPickaxeCrafting(EXAMPLE_ITEM, EXAMPLE_PICKAXE);
-CraftingZone.addShovelCrafting(EXAMPLE_ITEM, EXAMPLE_SHOVEL);
-CraftingZone.addSwordCrafting(EXAMPLE_ITEM, EXAMPLE_SWORD);
-//	 String oldclasspath = System.getProperty("java.class.path");
+    /* ---------------------------------------------------------
+       REGISTRATION
+    ---------------------------------------------------------- */
 
-//		System.out.println(oldclasspath);
+    public static void registerAll() {
 
+        /* Items */
 
-FeatureCreep.LOGGER.log(Level.WARN, "FPMBuild Is Still in Development");
+        Registry.register(BuiltInRegistries.ITEM, id("example_item"), EXAMPLE_ITEM);
+        Registry.register(BuiltInRegistries.ITEM, id("example_item_2"), EXAMPLE_ITEM_2);
+        Registry.register(BuiltInRegistries.ITEM, id("example_gem"), EXAMPLE_GEM);
+        Registry.register(BuiltInRegistries.ITEM, id("example_stick"), EXAMPLE_STICK);
+        Registry.register(BuiltInRegistries.ITEM, id("example_food"), EXAMPLE_FOOD);
 
+        Registry.register(BuiltInRegistries.ITEM, id("example_pickaxe"), EXAMPLE_PICKAXE);
+        Registry.register(BuiltInRegistries.ITEM, id("example_shovel"), EXAMPLE_SHOVEL);
+        Registry.register(BuiltInRegistries.ITEM, id("example_hoe"), EXAMPLE_HOE);
+        Registry.register(BuiltInRegistries.ITEM, id("example_sword"), EXAMPLE_SWORD);
+        Registry.register(BuiltInRegistries.ITEM, id("example_axe"), EXAMPLE_AXE);
 
+        Registry.register(BuiltInRegistries.ITEM, id("example_helmet"), EXAMPLE_HELMET);
+        Registry.register(BuiltInRegistries.ITEM, id("example_chestplate"), EXAMPLE_CHESTPLATE);
+        Registry.register(BuiltInRegistries.ITEM, id("example_leggings"), EXAMPLE_LEGGINGS);
+        Registry.register(BuiltInRegistries.ITEM, id("example_boots"), EXAMPLE_BOOTS);
 
-	}
-	
-	
-	
-	
-	
-	}
+        Registry.register(BuiltInRegistries.ITEM, id("example_minecart"), EXAMPLE_MINECART);
+        Registry.register(BuiltInRegistries.ITEM, id("example_chest_minecart"), EXAMPLE_CHEST_MINECART);
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_boat"), EXAMPLE_BOAT);
+        Registry.register(BuiltInRegistries.ITEM, id("example_chest_boat"), EXAMPLE_CHEST_BOAT);
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_bucket"), EXAMPLE_BUCKET);
+        Registry.register(BuiltInRegistries.ITEM, id("example_flint_and_steel"), EXAMPLE_FLINT_AND_STEEL);
+        Registry.register(BuiltInRegistries.ITEM, id("example_bow"), EXAMPLE_BOW);
+
+        /* Blocks */
+
+        Registry.register(BuiltInRegistries.BLOCK, id("example_block"), EXAMPLE_BLOCK);
+        Registry.register(BuiltInRegistries.BLOCK, id("example_ore"), EXAMPLE_ORE_BLOCK);
+        Registry.register(BuiltInRegistries.BLOCK, id("example_stairs"), EXAMPLE_STAIRS);
+        Registry.register(BuiltInRegistries.BLOCK, id("example_slab"), EXAMPLE_SLAB);
+        Registry.register(BuiltInRegistries.BLOCK, id("example_fence"), EXAMPLE_FENCE);
+        Registry.register(BuiltInRegistries.BLOCK, id("example_door"), EXAMPLE_DOOR);
+
+        /* Block Items */
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_block"),
+                new BlockItem(EXAMPLE_BLOCK, new Item.Properties()));
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_ore"),
+                new BlockItem(EXAMPLE_ORE_BLOCK, new Item.Properties()));
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_stairs"),
+                new BlockItem(EXAMPLE_STAIRS, new Item.Properties()));
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_slab"),
+                new BlockItem(EXAMPLE_SLAB, new Item.Properties()));
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_fence"),
+                new BlockItem(EXAMPLE_FENCE, new Item.Properties()));
+
+        Registry.register(BuiltInRegistries.ITEM, id("example_door"),
+                new BlockItem(EXAMPLE_DOOR, new Item.Properties()));
+    }
+
+    private static ResourceLocation id(String path) {
+        return new ResourceLocation(MODID, path);
+    }
+
+    /* ---------------------------------------------------------
+       ENTRYPOINT
+    ---------------------------------------------------------- */
+
+    public static void main(String[] main) {
+        System.out.println("ExampleMod loaded (Vanilla registry style)");
+        registerAll();
+    }
+}

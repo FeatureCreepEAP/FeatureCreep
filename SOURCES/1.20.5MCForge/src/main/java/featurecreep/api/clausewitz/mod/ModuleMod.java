@@ -131,7 +131,7 @@ public class ModuleMod implements Mod {
 			if (rl instanceof IterableResourceLoader) {
 				IterableResourceLoader iter = (IterableResourceLoader) rl;
 				iter.iterateResources("", true).forEachRemaining((res) -> {
-						str.add(res.getName());
+					str.add(res.getName());
 
 				});
 

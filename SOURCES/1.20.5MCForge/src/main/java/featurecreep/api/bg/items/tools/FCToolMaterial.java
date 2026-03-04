@@ -10,6 +10,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCToolMaterial implements Tier {
 
 	public int harvest;
@@ -88,7 +90,6 @@ public class FCToolMaterial implements Tier {
 		return this.getToolAttackDamage();
 	}
 
-
 	@Override
 	public int getEnchantmentValue() {
 		// TODO Auto-generated method stub
@@ -117,23 +118,22 @@ public class FCToolMaterial implements Tier {
 	@Override
 	public TagKey<Block> getIncorrectBlocksForDrops() {
 		// TODO Auto-generated method stub
-	
-		if(getToolHarvestLevel() == 0) {
-			return BlockTags.INCORRECT_FOR_GOLD_TOOL;//Prioritising butter as itll likely have more supported blocks
-		} else if(getToolHarvestLevel() == 1) {
+
+		if (getToolHarvestLevel() == 0) {
+			return BlockTags.INCORRECT_FOR_GOLD_TOOL;// Prioritising butter as itll likely have more supported blocks
+		} else if (getToolHarvestLevel() == 1) {
 			return BlockTags.INCORRECT_FOR_STONE_TOOL;
-		}else if(getToolHarvestLevel() == 2) {
+		} else if (getToolHarvestLevel() == 2) {
 			return BlockTags.INCORRECT_FOR_IRON_TOOL;
-		}else if(getToolHarvestLevel() == 3) {
+		} else if (getToolHarvestLevel() == 3) {
 			return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
-		}else if(getToolHarvestLevel() == 4) {
+		} else if (getToolHarvestLevel() == 4) {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
-		
-		
-			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;//Mine everything else for now. FC Blocks still rely on harvest level to be mined for now
-		
-				
+
+		return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;// Mine everything else for now. FC Blocks still rely on harvest
+														// level to be mined for now
+
 	}
 
 }

@@ -2,6 +2,8 @@ package featurecreep.api.bg.items.projectile;
 
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCGun extends FCBow {
 
 	public static final int TICKS_PER_SECOND = 500;

@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
  * NOT LOADING. STAY WITHIN DOCUMENTATION UNLESS YOU REALLY KNOW WHAT YOU ARE
  * DOING
  **/
+@Deprecated(forRemoval = true, since = "13")
 public class VanillaItem implements FCItemAPI<VanillaItem> {
 
 	public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();

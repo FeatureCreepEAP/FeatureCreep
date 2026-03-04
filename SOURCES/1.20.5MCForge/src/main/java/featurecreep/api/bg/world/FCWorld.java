@@ -2,6 +2,8 @@ package featurecreep.api.bg.world;
 
 import net.minecraft.world.level.Level;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCWorld {
 
 	Level world;

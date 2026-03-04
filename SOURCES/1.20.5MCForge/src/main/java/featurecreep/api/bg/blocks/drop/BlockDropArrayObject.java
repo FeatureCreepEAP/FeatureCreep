@@ -8,6 +8,8 @@ import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.tooltypes.ToolType;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class BlockDropArrayObject {
 
 	public ArrayList<Object> drop = new ArrayList<Object>();

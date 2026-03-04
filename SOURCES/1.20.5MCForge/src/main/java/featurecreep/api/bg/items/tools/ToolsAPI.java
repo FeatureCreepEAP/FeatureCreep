@@ -3,6 +3,8 @@ package featurecreep.api.bg.items.tools;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public interface ToolsAPI<T> extends FCItemAPI<T> {
 
 	public default void initialise(FCToolMaterial material, int attackDamage, int attackSpeed) {

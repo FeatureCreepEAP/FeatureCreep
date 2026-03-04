@@ -4,6 +4,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCAxe extends AxeItem implements ToolsAPI<FCAxe> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();

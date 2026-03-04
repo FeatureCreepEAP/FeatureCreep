@@ -1,9 +1,132 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>examplemod</groupId>
-  <artifactId>examplemod</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>examplemod</name>
-  <description>FeatureCreep TutorialMod
-</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>example-client-mod</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Example Client Mod</name>
+    <description>Example client-side Minecraft mod</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <minecraft.version>1.20.4</minecraft.version>
+    </properties>
+
+    <dependencies>
+
+
+        <!-- Sponge Mixin (compile only) -->
+        <dependency>
+            <groupId>net.fabricmc</groupId>
+            <artifactId>sponge-mixin</artifactId>
+            <version>0.16.5+mixin.0.8.7</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Loader (compile only) -->
+        <dependency>
+            <groupId>com.asbestosstar</groupId>
+            <artifactId>featurecreep-loader</artifactId>
+            <version>6.0.0-am0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- API -->
+        <dependency>
+            <groupId>com.asbestosstar</groupId>
+            <artifactId>featurecreep-api</artifactId>
+            <version>6.0.0-am3</version>
+        </dependency>
+
+        <!-- Bootstrap -->
+        <dependency>
+            <groupId>com.asbestosstar</groupId>
+            <artifactId>featurecreep-bootstrap</artifactId>
+            <version>0.0.2.9</version>
+        </dependency>
+
+
+<dependency>
+    <groupId>net.minecraft</groupId>
+    <artifactId>minecraft</artifactId>
+    <version>${minecraft.version}</version>
+    <classifier>client</classifier>
+    <scope>provided</scope>
+</dependency>
+
+    </dependencies>
+    
+    
+    
+    
+    
+
+    <build>
+        <plugins>
+
+            <!-- Minecraft Resolver Plugin -->
+            <plugin>
+                <groupId>com.asbestosstar</groupId>
+                <artifactId>fcdependencies-maven-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>resolve-minecraft</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>fcdependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mcVersion>${minecraft.version}</mcVersion>
+                    <side>CLIENT</side>
+<decompiler>FABRIC_CFR</decompiler>
+                </configuration>
+            </plugin>
+
+            <!-- Java Compiler -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+
+            <!-- Attach Sources -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Attach Javadoc -->
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>

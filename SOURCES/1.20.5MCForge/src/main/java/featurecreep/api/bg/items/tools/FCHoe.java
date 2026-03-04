@@ -4,6 +4,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCHoe extends HoeItem implements ToolsAPI<FCHoe> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();

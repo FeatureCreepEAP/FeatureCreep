@@ -2,6 +2,8 @@ package featurecreep.api.bg.entity;
 
 import net.minecraft.world.entity.Entity;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class VanillaEntity implements AbstractEntity {
 
 	Entity entity;

@@ -186,12 +186,12 @@ public class ModFile {
 
 		// Optionally add dependencies (if not null or empty)
 		if (dependencies != null && !dependencies.isEmpty()) {
-			sb.append("dependencies={\"").append(String.join("\""+"\n", dependencies)).append("}\n");
+			sb.append("dependencies={\"").append(String.join("\"" + "\n", dependencies)).append("}\n");
 		}
 
 		// Optionally add tags (if not null or empty)
 		if (tags != null && !tags.isEmpty()) {
-			sb.append("tags={\"").append(String.join("\""+"\n", tags)).append("}\n");
+			sb.append("tags={\"").append(String.join("\"" + "\n", tags)).append("}\n");
 		}
 
 		// Add the supported version

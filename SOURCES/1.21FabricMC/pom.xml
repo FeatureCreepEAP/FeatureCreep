@@ -34,6 +34,7 @@
               <Can-Redefine-Classes>true</Can-Redefine-Classes>
               <Can-Retransform-Classes>true</Can-Retransform-Classes>
               <Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+                            <MixinConfigs>featurecreep.mixins.json</MixinConfigs>
             </manifestEntries>
           </archive>
         </configuration>

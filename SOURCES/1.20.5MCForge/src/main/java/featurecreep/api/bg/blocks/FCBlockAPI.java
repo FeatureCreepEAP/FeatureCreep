@@ -3,24 +3,23 @@ package featurecreep.api.bg.blocks;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.jboss.dmr.ModelNode;
-
 import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.VersionDependentContstants;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
-import featurecreep.api.bg.blocknitem.TextureInfo;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
+import featurecreep.api.dmr.ModelNode;
 import featurecreep.api.io.BasicIO;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
+@Deprecated(forRemoval = true, since = "13")
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 	@Override
@@ -227,11 +226,6 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	};
 
 	@Override
-	public default TextureInfo appendGetTextureInfo() {
-		return null;
-	}; // Needa Actually implement this
-
-	@Override
 	public default void appendLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block,
 			int side) {
 	};
@@ -270,18 +264,13 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 	}
 
 	@Override
-	public default TextureInfo executeGetTextureInfo() {
-		return appendGetTextureInfo();// On DangerZone actually try to return correct
-	}
-
-	@Override
 	public default void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block,
 			int side) {
 		get().asItem().mineBlock(toStack(1), worl.get(), block.get().defaultBlockState(), pos, p.get());
 	}
 
 	@Override
-	public default void executeOnFoodEaten(AbstractEntity e) {//TODO fix this method
+	public default void executeOnFoodEaten(AbstractEntity e) {// TODO fix this method
 		LivingEntity ent;
 		if (e instanceof LivingEntity) {
 			ent = (LivingEntity) e;

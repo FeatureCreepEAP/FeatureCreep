@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.7",
+  "package": "asbestosstar.sm.minecraft",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "asbestosstar.bootstrap.sm.SpongeMixinConfig",
+  "mixins": [
+  ],
+    "injectors": {
+    "defaultRequire": 1
+  }
+}
+

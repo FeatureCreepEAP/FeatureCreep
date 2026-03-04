@@ -3,7 +3,7 @@ modLoader="javafml" #mandatory
 
 
 license="Public Domain"
-
+loaderVersion="*"
 
 [[mods]] #mandatory
 

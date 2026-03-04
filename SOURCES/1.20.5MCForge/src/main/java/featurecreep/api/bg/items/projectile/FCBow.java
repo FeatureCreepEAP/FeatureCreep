@@ -5,6 +5,7 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCBow extends BowItem implements FCItemAPI<FCBow> {
 
 	public featurecreep.api.bg.items.ItemFieldHolder holder = new featurecreep.api.bg.items.ItemFieldHolder();
