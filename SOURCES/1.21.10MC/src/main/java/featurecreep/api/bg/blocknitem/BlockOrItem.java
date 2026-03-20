@@ -1,19 +1,16 @@
 package featurecreep.api.bg.blocknitem;
 
-import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.items.datafied.DatafiedItem;
-import featurecreep.api.bg.registries.FCRegistries;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
-import featurecreep.api.platform.super_.SuperLoader;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
+@Deprecated(forRemoval = true, since = "13")
 public interface BlockOrItem<T> {
 
 	public default void initialise(int id, String modid, String name, UnifiedItemGroupGetter group) {
@@ -21,20 +18,7 @@ public interface BlockOrItem<T> {
 		setUnlocName(name);
 		setDefaultCreativeTab(group.get());
 		setNumberID(id);
-		if (FeatureCreep.debug_mode) {
-			System.out.println("Initalising " + getFCRegistryName());
-		}
-		if (this instanceof DatafiedItem) {
-		} else {// Need to rewrite Datafiedto allow for ItemGroups and Ingredients and
-				// preregister
-			if (FeatureCreep.super_loader.equals(SuperLoader.MINECRAFTFORGE)) {
-				if (this instanceof FCItemAPI item) {
-					FCRegistries.registerItem(item);
-				} else {
-					FCRegistries.registerBlock((FCBlockAPI) this);
-				}
-			}
-		}
+
 	}
 
 	public void registerModels();
@@ -101,8 +85,6 @@ public interface BlockOrItem<T> {
 
 	public boolean appendAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount);
 
-	public TextureInfo appendGetTextureInfo();
-
 	public void appendLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
 
 	public void appendOnFoodEaten(AbstractEntity e);
@@ -119,8 +101,6 @@ public interface BlockOrItem<T> {
 	public boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl);
 
 	public boolean executeAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount);
-
-	public TextureInfo executeGetTextureInfo();
 
 	public void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
 

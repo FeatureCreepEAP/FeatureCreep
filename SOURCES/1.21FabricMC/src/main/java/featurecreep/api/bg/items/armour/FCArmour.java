@@ -5,6 +5,8 @@ import featurecreep.api.bg.items.ItemFieldHolder;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.ArmorItem;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCArmour extends ArmorItem implements FCItemAPI<FCArmour> {
 	public ItemFieldHolder holder = new ItemFieldHolder();
 	public FCArmourMaterial fcmaterial;

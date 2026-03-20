@@ -7,14 +7,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.jboss.dmr.ModelNode;
 import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
 import org.jboss.modules.ResourceLoader;
 
-import featurecreep.api.bg.PackLoader;
+import featurecreep.api.dmr.ModelNode;
 import featurecreep.loader.utils.ResourceLoaderObtainer;
-import net.minecraft.server.packs.metadata.MetadataSectionType;
 
 // Only works with LOCAL files, not non-local ones. The ResourceLoader needs to be an IteratableResourceLoader
 public class ModuleVainillaResourcePack implements VainillaResourcePack {
@@ -102,7 +100,7 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 			}
 		}
 
-		return new FCPackMCMeta(PackLoader.pack_version, getPackName());
+		return new FCPackMCMeta(41, getPackName());
 
 	}
 
@@ -136,10 +134,4 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 		return getStream("pack.png");
 	}
 
-	@Override
-	public <T> T getMetadataSection(MetadataSectionType<T> var1) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

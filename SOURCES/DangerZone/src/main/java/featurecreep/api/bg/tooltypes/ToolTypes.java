@@ -1,12 +1,11 @@
 package featurecreep.api.bg.tooltypes;
 
-import org.jboss.dmr.ModelNode;
-
 import dangerzone.items.ItemAxe;
 import dangerzone.items.ItemHoe;
 import dangerzone.items.ItemPickAxe;
 import dangerzone.items.ItemShovel;
 import dangerzone.items.ItemSword;
+import featurecreep.api.dmr.ModelNode;
 
 public class ToolTypes {
 

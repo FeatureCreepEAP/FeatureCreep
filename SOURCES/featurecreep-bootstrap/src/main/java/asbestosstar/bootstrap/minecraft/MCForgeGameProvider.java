@@ -6,7 +6,6 @@ import featurecreep.loader.ExecutionSide;
 
 public class MCForgeGameProvider extends MinecraftGameProvider {
 
-
 	@Override
 	public ExecutionSide getExecutionSide() {
 		// Forge-compatible way to detect logical side (works in both dedicated server
@@ -17,7 +16,6 @@ public class MCForgeGameProvider extends MinecraftGameProvider {
 			return ExecutionSide.SERVER;
 		}
 	}
-
 
 	@Override
 	public boolean isSuperLoaderModZip(File zip) {
@@ -49,6 +47,5 @@ public class MCForgeGameProvider extends MinecraftGameProvider {
 			return false;
 		}
 	}
-
 
 }

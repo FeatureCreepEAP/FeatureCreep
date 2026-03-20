@@ -8,9 +8,8 @@ import featurecreep.api.bg.blocks.FCBlockPos;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.world.FCWorld;
-import featurecreep.api.io.BasicIO;
-import featurecreep.api.bg.PackLoader;
 
+@Deprecated(forRemoval = true, since = "13")
 public interface FCItemAPI<T> extends BlockOrItem<T> {
 
 	@Override

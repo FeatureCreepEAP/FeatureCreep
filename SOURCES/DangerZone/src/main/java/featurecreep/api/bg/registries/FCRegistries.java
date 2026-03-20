@@ -2,58 +2,51 @@ package featurecreep.api.bg.registries;
 
 import java.util.ArrayList;
 
-import featurecreep.FeatureCreep;
+import dangerzone.blocks.Blocks;
+import dangerzone.items.Items;
 import featurecreep.api.bg.blocks.FCBlockAPI;
-import featurecreep.api.bg.blocks.vanilla.VanillaBlock;
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.items.datafied.dmr.DMRItem;
-import featurecreep.api.bg.items.vanilla.VanillaItem;
 
 public class FCRegistries {
 
 	public static ArrayList<FCBlockAPI> BLOCKS = new ArrayList<FCBlockAPI>();
 	public static ArrayList<FCItemAPI> ITEMS = new ArrayList<FCItemAPI>();
 
-	// https://github.com/Trikzon/Snow-Variants/blob/1.13.2/src/main/java/trikzon/snowvariants/init/ModBlocks.java
-
+	/**
+	 * Registers a block and automatically registers a corresponding BlockItem.
+	 */
 	public static FCBlockAPI registerBlock(FCBlockAPI block) {
-		if (!GameRegistries.BlockKeyExistsInRegistry(block.getFCRegistryName())) {
+		String registryName = block.getFCRegistryName();
 
-			if (block instanceof VanillaBlock) {
-				VanillaRegistries.registerBlock((VanillaBlock) block);
-			} else { // When Dataified Blocks come out we need to make a similar trap
-				UniversalRegistryGettersAndSetters.registerBlock(block);
-				BLOCKS.add(block);
-				GlobalRegistries.BLOCKS.add(block);
-			}
+		// Check if block already exists in DangerZone registry
+		if (Blocks.findByName(registryName) == 0) { // findByName returns 0 if not found
+
+			// Register custom blocks
+			Blocks.registerBlock(block.get());
+			BLOCKS.add(block);
 
 		} else {
-			if (FeatureCreep.debug_mode) {
-				System.out.println("The following block already exists in the Registry." + block.getFCRegistryName());
-			}
+			System.out.println("The following block already exists in the Registry: " + registryName);
+
 		}
 		return block;
 	}
 
+	/**
+	 * Registers an item directly.
+	 */
 	public static FCItemAPI registerItem(FCItemAPI item) {
+		String registryName = item.getFCRegistryName();
 
-		if (!GameRegistries.ItemKeyExistsInRegistry(item.getFCRegistryName())) {
+		// Check if item already exists in DangerZone registry
+		if (Items.findByName(registryName) == 0) { // findByName returns 0 if not found
 
-			if (item instanceof VanillaItem) {
-				VanillaRegistries.registerItem((VanillaItem) item);
-			} else if (item instanceof DMRItem) // When other datafied come out I need to do for those to
-			{
-				DatafiedObjectRegistration.registerDMRItem((DMRItem) item);
-			} else { // When Dataified Blocks come out we need to make a similar trap
-				UniversalRegistryGettersAndSetters.registerItem(item);
-				ITEMS.add(item);
-				GlobalRegistries.ITEMS.add(item);
-			}
+			Items.registerItem(item.get());
+			ITEMS.add(item);
 
 		} else {
-			if (FeatureCreep.debug_mode) {
-				System.out.println("The following item already exists in the Registry." + item.getFCRegistryName());
-			}
+			System.out.println("The following item already exists in the Registry: " + registryName);
+
 		}
 		return item;
 	}

@@ -1,13 +1,11 @@
 package featurecreep.api.bg.blocks;
 
+import featurecreep.api.annotations.Nullable;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.player.Player;
@@ -18,9 +16,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import io.smallrye.common.constraint.Nullable;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCOre extends DropExperienceBlock implements FCBlockAPI<FCOre> {
 
 	public BlockFieldHolder holder = new BlockFieldHolder();
@@ -34,15 +31,15 @@ public class FCOre extends DropExperienceBlock implements FCBlockAPI<FCOre> {
 
 	public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops, Object ore_material) {
-		super(ConstantInt.of(0), Properties.of().destroyTime(strength / 10f).setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(),ResourceLocation.fromNamespaceAndPath(modid,name)) ));// Need to add material again
-																							// soon
+		super(ConstantInt.of(0), Properties.of().destroyTime(strength / 10f));// Need to add material again
+																				// soon
 		initialise(id, modid, name, group, material, strength, drops);
 		resource = ore_material;
 	}
 
 	@Override
-	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity,
-			ItemStack stack) {
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state,
+			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		player.awardStat(Stats.BLOCK_MINED.get(this));
 		player.causeFoodExhaustion(0.005f);
 

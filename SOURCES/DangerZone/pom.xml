@@ -1,70 +1,231 @@
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>DangerZone</groupId>
-  <artifactId>DangerZone</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
- <build>
-  <plugins>
-    <!-- other plugins omitted -->
-    <plugin>
-      <artifactId>maven-jar-plugin</artifactId>
-      <version>2.4</version>
-      <configuration>
-        <archive>
-          <manifestEntries>
-            <Premain-Class>asbestosstar.FCAgent</Premain-Class>
-                        <Can-Retransform-Classes>true</Can-Retransform-Classes>
-            <Can-Redefine-Classes>true</Can-Redefine-Classes>
-          </manifestEntries>
-        </archive>
-      </configuration> 
-    </plugin>
-  </plugins>
-</build>
- <properties>
- 	<maven.compiler.target>1.8</maven.compiler.target>
- 	 	<maven.compiler.source>1.8</maven.compiler.source>
- 	 	<fcdependencies.dir>${user.home}/fcdependencies/DangerZone</fcdependencies.dir>  
- </properties>
- <dependencies>
- 	<dependency>
- 		<groupId>org.javassist</groupId>
- 		<artifactId>javassist</artifactId>
- 		<version>3.30.2-GA</version>
- 	</dependency>
- 	
- 	             <!-- 添加本地 JAR 文件作为依赖 -->  
-        <dependency> 
-            <groupId>DangerZone</groupId>  
-            <artifactId>DangerZone</artifactId>  
-            <version>1.0.0</version> <!-- 可以是任意版本号，但最好是有意义的 -->  
-            <scope>system</scope>  
-            <systemPath>${fcdependencies.dir}/DangerZone.jar</systemPath>  
-        </dependency> 
-        
-        
-        
-        
-        
-        
-         <!-- Solo compilar -->  
-  	<dependency>
-  		<groupId>org.apache.logging.log4j</groupId>
-  		<artifactId>log4j-core</artifactId>
-  		<version>2.22.1</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.logging.log4j</groupId>
-  		<artifactId>log4j-api</artifactId>
-  		<version>2.22.1</version>
-  	</dependency>
-        
-        
-        
- 	
- </dependencies>
- 
- 
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.asbestosstar</groupId>
+	<artifactId>featurecreepdz</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
- 
+
+	<properties>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<!-- Directory to store embedded JARs -->
+		<embedded.jars.dir>${project.build.outputDirectory}/jars</embedded.jars.dir>
+		<dangerzone.version>2.7</dangerzone.version>
+	</properties>
+
+
+	<build>
+		<plugins>
+			<!-- other plugins omitted -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Premain-Class>
+								asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+							<Agent-Class>
+								asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+							<Can-Redefine-Classes>true</Can-Redefine-Classes>
+							<Can-Retransform-Classes>true</Can-Retransform-Classes>
+							<Automatic-Module-Name>featurecreep.bootstrap</Automatic-Module-Name>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+
+			<!-- Minecraft Resolver Plugin -->
+			<plugin>
+				<groupId>com.asbestosstar</groupId>
+				<artifactId>fcdependencies-maven-plugin</artifactId>
+				<version>0.0.1</version>
+				<executions>
+					<execution>
+						<id>resolve-dangerzone</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>fcdependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+               <app>dangerzone</app>
+                    <version>${dangerzone.version}</version>
+					<decompiler>FABRIC_CFR</decompiler>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.5.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<!-- Exclude entire groups -->
+										<exclude>org.ow2.asm:*</exclude>
+										<exclude>com.mojang:*</exclude>
+										<exclude>io.netty:*</exclude>
+										<exclude>org.apache.commons:*</exclude>
+										<exclude>org.apache.httpcomponents:*</exclude>
+										<exclude>org.apache.logging.log4j:*</exclude>
+										<exclude>net.java.dev.jna:*</exclude>
+										<exclude>org.lwjgl:*</exclude>
+										<exclude>net.minecraftforge:*</exclude>
+										<exclude>cpw.mods:*</exclude>
+
+										<!-- Exclude individual artifacts -->
+										<exclude>ca.weblite:java-objc-bridge</exclude>
+										<exclude>com.github.oshi:oshi-core</exclude>
+										<exclude>com.google.guava:failureaccess</exclude>
+										<exclude>com.google.code.gson:gson</exclude>
+										<exclude>com.ibm.icu:icu4j</exclude>
+										<exclude>commons-codec:commons-codec</exclude>
+										<exclude>commons-io:commons-io</exclude>
+										<exclude>commons-logging:commons-logging</exclude>
+										<exclude>it.unimi.dsi:fastutil</exclude>
+										<exclude>net.sf.jopt-simple:jopt-simple</exclude>
+										<exclude>org.jcraft:jorbis</exclude>
+										<exclude>org.joml:joml</exclude>
+									</excludes>
+								</filter>
+							</filters>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Premain-Class>
+											asbestosstar.bootstrap.FeatureCreepAgent</Premain-Class>
+										<Agent-Class>
+											asbestosstar.bootstrap.FeatureCreepAgent</Agent-Class>
+										<Can-Redefine-Classes>true</Can-Redefine-Classes>
+										<Can-Retransform-Classes>true</Can-Retransform-Classes>
+										<Automatic-Module-Name>
+											featurecreep.bootstrap</Automatic-Module-Name>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+		</plugins>
+	</build>
+
+
+	<repositories>
+		<repository>
+			<id>MCForge</id>
+			<name>MCForge</name>
+			<url>https://maven.minecraftforge.net/</url>
+		</repository>
+		<repository>
+			<id>Minecraft</id>
+			<name>Minecraft</name>
+			<url>https://libraries.minecraft.net</url>
+		</repository>
+		<repository>
+			<id>TLauncher</id>
+			<name>TLauncher</name>
+			<url>https://res.tlauncher.org</url>
+		</repository>
+		<repository>
+			<id>NeoForge</id>
+			<name>NeoForge</name>
+			<url>https://maven.neoforged.net/</url>
+		</repository>
+
+
+		<repository>
+			<id>FabricMC</id>
+			<name>FabricMC</name>
+			<url>https://maven.fabricmc.net/</url>
+		</repository>
+
+
+		<repository>
+			<id>jitpack</id>
+			<name>jitpack</name>
+			<url>https://jitpack.io/</url>
+		</repository>
+
+
+	</repositories>
+
+	<dependencies>
+
+		
+
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>5.14.0</version>
+		</dependency>
+	
+
+
+
+		<dependency>
+			<groupId>net.dangerzonegame</groupId>
+			<artifactId>dangerzone</artifactId>
+			<version>${dangerzone.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+
+
+		<!-- End of Do not include these in fat jar -->
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>featurecreep-loader</artifactId>
+			<version>6.0.0-am2</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>featurecreep-api</artifactId>
+			<version>6.0.0-am3</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>featurecreep-bootstrap</artifactId>
+			<version>0.0.2.9</version>
+		</dependency>
+
+
+		<!-- Source:
+		https://mvnrepository.com/artifact/com.github.vincentzhang96/DDS4J -->
+		<dependency>
+			<groupId>com.github.vincentzhang96</groupId>
+			<artifactId>DDS4J</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+
+	</dependencies>
 </project>

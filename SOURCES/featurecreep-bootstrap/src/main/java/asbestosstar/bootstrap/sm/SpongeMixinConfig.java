@@ -11,12 +11,9 @@ import asbestosstar.bootstrap.minecraft.MinecraftCommonStartup;
 
 public class SpongeMixinConfig implements IMixinConfigPlugin {
 
-	
-
 	static {
 		MinecraftCommonStartup.start();
 	}
-
 
 	@Override
 	public void onLoad(String mixinPackage) {

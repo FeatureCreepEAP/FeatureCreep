@@ -1,12 +1,10 @@
 package featurecreep.api.bg.items.tools;
 
-import dangerzone.blocks.Block;
 import dangerzone.items.Item;
-import featurecreep.api.bg.blocks.FCBlock;
 import featurecreep.api.bg.blocks.FCBlockAPI;
-import featurecreep.api.bg.blocks.FCOre;
-import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.items.FCItemAPI;
+
+@Deprecated(forRemoval = true, since = "13")
 
 public class FCToolMaterial {
 

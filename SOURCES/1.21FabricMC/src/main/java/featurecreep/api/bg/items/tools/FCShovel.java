@@ -3,6 +3,8 @@ package featurecreep.api.bg.items.tools;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.ShovelItem;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCShovel extends ShovelItem implements ToolsAPI<FCShovel> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();

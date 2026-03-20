@@ -15,7 +15,7 @@ import featurecreep.loader.ExecutionSide;
 import featurecreep.loader.GameProvider;
 import featurecreep.loader.GetPackagesFromClassLoader;
 
-public class MinecraftGameProvider  implements GameProvider {
+public class MinecraftGameProvider implements GameProvider {
 
 	public static Set<String> packages_needed = new HashSet<String>();
 	static {
@@ -101,14 +101,14 @@ public class MinecraftGameProvider  implements GameProvider {
 
 	@Override
 	public ExecutionSide getExecutionSide() {
-	    ClassLoader cl = Thread.currentThread().getContextClassLoader();
-	    if (cl == null) {
-	        cl = this.getClass().getClassLoader();
-	    }
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (cl == null) {
+			cl = this.getClass().getClassLoader();
+		}
 
-	    boolean clientPresent = cl.getResource("net/minecraft/client/Minecraft.class") != null;
+		boolean clientPresent = cl.getResource("net/minecraft/client/Minecraft.class") != null;
 
-	    return clientPresent ? ExecutionSide.CLIENT : ExecutionSide.SERVER;
+		return clientPresent ? ExecutionSide.CLIENT : ExecutionSide.SERVER;
 	}
 
 	@Override
@@ -119,17 +119,13 @@ public class MinecraftGameProvider  implements GameProvider {
 
 	@Override
 	public boolean isSuperLoaderModZip(File zip) {
-		return false;//Override in providers for Super Loader
+		return false;// Override in providers for Super Loader
 	}
 
 	@Override
 	public boolean isSuperLoaderModFolder(File folder) {
 		// TODO Auto-generated method stub
-		return false;//Override in providers for Super Loader
+		return false;// Override in providers for Super Loader
 	}
 
-	
-	
-	
-	
 }

@@ -1,7 +1,8 @@
 package featurecreep.api.bg.ui;
 
-import featurecreep.api.bg.registries.GlobalRegistries;
 import featurecreep.api.bg.ui.tabs.vanilla.VanillaCreativeTab;
+
+@Deprecated(forRemoval = true, since = "13")
 
 public class FCCreativeTabs {
 
@@ -15,21 +16,5 @@ public class FCCreativeTabs {
 	public static VanillaCreativeTab REDSTONE = new VanillaCreativeTab("REDSTONE");
 	public static VanillaCreativeTab TOOLS = new VanillaCreativeTab("TOOLS");
 	public static VanillaCreativeTab TRANSPORTATION = new VanillaCreativeTab("TRANSPORTATION");
-
-	public static void onInitialise() {
-		// TODO Auto-generated method stub
-
-		GlobalRegistries.ITEMGROUPS.add(BREWING);
-		GlobalRegistries.ITEMGROUPS.add(BUILDING_BLOCKS);
-		GlobalRegistries.ITEMGROUPS.add(COMBAT);
-		GlobalRegistries.ITEMGROUPS.add(DECORATIONS);
-		GlobalRegistries.ITEMGROUPS.add(FOOD);
-		GlobalRegistries.ITEMGROUPS.add(MATERIALS);
-		GlobalRegistries.ITEMGROUPS.add(MISC);
-		GlobalRegistries.ITEMGROUPS.add(REDSTONE);
-		GlobalRegistries.ITEMGROUPS.add(TOOLS);
-		GlobalRegistries.ITEMGROUPS.add(TRANSPORTATION);
-
-	}
 
 }

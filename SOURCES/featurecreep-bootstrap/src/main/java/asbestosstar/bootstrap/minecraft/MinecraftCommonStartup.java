@@ -32,11 +32,7 @@ public class MinecraftCommonStartup {
 		BootstrapCommon.loader.addTransformer(new GameInjections());
 		System.out.println("Getting Premains");
 		BootstrapCommon.loader.PremainAgents();
-		
-		
-		
-		
-		
+
 	}
 
 	private static GameProvider getGameProvider() {

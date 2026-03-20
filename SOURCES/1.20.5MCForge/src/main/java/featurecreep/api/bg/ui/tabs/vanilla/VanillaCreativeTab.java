@@ -59,7 +59,7 @@ public class VanillaCreativeTab implements UnifiedItemGroupGetter {
 		}
 
 		ResourceKey<CreativeModeTab> key = ResourceKey.create(Registries.CREATIVE_MODE_TAB,
-				ResourceLocation.fromNamespaceAndPath("minecraft", tabId));
+				ResourceLocation.tryBuild("minecraft", tabId));
 		return BuiltInRegistries.CREATIVE_MODE_TAB.get(key);
 	}
 

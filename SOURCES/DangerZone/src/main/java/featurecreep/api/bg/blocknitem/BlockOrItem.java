@@ -10,12 +10,13 @@ import featurecreep.api.bg.ui.FCCreativeTab;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 
+@Deprecated(forRemoval = true, since = "13")
 public interface BlockOrItem<T> {
 
 	public default void initialise(int id, String modid, String name, UnifiedItemGroupGetter group) {
 		setModId(modid);
 		setUnlocName(name);
-		setDefaultCreativeTab(group.get());
+		// setDefaultCreativeTab(group.get());
 		setNumberID(id);
 		System.out.println("Initalising " + getFCRegistryName());
 	}

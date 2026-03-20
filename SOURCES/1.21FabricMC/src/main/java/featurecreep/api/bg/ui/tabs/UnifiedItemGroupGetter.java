@@ -2,6 +2,8 @@ package featurecreep.api.bg.ui.tabs;
 
 import net.minecraft.world.item.CreativeModeTab;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public interface UnifiedItemGroupGetter {
 
 	public CreativeModeTab get();

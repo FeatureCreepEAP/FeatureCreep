@@ -3,24 +3,19 @@ package featurecreep.api.bg.blocks;
 import java.util.ArrayList;
 
 import dangerzone.DangerZone;
-import dangerzone.InventoryContainer;
 import dangerzone.Player;
-import dangerzone.blocks.Block;
 import dangerzone.blocks.BlockOre;
-import dangerzone.entities.EntityBlockItem;
-import dangerzone.items.Item;
 import dangerzone.rendering.StitchedTexture;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
-import featurecreep.api.bg.blocks.drop.BlockDropArrayObjects;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
 import featurecreep.api.bg.items.vanilla.VanillaItem;
-import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 import slick.Texture;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCOre extends BlockOre implements FCBlockAPI<FCOre> {
 
 	public BlockFieldHolder holder = new BlockFieldHolder();

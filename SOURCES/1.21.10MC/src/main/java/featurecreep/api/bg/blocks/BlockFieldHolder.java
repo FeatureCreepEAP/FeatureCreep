@@ -4,6 +4,7 @@ import featurecreep.api.bg.blocknitem.BlocknItemFieldHolder;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 
+@Deprecated(forRemoval = true, since = "13")
 public class BlockFieldHolder extends BlocknItemFieldHolder {
 
 	public boolean single_sided = false;

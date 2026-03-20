@@ -2,6 +2,8 @@ package featurecreep.api.bg.entity;
 
 import dangerzone.Player;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class VanillaPlayer extends Player implements AbstractPlayer {
 
 	Player entity;

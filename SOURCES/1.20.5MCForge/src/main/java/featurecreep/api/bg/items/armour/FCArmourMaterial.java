@@ -123,14 +123,14 @@ public class FCArmourMaterial {
 
 	public Holder<ArmorMaterial> get() {
 		Holder<SoundEvent> vainilla_sound = this.sound.getEntry();
-		List<Layer> $$7 = List.of(new Layer(ResourceLocation.parse(name)));
+		List<Layer> $$7 = List.of(new Layer(ResourceLocation.tryParse(name)));
 		EnumMap<Type, Integer> $$8 = new EnumMap<Type, Integer>(Type.class);
 		for (Type $$9 : Type.values()) {
 			$$8.put($$9, this.getProtectionAmount($$9.getSlot()));
 		}
 		ArmorMaterial mat = new ArmorMaterial($$8, getFCEnchantability(), vainilla_sound, () -> this.repair, $$7,
 				(float) this.getFCToughness(), (float) this.getFCKnockBackResistance());
-		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.parse(name), mat);
+		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.tryParse(name), mat);
 
 	}
 

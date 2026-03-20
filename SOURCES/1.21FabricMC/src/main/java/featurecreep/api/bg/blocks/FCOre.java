@@ -1,5 +1,6 @@
 package featurecreep.api.bg.blocks;
 
+import featurecreep.api.annotations.Nullable;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
@@ -15,9 +16,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import io.smallrye.common.constraint.Nullable;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCOre extends DropExperienceBlock implements FCBlockAPI<FCOre> {
 
 	public BlockFieldHolder holder = new BlockFieldHolder();
@@ -32,14 +32,14 @@ public class FCOre extends DropExperienceBlock implements FCBlockAPI<FCOre> {
 	public FCOre(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops, Object ore_material) {
 		super(ConstantInt.of(0), Properties.of().destroyTime(strength / 10f));// Need to add material again
-																							// soon
+																				// soon
 		initialise(id, modid, name, group, material, strength, drops);
 		resource = ore_material;
 	}
 
 	@Override
-	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity,
-			ItemStack stack) {
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state,
+			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		player.awardStat(Stats.BLOCK_MINED.get(this));
 		player.causeFoodExhaustion(0.005f);
 

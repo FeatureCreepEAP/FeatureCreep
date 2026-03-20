@@ -8,40 +8,45 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCArmour extends Item implements FCItemAPI<FCArmour> {
-    public ItemFieldHolder holder = new ItemFieldHolder();
-    public FCArmourMaterial fcmaterial;
-    public FCArmourSlot slot;
+	public ItemFieldHolder holder = new ItemFieldHolder();
+	public FCArmourMaterial fcmaterial;
+	public FCArmourSlot slot;
 
-    @Override
-    public ItemFieldHolder holder() {
-        return this.holder;
-    }
+	@Override
+	public ItemFieldHolder holder() {
+		return this.holder;
+	}
 
-    public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material,
-            FCArmourSlot slot) {
-        // Usamos humanoidArmor con el Holder y ArmorType
-        super(new Item.Properties()
-            .humanoidArmor(material.get(), slot.getSlot()).setId(ResourceKey.create(BuiltInRegistries.ITEM.key(),Identifier.fromNamespaceAndPath(modid, name)) ) // ← Esto reemplaza ArmorItem
-        );
-        this.initialise(id, modid, name, group);
-        this.slot = slot;
-        this.fcmaterial = material;
-    }
+	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material,
+			FCArmourSlot slot) {
+		// Usamos humanoidArmor con el Holder y ArmorType
+		super(new Item.Properties().humanoidArmor(material.get(), slot.getSlot())
+				.setId(ResourceKey.create(BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(modid, name))) // ←
+																														// Esto
+																														// reemplaza
+																														// ArmorItem
+		);
+		this.initialise(id, modid, name, group);
+		this.slot = slot;
+		this.fcmaterial = material;
+	}
 
-    public void setSlot(FCArmourSlot slot) {
-        this.slot = slot;
-    }
+	public void setSlot(FCArmourSlot slot) {
+		this.slot = slot;
+	}
 
-    public FCArmourSlot getSlot() {
-        return this.slot;
-    }
+	public FCArmourSlot getSlot() {
+		return this.slot;
+	}
 
-    public void setFCMaterial(FCArmourMaterial fcmaterial) {
-        this.fcmaterial = fcmaterial;
-    }
+	public void setFCMaterial(FCArmourMaterial fcmaterial) {
+		this.fcmaterial = fcmaterial;
+	}
 
-    public FCArmourMaterial getFCMaterial() {
-        return this.fcmaterial;
-    }
+	public FCArmourMaterial getFCMaterial() {
+		return this.fcmaterial;
+	}
 }

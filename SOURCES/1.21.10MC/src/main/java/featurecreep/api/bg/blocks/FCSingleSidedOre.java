@@ -4,6 +4,8 @@ import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCSingleSidedOre extends FCOre {
 
 	public FCSingleSidedOre(int id, String modid, String name, UnifiedItemGroupGetter group,

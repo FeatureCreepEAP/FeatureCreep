@@ -1,10 +1,10 @@
 package featurecreep.api.bg.items.armour;
 
 import dangerzone.items.ItemArmor;
-import featurecreep.FeatureCreep;
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.ui.FCCreativeTab;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
+
+@Deprecated(forRemoval = true, since = "13")
 
 public class FCArmour extends ItemArmor implements FCItemAPI<FCArmour> {
 
@@ -20,12 +20,9 @@ public class FCArmour extends ItemArmor implements FCItemAPI<FCArmour> {
 
 	public FCArmour(int id, String modid, String name, UnifiedItemGroupGetter group, FCArmourMaterial material,
 			FCArmourSlot slot) {
-		super(modid + ":" + name,
-				FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + modid + "/textures/items/" + name + ".png",
-				FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/minecraft/textures/models/armor/" + name
-						+ "_layer_1.png",
-				FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/minecraft/textures/models/armor/" + name
-						+ "_layer_2.png",
+		super(modid + ":" + name, "./resourcepacks/fcpack_8/assets/" + modid + "/textures/items/" + name + ".png",
+				"./resourcepacks/fcpack_8/assets/minecraft/textures/models/armor/" + name + "_layer_1.png",
+				"./resourcepacks/fcpack_8/assets/minecraft/textures/models/armor/" + name + "_layer_2.png",
 				material.getFCProtection(slot), material.getFCDurability(), slot.getSlot());
 		// TODO Auto-generated constructor stub
 		initialise(id, modid, name, group);

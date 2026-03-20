@@ -1,5 +1,7 @@
 package featurecreep.api.bg.items.armour;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCArmourSlots {
 
 	public static FCArmourSlot HELMET = new FCArmourSlot("HELMET");

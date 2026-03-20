@@ -2,6 +2,7 @@ package featurecreep.api.bg.blocks;
 
 import net.minecraft.core.BlockPos;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCBlockPos extends BlockPos {
 
 	public int x;

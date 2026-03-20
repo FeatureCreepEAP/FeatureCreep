@@ -6,6 +6,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCSword extends Item implements ToolsAPI<FCSword> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();
@@ -17,7 +19,8 @@ public class FCSword extends Item implements ToolsAPI<FCSword> {
 
 	public FCSword(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material,
 			int attackDamage, int attackSpeed) {
-        super(new Item.Properties().sword(material.toMinecraftToolMaterial(), attackDamage, attackSpeed).setId(ResourceKey.create(BuiltInRegistries.ITEM.key(),Identifier.fromNamespaceAndPath(modid, name)) ));
+		super(new Item.Properties().sword(material.toMinecraftToolMaterial(), attackDamage, attackSpeed)
+				.setId(ResourceKey.create(BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(modid, name))));
 		initialise(id, modid, name, group, material, attackDamage, attackSpeed);
 	}
 

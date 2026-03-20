@@ -1,14 +1,11 @@
 package featurecreep.api.bg.blocks;
 
+import featurecreep.api.annotations.Nullable;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import io.smallrye.common.constraint.Nullable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -18,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	public BlockFieldHolder holder = new BlockFieldHolder();
@@ -29,14 +27,14 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	public FCBlock(int id, String modid, String name, UnifiedItemGroupGetter group, UnifiedBlockMaterial material,
 			int strength, BlockDropArrayObject[] drops) {
-		super(Properties.of().destroyTime(strength / 10f).setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(),Identifier.fromNamespaceAndPath(modid,name)) ));// Need to add material again soon
+		super(Properties.of().destroyTime(strength / 10f));// Need to add material again soon
 		initialise(id, modid, name, group, material, strength, drops);
 
 	}
 
 	@Override
-	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity,
-			ItemStack stack) {
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state,
+			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		player.awardStat(Stats.BLOCK_MINED.get(this));
 		player.causeFoodExhaustion(0.005f);
 

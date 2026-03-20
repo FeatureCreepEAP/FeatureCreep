@@ -1,7 +1,9 @@
 package featurecreep.api.bg.blocks.materials;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public interface UnifiedBlockMaterial {
 
-	public Object get(); // Does not do anything in DZ
+	// public Material get();
 
 }

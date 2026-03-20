@@ -1,13 +1,11 @@
 package featurecreep.api.bg.items.armour;
 
-import dangerzone.blocks.Block;
-import dangerzone.items.Item;
-import featurecreep.api.bg.blocks.FCBlock;
 import featurecreep.api.bg.blocks.FCBlockAPI;
-import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.items.tools.FCIngredient;
 import featurecreep.api.soundeffects.AbstractSoundEffect;
+
+@Deprecated(forRemoval = true, since = "13")
 
 public class FCArmourMaterial {
 

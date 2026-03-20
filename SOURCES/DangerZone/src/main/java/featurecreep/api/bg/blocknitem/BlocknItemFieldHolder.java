@@ -2,6 +2,8 @@ package featurecreep.api.bg.blocknitem;
 
 import featurecreep.api.bg.ui.FCCreativeTab;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class BlocknItemFieldHolder {
 
 	public String public_modid;

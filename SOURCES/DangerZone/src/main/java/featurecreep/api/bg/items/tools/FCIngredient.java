@@ -3,6 +3,8 @@ package featurecreep.api.bg.items.tools;
 import dangerzone.blocks.Block;
 import dangerzone.items.Item;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCIngredient {
 
 	public static FCIngredient ingredientFromItem(Item item) {

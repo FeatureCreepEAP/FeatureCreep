@@ -2,6 +2,8 @@ package featurecreep.api.bg.ui.tabs;
 
 import featurecreep.api.bg.ui.FCCreativeTab;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public interface UnifiedItemGroupGetter {
 
 	public FCCreativeTab get();

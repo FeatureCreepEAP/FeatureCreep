@@ -1,70 +1,63 @@
 package featurecreep.api.bg.registries;
 
-import java.util.ArrayList;
-
-import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocks.FCBlockAPI;
-import featurecreep.api.bg.blocks.vanilla.VanillaBlock;
 import featurecreep.api.bg.items.FCItemAPI;
-import featurecreep.api.bg.items.datafied.dmr.DMRItem;
-import featurecreep.api.bg.items.vanilla.VanillaItem;
 
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+
+/**
+ * Legacy registry bridge for FC4 API.
+ *
+ * @deprecated This class will be removed in version 13.
+ */
+@Deprecated(forRemoval = true, since = "13")
 public class FCRegistries {
 
-	public static ArrayList<FCBlockAPI> BLOCKS = new ArrayList<FCBlockAPI>();
-	public static ArrayList<FCItemAPI> ITEMS = new ArrayList<FCItemAPI>();
-
-	// https://github.com/Trikzon/Snow-Variants/blob/1.13.2/src/main/java/trikzon/snowvariants/init/ModBlocks.java
-
+	/**
+	 * Registers a block through the vanilla registry system.
+	 */
 	public static FCBlockAPI registerBlock(FCBlockAPI block) {
-		if (!GameRegistries.BlockKeyExistsInRegistry(block.getFCRegistryName())) {
 
-			if (block instanceof VanillaBlock) {
-				VanillaRegistries.registerBlock((VanillaBlock) block);
-			} else { // When Dataified Blocks come out we need to make a similar trap
-				UniversalRegistryGettersAndSetters.registerBlock(block);
-				BLOCKS.add(block);
-				GlobalRegistries.BLOCKS.add(block);
-			}
+		Block vanilla = (Block) block;
+		ResourceLocation id = BuiltInRegistries.BLOCK.getKey(vanilla);
 
-		} else {
-			if (FeatureCreep.debug_mode) {
-				System.out.println("The following block already exists in the Registry." + block.getFCRegistryName());
-			}
+		if (id == null) {
+			throw new IllegalStateException("Block has no registry name: " + block);
 		}
+
+		Registry.register(BuiltInRegistries.BLOCK, id, vanilla);
+
+		/* Automatically create block item like vanilla does */
+
+		Item blockItem = new BlockItem(vanilla, new Item.Properties());
+
+		Registry.register(BuiltInRegistries.ITEM, id, blockItem);
+
 		return block;
 	}
 
+	/**
+	 * Registers an item through the vanilla registry system.
+	 */
 	public static FCItemAPI registerItem(FCItemAPI item) {
 
-		if (!GameRegistries.ItemKeyExistsInRegistry(item.getFCRegistryName())) {
+		Item vanilla = (Item) item;
 
-			if (item instanceof VanillaItem) {
-				VanillaRegistries.registerItem((VanillaItem) item);
-			} else if (item instanceof DMRItem) // When other datafied come out I need to do for those to
-			{
-				DatafiedObjectRegistration.registerDMRItem((DMRItem) item);
-			} else { // When Dataified Blocks come out we need to make a similar trap
-				UniversalRegistryGettersAndSetters.registerItem(item);
-				ITEMS.add(item);
-				GlobalRegistries.ITEMS.add(item);
-			}
+		ResourceLocation id = BuiltInRegistries.ITEM.getKey(vanilla);
 
-		} else {
-			if (FeatureCreep.debug_mode) {
-				System.out.println("The following item already exists in the Registry." + item.getFCRegistryName());
-			}
+		if (id == null) {
+			throw new IllegalStateException("Item has no registry name: " + item);
 		}
+
+		Registry.register(BuiltInRegistries.ITEM, id, vanilla);
+
 		return item;
-	}
-
-	public static void generateModels() {
-		for (int i = 0; i < ITEMS.size(); i++) {
-			ITEMS.get(i).registerModels();
-		}
-		for (int b = 0; b < BLOCKS.size(); b++) {
-			BLOCKS.get(b).registerModels();
-		}
 	}
 
 }

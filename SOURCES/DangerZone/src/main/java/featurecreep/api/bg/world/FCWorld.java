@@ -2,6 +2,8 @@ package featurecreep.api.bg.world;
 
 import dangerzone.world.World;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCWorld {
 
 	World world;

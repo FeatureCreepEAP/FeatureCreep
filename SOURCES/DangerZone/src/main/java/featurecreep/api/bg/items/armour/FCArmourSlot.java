@@ -1,5 +1,7 @@
 package featurecreep.api.bg.items.armour;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCArmourSlot {
 
 	// Warning on this file, it should not be used by modders in most cases you will

@@ -1,5 +1,6 @@
 package featurecreep.api.bg.blocks;
 
+import featurecreep.api.annotations.Nullable;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.tooltypes.ToolTypes;
@@ -13,9 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import io.smallrye.common.constraint.Nullable;
 
+@Deprecated(forRemoval = true, since = "13")
 public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 
 	public BlockFieldHolder holder = new BlockFieldHolder();
@@ -33,8 +33,8 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 	}
 
 	@Override
-	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity,
-			ItemStack stack) {
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state,
+			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		player.awardStat(Stats.BLOCK_MINED.get(this));
 		player.causeFoodExhaustion(0.005f);
 

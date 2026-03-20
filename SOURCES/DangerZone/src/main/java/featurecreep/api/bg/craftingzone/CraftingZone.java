@@ -2,8 +2,6 @@ package featurecreep.api.bg.craftingzone;
 
 import java.util.ArrayList;
 
-import dangerzone.crafting.Cooking;
-import dangerzone.crafting.Crafting;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.items.vanilla.VanillaItems;
 
@@ -15,9 +13,6 @@ public class CraftingZone {
 	public static void addShapedCrafting(BlockOrItem result, int quantity, BlockOrItem ingredient0,
 			BlockOrItem ingredient1, BlockOrItem ingredient2, BlockOrItem ingredient3, BlockOrItem ingredient4,
 			BlockOrItem ingredient5, BlockOrItem ingredient6, BlockOrItem ingredient7, BlockOrItem ingredient8) {
-
-		Crafting.registerCraftingRecipe(ingredient0, ingredient1, ingredient2, ingredient3, ingredient4, ingredient5,
-				ingredient6, ingredient7, ingredient8, result, quantity, true);
 
 		objects.add(new CraftObject(result, quantity, ingredient0, ingredient1, ingredient2, ingredient3, ingredient4,
 				ingredient5, ingredient6, ingredient7, ingredient8));
@@ -58,49 +53,7 @@ public class CraftingZone {
 
 	}
 
-	public static void addCrystalPickaxeCrafting(BlockOrItem item, BlockOrItem pickaxe) {
-
-		addShapedCrafting(pickaxe, 1, item, item, item, null, VanillaItems.CRYSTAL_STICK, null, null,
-				VanillaItems.CRYSTAL_STICK, null);
-
-	}
-
-	public static void addCrystalSwordCrafting(BlockOrItem item, BlockOrItem sword) {
-
-		addShapedCrafting(sword, 1, null, item, null, null, item, null, null, VanillaItems.CRYSTAL_STICK, null);
-
-	}
-
-	public static void addCrystalShovelCrafting(BlockOrItem item, BlockOrItem shovel) {
-
-		addShapedCrafting(shovel, 1, null, item, null, null, VanillaItems.CRYSTAL_STICK, null, null,
-				VanillaItems.CRYSTAL_STICK, null);
-
-	}
-
-	public static void addCrystalHoeCrafting(BlockOrItem item, BlockOrItem hoe) {
-
-		addShapedCrafting(hoe, 1, null, item, item, null, VanillaItems.CRYSTAL_STICK, null, null,
-				VanillaItems.CRYSTAL_STICK, null);
-
-		addShapedCrafting(hoe, 1, item, item, null, null, VanillaItems.CRYSTAL_STICK, null, null,
-				VanillaItems.CRYSTAL_STICK, null);
-
-	}
-
-	public static void addCrystalAxeCrafting(BlockOrItem item, BlockOrItem axe) {
-
-		addShapedCrafting(axe, 1, null, item, item, null, VanillaItems.CRYSTAL_STICK, item, null,
-				VanillaItems.CRYSTAL_STICK, null);
-
-		addShapedCrafting(axe, 1, item, item, null, item, VanillaItems.CRYSTAL_STICK, null, null,
-				VanillaItems.CRYSTAL_STICK, null);
-
-	}
-
 	public static void addMelting(BlockOrItem item, BlockOrItem result, int xp, int cooking_time, String group) {
-
-		Cooking.registerCookingRecipe(item.getObject(), result.getObject(), cooking_time);
 		melts.add(new MeltObject(item, result, xp, cooking_time, group));
 	}
 

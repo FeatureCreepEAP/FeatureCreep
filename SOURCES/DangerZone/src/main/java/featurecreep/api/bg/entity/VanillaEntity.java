@@ -2,6 +2,8 @@ package featurecreep.api.bg.entity;
 
 import dangerzone.entities.Entity;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class VanillaEntity implements AbstractEntity {
 
 	Entity entity;

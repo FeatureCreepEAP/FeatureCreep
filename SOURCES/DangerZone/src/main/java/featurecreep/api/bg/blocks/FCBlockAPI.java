@@ -1,25 +1,22 @@
 package featurecreep.api.bg.blocks;
 
 import java.util.ArrayList;
-import featurecreep.FeatureCreep;
 
 import dangerzone.DangerZone;
 import dangerzone.Player;
 import dangerzone.blocks.Block;
-import featurecreep.FeatureCreep;
 import featurecreep.api.bg.blocknitem.BlockOrItem;
 import featurecreep.api.bg.blocknitem.TextureInfo;
 import featurecreep.api.bg.blocks.drop.BlockDropArrayObject;
 import featurecreep.api.bg.blocks.materials.UnifiedBlockMaterial;
 import featurecreep.api.bg.entity.AbstractEntity;
-import featurecreep.api.io.BasicIO;
-import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.entity.AbstractPlayer;
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.tooltypes.ToolTypes;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import featurecreep.api.bg.world.FCWorld;
 
+@Deprecated(forRemoval = true, since = "13")
 public interface FCBlockAPI<T> extends BlockOrItem<T> {
 
 	@Override
@@ -125,34 +122,34 @@ public interface FCBlockAPI<T> extends BlockOrItem<T> {
 		// TODO Auto-generated method stub
 
 		if (getSingleSided()) {
-			setUpTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + ".png");
-			setDownTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + ".png");
-			setWestTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + ".png");
-			setEastTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + ".png");
-			setNorthTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + ".png");
-			setSouthTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + ".png");
+			setUpTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + ".png");
+			setDownTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + ".png");
+			setWestTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + ".png");
+			setEastTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + ".png");
+			setNorthTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + ".png");
+			setSouthTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + ".png");
 			System.out.println(getUpTextureName());
 
 		} else {
 
-			setUpTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + "_up.png");
-			setDownTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + "_down.png");
-			setWestTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + "_west.png");
-			setEastTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + "_east.png");
-			setNorthTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + "_north.png");
-			setSouthTextureName(FeatureCreep.gamepath + "/resourcepacks/fcpack_8/assets/" + this.getModId()
-					+ "/textures/blocks/" + this.getUnlocName() + "_south.png");
+			setUpTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + "_up.png");
+			setDownTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + "_down.png");
+			setWestTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + "_west.png");
+			setEastTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + "_east.png");
+			setNorthTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + "_north.png");
+			setSouthTextureName("./resourcepacks/fcpack_8/assets/" + this.getModId() + "/textures/blocks/"
+					+ this.getUnlocName() + "_south.png");
 
 			System.out.println(getUpTextureName());
 

@@ -1,5 +1,7 @@
 package featurecreep.api.soundeffects;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class VanillaSoundEffects {
 
 	// For now only Armour Ones for MC and DZ, soon we will need for HOI4

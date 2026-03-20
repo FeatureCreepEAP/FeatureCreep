@@ -3,6 +3,8 @@ package featurecreep.api.bg.ui;
 import featurecreep.api.bg.items.FCItem;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCCreativeTab implements UnifiedItemGroupGetter {
 
 	public String id;

@@ -77,9 +77,7 @@ public class ModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 
 			}
 		}
-		
-		
-		
+
 		return files;
 
 	}

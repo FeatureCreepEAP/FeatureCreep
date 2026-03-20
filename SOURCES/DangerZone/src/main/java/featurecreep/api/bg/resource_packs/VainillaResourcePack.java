@@ -30,7 +30,6 @@ public interface VainillaResourcePack {
 	 */
 	public Supplier<InputStream> getPackPng();
 
-
 	@Internal
 	public static String toPath(FCResourceType arg, String namespace, String path) {
 		return String.format(Locale.ROOT, "%s/%s/%s", arg.getDirectory(), namespace, path);
@@ -51,29 +50,29 @@ public interface VainillaResourcePack {
 	 * @return A set of unique prefixes (namespaces).
 	 */
 	public default Set<String> getPackPrefixes() {
-	    Set<String> prefixes = new HashSet<>();
+		Set<String> prefixes = new HashSet<>();
 
-	    // Get all entries with an empty prefix to retrieve the root-level entries
-	    Collection<String> entries = getEntries("");
+		// Get all entries with an empty prefix to retrieve the root-level entries
+		Collection<String> entries = getEntries("");
 
-	    for (String entry : entries) {
-	        // Check if the entry starts with "assets/" or "data/"
-	        if (entry.startsWith("assets/") || entry.startsWith("data/")) {
-	            // Remove "assets/" or "data/" prefix
-	            String withoutPrefix = entry.startsWith("assets/") ? entry.substring(7) : entry.substring(5);
-	            // Extract the prefix, which is the segment before the next '/'
-	            int slashIndex = withoutPrefix.indexOf('/');
-	            if (slashIndex != -1) {
-	                String prefix = withoutPrefix.substring(0, slashIndex);
-	                prefixes.add(prefix); // Add the unique prefix to the set
-	            } else {
-	                // If there's no additional '/', the entire string is the prefix
-	                prefixes.add(withoutPrefix);
-	            }
-	        }
-	    }
+		for (String entry : entries) {
+			// Check if the entry starts with "assets/" or "data/"
+			if (entry.startsWith("assets/") || entry.startsWith("data/")) {
+				// Remove "assets/" or "data/" prefix
+				String withoutPrefix = entry.startsWith("assets/") ? entry.substring(7) : entry.substring(5);
+				// Extract the prefix, which is the segment before the next '/'
+				int slashIndex = withoutPrefix.indexOf('/');
+				if (slashIndex != -1) {
+					String prefix = withoutPrefix.substring(0, slashIndex);
+					prefixes.add(prefix); // Add the unique prefix to the set
+				} else {
+					// If there's no additional '/', the entire string is the prefix
+					prefixes.add(withoutPrefix);
+				}
+			}
+		}
 
-	    return prefixes;
+		return prefixes;
 	}
 
 	public FCPackMCMeta getPackMCMetaInfo();
@@ -130,7 +129,7 @@ public interface VainillaResourcePack {
 	}
 
 	public default boolean isEmpty() {
-		return getEntries("assets/").isEmpty()&&getEntries("data/").isEmpty();
+		return getEntries("assets/").isEmpty() && getEntries("data/").isEmpty();
 	}
-	
+
 }

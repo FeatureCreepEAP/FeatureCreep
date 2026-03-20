@@ -43,7 +43,7 @@ public class WithoutModFileModuleClausewitzModLoader implements ClausewitzModLoa
 	public Map<String, ModFile> setupModFile(Module search) {
 		// TODO Auto-generated method stub
 		Map<String, ModFile> files = new HashMap<String, ModFile>();
-		
+
 		for (ResourceLoader rl : ResourceLoaderObtainer.getResourceLoaders(search)) {
 			if (rl instanceof IterableResourceLoader) {
 				IterableResourceLoader iter = (IterableResourceLoader) rl;
@@ -76,8 +76,7 @@ public class WithoutModFileModuleClausewitzModLoader implements ClausewitzModLoa
 
 			}
 		}
-		
-		
+
 		return files;
 
 	}

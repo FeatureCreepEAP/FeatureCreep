@@ -4,6 +4,8 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public class FCPickaxe extends PickaxeItem implements ToolsAPI<FCPickaxe> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();

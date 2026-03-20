@@ -3,6 +3,8 @@ package featurecreep.api.bg.entity;
 import dangerzone.entities.Entity;
 import featurecreep.api.bg.world.FCWorld;
 
+@Deprecated(forRemoval = true, since = "13")
+
 public interface AbstractEntity {
 
 	public Entity get();
