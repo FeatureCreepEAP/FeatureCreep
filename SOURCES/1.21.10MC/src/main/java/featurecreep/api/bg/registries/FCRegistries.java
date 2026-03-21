@@ -25,7 +25,7 @@ public class FCRegistries {
 	public static FCBlockAPI registerBlock(FCBlockAPI block) {
 
 		Block vanilla = (Block) block;
-		ResourceLocation id = BuiltInRegistries.BLOCK.getKey(vanilla);
+		ResourceLocation id = ResourceLocation.tryBuild(block.getModId(), block.getUnlocName());
 
 		if (id == null) {
 			throw new IllegalStateException("Block has no registry name: " + block);
@@ -49,7 +49,7 @@ public class FCRegistries {
 
 		Item vanilla = (Item) item;
 
-		ResourceLocation id = BuiltInRegistries.ITEM.getKey(vanilla);
+		ResourceLocation id = ResourceLocation.tryBuild(item.getModId(), item.getUnlocName());
 
 		if (id == null) {
 			throw new IllegalStateException("Item has no registry name: " + item);

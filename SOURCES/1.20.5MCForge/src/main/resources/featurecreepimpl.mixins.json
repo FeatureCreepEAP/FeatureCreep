@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.7",
+  "package": "featurecreep.api.bg.mc.spongemixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinPackRepository",
+    "MixinBuiltInRegistries"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

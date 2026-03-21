@@ -34,7 +34,7 @@ public class FeatureCreepMC {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Module mod : FCLoaderObtainer.getFCLoaderBasic(FeatureCreepMC.class).getModules()) {
+		for (Module mod : BootstrapCommon.loader.getModules()) {
 			clausewitz_module_modloader.search(mod);
 			clausewitz_module_modloader_no_modfile.search(mod);// Maybe try to make one 1 work in the future
 		}
@@ -54,3 +54,4 @@ public class FeatureCreepMC {
 	}
 
 }
+

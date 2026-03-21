@@ -44,16 +44,7 @@ public class MinecraftGameProvider implements GameProvider {
 	@Override
 	public Path[] getModulePKZipLocations() {
 		Path modsDir = java.nio.file.Paths.get("mods").toAbsolutePath().normalize();
-		if (!java.nio.file.Files.exists(modsDir) || !java.nio.file.Files.isDirectory(modsDir)) {
-			return new Path[0];
-		}
-
-		try (var stream = java.nio.file.Files.list(modsDir)) {
-			return stream.filter(path -> java.nio.file.Files.isRegularFile(path))
-					.filter(path -> path.getFileName().toString().endsWith(".jar")).toArray(Path[]::new);
-		} catch (java.io.IOException e) {
-			return new Path[0];
-		}
+		return new Path[] {modsDir};
 	}
 
 	@Override

@@ -101,6 +101,7 @@
 										<exclude>net.sf.jopt-simple:jopt-simple</exclude>
 										<exclude>org.jcraft:jorbis</exclude>
 										<exclude>org.joml:joml</exclude>
+										<exclude>META-INF/services/**</exclude>
 									</excludes>
 								</filter>
 							</filters>
@@ -198,14 +199,6 @@
 		<dependency>
 			<groupId>com.asbestosstar</groupId>
 			<artifactId>featurecreep-loader</artifactId>
-			<version>6.0.0-am2</version>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
-		<dependency>
-			<groupId>com.asbestosstar</groupId>
-			<artifactId>featurecreep-api</artifactId>
 			<version>6.0.0-am3</version>
 		</dependency>
 
@@ -213,8 +206,16 @@
 		<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
 		<dependency>
 			<groupId>com.asbestosstar</groupId>
+			<artifactId>featurecreep-api</artifactId>
+			<version>6.0.0-am4</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/cpw.mods/securejarhandler -->
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
 			<artifactId>featurecreep-bootstrap</artifactId>
-			<version>0.0.2.9</version>
+			<version>0.0.3</version>
 		</dependency>
 
 

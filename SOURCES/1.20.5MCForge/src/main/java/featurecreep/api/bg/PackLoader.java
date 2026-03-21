@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 import org.jboss.modules.Module;
 
-import featurecreep.api.FCLoaderObtainer;
+import asbestosstar.bootstrap.BootstrapCommon;
 import featurecreep.api.bg.datapacks.DataPackLoader;
 import featurecreep.api.bg.mc.FeatureCreepMC;
 import featurecreep.api.bg.resource_packs.ClausewitzModResourcePack;
@@ -39,7 +39,7 @@ public class PackLoader implements VainillaResourcePack {
 			ClausewitzModResourcePack pack = new ClausewitzModResourcePack(mod);
 			packs.put(pack.getPackName(), pack);
 		}
-		for (Module mod : FCLoaderObtainer.getFCLoaderBasic(PackLoader.class).getModules()) {
+		for (Module mod : BootstrapCommon.loader.getModules()) {
 			packs.put(mod.getName(), new ModuleVainillaResourcePack(mod));
 		}
 	}

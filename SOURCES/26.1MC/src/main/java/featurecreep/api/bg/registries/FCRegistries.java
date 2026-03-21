@@ -2,9 +2,11 @@ package featurecreep.api.bg.registries;
 
 import featurecreep.api.bg.blocks.FCBlockAPI;
 import featurecreep.api.bg.items.FCItemAPI;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
+
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -23,7 +25,7 @@ public class FCRegistries {
 	public static FCBlockAPI registerBlock(FCBlockAPI block) {
 
 		Block vanilla = (Block) block;
-		Identifier id = BuiltInRegistries.BLOCK.getKey(vanilla);
+		ResourceLocation id = ResourceLocation.tryBuild(block.getModId(), block.getUnlocName());
 
 		if (id == null) {
 			throw new IllegalStateException("Block has no registry name: " + block);
@@ -47,7 +49,7 @@ public class FCRegistries {
 
 		Item vanilla = (Item) item;
 
-		Identifier id = BuiltInRegistries.ITEM.getKey(vanilla);
+		ResourceLocation id = ResourceLocation.tryBuild(item.getModId(), item.getUnlocName());
 
 		if (id == null) {
 			throw new IllegalStateException("Item has no registry name: " + item);

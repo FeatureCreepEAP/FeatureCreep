@@ -4,15 +4,31 @@ import java.util.List;
 import java.util.Set;
 
 import org.objectweb.asm.tree.ClassNode;
+import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import asbestosstar.bootstrap.minecraft.MinecraftCommonStartup;
+import asbestosstar.bootstrap.sm.util.SpongeMixinUtils;
 
 public class SpongeMixinConfig implements IMixinConfigPlugin {
 
 	static {
 		MinecraftCommonStartup.start();
+		SpongeMixinUtils.injectSpongeMixins();
+
+		String featureConfig = "featurecreepimpl.mixins.json";
+
+		// Check if the resource exists in the current classloader has this config. this config is not part of the bootstrap but of the version specific projects
+		if (SpongeMixinConfig.class.getClassLoader().getResource(featureConfig) != null) {
+			try {
+				Mixins.addConfiguration(featureConfig);
+			} catch (Exception e) {
+				System.err.println("Failed to register " + featureConfig);
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	@Override

@@ -2,13 +2,35 @@ package asbestosstar.bootstrap.minecraft;
 
 import asbestosstar.bootstrap.BootstrapCommon;
 import featurecreep.loader.FCLoaderBasicR9;
-import featurecreep.loader.FCTransformer;
 import featurecreep.loader.GameProvider;
 
 public class MinecraftCommonStartup {
 
-	public static boolean init_agent = BootstrapCommon.initDefault();
 	public static GameProvider prov = getGameProvider();
+	static {
+		BootstrapCommon.loader = new FCLoaderBasicR9(prov, 8);
+		System.out.println("Starting FeatureCreep. Loading Mods :");
+		BootstrapCommon.loader.loadMods();
+
+		if (BootstrapCommon.loader.isHotswapNeeded()) {
+			boolean init_agent = BootstrapCommon.initDefault();
+			System.out.println("init agent is :");
+			System.out.println(init_agent);
+			prov.setInstrumentation(BootstrapCommon.instrument);
+			BootstrapCommon.loader.setupInstrumentation();
+
+			System.out.println("instrumentation is null in GameProvider: ");
+			System.out.println(prov.getInstrumentation() == null);
+			System.out.println("instrumentation is null in FCLoaderBasic: ");
+			System.out.println(BootstrapCommon.loader.getInstrumentation() == null);
+			System.out.println("Getting transformers");
+			// BootstrapCommon.loader.addTransformer(new GameInjections());
+			System.out.println("Getting Premains");
+			BootstrapCommon.loader.PremainAgents();
+
+		}
+
+	}
 
 	/**
 	 * Minecraft Vanilla Bootstrap for 1.21.11+
@@ -20,18 +42,6 @@ public class MinecraftCommonStartup {
 	}
 
 	public static void start() {
-		System.out.println("Starting FeatureCreep. init agent is :");
-		System.out.println(init_agent);
-		System.out.println("instrumentation is null in GameProvider: ");
-		System.out.println(prov.getInstrumentation() == null);
-		BootstrapCommon.loader = new FCLoaderBasicR9(prov, 8);
-		System.out.println("instrumentation is null in FCLoaderBasic: ");
-		System.out.println(BootstrapCommon.loader.getInstrumentation() == null);
-		BootstrapCommon.loader.loadMods();
-		System.out.println("Getting transformers");
-		BootstrapCommon.loader.addTransformer(new GameInjections());
-		System.out.println("Getting Premains");
-		BootstrapCommon.loader.PremainAgents();
 
 	}
 
