@@ -9,14 +9,17 @@ import java.util.function.Supplier;
 
 import org.jboss.modules.Module;
 
-import featurecreep.api.FCLoaderObtainer;
-import featurecreep.api.bg.dz.FeatureCreepDZ;
+import asbestosstar.bootstrap.BootstrapCommon;
+import featurecreep.api.bg.datapacks.DataPackLoader;
+import featurecreep.api.bg.mc.FeatureCreepMC;
 import featurecreep.api.bg.resource_packs.ClausewitzModResourcePack;
 import featurecreep.api.bg.resource_packs.FCPackMCMeta;
+import featurecreep.api.bg.resource_packs.FlatVainillaResourcePack;
 import featurecreep.api.bg.resource_packs.ModuleVainillaResourcePack;
 import featurecreep.api.bg.resource_packs.VainillaResourcePack;
 import featurecreep.api.clausewitz.mod.Mod;
 import featurecreep.api.io.BasicIO;
+import featurecreep.loader.flat.FlatModMetadata;
 
 /**
  * The FC4 compat parts will be removed in version 13 but loadPacks will stay
@@ -24,74 +27,78 @@ import featurecreep.api.io.BasicIO;
 @Deprecated(forRemoval = true, since = "13")
 public class PackLoader implements VainillaResourcePack {
 
-	public static Map<String, byte[]> entries = new HashMap<String, byte[]>();// For static entries
-	public static Map<String, VainillaResourcePack> packs = new HashMap<String, VainillaResourcePack>();
-	public static int pack_version = 0;
-	public static String pack_name = "fcpack_" + pack_version;
-	public static String fc_pack_location = pack_name; // This used to point to a physical directory but not anymore
-	public static VainillaResourcePack INSTANCE = new PackLoader();// TEMPORARILY
+    public static Map<String, byte[]> entries = new HashMap<String, byte[]>();
+    public static Map<String, VainillaResourcePack> packs = new HashMap<String, VainillaResourcePack>();
+    public static int pack_version = 10;
+    public static String pack_name = "fcpack_" + pack_version;
+    public static String fc_pack_location = pack_name; 
+    public static VainillaResourcePack INSTANCE = new PackLoader();
 
-	public static void loadPacks() {
-		packs.put(pack_name, INSTANCE);
-		for (Mod mod : FeatureCreepDZ.getClausewitzMods()) {
-			ClausewitzModResourcePack pack = new ClausewitzModResourcePack(mod);
-			packs.put(pack.getPackName(), pack);
-		}
-		for (Module mod : FCLoaderObtainer.getFCLoaderBasic(PackLoader.class).getModules()) {
-			packs.put(mod.getName(), new ModuleVainillaResourcePack(mod));
-		}
-	}
+    public static void loadPacks() {
+        DataPackLoader.onInitialise();
+        packs.put(pack_name, INSTANCE);
+        
+        // Load Clausewitz Mods
+        for (Mod mod : FeatureCreepMC.getClausewitzMods()) {
+            ClausewitzModResourcePack pack = new ClausewitzModResourcePack(mod);
+            packs.put(pack.getPackName(), pack);
+        }
+        
+        // Load JBoss Module Mods
+        for (Module mod : BootstrapCommon.loader.getModules()) {
+            packs.put(mod.getName(), new ModuleVainillaResourcePack(mod));
+        }
+        
+        // Load Flat Mods
+        ClassLoader flatClassLoader = BootstrapCommon.flatloader.getFlatClassLoader();
+        for (Map.Entry<String, FlatModMetadata> entry : BootstrapCommon.flatloader.getModMetadataMap().entrySet()) {
+            FlatModMetadata meta = entry.getValue();
+            FlatVainillaResourcePack pack = new FlatVainillaResourcePack(meta, flatClassLoader);
+            packs.put(meta.getModId(), pack);
+        }
+    }
 
-	public static boolean packLoaderFCHasPack(String name) {
-		return packs.containsKey(name);
-	}
+    public static boolean packLoaderFCHasPack(String name) {
+        return packs.containsKey(name);
+    }
 
-	@Override
-	public Supplier<InputStream> getStream(String location) {
-		// TODO Auto-generated method stub
-		byte[] get = entries.get(location);
-		if (get != null) {
-			return BasicIO.inputStreamSupplierFromBytes(get);
-		}
+    @Override
+    public Supplier<InputStream> getStream(String location) {
+        byte[] get = entries.get(location);
+        if (get != null) {
+            return BasicIO.inputStreamSupplierFromBytes(get);
+        }
+        return null;
+    }
 
-		return null;// I may make this globbed in the future
+    @Override
+    public Supplier<InputStream> getPackPng() {
+        return null;
+    }
 
-	}
+    @Override
+    public Collection<String> getEntries(String prefix) {
+        ArrayList<String> strs = new ArrayList<String>();
+        for (String str : entries.keySet()) {
+            if (str.startsWith(prefix)) {
+                strs.add(str);
+            }
+        }
+        return strs;
+    }
 
-	@Override
-	public Supplier<InputStream> getPackPng() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public FCPackMCMeta getPackMCMetaInfo() {
+        return new FCPackMCMeta(pack_version, "Paquete de FeatureCreep genderado automaticomente");
+    }
 
-	@Override
-	public Collection<String> getEntries(String prefix) {
-		// TODO Auto-generated method stub
-		ArrayList<String> strs = new ArrayList<String>();
-		for (String str : entries.keySet()) {
-			if (str.startsWith(prefix)) {
-				strs.add(str);
-			}
-		}
-		return strs;
-	}
+    @Override
+    public String getPackName() {
+        return pack_name;
+    }
 
-	@Override
-	public FCPackMCMeta getPackMCMetaInfo() {
-		// TODO Auto-generated method stub
-		return new FCPackMCMeta(pack_version, "Paquete de FeatureCreep genderado automaticomente");
-	}
-
-	@Override
-	public String getPackName() {
-		// TODO Auto-generated method stub
-		return pack_name;
-	}
-
-	@Override
-	public void closeStreams() {
-		// TODO Auto-generated method stub
-
-	}
-
+    @Override
+    public void closeStreams() {
+        // No-op
+    }
 }

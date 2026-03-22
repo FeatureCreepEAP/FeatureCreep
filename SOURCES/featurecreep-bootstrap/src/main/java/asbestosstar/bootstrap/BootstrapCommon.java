@@ -9,6 +9,7 @@ import java.net.URI;
 import javax.annotation.Nullable;
 
 import featurecreep.loader.FCLoaderBasic;
+import featurecreep.loader.flat.FCLoaderFlat;
 
 public class BootstrapCommon {
 
@@ -18,6 +19,7 @@ public class BootstrapCommon {
 	public static boolean agent_activated = false;
 	public static Instrumentation instrument;
 	public static FCLoaderBasic loader;
+	public static FCLoaderFlat flatloader;
 
 	/**
 	 * Default init

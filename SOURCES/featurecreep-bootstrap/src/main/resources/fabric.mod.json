@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "featurecreep-bootstrap",
+	"version": "0",
+	"name": "featurecreep-bootstrap",
+	"description": "Bootstraps FeatureCreep Loader",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https//:github.com/FeatureCreepEAP/",
+		"sources": "https//:github.com/FeatureCreepEAP/"
+	},
+	"license": "CC0-1.0",
+	"icon": "",
+	"environment": "*",
+	"entrypoints": {
+
+	},
+	"mixins": [
+		"featurecreep.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.2"
+		,"java": ">=11"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

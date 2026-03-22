@@ -8,7 +8,7 @@ import java.util.List;
 import org.jboss.modules.Module;
 
 import asbestosstar.bootstrap.BootstrapCommon;
-import featurecreep.api.FCLoaderObtainer;
+import asbestosstar.bootstrap.minecraft.MinecraftCommonStartup;
 import featurecreep.api.bg.PackLoader;
 import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
 import featurecreep.api.clausewitz.mod.Mod;
@@ -20,38 +20,47 @@ import featurecreep.loader.filesystem.DirectoryReader;
 
 public class FeatureCreepMC {
 
-	public static ModuleClausewitzModLoader clausewitz_module_modloader = new ModuleClausewitzModLoader();
-	public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = new FileSystemClausewitzModLoader();
-	public static WithoutModFileModuleClausewitzModLoader clausewitz_module_modloader_no_modfile = new WithoutModFileModuleClausewitzModLoader();
-	public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_modloader_no_modfile = new WithoutModFileFileSystemClausewitzModLoader();
+    // Module Loaders
+    public static ModuleClausewitzModLoader clausewitz_module_modloader = new ModuleClausewitzModLoader();
+    public static FileSystemClausewitzModLoader clausewitz_filesystem_modloader = new FileSystemClausewitzModLoader();
+    public static WithoutModFileModuleClausewitzModLoader clausewitz_module_modloader_no_modfile = new WithoutModFileModuleClausewitzModLoader();
+    public static WithoutModFileFileSystemClausewitzModLoader clausewitz_filesystem_modloader_no_modfile = new WithoutModFileFileSystemClausewitzModLoader();
 
-	public static void init() {
-		System.out.println("FC Init");
-		FCItems.onInitialise();
-		try {
-			clausewitz_filesystem_modloader.search(new DirectoryReader(new File(System.getProperty("user.dir"))));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Module mod : BootstrapCommon.loader.getModules()) {
-			clausewitz_module_modloader.search(mod);
-			clausewitz_module_modloader_no_modfile.search(mod);// Maybe try to make one 1 work in the future
-		}
+    public static void init() {
+        System.out.println("FC Init");
+        MinecraftCommonStartup.start();
+        FCItems.onInitialise();
+        
+        // Search filesystem for Clausewitz mods
+        try {
+            clausewitz_filesystem_modloader.search(new DirectoryReader(new File(System.getProperty("user.dir"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // Search JBoss Modules for Clausewitz mods
+        for (Module mod : BootstrapCommon.loader.getModules()) {
+            clausewitz_module_modloader.search(mod);
+            clausewitz_module_modloader_no_modfile.search(mod);
+        }
 
-		BootstrapCommon.loader.runMods();
-		PackLoader.loadPacks();
+        // Run Module Mods
+        BootstrapCommon.loader.runMods();
+        
+        // Run Flat Mods
+        // Note: Flat mods are run here to ensure they execute after standard module setup
+        // but PackLoader logic runs afterwards to bundle everything.
+        BootstrapCommon.flatloader.runMods();
+        
+        PackLoader.loadPacks();
+    }
 
-	}
-
-	public static List<Mod> getClausewitzMods() {
-		ArrayList<Mod> list = new ArrayList<Mod>();
-		list.addAll(clausewitz_module_modloader.getMods());
-		list.addAll(clausewitz_filesystem_modloader.getMods());
-		list.addAll(clausewitz_module_modloader_no_modfile.getMods());
-		list.addAll(clausewitz_filesystem_modloader_no_modfile.getMods());
-		return list;
-	}
-
+    public static List<Mod> getClausewitzMods() {
+        ArrayList<Mod> list = new ArrayList<Mod>();
+        list.addAll(clausewitz_module_modloader.getMods());
+        list.addAll(clausewitz_filesystem_modloader.getMods());
+        list.addAll(clausewitz_module_modloader_no_modfile.getMods());
+        list.addAll(clausewitz_filesystem_modloader_no_modfile.getMods());
+        return list;
+    }
 }
-

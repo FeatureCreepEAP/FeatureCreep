@@ -8,14 +8,11 @@ import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import asbestosstar.bootstrap.minecraft.MinecraftCommonStartup;
-import asbestosstar.bootstrap.sm.util.SpongeMixinUtils;
-
 public class SpongeMixinConfig implements IMixinConfigPlugin {
 
 	static {
-		MinecraftCommonStartup.start();
-		SpongeMixinUtils.injectSpongeMixins();
+		
+		//SpongeMixinUtils.injectSpongeMixins();
 
 		String featureConfig = "featurecreepimpl.mixins.json";
 
