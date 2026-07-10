@@ -8,24 +8,114 @@ import java.net.URI;
 
 import javax.annotation.Nullable;
 
+import asbestosstar.bootstrap.sm.SpongeMixinRuntime;
 import featurecreep.loader.FCLoaderBasic;
+import featurecreep.loader.FCLoaderBasicR9;
+import featurecreep.loader.GameProvider;
 import featurecreep.loader.flat.FCLoaderFlat;
+import featurecreep.loader.flat.FCLoaderFlatR1;
 
-public class BootstrapCommon {
+/**
+ * Shared bootstrap for all supported game providers.
+ *
+ * <p>
+ * This class now owns the complete loader lifecycle. There is no separate
+ * MinecraftCommonStartup class.
+ * </p>
+ */
+public final class BootstrapCommon {
+	public static volatile boolean agent_activated;
+	public static volatile Instrumentation instrument;
+	public static volatile FCLoaderBasic loader;
+	public static volatile FCLoaderFlat flatloader;
+
+	private static volatile GameProvider gameProvider;
+	private static volatile boolean loadersInitialized;
+	private static volatile boolean modsRun;
+
+	private BootstrapCommon() {
+	}
 
 	/**
-	 * True if the agent successfully activates.
-	 */
-	public static boolean agent_activated = false;
-	public static Instrumentation instrument;
-	public static FCLoaderBasic loader;
-	public static FCLoaderFlat flatloader;
-
-	/**
-	 * Default init
+	 * Initializes FeatureCreep for a game provider, discovers mods, initializes
+	 * Sponge Mixin, and registers each mod's own Mixin configuration.
 	 *
-	 * @return true if an Instrumentation instance was obtained
+	 * <p>
+	 * This method does not launch the game and does not require command-line Mixin
+	 * configuration arguments.
+	 * </p>
 	 */
+	public static synchronized void initializeGame(GameProvider provider) {
+		if (loadersInitialized) {
+			if (gameProvider != provider && !gameProvider.getClass().equals(provider.getClass())) {
+				throw new IllegalStateException(
+						"FeatureCreep was already initialized with " + gameProvider.getClass().getName()
+								+ ", cannot replace it with " + provider.getClass().getName());
+			}
+			return;
+		}
+
+		gameProvider = provider;
+
+		if (instrument != null) {
+			provider.setInstrumentation(instrument);
+		}
+
+		loader = new FCLoaderBasicR9(provider, 8);
+		flatloader = new FCLoaderFlatR1(provider);
+
+		System.out.println("[FeatureCreep] Loading module mods.");
+		loader.loadMods();
+
+		System.out.println("[FeatureCreep] Loading flat mods.");
+		flatloader.loadMods();
+
+		if (loader.isHotswapNeeded()) {
+			if (instrument == null && !initDefault()) {
+				throw new IllegalStateException(
+						"Module mods require Instrumentation, but the FeatureCreep " + "agent could not be activated.");
+			}
+
+			provider.setInstrumentation(instrument);
+			loader.setupInstrumentation();
+			loader.PremainAgents();
+		}
+
+		/*
+		 * Mixin must initialize only after module discovery, because the mods own their
+		 * configurations and classloaders.
+		 */
+		SpongeMixinRuntime.initialize(provider, loader, flatloader);
+		SpongeMixinRuntime.registerDiscoveredModConfigurations();
+
+		loadersInitialized = true;
+	}
+
+	/**
+	 * Runs module and flat mod entrypoints after all transformation systems have
+	 * been initialized.
+	 */
+	public static synchronized void runMods() {
+		if (!loadersInitialized) {
+			throw new IllegalStateException("BootstrapCommon.initializeGame(provider) must run first.");
+		}
+		if (modsRun) {
+			return;
+		}
+
+		loader.runMods();
+		flatloader.runMods();
+		modsRun = true;
+	}
+
+	public static GameProvider getGameProvider() {
+		return gameProvider;
+	}
+
+	public static boolean isGameInitialized() {
+		return loadersInitialized;
+	}
+
 	public static boolean initDefault() {
 		if (instrument != null && agent_activated) {
 			return true;
@@ -33,127 +123,83 @@ public class BootstrapCommon {
 
 		activateAgent(getJar());
 
-		// If the agent already set our local static, done
 		if (instrument != null && agent_activated) {
 			return true;
 		}
 
-		// Cross-classloader recovery: read instrumentation from the agent-side class
 		try {
 			ClassLoader sys = ClassLoader.getSystemClassLoader();
-
 			Class<?> agentClass = Class.forName("asbestosstar.bootstrap.FeatureCreepAgent", false, sys);
 
-			Method m = agentClass.getMethod("getInstrumentation");
-			Object got = m.invoke(null);
+			Method method = agentClass.getMethod("getInstrumentation");
+			Object obtained = method.invoke(null);
 
-			if (got instanceof Instrumentation) {
-				instrument = (Instrumentation) got;
+			if (obtained instanceof Instrumentation) {
+				instrument = (Instrumentation) obtained;
 				agent_activated = true;
 				return true;
 			}
 		} catch (Throwable t) {
-			System.err.println("[BootstrapCommon] Could not fetch Instrumentation from agent loader: " + t);
+			System.err.println("[BootstrapCommon] Could not recover Instrumentation: " + t);
 			t.printStackTrace(System.err);
 		}
 
 		return false;
 	}
 
-	/**
-	 * Attempts to activate the agent in the current JVM.
-	 * <p>
-	 * Order of attempts:
-	 * </p>
-	 * <ol>
-	 * <li>JDK Attach API (jdk.attach, preferred when available & self-attach
-	 * allowed)</li>
-	 * <li>FeatureCreep attach (featurecreep.attach.Attach)</li>
-	 * </ol>
-	 */
-	public static @Nullable Instrumentation activateAgent(String path_to_agent) {
+	public static @Nullable Instrumentation activateAgent(String pathToAgent) {
 		if (instrument != null) {
 			return instrument;
 		}
-
-		if (path_to_agent == null) {
+		if (pathToAgent == null) {
 			return null;
 		}
 
-		//
-		// Step 1 – JDK attach (preferred)
-		//
 		if (hasJdkAttach()) {
 			try {
-				boolean attached = jdkAttachSelf(path_to_agent, "");
-				if (attached) {
-					// Agent loaded via JDK attach. The agent should
-					// set BootstrapCommon.instrument in its install().
+				if (jdkAttachSelf(pathToAgent, "")) {
 					return instrument;
 				}
 			} catch (Throwable t) {
-				System.err.println("[BootstrapCommon] JDK attach failed (will try FeatureCreep attach): " + t);
+				System.err.println("[BootstrapCommon] JDK attach failed; trying fallback: " + t);
 			}
-		} else {
-			System.err.println("[BootstrapCommon] jdk.attach module not present; skipping JDK self-attach.");
 		}
 
-		//
-		// Step 2 – FeatureCreep attach fallback
-		//
 		if (classExists("featurecreep.attach.Attach")) {
 			try {
-				ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
-				Class<?> attachClass = Class.forName("featurecreep.attach.Attach", true, cl);
-
-				java.lang.reflect.Method attachMethod = attachClass.getMethod("attach", String.class, String.class);
-
-				// static method → invoke with null instance
-				attachMethod.invoke(null, path_to_agent, "");
-
+				ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+				Class<?> attachClass = Class.forName("featurecreep.attach.Attach", true, classLoader);
+				Method attachMethod = attachClass.getMethod("attach", String.class, String.class);
+				attachMethod.invoke(null, pathToAgent, "");
 			} catch (Throwable t) {
 				System.err.println("[BootstrapCommon] FeatureCreep attach failed: " + t);
 				t.printStackTrace(System.err);
 			}
-		} else {
-			System.err
-					.println("[BootstrapCommon] featurecreep.attach.Attach not found; cannot use FeatureCreep attach.");
 		}
 
 		return instrument;
 	}
 
-	/**
-	 * Attach to self using the standard JDK Attach API.
-	 *
-	 * @return true if attach was attempted and not explicitly blocked by
-	 *         AttachNotSupportedException; false if self-attach is clearly blocked.
-	 */
 	private static boolean jdkAttachSelf(String agentPath, String args) throws Exception {
-		// Ensure we’re running on a JDK with jdk.attach
 		Class<?> vmClass = Class.forName("com.sun.tools.attach.VirtualMachine");
-		Class<?> attachExClass = Class.forName("com.sun.tools.attach.AttachNotSupportedException");
+		Class<?> attachExceptionClass = Class.forName("com.sun.tools.attach.AttachNotSupportedException");
 
 		Method attach = vmClass.getMethod("attach", String.class);
 		Method loadAgent = vmClass.getMethod("loadAgent", String.class, String.class);
 		Method detach = vmClass.getMethod("detach");
 
-		// Java 11+ supports ProcessHandle
 		String pid = Long.toString(ProcessHandle.current().pid());
-
 		Object vm = null;
+
 		try {
 			try {
 				vm = attach.invoke(null, pid);
-			} catch (InvocationTargetException ite) {
-				Throwable cause = ite.getCause();
-				if (cause != null && attachExClass.isInstance(cause)) {
-					// JDK Attach is present but self-attach is blocked
-					System.err.println("[BootstrapCommon] JDK attach present but self-attach is blocked: " + cause);
+			} catch (InvocationTargetException exception) {
+				Throwable cause = exception.getCause();
+				if (cause != null && attachExceptionClass.isInstance(cause)) {
 					return false;
 				}
-				throw ite;
+				throw exception;
 			}
 
 			loadAgent.invoke(vm, agentPath, args == null ? "" : args);
@@ -168,54 +214,42 @@ public class BootstrapCommon {
 		}
 	}
 
-	/**
-	 * Check if jdk.attach is available in the current runtime.
-	 */
 	private static boolean hasJdkAttach() {
 		try {
 			Class.forName("com.sun.tools.attach.VirtualMachine", false, BootstrapCommon.class.getClassLoader());
 			return true;
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException exception) {
 			return false;
 		}
 	}
 
-	/**
-	 * Checks whether a class is available to the current class loader.
-	 */
 	public static boolean classExists(String name) {
 		try {
 			Class.forName(name, false, BootstrapCommon.class.getClassLoader());
 			return true;
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException exception) {
 			return false;
 		}
 	}
 
 	public static @Nullable String getJar() {
-		String jar = null;
-
 		try {
-			URI uriJar = BootstrapCommon.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+			URI source = BootstrapCommon.class.getProtectionDomain().getCodeSource().getLocation().toURI();
 
-			String uriJarString = uriJar.toString();
-
-			if (uriJarString.startsWith("union:")) { // For Modlauncher
-				uriJarString = uriJarString.replace("union:", "file://");
+			String value = source.toString();
+			if (value.startsWith("union:")) {
+				value = value.replace("union:", "file://");
+			}
+			if (value.startsWith("jar:")) {
+				value = value.substring(4);
 			}
 
-			if (uriJarString.startsWith("jar:")) {
-				uriJarString = uriJarString.substring(4); // remove "jar:"
-			}
-
-			URI cd_uri = new URI(uriJarString);
-			String cd_uri_path = cd_uri.getPath();
-			System.out.println("Found FC Jar " + cd_uri_path);
-			jar = new File(cd_uri_path).getAbsolutePath().split(".jar")[0] + ".jar";
-		} catch (Exception e) {
-			System.err.println("Could Not Find FeatureCreep Jar, this could cause problems");
-			e.printStackTrace();
+			String path = new URI(value).getPath();
+			return new File(path).getAbsolutePath().split("\\.jar")[0] + ".jar";
+		} catch (Exception exception) {
+			System.err.println("[BootstrapCommon] Could not locate bootstrap jar.");
+			exception.printStackTrace(System.err);
+			return null;
 		}
-		return jar;
 	}
 }

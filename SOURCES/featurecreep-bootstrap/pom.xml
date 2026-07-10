@@ -626,13 +626,13 @@
 		</dependency>
 
 
-		<!-- https://mvnrepository.com/artifact/net.fabricmc/sponge-mixin -->
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>sponge-mixin</artifactId>
-			<version>0.16.5+mixin.0.8.7</version>
-			<scope>provided</scope>
-		</dependency>
+<!-- Source: https://mvnrepository.com/artifact/net.fabricmc/sponge-mixin -->
+<dependency>
+    <groupId>net.fabricmc</groupId>
+    <artifactId>sponge-mixin</artifactId>
+    <version>0.17.3+mixin.0.8.7</version>
+    <scope>provided</scope>
+</dependency>
 
 
 		<!-- End of Do not include these in fat jar -->

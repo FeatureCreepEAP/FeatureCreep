@@ -3,6 +3,7 @@ package asbestosstar.bootstrap.minecraft;
 import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,46 +16,41 @@ import featurecreep.loader.ExecutionSide;
 import featurecreep.loader.GameProvider;
 import featurecreep.loader.GetPackagesFromClassLoader;
 
+/**
+ * Base provider shared by vanilla, Fabric, Forge, and NeoForge.
+ */
 public class MinecraftGameProvider implements GameProvider {
+	private static final Set<String> PACKAGES_NEEDED = new HashSet<>();
 
-	public static Set<String> packages_needed = new HashSet<String>();
 	static {
-		// Explicitly add core Minecraft packages to ensure delegation.
-		// If we don't do this, the Mod ClassLoader might load its own copy of these
-		// classes,
-		// causing "Not bootstrapped" errors because the static state is not shared.
-		packages_needed.add("net/minecraft"); // Covers all net.minecraft.* classes
-		packages_needed.add("com/mojang"); // Covers Mojang auth/brigadier/etc
-		packages_needed.add("it/unimi/dsi/fastutil"); // Minecraft depends heavily on this
+		PACKAGES_NEEDED.add("net/minecraft");
+		PACKAGES_NEEDED.add("com/mojang");
+		PACKAGES_NEEDED.add("it/unimi/dsi/fastutil");
+		PACKAGES_NEEDED.add("org/spongepowered/asm");
 
-		packages_needed.add("net/minecraft/core/registries");
-
-		// Scan existing classpath
-		for (String str : GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader()) {
-			packages_needed.add(str);
+		for (String packageName : GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader()) {
+			PACKAGES_NEEDED.add(packageName);
 		}
 	}
 
-	public static boolean debugmode = false;
-	public static Instrumentation instrumentation = BootstrapCommon.instrument;
+	private static volatile boolean debugMode;
+	private static volatile Instrumentation instrumentation = BootstrapCommon.instrument;
 
 	@Override
 	public boolean getDebugMode() {
-		// TODO Auto-generated method stub
-		return debugmode;
+		return debugMode;
 	}
 
 	@Override
-	public boolean setDebugMode(boolean val) {
-		// TODO Auto-generated method stub
-		debugmode = val;
-		return debugmode;
+	public boolean setDebugMode(boolean value) {
+		debugMode = value;
+		return value;
 	}
 
 	@Override
 	public Path[] getModulePKZipLocations() {
-		Path modsDir = java.nio.file.Paths.get("mods").toAbsolutePath().normalize();
-		return new Path[] { modsDir };
+		Path mods = Paths.get(System.getProperty("featurecreep.modsDir", "mods")).toAbsolutePath().normalize();
+		return new Path[] { mods };
 	}
 
 	@Override
@@ -64,69 +60,58 @@ public class MinecraftGameProvider implements GameProvider {
 
 	@Override
 	public Instrumentation getInstrumentation() {
-		// TODO Auto-generated method stub
 		return instrumentation;
 	}
 
 	@Override
-	public Instrumentation setInstrumentation(Instrumentation instrument) {
-		// TODO Auto-generated method stub
-		this.instrumentation = instrument;
-		return instrumentation;
+	public Instrumentation setInstrumentation(Instrumentation value) {
+		instrumentation = value;
+		return value;
 	}
 
 	@Override
 	public Set<String> getNeededPackages() {
-		// TODO Auto-generated method stub
-		return this.packages_needed;
+		return PACKAGES_NEEDED;
 	}
 
 	@Override
-	public void addNeededPackage(String pack) {
-		// TODO Auto-generated method stub
-		packages_needed.add(pack);
+	public void addNeededPackage(String packageName) {
+		PACKAGES_NEEDED.add(packageName);
 	}
 
 	@Override
 	public List<String> getAvoidedModSuffixes() {
-		// TODO Auto-generated method stub
-
-		List<String> set = new ArrayList<String>();
-		set.add(".nil.jar");
-		set.add(".nil");
-		set.add(".deactivation");
-		set.add(".disabled");
-		return set;
-
+		List<String> suffixes = new ArrayList<>();
+		suffixes.add(".nil.jar");
+		suffixes.add(".nil");
+		suffixes.add(".deactivation");
+		suffixes.add(".disabled");
+		return suffixes;
 	}
 
 	@Override
 	public ExecutionSide getExecutionSide() {
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		if (cl == null) {
-			cl = this.getClass().getClassLoader();
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		if (loader == null) {
+			loader = getClass().getClassLoader();
 		}
 
-		boolean clientPresent = cl.getResource("net/minecraft/client/Minecraft.class") != null;
-
-		return clientPresent ? ExecutionSide.CLIENT : ExecutionSide.SERVER;
+		return loader.getResource("net/minecraft/client/Minecraft.class") != null ? ExecutionSide.CLIENT
+				: ExecutionSide.SERVER;
 	}
 
 	@Override
 	public List<ModuleFinder> getDefaultModuleFinders() {
-		// TODO Auto-generated method stub
-		return new ArrayList<ModuleFinder>();
+		return new ArrayList<>();
 	}
 
 	@Override
 	public boolean isSuperLoaderModZip(File zip) {
-		return false;// Override in providers for Super Loader
+		return false;
 	}
 
 	@Override
 	public boolean isSuperLoaderModFolder(File folder) {
-		// TODO Auto-generated method stub
-		return false;// Override in providers for Super Loader
+		return false;
 	}
-
 }

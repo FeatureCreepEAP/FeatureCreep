@@ -2,46 +2,45 @@ package asbestosstar.bootstrap;
 
 import java.lang.instrument.Instrumentation;
 
+import asbestosstar.bootstrap.sm.InstrumentationMixinTransformer;
+
 /**
- * Java agent for FeatureCreep bootstrap. - premain: when supplied via
- * -javaagent at JVM start - agentmain: when attached dynamically via jdk.attach
+ * FeatureCreep Java agent.
  */
 public final class FeatureCreepAgent {
+	private static volatile Instrumentation instrumentation;
+	private static volatile InstrumentationMixinTransformer mixinTransformer;
 
 	private FeatureCreepAgent() {
 	}
 
-	private static volatile Instrumentation AGENT_INSTRUMENTATION;
-
 	public static Instrumentation getInstrumentation() {
-		return AGENT_INSTRUMENTATION;
+		return instrumentation;
 	}
 
-	/** JVM startup attach (-javaagent:path=agent.jar[=args]) */
 	public static void premain(String agentArgs, Instrumentation inst) {
 		install(inst);
 	}
 
-	/** Dynamic attach (VirtualMachine#loadAgent) */
 	public static void agentmain(String agentArgs, Instrumentation inst) {
 		install(inst);
 	}
 
-	private static void install(Instrumentation inst) {
-		if (FeatureCreepAgent.class.getClassLoader().getClass().getCanonicalName()
-				.equals("org.jboss.modules.ModuleClassLoader")) {
+	private static synchronized void install(Instrumentation inst) {
+		if (instrumentation != null) {
 			return;
 		}
 
+		instrumentation = inst;
 		BootstrapCommon.instrument = inst;
 		BootstrapCommon.agent_activated = true;
 
-		AGENT_INSTRUMENTATION = inst;
+		mixinTransformer = new InstrumentationMixinTransformer();
+		inst.addTransformer(mixinTransformer, inst.isRetransformClassesSupported());
 
-		// Optional marker (useful for debugging / checks)
 		System.setProperty("featurecreep.agent.active", "true");
 
-		System.out.println("[FeatureCreepAgent] Instrumentation installed. Redef=" + inst.isRedefineClassesSupported()
-				+ " Retransform=" + inst.isRetransformClassesSupported());
+		System.out.println("[FeatureCreepAgent] Instrumentation installed. Redefine="
+				+ inst.isRedefineClassesSupported() + ", retransform=" + inst.isRetransformClassesSupported());
 	}
 }
