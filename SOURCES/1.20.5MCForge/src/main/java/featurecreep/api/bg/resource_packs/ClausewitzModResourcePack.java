@@ -24,6 +24,7 @@ import featurecreep.api.bg.VersionDependentContstants;
 import featurecreep.api.clausewitz.mod.Mod;
 import featurecreep.api.hashing.Md5;
 import featurecreep.api.io.BasicIO;
+import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 
 public class ClausewitzModResourcePack implements VainillaResourcePack {
 
@@ -326,6 +327,7 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 	public static String getLocationFromDDSFileName(String file_name) {
 		return getNameSpaceAndLocationFromDDSFileName(file_name)[1];
 	}
+
 
 //TODO. make it so orespawn and datafied items are able to be removed in a pack and make an isEmptyOverride to check for that\
 

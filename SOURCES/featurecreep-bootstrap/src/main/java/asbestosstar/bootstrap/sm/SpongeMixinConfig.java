@@ -11,12 +11,39 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 public class SpongeMixinConfig implements IMixinConfigPlugin {
 
 	static {
-		
-		//SpongeMixinUtils.injectSpongeMixins();
+
+	}
+
+	@Override
+	public void onLoad(String mixinPackage) {
+		// TODO Auto-generated method stub
+
+		// SpongeMixinUtils.injectSpongeMixins();
+
+	}
+
+	@Override
+	public String getRefMapperConfig() {
+		// TODO Auto-generated method stub
+
+		return null;
+	}
+
+	@Override
+	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+		// TODO Auto-generated method stub
+
+		return true;
+	}
+
+	@Override
+	public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+		// TODO Auto-generated method stub
 
 		String featureConfig = "featurecreepimpl.mixins.json";
 
-		// Check if the resource exists in the current classloader has this config. this config is not part of the bootstrap but of the version specific projects
+		// Check if the resource exists in the current classloader has this config. this
+		// config is not part of the bootstrap but of the version specific projects
 		if (SpongeMixinConfig.class.getClassLoader().getResource(featureConfig) != null) {
 			try {
 				Mixins.addConfiguration(featureConfig);
@@ -26,29 +53,7 @@ public class SpongeMixinConfig implements IMixinConfigPlugin {
 			}
 		}
 
-	}
-
-	@Override
-	public void onLoad(String mixinPackage) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String getRefMapperConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-		// TODO Auto-generated method stub
+		// TODO, inject SpongeMixin Configs from Mods
 
 	}
 

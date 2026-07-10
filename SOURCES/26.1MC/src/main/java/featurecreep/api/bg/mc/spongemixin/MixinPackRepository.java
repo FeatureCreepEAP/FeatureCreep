@@ -2,7 +2,9 @@ package featurecreep.api.bg.mc.spongemixin;
 
 import java.util.Set;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,22 +19,16 @@ import net.minecraft.server.packs.repository.RepositorySource;
 @Mixin(PackRepository.class)
 public abstract class MixinPackRepository implements PackRepositoryExtension {
 
+    @Mutable
+    @Final
     @Shadow
     private Set<RepositorySource> sources;
 
     @Override
     public void addResourcePackFinder(RepositorySource source) {
-        // Check if the set is specifically a Google Guava RegularImmutableSet
-        if (this.sources.getClass().getName().equals("com.google.common.collect.RegularImmutableSet")) {
-            // It is a Google Immutable Set, use the reflection hack
-            GoogleCommonsImmutableMutaliser.addToRegularImmutableSet(source, this.sources);
-        } else {
-            // It is a standard Set (HashSet, LinkedHashSet, etc.), use the normal add method
-            this.sources.add(source);
-        }
+        this.sources = GoogleCommonsImmutableMutaliser.addToSet(source, this.sources);
     }
 
-    // Adding remap = false prevents the processor from looking for a refmap
     @Inject(method = "reload", at = @At("HEAD"), remap = false)
     private void onReload(CallbackInfo ci) {
         this.addResourcePackFinder(FCPackLoad.INSTANCE);

@@ -136,14 +136,8 @@ public class FCPackLoad implements ResourcePackProvider {
 	}
 	
 	
-	public static void updateProviders(Set<ResourcePackProvider> providers) {
-		if(providers instanceof ImmutableSet) {//I doubt it will be anything but regularimmutbleset
-			GoogleCommonsImmutableMutaliser.addToRegularImmutableSet(INSTANCE, providers);
-		}else {//Sometimes,like with FabricAPI, the type is changed, such as by fabric api, lets hope its not immutable
-			providers.add(INSTANCE);
-		}
-		
-		
+	public static Set<RepositorySource> updateProviders(Set<RepositorySource> providers) {
+	    return GoogleCommonsImmutableMutaliser.addToSet(INSTANCE, providers);
 	}
 	
 	

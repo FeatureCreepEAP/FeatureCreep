@@ -11,18 +11,17 @@ import net.minecraft.core.registries.BuiltInRegistries;
 @Mixin(BuiltInRegistries.class)
 public abstract class MixinBuiltInRegistries {
 
-    // Adding remap = false prevents the processor from looking for a refmap
     @Inject(
         method = "bootStrap",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/core/registries/BuiltInRegistries;createContents()V",
-            shift = At.Shift.AFTER,
-            remap = false // Also required for the target reference
+            target = "Lnet/minecraft/core/registries/BuiltInRegistries;freeze()V",
+            shift = At.Shift.BEFORE,
+            remap = false
         ),
         remap = false
     )
-    private static void afterCreateContents(CallbackInfo ci) {
+    private static void featurecreep$beforeFreeze(CallbackInfo ci) {
         FeatureCreepMC.init();
     }
 }

@@ -299,7 +299,7 @@
 		<dependency>
 			<groupId>com.asbestosstar</groupId>
 			<artifactId>featurecreep-loader</artifactId>
-			<version>6.0.0-am3</version>
+			<version>7</version>
 		</dependency>
 
 
@@ -307,7 +307,7 @@
 		<dependency>
 			<groupId>com.asbestosstar</groupId>
 			<artifactId>featurecreep-api</artifactId>
-			<version>6.0.0-am4</version>
+			<version>7</version>
 		</dependency>
 
 
@@ -315,7 +315,7 @@
 		<dependency>
 			<groupId>com.asbestosstar</groupId>
 			<artifactId>featurecreep-bootstrap</artifactId>
-			<version>0.0.3</version>
+			<version>7</version>
 		</dependency>
 
 

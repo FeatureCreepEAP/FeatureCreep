@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 import org.jboss.modules.Module;
 
 import asbestosstar.bootstrap.BootstrapCommon;
-import featurecreep.api.bg.datapacks.DataPackLoader;
 import featurecreep.api.bg.mc.FeatureCreepMC;
 import featurecreep.api.bg.resource_packs.ClausewitzModResourcePack;
 import featurecreep.api.bg.resource_packs.FCPackMCMeta;
@@ -35,7 +34,6 @@ public class PackLoader implements VainillaResourcePack {
     public static VainillaResourcePack INSTANCE = new PackLoader();
 
     public static void loadPacks() {
-        DataPackLoader.onInitialise();
         packs.put(pack_name, INSTANCE);
         
         // Load Clausewitz Mods

@@ -23,6 +23,7 @@ import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
+import net.minecraft.server.packs.metadata.MetadataSectionType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.Pack.Metadata;
 import net.minecraft.server.packs.repository.PackSource;
@@ -159,16 +160,6 @@ public interface VainillaResourcePack extends PackResources {
 		return getPackPrefixes();
 	}
 
-	@Override
-	@Vainilla
-	public default <T> T getMetadataSection(MetadataSectionSerializer<T> var1) throws IOException {
-		Gson gson = new Gson();
-		JsonObject obj = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
-		if (!obj.has(var1.getMetadataSectionName())) {
-			return null;
-		}
-		return var1.fromJson(GsonHelper.getAsJsonObject(obj, var1.getMetadataSectionName()));
-	}
 
 	public FCPackMCMeta getPackMCMetaInfo();
 
@@ -281,6 +272,18 @@ public interface VainillaResourcePack extends PackResources {
 			return new CompositePackResources(openPrimary(var1), list2);
 		}
 
+	}
+	
+	
+	@Override
+	@Vainilla
+	public default <T> T getMetadataSection(MetadataSectionSerializer<T> var1) throws IOException {
+		Gson gson = new Gson();
+		JsonObject obj = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
+		if (!obj.has(var1.getMetadataSectionName())) {
+			return null;
+		}
+		return var1.fromJson(GsonHelper.getAsJsonObject(obj, var1.getMetadataSectionName()));
 	}
 
 }

@@ -18,22 +18,22 @@ import featurecreep.loader.GetPackagesFromClassLoader;
 public class MinecraftGameProvider implements GameProvider {
 
 	public static Set<String> packages_needed = new HashSet<String>();
-    static {
-        // Explicitly add core Minecraft packages to ensure delegation.
-        // If we don't do this, the Mod ClassLoader might load its own copy of these classes,
-        // causing "Not bootstrapped" errors because the static state is not shared.
-        packages_needed.add("net/minecraft"); // Covers all net.minecraft.* classes
-        packages_needed.add("com/mojang");    // Covers Mojang auth/brigadier/etc
-        packages_needed.add("it/unimi/dsi/fastutil"); // Minecraft depends heavily on this
-        
-        packages_needed.add("net/minecraft/core/registries");
-        
-        
-        // Scan existing classpath
-        for (String str : GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader()) {
-            packages_needed.add(str);
-        }
-    }
+	static {
+		// Explicitly add core Minecraft packages to ensure delegation.
+		// If we don't do this, the Mod ClassLoader might load its own copy of these
+		// classes,
+		// causing "Not bootstrapped" errors because the static state is not shared.
+		packages_needed.add("net/minecraft"); // Covers all net.minecraft.* classes
+		packages_needed.add("com/mojang"); // Covers Mojang auth/brigadier/etc
+		packages_needed.add("it/unimi/dsi/fastutil"); // Minecraft depends heavily on this
+
+		packages_needed.add("net/minecraft/core/registries");
+
+		// Scan existing classpath
+		for (String str : GetPackagesFromClassLoader.getPackageNamesInCurrentClassLoader()) {
+			packages_needed.add(str);
+		}
+	}
 
 	public static boolean debugmode = false;
 	public static Instrumentation instrumentation = BootstrapCommon.instrument;
@@ -54,7 +54,7 @@ public class MinecraftGameProvider implements GameProvider {
 	@Override
 	public Path[] getModulePKZipLocations() {
 		Path modsDir = java.nio.file.Paths.get("mods").toAbsolutePath().normalize();
-		return new Path[] {modsDir};
+		return new Path[] { modsDir };
 	}
 
 	@Override

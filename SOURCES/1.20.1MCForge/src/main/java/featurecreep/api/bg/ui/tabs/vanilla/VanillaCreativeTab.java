@@ -1,80 +1,54 @@
 package featurecreep.api.bg.ui.tabs.vanilla;
 
-import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
-import game.BuiltInRegistries;
-import game.CreativeTab;
-import game.CreativeTabs;
+import featurecreep.api.bg.ui.FCCreativeTab;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.core.registries.Registries;
 
+@Deprecated(forRemoval = true, since = "13")
+public class VanillaCreativeTab extends FCCreativeTab {
 
-public class VanillaCreativeTab  implements UnifiedItemGroupGetter
-{
-	public String tabname;
-	
-public VanillaCreativeTab(String name) {
-	tabname=name;
-	setTabName(getVanillaGroupFromString(this).getUnlocalisedName().getString()); //May not work, ideally tabname will be used for most //In Yarn the ID is the String name, kinda throws off considering here its the number
-	setID(0);//TODO
-}
+    private final String legacyName;
+    private ResourceKey<CreativeModeTab> cachedKey;
 
-//Minecraft Only gotta change the mappings for these once i figure them out
-public static CreativeTab getVanillaGroupFromString(VanillaCreativeTab groupname)
-{
-if (groupname.tabname.equals("BUILDING_BLOCKS"))
-{
-return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.BUILDING_BLOCKS);	
-}
-else if (groupname.tabname.equals("BREWING"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.MISULANIOUS);	
-}
-else if (groupname.tabname.equals("COMBAT"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.COMBAT);
-}
-else if (groupname.tabname.equals("DECORATIONS"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.BUILDING_BLOCKS);
-}
-else if (groupname.tabname.equals("FOOD"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.FOODSTUFFS);
-}
-else if (groupname.tabname.equals("MATERIALS"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.PLANTS);
-}
-else if (groupname.tabname.equals("MISC"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.MISULANIOUS);
-}
-else if (groupname.tabname.equals("REDSTONE"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.REDSTONE);
-}
-else if (groupname.tabname.equals("TOOLS"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.TOOLS);
-}
-else if (groupname.tabname.equals("TRANSPORTATION"))
-{
-	return BuiltInRegistries.CREATIVE_TABS.get(CreativeTabs.FUNCTION);
-}else
-{
-	return null;
-}
+    public VanillaCreativeTab(String legacyName) {
+        this.legacyName = legacyName;
+        this.setTabName(legacyName);
+    }
 
+    @Override
+    public CreativeModeTab get() {
+        ResourceKey<CreativeModeTab> key = getKey();
+        return BuiltInRegistries.CREATIVE_MODE_TAB.getOrThrow(key);
+    }
 
+    public ResourceKey<CreativeModeTab> getKey() {
+        if (cachedKey == null) {
+            cachedKey = mapLegacyName(legacyName);
+        }
+        return cachedKey;
+    }
 
+    private static ResourceKey<CreativeModeTab> mapLegacyName(String name) {
+        String path = switch (name) {
+            case "BUILDING_BLOCKS" -> "building_blocks";
+            case "BREWING" -> "brewing";
+            case "COMBAT" -> "combat";
+            case "DECORATIONS" -> "colored_blocks"; // adjust if your target MC version differs
+            case "FOOD" -> "food_and_drinks";
+            case "MATERIALS" -> "ingredients";
+            case "MISC" -> "spawn_eggs"; // or another mapping if your legacy meaning differs
+            case "REDSTONE" -> "redstone_blocks";
+            case "TOOLS" -> "tools_and_utilities";
+            case "TRANSPORTATION" -> "functional_blocks"; // adjust if needed
+            default -> throw new IllegalArgumentException("Unknown legacy creative tab: " + name);
+        };
 
-
-}
-
-@Override
-public CreativeTab get() {
-	// TODO Auto-generated method stub
-	return getVanillaGroupFromString(this);
-}
-
-
-
+        return ResourceKey.create(
+            Registries.CREATIVE_MODE_TAB,
+            ResourceLocation.withDefaultNamespace(path)
+        );
+    }
 }
