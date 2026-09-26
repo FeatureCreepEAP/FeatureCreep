@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="featurecreep.minecraft.26_1_2" xmlns="urn:jboss:module:1.9">
+  <properties>
+    <property name="FeatureCreep-Mod-Id" value="featurecreep-minecraft-26.1.2"/>
+    <property name="FeatureCreep-Name" value="FeatureCreep Minecraft 26.1.2"/>
+    <property name="FeatureCreep-Description" value="FeatureCreep 12 Minecraft implementation for 26.1.2"/>
+    <property name="FeatureCreep-Visibility" value="public"/>
+    <property name="FeatureCreep-Auto-Dependencies" value="true"/>
+    <property name="FeatureCreep-Host-Fallback" value="true"/>
+    <property name="FeatureCreep-Side" value="both"/>
+    <property name="FeatureCreep-Runnable" value="false"/>
+    <property name="FeatureCreep-Nested-Jars" value="private"/>
+    <property name="Module-Version" value="12"/>
+    <property name="FeatureCreep-Target-Game" value="minecraft"/>
+    <property name="FeatureCreep-Target-Version" value="26.1.2"/>
+    <property name="MixinConfigs" value="featurecreepimpl.mixins.json"/>
+  </properties>
+  <resources>
+    <resource-root path="."/>
+  </resources>
+</module>

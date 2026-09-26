@@ -1,0 +1,16 @@
+{
+  "loader": {
+    "name": "java_plain",
+    "version": "1.0"
+  },
+  "license": "CC0-1.0",
+  "plugins": [
+    {
+      "id": "featurecreep",
+      "name": "FeatureCreep",
+      "version": "12",
+      "entrypoint": "asbestosstar.bootstrap.minecraft.SpongeBootstrapPlugin",
+      "description": "FeatureCreep JBoss Modules bootstrap. Sponge owns the host Mixin runtime."
+    }
+  ]
+}

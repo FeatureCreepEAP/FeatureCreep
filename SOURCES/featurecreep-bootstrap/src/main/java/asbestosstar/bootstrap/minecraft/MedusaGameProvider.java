@@ -1,18 +1,11 @@
 package asbestosstar.bootstrap.minecraft;
 
 import java.io.File;
-import java.lang.instrument.Instrumentation;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.jboss.modules.ModuleFinder;
 
-import asbestosstar.bootstrap.BootstrapCommon;
 import featurecreep.loader.ExecutionSide;
-import featurecreep.loader.GetPackagesFromClassLoader;
 
 public class MedusaGameProvider extends MinecraftGameProvider {
 

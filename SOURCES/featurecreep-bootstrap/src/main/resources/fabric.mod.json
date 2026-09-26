@@ -1,30 +1,28 @@
 {
-	"schemaVersion": 1,
-	"id": "featurecreep-bootstrap",
-	"version": "0",
-	"name": "featurecreep-bootstrap",
-	"description": "Bootstraps FeatureCreep Loader",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https//:github.com/FeatureCreepEAP/",
-		"sources": "https//:github.com/FeatureCreepEAP/"
-	},
-	"license": "CC0-1.0",
-	"icon": "",
-	"environment": "*",
-	"entrypoints": {
-
-	},
-	"mixins": [
-		"featurecreep.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.18.2"
-		,"java": ">=11"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "featurecreep-bootstrap",
+  "version": "12",
+  "name": "FeatureCreep Bootstrap",
+  "description": "Bootstraps FeatureCreep through its Sponge Mixin plugin while reusing Fabric's Mixin runtime.",
+  "authors": [
+    "Asbestosstar"
+  ],
+  "contact": {
+    "homepage": "https://github.com/FeatureCreepEAP/FeatureCreep",
+    "sources": "https://github.com/FeatureCreepEAP/FeatureCreep"
+  },
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "preLaunch": [
+      "asbestosstar.bootstrap.minecraft.FabricBootstrapEntrypoint"
+    ]
+  },
+  "mixins": [
+    "featurecreepimpl.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.3",
+    "java": ">=25"
+  }
 }

@@ -1,31 +1,43 @@
 #!/bin/sh
-echo "We trust you have received the usual lecture from the local System
-Administrator. It usually boils down to these three things:"
-echo "	#1) Respect the privacy of others."
-echo "	#2) Think before you type."
-echo "	#3) With great power comes great responsibility."	
-if [ $PWD = ~ ];
-	
-then
-	
-	echo "You are running fpmbuild from your Home Directory, your fpm data will be stored at ~/fpmbuild"
-	
-	#[ loc = ~/fpmbuild ]
-	
-	java -Xss1g -jar ~/fpmbuild/.fpmbuild/jruby-complete-9.3.7.0.jar ~/fpmbuild/.fpmbuild/fpmbuildmain.rb ~/fpmbuild $1 $2 $3 $4
-	
-else
-	
-	echo ""
-	
-	#[ loc = $PWD ]
-	
-        java -Xss1g -jar $PWD/.fpmbuild/jruby-complete-9.3.7.0.jar $PWD/.fpmbuild/fpmbuildmain.rb $PWD $1 $2 $3 $4
-	
- 
-	
-#echo ~
-	
-#echo $PWD
-	
+set -eu
+
+# fpmbuild-version=0.0.1
+# Maven Central release used by this repository. POSIX shell variable names cannot contain '-', so the executable variable is fpmbuild_version.
+fpmbuild_version="0.0.1"
+
+# Optional environment override for CI/agents without editing this file.
+if [ -n "${FPMBUILD_VERSION:-}" ]; then
+    fpmbuild_version="$FPMBUILD_VERSION"
 fi
+
+SCRIPT_DIR=$(CDPATH= cd "$(dirname "$0")" && pwd -P)
+JAVA_BIN="java"
+if [ -n "${JAVA_HOME:-}" ]; then
+    JAVA_BIN="$JAVA_HOME/bin/java"
+fi
+
+if ! "$JAVA_BIN" -version >/dev/null 2>&1; then
+    echo "FPMBuild requires Java 25+. Set JAVA_HOME or put java on PATH." >&2
+    exit 1
+fi
+
+M2_REPOSITORY="${M2_REPOSITORY:-${HOME}/.m2/repository}"
+FPMBUILD_GROUP_PATH="com/asbestosstar/fpmbuild-java"
+FPMBUILD_JAR="$M2_REPOSITORY/$FPMBUILD_GROUP_PATH/$fpmbuild_version/fpmbuild-java-$fpmbuild_version.jar"
+FPMBUILD_URL="${FPMBUILD_REPOSITORY:-https://repo1.maven.org/maven2}/$FPMBUILD_GROUP_PATH/$fpmbuild_version/fpmbuild-java-$fpmbuild_version.jar"
+BOOTSTRAP_SOURCE="$SCRIPT_DIR/tools/FPMBuildMavenCentralBootstrap.java"
+
+if [ ! -f "$FPMBUILD_JAR" ]; then
+    echo "FPMBuild $fpmbuild_version is not in the local Maven repository." >&2
+    echo "Downloading from Maven Central to: $FPMBUILD_JAR" >&2
+    "$JAVA_BIN" "$BOOTSTRAP_SOURCE" "$FPMBUILD_URL" "$FPMBUILD_JAR"
+fi
+
+# Preserve the classic tutorial invocation: ./fpmbuild -ba SPECS/examplemod.spec
+# The Java FPMBuild legacy form expects the repository root before -ba.
+if [ "${1:-}" = "-ba" ]; then
+    exec "$JAVA_BIN" -jar "$FPMBUILD_JAR" "$SCRIPT_DIR" "$@"
+fi
+
+# Modern FPMBuild commands (inspect-project, build, agent --stdio, etc.) are passed through unchanged.
+exec "$JAVA_BIN" -jar "$FPMBUILD_JAR" "$@"

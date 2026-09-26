@@ -2,220 +2,118 @@ package asbestosstar.bootstrap;
 
 import java.io.File;
 import java.lang.instrument.Instrumentation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 
 import javax.annotation.Nullable;
 
+import featurecreep.attach.Attach;
 import featurecreep.loader.FCLoaderBasic;
-import featurecreep.loader.flat.FCLoaderFlat;
 
+/** Shared bootstrap utilities used by the FeatureCreep launch integrations. */
 public class BootstrapCommon {
 
-	/**
-	 * True if the agent successfully activates.
-	 */
-	public static boolean agent_activated = false;
-	public static Instrumentation instrument;
-	public static FCLoaderBasic loader;
-	public static FCLoaderFlat flatloader;
+    /** True after the Java agent has supplied an Instrumentation instance. */
+    public static boolean agent_activated = false;
+    public static Instrumentation instrument;
+    public static FCLoaderBasic loader;
 
-	/**
-	 * Default init
-	 *
-	 * @return true if an Instrumentation instance was obtained
-	 */
-	public static boolean initDefault() {
-		if (instrument != null && agent_activated) {
-			return true;
-		}
+    /**
+     * Activates the FeatureCreep agent using the direct v12 HotSpot attach path.
+     *
+     * @return true if an Instrumentation instance was obtained
+     */
+    public static boolean initDefault() {
+        if (instrument != null && agent_activated) {
+            return true;
+        }
 
-		activateAgent(getJar());
+        activateAgent(getJar());
 
-		// If the agent already set our local static, done
-		if (instrument != null && agent_activated) {
-			return true;
-		}
+        if (instrument != null && agent_activated) {
+            return true;
+        }
 
-		// Cross-classloader recovery: read instrumentation from the agent-side class
-		try {
-			ClassLoader sys = ClassLoader.getSystemClassLoader();
+        // The agent can be loaded by a different class loader. Recover the
+        // Instrumentation instance from the system-visible agent class when needed.
+        try {
+            ClassLoader sys = ClassLoader.getSystemClassLoader();
+            Class<?> agentClass = Class.forName("asbestosstar.bootstrap.FeatureCreepAgent", false, sys);
+            Method m = agentClass.getMethod("getInstrumentation");
+            Object got = m.invoke(null);
 
-			Class<?> agentClass = Class.forName("asbestosstar.bootstrap.FeatureCreepAgent", false, sys);
+            if (got instanceof Instrumentation instrumentation) {
+                instrument = instrumentation;
+                agent_activated = true;
+                return true;
+            }
+        } catch (Throwable t) {
+            System.err.println("[BootstrapCommon] Could not fetch Instrumentation from agent loader: " + t);
+        }
 
-			Method m = agentClass.getMethod("getInstrumentation");
-			Object got = m.invoke(null);
+        return false;
+    }
 
-			if (got instanceof Instrumentation) {
-				instrument = (Instrumentation) got;
-				agent_activated = true;
-				return true;
-			}
-		} catch (Throwable t) {
-			System.err.println("[BootstrapCommon] Could not fetch Instrumentation from agent loader: " + t);
-			t.printStackTrace(System.err);
-		}
+    /**
+     * Activates the agent in the current JVM using FeatureCreep API's direct
+     * HotSpot attach implementation. This intentionally does not use
+     * {@code jdk.attach.VirtualMachine} and does not depend on
+     * {@code jdk.attach.allowAttachSelf}.
+     *
+     * @param pathToAgent path to the FeatureCreep agent JAR
+     * @return the Instrumentation instance if the agent has already published it
+     */
+    public static @Nullable Instrumentation activateAgent(String pathToAgent) {
+        if (instrument != null) {
+            return instrument;
+        }
+        if (pathToAgent == null || pathToAgent.isBlank()) {
+            return null;
+        }
 
-		return false;
-	}
+        try {
+            Attach.attach(pathToAgent, "");
+        } catch (Throwable t) {
+            System.err.println("[BootstrapCommon] FeatureCreep direct attach failed: " + t);
+            t.printStackTrace(System.err);
+        }
 
-	/**
-	 * Attempts to activate the agent in the current JVM.
-	 * <p>
-	 * Order of attempts:
-	 * </p>
-	 * <ol>
-	 * <li>JDK Attach API (jdk.attach, preferred when available & self-attach
-	 * allowed)</li>
-	 * <li>FeatureCreep attach (featurecreep.attach.Attach)</li>
-	 * </ol>
-	 */
-	public static @Nullable Instrumentation activateAgent(String path_to_agent) {
-		if (instrument != null) {
-			return instrument;
-		}
+        return instrument;
+    }
 
-		if (path_to_agent == null) {
-			return null;
-		}
+    /** Checks whether a class is available without initializing it. */
+    public static boolean classExists(String name) {
+        try {
+            Class.forName(name, false, BootstrapCommon.class.getClassLoader());
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 
-		//
-		// Step 1 – JDK attach (preferred)
-		//
-		if (hasJdkAttach()) {
-			try {
-				boolean attached = jdkAttachSelf(path_to_agent, "");
-				if (attached) {
-					// Agent loaded via JDK attach. The agent should
-					// set BootstrapCommon.instrument in its install().
-					return instrument;
-				}
-			} catch (Throwable t) {
-				System.err.println("[BootstrapCommon] JDK attach failed (will try FeatureCreep attach): " + t);
-			}
-		} else {
-			System.err.println("[BootstrapCommon] jdk.attach module not present; skipping JDK self-attach.");
-		}
+    /** Returns the current bootstrap/agent JAR path when it can be determined. */
+    public static @Nullable String getJar() {
+        String jar = null;
 
-		//
-		// Step 2 – FeatureCreep attach fallback
-		//
-		if (classExists("featurecreep.attach.Attach")) {
-			try {
-				ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try {
+            URI uriJar = BootstrapCommon.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+            String uriJarString = uriJar.toString();
 
-				Class<?> attachClass = Class.forName("featurecreep.attach.Attach", true, cl);
+            if (uriJarString.startsWith("union:")) { // ModLauncher
+                uriJarString = uriJarString.replace("union:", "file://");
+            }
+            if (uriJarString.startsWith("jar:")) {
+                uriJarString = uriJarString.substring(4);
+            }
 
-				java.lang.reflect.Method attachMethod = attachClass.getMethod("attach", String.class, String.class);
-
-				// static method → invoke with null instance
-				attachMethod.invoke(null, path_to_agent, "");
-
-			} catch (Throwable t) {
-				System.err.println("[BootstrapCommon] FeatureCreep attach failed: " + t);
-				t.printStackTrace(System.err);
-			}
-		} else {
-			System.err
-					.println("[BootstrapCommon] featurecreep.attach.Attach not found; cannot use FeatureCreep attach.");
-		}
-
-		return instrument;
-	}
-
-	/**
-	 * Attach to self using the standard JDK Attach API.
-	 *
-	 * @return true if attach was attempted and not explicitly blocked by
-	 *         AttachNotSupportedException; false if self-attach is clearly blocked.
-	 */
-	private static boolean jdkAttachSelf(String agentPath, String args) throws Exception {
-		// Ensure we’re running on a JDK with jdk.attach
-		Class<?> vmClass = Class.forName("com.sun.tools.attach.VirtualMachine");
-		Class<?> attachExClass = Class.forName("com.sun.tools.attach.AttachNotSupportedException");
-
-		Method attach = vmClass.getMethod("attach", String.class);
-		Method loadAgent = vmClass.getMethod("loadAgent", String.class, String.class);
-		Method detach = vmClass.getMethod("detach");
-
-		// Java 11+ supports ProcessHandle
-		String pid = Long.toString(ProcessHandle.current().pid());
-
-		Object vm = null;
-		try {
-			try {
-				vm = attach.invoke(null, pid);
-			} catch (InvocationTargetException ite) {
-				Throwable cause = ite.getCause();
-				if (cause != null && attachExClass.isInstance(cause)) {
-					// JDK Attach is present but self-attach is blocked
-					System.err.println("[BootstrapCommon] JDK attach present but self-attach is blocked: " + cause);
-					return false;
-				}
-				throw ite;
-			}
-
-			loadAgent.invoke(vm, agentPath, args == null ? "" : args);
-			return true;
-		} finally {
-			if (vm != null) {
-				try {
-					detach.invoke(vm);
-				} catch (Throwable ignored) {
-				}
-			}
-		}
-	}
-
-	/**
-	 * Check if jdk.attach is available in the current runtime.
-	 */
-	private static boolean hasJdkAttach() {
-		try {
-			Class.forName("com.sun.tools.attach.VirtualMachine", false, BootstrapCommon.class.getClassLoader());
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-	}
-
-	/**
-	 * Checks whether a class is available to the current class loader.
-	 */
-	public static boolean classExists(String name) {
-		try {
-			Class.forName(name, false, BootstrapCommon.class.getClassLoader());
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-	}
-
-	public static @Nullable String getJar() {
-		String jar = null;
-
-		try {
-			URI uriJar = BootstrapCommon.class.getProtectionDomain().getCodeSource().getLocation().toURI();
-
-			String uriJarString = uriJar.toString();
-
-			if (uriJarString.startsWith("union:")) { // For Modlauncher
-				uriJarString = uriJarString.replace("union:", "file://");
-			}
-
-			if (uriJarString.startsWith("jar:")) {
-				uriJarString = uriJarString.substring(4); // remove "jar:"
-			}
-
-			URI cd_uri = new URI(uriJarString);
-			String cd_uri_path = cd_uri.getPath();
-			System.out.println("Found FC Jar " + cd_uri_path);
-			jar = new File(cd_uri_path).getAbsolutePath().split(".jar")[0] + ".jar";
-		} catch (Exception e) {
-			System.err.println("Could Not Find FeatureCreep Jar, this could cause problems");
-			e.printStackTrace();
-		}
-		return jar;
-	}
+            URI codeSourceUri = new URI(uriJarString);
+            String codeSourcePath = codeSourceUri.getPath();
+            System.out.println("Found FC Jar " + codeSourcePath);
+            jar = new File(codeSourcePath).getAbsolutePath().split("\\.jar", 2)[0] + ".jar";
+        } catch (Exception e) {
+            System.err.println("Could Not Find FeatureCreep Jar, this could cause problems");
+            e.printStackTrace();
+        }
+        return jar;
+    }
 }

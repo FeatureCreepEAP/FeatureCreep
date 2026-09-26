@@ -1,21 +1,13 @@
-
-modLoader="javafml" #mandatory
-
-
-license="Public Domain"
+modLoader="javafml"
 loaderVersion="*"
+license="Public Domain"
 
-[[mods]] #mandatory
+[[mods]]
+modId="featurecreep"
+version="12"
+displayName="FeatureCreep"
+authors="Asbestosstar"
+description='''FeatureCreep JBoss Modules bootstrap. Forge owns the host Mixin runtime; FeatureCreep only registers module-declared Mixin configs with it.'''
 
-# The modid of the mod
-modId="featurecreep" #mandatory
-
-version="5am0" #mandatory
-
-displayName="FeatureCreep" #mandatory
-
-authors="Asbestosstar" #optional
-
-# The description text for the mod (multi line!) (#mandatory)
-description='''This file is temporary we will move back to modlauncher services later'''
-
+[[mixins]]
+config="featurecreepimpl.mixins.json"
