@@ -2,6 +2,9 @@ package featurecreep.api.bg.items.projectile;
 
 import featurecreep.api.bg.items.FCItemAPI;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 
@@ -16,7 +19,8 @@ public class FCBow extends BowItem implements FCItemAPI<FCBow> {
 	}
 
 	public FCBow(int id, String modid, String name, UnifiedItemGroupGetter group) {
-		super(new Item.Properties());
+		super(new Item.Properties().setId(ResourceKey.create(Registries.ITEM,
+				Identifier.fromNamespaceAndPath(modid, name))));
 		initialise(id, modid, name, group);
 
 	}

@@ -28,7 +28,9 @@ public class FeatureCreepMC {
 
     public static void init() {
         System.out.println("FC Init");
-        MinecraftCommonStartup.start();
+        // Ensure loader/module discovery exists, but do not run modules until the
+        // game-side registries and Clausewitz discovery below have been prepared.
+        MinecraftCommonStartup.bootstrap();
         FCItems.onInitialise();
         
         // Search filesystem for Clausewitz mods
@@ -44,9 +46,9 @@ public class FeatureCreepMC {
             clausewitz_module_modloader_no_modfile.search(mod);
         }
 
-        // Run Module Mods
-        BootstrapCommon.loader.runMods();
-        
+        // Run FeatureCreep modules exactly once after game-side discovery.
+        MinecraftCommonStartup.start();
+
         PackLoader.loadPacks();
     }
 

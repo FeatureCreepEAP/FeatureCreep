@@ -27,7 +27,7 @@ public class VanillaItem implements FCItemAPI<VanillaItem> {
 		setUnlocName(registry_name.split(":")[1]);
 		// registerModels(); We do not need this at this time, maybe in the future we
 		// can do something with it
-		setDefaultCreativeTab(FCCreativeTabs.TOOLS.get()); // May not work on all versions, we may need to remove this.
+		setDefaultCreativeTab(FCCreativeTabs.TOOLS); // May not work on all versions, we may need to remove this.
 															// Yay it works on 1.13 and newer, we will need to check
 															// about 1.19.3 though, 1.19.3 does not work but i can put a
 															// generic tab. Soon I will make a porting tab though

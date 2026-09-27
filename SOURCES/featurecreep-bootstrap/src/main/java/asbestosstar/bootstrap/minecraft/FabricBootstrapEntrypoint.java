@@ -6,6 +6,6 @@ import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 public final class FabricBootstrapEntrypoint implements PreLaunchEntrypoint {
     @Override
     public void onPreLaunch() {
-        MinecraftCommonStartup.start();
+        MinecraftCommonStartup.bootstrap();
     }
 }

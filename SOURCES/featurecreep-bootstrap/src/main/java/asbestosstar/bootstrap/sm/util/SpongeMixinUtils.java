@@ -8,6 +8,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Enumeration;
+import java.util.Collections;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.jboss.modules.Module;
@@ -220,6 +223,34 @@ public final class SpongeMixinUtils {
                 }
             }
             return null;
+        }
+
+        @Override
+        public Enumeration<URL> getResources(String name) throws IOException {
+            Enumeration<URL> base = super.getResources(name);
+            if (!"META-INF/services/org.spongepowered.asm.service.IMixinService".equals(name)) {
+                return base;
+            }
+            List<URL> filtered = new ArrayList<>();
+            while (base.hasMoreElements()) {
+                URL u = base.nextElement();
+                String text;
+                try (InputStream in = u.openStream()) {
+                    text = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                }
+                text = text.replaceAll("(?m)^org\\.spongepowered\\.asm\\.service\\.mojang\\.MixinServiceLaunchWrapper.*\\R?", "");
+                final byte[] bytes = text.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                filtered.add(new URL(null, "featurecreep-mixin-service:" + filtered.size(), new java.net.URLStreamHandler() {
+                    @Override
+                    protected java.net.URLConnection openConnection(URL url) {
+                        return new java.net.URLConnection(url) {
+                            @Override public void connect() {}
+                            @Override public InputStream getInputStream() { return new java.io.ByteArrayInputStream(bytes); }
+                        };
+                    }
+                }));
+            }
+            return Collections.enumeration(filtered);
         }
 
         @Override

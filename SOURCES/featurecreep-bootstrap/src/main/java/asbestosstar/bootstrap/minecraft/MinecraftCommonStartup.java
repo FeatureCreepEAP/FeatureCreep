@@ -8,6 +8,7 @@ import featurecreep.loader.GameProvider;
 /** Shared Minecraft bootstrap across vanilla and supported superloaders. */
 public final class MinecraftCommonStartup {
     private static volatile boolean bootstrapped;
+    private static volatile boolean started;
     public static final MinecraftHostKind HOST = MinecraftHostDetector.detect();
     public static final GameProvider prov = getGameProvider(HOST);
 
@@ -66,9 +67,11 @@ public final class MinecraftCommonStartup {
         start();
     }
 
-    public static void start() {
+    public static synchronized void start() {
         bootstrap();
+        if (started) return;
         BootstrapCommon.loader.runMods();
+        started = true;
     }
 
     private static GameProvider getGameProvider(MinecraftHostKind host) {

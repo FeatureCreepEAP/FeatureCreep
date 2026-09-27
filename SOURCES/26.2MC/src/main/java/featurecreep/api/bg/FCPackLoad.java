@@ -3,10 +3,6 @@ package featurecreep.api.bg;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
-
-import com.google.common.collect.ImmutableSet;
-
-import featurecreep.api.anti_encapsulation.GoogleCommonsImmutableMutaliser;
 import featurecreep.api.bg.resource_packs.VainillaResourcePack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackLocationInfo;
@@ -88,14 +84,24 @@ public class FCPackLoad implements RepositorySource {
 		return false;
 	}
 
+	/**
+	 * Legacy compatibility helper. New code should use PackRepositoryExtension,
+	 * which keeps FeatureCreep sources separate from Minecraft's own source set.
+	 *
+	 * This method deliberately does not use reflection to mutate Guava immutable
+	 * collections. If a caller supplies an immutable set, the PackRepository mixin
+	 * discovery hook still supplies FeatureCreep's packs at runtime.
+	 */
+	@Deprecated
 	public static void updateProviders(Set<RepositorySource> providers) {
-		if (providers instanceof ImmutableSet) {// I doubt it will be anything but regularimmutbleset
-			GoogleCommonsImmutableMutaliser.addToRegularImmutableSet(INSTANCE, providers);
-		} else {// Sometimes,like with FabricAPI, the type is changed, such as by fabric api,
-				// lets hope its not immutable
-			providers.add(INSTANCE);
+		if (providers == null || providers.contains(INSTANCE)) {
+			return;
 		}
-
+		try {
+			providers.add(INSTANCE);
+		} catch (UnsupportedOperationException ignored) {
+			System.out.println("FeatureCreep: PackRepository source set is immutable; using the non-mutating discovery hook instead.");
+		}
 	}
 
 }

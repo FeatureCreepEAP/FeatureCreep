@@ -8,6 +8,10 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.security.ProtectionDomain;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Collections;
+import java.io.IOException;
 
 import asbestosstar.bootstrap.BootstrapCommon;
 import asbestosstar.bootstrap.minecraft.MinecraftHostKind;

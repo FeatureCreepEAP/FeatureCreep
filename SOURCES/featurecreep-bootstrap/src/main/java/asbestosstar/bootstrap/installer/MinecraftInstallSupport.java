@@ -14,12 +14,16 @@ public final class MinecraftInstallSupport {
     public static final String FC_VERSION = "12";
     public static final String MIXIN_VERSION = "0.8.7";
     public static final String ASM_VERSION = "9.5";
+    public static final String JBOSS_MODULES_VERSION = "2.3.0";
+    public static final String MIXINEXTRAS_VERSION = "0.5.5";
     public static final List<String> SUPPORTED_VERSIONS = List.of("26.1.2", "26.2", "26.3", "26.4");
 
     private static final ArtifactCoordinate LOADER = new ArtifactCoordinate("com.asbestosstar", "featurecreep-loader", FC_VERSION, ArtifactResolver.CENTRAL);
     private static final ArtifactCoordinate API = new ArtifactCoordinate("com.asbestosstar", "featurecreep-api", FC_VERSION, ArtifactResolver.CENTRAL);
     private static final ArtifactCoordinate BOOTSTRAP = new ArtifactCoordinate("com.asbestosstar", "featurecreep-bootstrap", FC_VERSION, ArtifactResolver.CENTRAL);
     private static final ArtifactCoordinate MIXIN = new ArtifactCoordinate("org.spongepowered", "mixin", MIXIN_VERSION, ArtifactResolver.SPONGE);
+    private static final ArtifactCoordinate JBOSS_MODULES = new ArtifactCoordinate("org.jboss.modules", "jboss-modules", JBOSS_MODULES_VERSION, ArtifactResolver.CENTRAL);
+    private static final ArtifactCoordinate MIXINEXTRAS = new ArtifactCoordinate("io.github.llamalad7", "mixinextras-common", MIXINEXTRAS_VERSION, ArtifactResolver.CENTRAL);
     private static final ArtifactCoordinate ASM = new ArtifactCoordinate("org.ow2.asm", "asm", ASM_VERSION, ArtifactResolver.CENTRAL);
     private static final ArtifactCoordinate ASM_ANALYSIS = new ArtifactCoordinate("org.ow2.asm", "asm-analysis", ASM_VERSION, ArtifactResolver.CENTRAL);
     private static final ArtifactCoordinate ASM_COMMONS = new ArtifactCoordinate("org.ow2.asm", "asm-commons", ASM_VERSION, ArtifactResolver.CENTRAL);
@@ -28,11 +32,12 @@ public final class MinecraftInstallSupport {
 
     /*
      * Minecraft version JSONs are not Maven builds: launchers do not resolve the
-     * transitive dependency graph for us. Mixin 0.8.7 is built against ASM 9.5,
-     * so every standalone/vanilla install must list the ASM modules explicitly.
+     * transitive dependency graph for us. The FeatureCreep bootstrap directly uses
+     * JBoss Modules, and Mixin 0.8.7 is built against ASM 9.5, so every standalone/
+     * vanilla install must list JBoss Modules and the ASM modules explicitly.
      */
     private static final List<ArtifactCoordinate> VANILLA_RUNTIME = List.of(
-            LOADER, API, BOOTSTRAP, MIXIN,
+            LOADER, API, BOOTSTRAP, JBOSS_MODULES, MIXIN, MIXINEXTRAS,
             ASM, ASM_ANALYSIS, ASM_COMMONS, ASM_TREE, ASM_UTIL);
 
     private MinecraftInstallSupport() {}

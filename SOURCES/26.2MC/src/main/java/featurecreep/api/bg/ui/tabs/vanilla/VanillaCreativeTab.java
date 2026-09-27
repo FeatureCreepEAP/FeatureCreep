@@ -1,72 +1,84 @@
 package featurecreep.api.bg.ui.tabs.vanilla;
 
+import featurecreep.api.bg.ui.tabs.ItemGroupHolder;
 import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 
 @Deprecated(forRemoval = true, since = "13")
-
 public class VanillaCreativeTab implements UnifiedItemGroupGetter {
 	public String tabname;
+	private final ItemGroupHolder holder = new ItemGroupHolder();
+
+	@Override
+	public ItemGroupHolder holder() {
+		return holder;
+	}
 
 	public VanillaCreativeTab(String name) {
 		tabname = name;
-		setTabName(getVanillaGroupFromString(this).getDisplayName().getString()); // May not work, ideally tabname
-																					// will be used for most //In
-																					// Yarn the ID is the String
-																					// name, kinda throws off
-																					// considering here its the
-																					// number
-		setID(0);// TODO
+		// Do not resolve CreativeModeTab instances here. In 26.1+ the creative-tab
+		// registry contains unbound holders during BuiltInRegistries bootstrap.
+		setTabName(name);
+		setID(0);
 	}
 
-//Minecraft Only gotta change the mappings for these once i figure them out
-	public static CreativeModeTab getVanillaGroupFromString(VanillaCreativeTab groupname) {
-		String tabId = null;
+	/**
+	 * Returns the stable vanilla creative-tab key without touching the registry.
+	 * This is safe during early bootstrap and should be preferred by new code.
+	 */
+	@Override
+	public ResourceKey<CreativeModeTab> getKey() {
+		return switch (tabname) {
+		case "BUILDING_BLOCKS" -> vanillaKey("building_blocks");
+		case "DECORATIONS" -> vanillaKey("functional_blocks");
+		case "TRANSPORTATION" -> vanillaKey("tools_and_utilities");
+		case "COMBAT" -> vanillaKey("combat");
+		case "FOOD" -> vanillaKey("food_and_drinks");
+		case "TOOLS" -> vanillaKey("tools_and_utilities");
+		case "REDSTONE" -> vanillaKey("redstone_blocks");
+		case "MATERIALS", "BREWING", "MISC" -> vanillaKey("ingredients");
+		default -> null;
+		};
+	}
 
-		switch (groupname.tabname) {
-		case "BUILDING_BLOCKS":
-			tabId = "building_blocks";
-			break;
-		case "DECORATIONS":
-			tabId = "functional_blocks"; // best match
-			break;
-		case "COMBAT":
-			tabId = "combat";
-			break;
-		case "FOOD":
-			tabId = "food_and_drinks";
-			break;
-		case "TOOLS":
-			tabId = "tools_and_utilities";
-			break;
-		case "REDSTONE":
-			tabId = "redstone_blocks";
-			break;
-		case "MATERIALS":
-		case "BREWING":
-		case "MISC":
-			tabId = "ingredients";
-			break;
-		case "TRANSPORTATION":
-			tabId = "functional_blocks";
-			break;
-		default:
+	/**
+	 * The vanilla creative-tab keys are private in some 26.x mappings. Build the
+	 * same ResourceKey from its stable vanilla identifier instead of referencing
+	 * CreativeModeTabs' implementation-private fields. This also avoids resolving
+	 * the registry value during early bootstrap.
+	 */
+	private static ResourceKey<CreativeModeTab> vanillaKey(String path) {
+		return ResourceKey.create(
+				BuiltInRegistries.CREATIVE_MODE_TAB.key(),
+				Identifier.fromNamespaceAndPath("minecraft", path));
+	}
+
+	/**
+	 * Legacy object lookup. The value is resolved lazily and returns null while
+	 * the holder is still unbound instead of throwing during game bootstrap.
+	 */
+	public static CreativeModeTab getVanillaGroupFromString(VanillaCreativeTab groupname) {
+		if (groupname == null) {
 			return null;
 		}
 
-		ResourceKey<CreativeModeTab> key = ResourceKey.create(Registries.CREATIVE_MODE_TAB,
-				Identifier.fromNamespaceAndPath("minecraft", tabId));
-		return BuiltInRegistries.CREATIVE_MODE_TAB.get(key).get().value();
+		ResourceKey<CreativeModeTab> key = groupname.getKey();
+		if (key == null) {
+			return null;
+		}
+
+		var holder = BuiltInRegistries.CREATIVE_MODE_TAB.get(key);
+		if (holder.isEmpty() || !holder.get().isBound()) {
+			return null;
+		}
+		return holder.get().value();
 	}
 
 	@Override
 	public CreativeModeTab get() {
-		// TODO Auto-generated method stub
 		return getVanillaGroupFromString(this);
 	}
-
 }

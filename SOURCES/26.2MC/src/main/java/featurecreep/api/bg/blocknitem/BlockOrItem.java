@@ -16,9 +16,10 @@ public interface BlockOrItem<T> {
 	public default void initialise(int id, String modid, String name, UnifiedItemGroupGetter group) {
 		setModId(modid);
 		setUnlocName(name);
-		setDefaultCreativeTab(group.get());
+		// 26.1+ creative tabs are bootstrapped after built-in item/block registries.
+		// Preserve the logical tab reference instead of resolving it during static init.
+		setDefaultCreativeTab(group);
 		setNumberID(id);
-
 	}
 
 	public void registerModels();
@@ -37,8 +38,20 @@ public interface BlockOrItem<T> {
 		return holder().number_id;
 	}
 
+	/**
+	 * Resolves the legacy CreativeModeTab lazily. During early bootstrap this may
+	 * legitimately return null because vanilla creative tabs are not bound yet.
+	 */
 	public default CreativeModeTab getDefaultCreativeTab() {
-		return holder().default_tab;
+		if (holder().default_tab != null) {
+			return holder().default_tab;
+		}
+		UnifiedItemGroupGetter getter = holder().default_tab_getter;
+		return getter == null ? null : getter.get();
+	}
+
+	public default UnifiedItemGroupGetter getDefaultCreativeTabGetter() {
+		return holder().default_tab_getter;
 	}
 
 	public default void setModId(String modid) {
@@ -53,8 +66,16 @@ public interface BlockOrItem<T> {
 		holder().number_id = id;
 	}
 
+	/** Legacy direct-tab setter retained for callers that already have a bound tab. */
 	public default void setDefaultCreativeTab(CreativeModeTab group) {
 		holder().default_tab = group;
+		holder().default_tab_getter = null;
+	}
+
+	/** Preferred 26.1+ form: retain the logical tab and resolve only when needed. */
+	public default void setDefaultCreativeTab(UnifiedItemGroupGetter group) {
+		holder().default_tab_getter = group;
+		holder().default_tab = null;
 	}
 
 	public default String getFCRegistryName() {
@@ -71,65 +92,20 @@ public interface BlockOrItem<T> {
 			FCBlockAPI block = (FCBlockAPI) this;
 			return new ItemStack(block.get(), amount);
 		}
-
 	}
 
 	public void appendOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl);
-
 	public void appendUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl);
-
-	// public boolean appendOnLeftClick(AbstractEntity holder, BlockOrItem ic,
-	// FCWorld worl);
-
 	public boolean appendOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl);
-
 	public boolean appendAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount);
-
 	public void appendLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
-
 	public void appendOnFoodEaten(AbstractEntity e);
-
 	public void appendOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid);
-
 	public void executeOnCrafted(AbstractPlayer p, BlockOrItem ic, FCWorld worl);
-
 	public void executeUpdate(AbstractEntity e, BlockOrItem ic, FCWorld worl);
-
-	// public boolean executeOnLeftClick(AbstractEntity holder, BlockOrItem ic,
-	// FCWorld worl) ;
-
 	public boolean executeOnRightClick(AbstractEntity holder, BlockOrItem ic, FCWorld worl);
-
 	public boolean executeAfterHit(AbstractEntity ent, AbstractEntity target, BlockOrItem ic, int holdcount);
-
 	public void executeLeftClickOnBlock(AbstractPlayer p, FCWorld worl, FCBlockPos pos, FCBlockAPI block, int side);
-
 	public void executeOnFoodEaten(AbstractEntity e);
-
 	public void executeOnBlockBroken(AbstractEntity ent, FCBlockPos pos, FCBlockAPI block, int wasbid);
-
-//public void inUseTick(Entity e, InventoryContainer ic, int invindex) {}
-
-//public void renderMeHeld(WorldRenderer wr, Entity e, InventoryContainer ic, boolean isdisplay) {}
-
-//public void onLeftClick(Entity holder, Entity clickedon, InventoryContainer ic, int d, double px, double py, double pz, int fx, int fy, int fz, int bid) {
-
-// public boolean onSwingStop(Entity holder, Entity clickedon, InventoryContainer ic) {
-
-//public boolean singleshot(Entity ent, InventoryContainer ic, int holdcount) {
-
-//public boolean semiauto(Entity ent, InventoryContainer ic, int holdcount) {
-
-//public boolean fullauto(Entity ent, InventoryContainer ic, int holdcount) {
-
-//public float getfullholdcount() {
-
-//public boolean rightClickOnBlock(Player p, int dimension, int x, int y, int z, int side) {
-
-//public void onBlockBroken(Entity ent, FCBlockAPI block, int wasbid) {}
-
-// public void vr_hit_something(Entity e, int bid) {
-
-//public void vr_hit_EntityBlockItem(Entity e) {
-
 }

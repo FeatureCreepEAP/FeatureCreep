@@ -77,7 +77,7 @@ mvn clean deploy -Pcentral-release
 - Fabric, MinecraftForge, NeoForge and SpongePowered are host-owned Mixin environments; FeatureCreep never resolves/downloads a replacement Mixin runtime for them.
 - Standardized on the version-specific `featurecreepimpl.mixins.json` config everywhere. Superloader metadata and shaded manifests now advertise it directly; `SpongeMixinConfig` remains only as a compatibility helper for older integrations.
 - The bootstrap manifest again carries `MixinConfigs: featurecreepimpl.mixins.json`; Fabric and Forge/NeoForge metadata also advertise that config. The compile-time `org.spongepowered:mixin` dependency is `provided`, so it is not a second runtime bundled into host-owned loaders.
-- Fabric uses a `preLaunch` entrypoint (`FabricBootstrapEntrypoint`) that calls `MinecraftCommonStartup.start()`, matching the native startup path used by Forge, NeoForge, and Sponge; Fabric still supplies the host Mixin runtime.
+- Fabric uses a `preLaunch` entrypoint (`FabricBootstrapEntrypoint`) that calls `MinecraftCommonStartup.bootstrap()`. This performs loader/module discovery and Mixin setup early, but intentionally defers `runMods()` until the game-side registry hook calls `FeatureCreepMC.init()`. Fabric still supplies the host Mixin runtime.
 - Added SpongePowered, RiftLoader and NilLoader `GameProvider` targets.
 - Rift integrates Mixin through its LaunchWrapper transformer path; NilLoader uses `nilloader.api.ClassTransformer`; neither path requires FeatureCreep Instrumentation by default.
 - Vanilla resolves/boots standalone Mixin only when FC modules declare Mixin configs; the agent is not attached during ordinary startup.

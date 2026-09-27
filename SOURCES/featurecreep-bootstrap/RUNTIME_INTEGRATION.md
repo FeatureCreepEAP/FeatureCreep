@@ -20,7 +20,7 @@ The canonical Minecraft Mixin configuration is `featurecreepimpl.mixins.json`. I
 
 Fabric, Forge, NeoForge, module metadata, and shaded JAR manifests all advertise that implementation config directly. There is no second bootstrap Mixin JSON layer. `SpongeMixinConfig` remains only as an idempotent compatibility helper for older integrations that may still instantiate the plugin class.
 
-Fabric additionally uses a `preLaunch` entrypoint (`FabricBootstrapEntrypoint`) that calls `MinecraftCommonStartup.start()`, matching the native startup path used by the other superloaders. Fabric still owns the active Mixin runtime.
+Fabric additionally uses a `preLaunch` entrypoint (`FabricBootstrapEntrypoint`) that calls `MinecraftCommonStartup.bootstrap()`. This performs loader/module discovery and Mixin setup at prelaunch without running content modules before Minecraft registries are ready. `FeatureCreepMC.init()` later calls the idempotent `MinecraftCommonStartup.start()` from the game-side registry hook. Fabric still owns the active Mixin runtime.
 
 FeatureCreep does **not** download or embed a second Mixin runtime on Fabric/Forge/NeoForge/Sponge. The Maven Mixin dependency is `provided`; Vanilla/Nil/Rift can still use the standalone resolver when their transformation path requires it.
 

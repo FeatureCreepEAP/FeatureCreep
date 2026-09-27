@@ -19,6 +19,7 @@ class MinecraftInstallSupportTest {
                 "com/asbestosstar/featurecreep-api/12/featurecreep-api-12.jar",
                 "com/asbestosstar/featurecreep-bootstrap/12/featurecreep-bootstrap-12.jar",
                 "com/asbestosstar/featurecreepmc-26.1.2/12/featurecreepmc-26.1.2-12.jar",
+                "org/jboss/modules/jboss-modules/2.3.0/jboss-modules-2.3.0.jar",
                 "org/spongepowered/mixin/0.8.7/mixin-0.8.7.jar",
                 "org/ow2/asm/asm/9.5/asm-9.5.jar",
                 "org/ow2/asm/asm-analysis/9.5/asm-analysis-9.5.jar",
@@ -36,6 +37,8 @@ class MinecraftInstallSupportTest {
 
         assertTrue(json.contains("-javaagent:${library_directory}/com/asbestosstar/featurecreep-bootstrap/12/featurecreep-bootstrap-12.jar"));
         assertTrue(json.contains("-Dfeaturecreep.launch.managed=true"));
+        assertTrue(json.contains("org.jboss.modules:jboss-modules:2.3.0"));
+        assertTrue(Files.isRegularFile(mc.resolve("libraries/org/jboss/modules/jboss-modules/2.3.0/jboss-modules-2.3.0.jar")));
         assertTrue(json.contains("org.ow2.asm:asm:9.5"));
         assertTrue(json.contains("org.ow2.asm:asm-analysis:9.5"));
         assertTrue(json.contains("org.ow2.asm:asm-commons:9.5"));
@@ -50,6 +53,7 @@ class MinecraftInstallSupportTest {
                 "com/asbestosstar/featurecreep-loader/12/featurecreep-loader-12.jar",
                 "com/asbestosstar/featurecreep-api/12/featurecreep-api-12.jar",
                 "com/asbestosstar/featurecreep-bootstrap/12/featurecreep-bootstrap-12.jar",
+                "org/jboss/modules/jboss-modules/2.3.0/jboss-modules-2.3.0.jar",
                 "org/spongepowered/mixin/0.8.7/mixin-0.8.7.jar",
                 "org/ow2/asm/asm/9.5/asm-9.5.jar",
                 "org/ow2/asm/asm-analysis/9.5/asm-analysis-9.5.jar",
