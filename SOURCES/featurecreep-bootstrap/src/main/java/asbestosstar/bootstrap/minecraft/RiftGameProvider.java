@@ -6,6 +6,11 @@ import java.util.zip.ZipFile;
 /** Rift Loader provider. Rift/LaunchWrapper supplies the class transformation chain. */
 public class RiftGameProvider extends MinecraftGameProvider {
     @Override
+    public String getLoaderId() {
+        return "rift";
+    }
+
+    @Override
     public boolean isSuperLoaderModZip(File zip) {
         if (zip == null || !zip.isFile() || !zip.getName().endsWith(".jar")) return false;
         try (ZipFile zf = new ZipFile(zip)) {

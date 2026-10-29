@@ -10,15 +10,20 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.mojang.serialization.JsonOps;
 
 import featurecreep.api.annotations.Internal;
 import featurecreep.api.annotations.Vainilla;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.CompositePackResources;
+import net.minecraft.server.packs.OverlayedPackResources;
+import net.minecraft.server.packs.PackMetadataResources;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
@@ -44,7 +49,7 @@ public interface VainillaResourcePack extends PackResources {
 	@Override
 	@Vainilla
 	public default IoSupplier<InputStream> getRootResource(String... var1) {
-		String name = String.join((CharSequence) "", var1);
+		String name = String.join("/", var1);
 		if (name.equals("pack.png")) {
 			Supplier<InputStream> sup = getPackPng();
 			if (sup != null) {
@@ -71,14 +76,11 @@ public interface VainillaResourcePack extends PackResources {
 		if (supplier == null) {
 			return null;
 		}
-		InputStream stream = supplier.get();
-		if (stream == null) {
-			return null;
-		}
-		IoSupplier<InputStream> ret = () -> {
-			return stream;
-		};
-		return ret;
+
+		// IoSupplier represents an operation that opens the resource. Do not eagerly
+		// open and capture one InputStream: Minecraft may ask for the same resource
+		// more than once and closes streams after reading them.
+		return supplier::get;
 	}
 
 	@Override
@@ -98,15 +100,13 @@ public interface VainillaResourcePack extends PackResources {
 	@Vainilla
 	public default void listResources(PackType dir, String namespace, String object_type, ResourceOutput output) {
 
-		String namespacelocation = dir.getDirectory() + "/" + namespace + "/";// this.appendOverlayPrefix(dir.getDirectory()
-																				// + "/" + namespace + "/"); TODO,
-																				// support subpacks better
-		String search_path = this.appendOverlayPrefix(namespacelocation + object_type + "/");
-		for (String entry : getEntries(search_path)) {
+		String namespaceLocation = this.appendOverlayPrefix(dir.getDirectory() + "/" + namespace + "/");
+		String searchPath = namespaceLocation + object_type + "/";
+		for (String entry : getEntries(searchPath)) {
 			if (!entry.endsWith("/")) {
-				String file_name_no_dir = entry.substring(namespacelocation.length());
-				Identifier lv = Identifier.fromNamespaceAndPath(namespace, file_name_no_dir);
-				output.accept(lv, desdeSupplierNormal(getStream(entry)));
+				String fileNameWithinNamespace = entry.substring(namespaceLocation.length());
+				Identifier location = Identifier.fromNamespaceAndPath(namespace, fileNameWithinNamespace);
+				output.accept(location, desdeSupplierNormal(getStream(entry)));
 			}
 		}
 
@@ -160,13 +160,15 @@ public interface VainillaResourcePack extends PackResources {
 
 	@Override
 	@Vainilla
-	public default <T> T getMetadataSection(MetadataSectionType<T> var1) throws IOException {
+	public default <T> T getMetadataSection(MetadataSectionType<T> type) throws IOException {
 		Gson gson = new Gson();
-		JsonObject obj = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
-		// if (!obj.has(var1.name())) {
-		return null;
-		// }
-		// return var1.codec().(GsonHelper.getAsJsonObject(obj, var1.name()));
+		JsonObject metadata = gson.getAdapter(JsonObject.class).fromJson(getPackMCMetaInfo().asJSON());
+		JsonElement rawSection = metadata.get(type.name());
+		if (rawSection == null) {
+			return null;
+		}
+
+		return type.codec().parse(JsonOps.INSTANCE, rawSection).getOrThrow(JsonParseException::new);
 	}
 
 	public FCPackMCMeta getPackMCMetaInfo();
@@ -206,7 +208,6 @@ public interface VainillaResourcePack extends PackResources {
 	 * For Minecraft 1.13+ the Resource Packs have a feature called overlays which
 	 * are like subpacks, this is the prefix for those
 	 * 
-	 * @param string
 	 * @return
 	 */
 	public default String getOverlay() {
@@ -256,30 +257,28 @@ public interface VainillaResourcePack extends PackResources {
 	@FunctionalInterface
 	public static interface Loader extends Pack.ResourcesSupplier {
 
-		public VainillaResourcePack getPack(String overley);
+		public VainillaResourcePack getPack(String overlay);
 
 		@Override
-		public default PackResources openPrimary(PackLocationInfo var1) {
-			// TODO Auto-generated method stub
+		public default PackMetadataResources openMetadata(PackLocationInfo location) {
 			return getPack("");
 		}
 
 		@Override
-		public default PackResources openFull(PackLocationInfo var1, Metadata var2) {
-			// TODO Auto-generated method stub
-
-			List<String> list = var2.overlays();
-			if (list.isEmpty()) {
-				return openPrimary(var1);
+		public default Stream<PackResources> openResources(PackLocationInfo location, Metadata metadata) {
+			VainillaResourcePack primary = getPack("");
+			List<String> overlays = metadata.overlays();
+			if (overlays.isEmpty()) {
+				return Stream.of(primary);
 			}
 
-			ArrayList<PackResources> list2 = new ArrayList<PackResources>(list.size());
-			for (String string : list) {
-				list2.add(getPack(string));
+			ArrayList<PackResources> overlayResources = new ArrayList<>(overlays.size());
+			for (String overlay : overlays) {
+				overlayResources.add(getPack(overlay));
 			}
-			return new CompositePackResources(openPrimary(var1), list2);
+
+			return Stream.of(new OverlayedPackResources(primary, overlayResources));
 		}
 
 	}
-
 }

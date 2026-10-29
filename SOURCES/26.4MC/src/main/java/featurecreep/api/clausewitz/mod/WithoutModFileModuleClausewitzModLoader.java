@@ -22,7 +22,7 @@ public class WithoutModFileModuleClausewitzModLoader implements ClausewitzModLoa
 	/**
 	 * A new Clausewitz Mod
 	 * 
-	 * @param fs The Filesystem to make a mod. the root of the filesystem is used
+	 * @param module The module to make a mod from; the root of the module is used
 	 */
 	public void search(Module module) {
 		Map<String, ModFile> mfs = setupModFile(module);

@@ -24,7 +24,7 @@ public class ModuleClausewitzModLoader implements ClausewitzModLoader<Module> {
 	/**
 	 * A new Clausewitz Mod
 	 * 
-	 * @param mod The module to search for .mod files and load all the mods. ATM
+	 * @param module The module to search for .mod files and load all the mods. ATM
 	 *            only does directories because the modloader should get pkzips
 	 */
 	public void search(Module module) {

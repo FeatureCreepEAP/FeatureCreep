@@ -10,6 +10,8 @@ import org.jboss.modules.Module;
 import asbestosstar.bootstrap.BootstrapCommon;
 import asbestosstar.bootstrap.minecraft.MinecraftCommonStartup;
 import featurecreep.api.bg.PackLoader;
+import featurecreep.api.bg.mc.config.FCMinecraftConfig;
+import featurecreep.api.bg.mc.config.FCMinecraftEvents;
 import featurecreep.api.clausewitz.mod.FileSystemClausewitzModLoader;
 import featurecreep.api.clausewitz.mod.Mod;
 import featurecreep.api.clausewitz.mod.ModuleClausewitzModLoader;
@@ -32,7 +34,9 @@ public class FeatureCreepMC {
         // game-side registries and Clausewitz discovery below have been prepared.
         MinecraftCommonStartup.bootstrap();
         FCItems.onInitialise();
-        
+        FCMinecraftEvents.install();
+        FCMinecraftConfig.install();
+
         // Search filesystem for Clausewitz mods
         try {
             clausewitz_filesystem_modloader.search(new DirectoryReader(new File(System.getProperty("user.dir"))));

@@ -2,6 +2,7 @@ package asbestosstar.bootstrap.installer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -21,6 +22,7 @@ import asbestosstar.bootstrap.FeatureCreepMain;
 public final class ArtifactResolver {
     public static final String CENTRAL = "https://repo1.maven.org/maven2/";
     public static final String SPONGE = "https://repo.spongepowered.org/repository/maven-public/";
+    public static final String FABRIC = "https://maven.fabricmc.net/";
 
     private final Path m2;
     private final HttpClient http;
@@ -41,7 +43,11 @@ public final class ArtifactResolver {
         // Resolution order is deliberate: the running installer may embed an exact
         // compatible artifact set, which takes precedence over a stale local cache.
         if (extractFromCurrentJar(c, local)) return local;
-        if (Files.isRegularFile(local) && Files.size(local) > 0) return local;
+        // The bootstrap coordinate keeps version 12 across rebuilds, so a plain
+        // existence check would reuse a stale cached jar from an earlier install
+        // forever. Compare a canary class against the running code and refresh the
+        // cache when it no longer matches what is actually running.
+        if (Files.isRegularFile(local) && Files.size(local) > 0 && !isStaleBootstrap(c, local)) return local;
 
         String base = c.repository() == null || c.repository().isBlank() ? CENTRAL : c.repository();
         URI uri = URI.create(base.endsWith("/") ? base + c.relativePath() : base + "/" + c.relativePath());
@@ -90,6 +96,22 @@ public final class ArtifactResolver {
             }
         }
         return false;
+    }
+
+    private static final String BOOTSTRAP_CANARY = "asbestosstar/bootstrap/BootstrapCommon.class";
+
+    private boolean isStaleBootstrap(ArtifactCoordinate c, Path local) {
+        if (!"featurecreep-bootstrap".equals(c.artifactId())) return false;
+        try (InputStream running = FeatureCreepMain.class.getClassLoader().getResourceAsStream(BOOTSTRAP_CANARY);
+             JarFile jf = new JarFile(local.toFile())) {
+            var entry = jf.getJarEntry(BOOTSTRAP_CANARY);
+            if (running == null || entry == null) return false;
+            if (Arrays.equals(running.readAllBytes(), jf.getInputStream(entry).readAllBytes())) return false;
+            System.err.println("[FeatureCreep] Cached " + c.notation() + " does not match the running installer; refreshing it.");
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     static boolean isBootstrapArtifact(Path jar) {

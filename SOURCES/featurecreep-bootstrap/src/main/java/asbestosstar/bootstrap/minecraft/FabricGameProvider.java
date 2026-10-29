@@ -6,6 +6,16 @@ import java.util.zip.ZipFile;
 /** Fabric/Knot provider. Fabric owns Mixin; FeatureCreep only contributes configs. */
 public class FabricGameProvider extends MinecraftGameProvider {
     @Override
+    public String getLoaderId() {
+        return "fabricloader";
+    }
+
+    @Override
+    public boolean canApplyAccessWidening() {
+        return false;
+    }
+
+    @Override
     public boolean isSuperLoaderModZip(File zip) {
         if (zip == null || !zip.isFile() || !zip.getName().endsWith(".jar")) return false;
         try (ZipFile zf = new ZipFile(zip)) {

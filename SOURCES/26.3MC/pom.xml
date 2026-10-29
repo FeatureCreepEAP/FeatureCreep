@@ -5,12 +5,44 @@
   <artifactId>featurecreepmc-26.3</artifactId>
   <version>12</version>
   <name>FeatureCreep Minecraft 26.3</name>
+  <description>FeatureCreep support for Minecraft 26.3.</description>
+  <url>https://github.com/FeatureCreepEAP/FeatureCreep</url>
+  <licenses>
+    <license>
+      <name>The Unlicense</name>
+      <url>https://unlicense.org/</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Asbestosstar</name>
+      <email>asbestosstar@asbestosstar.com</email>
+      <organization>Asbestosstar</organization>
+      <organizationUrl>https://asbestosstar.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/FeatureCreepEAP/FeatureCreep.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/FeatureCreepEAP/FeatureCreep.git</developerConnection>
+    <url>https://github.com/FeatureCreepEAP/FeatureCreep</url>
+  </scm>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>central</id>
+      <url>https://central.sonatype.org/</url>
+    </snapshotRepository>
+    <repository>
+      <id>central</id>
+      <url>https://central.sonatype.org/</url>
+    </repository>
+  </distributionManagement>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>25</maven.compiler.release>
     <minecraft.version>26.3</minecraft.version>
     <featurecreep.version>12</featurecreep.version>
     <featurecreep.jpms.module>featurecreep.minecraft.v26_3</featurecreep.jpms.module>
+    <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
   <build>
     <plugins>
@@ -46,7 +78,7 @@
       <plugin>
         <groupId>com.asbestosstar</groupId>
         <artifactId>fcdependencies-maven-plugin</artifactId>
-        <version>0.0.1</version>
+        <version>0.1.0</version>
         <executions>
           <execution>
             <id>resolve-minecraft</id>
@@ -57,6 +89,8 @@
           </execution>
         </executions>
         <configuration>
+          <minecraftVersion>${minecraft.version}</minecraftVersion>
+          <runMode>vanilla</runMode>
           <app>minecraft</app>
           <version>${minecraft.version}</version>
           <side>CLIENT</side>
@@ -96,8 +130,7 @@
                   <include>org.jboss.modules:jboss-modules</include>
                   <include>com.asbestosstar:featurecreep-loader</include>
                   <include>com.asbestosstar:featurecreep-api</include>
-                  <include>com.github.vincentzhang96:DDS4J</include>
-                  <include>ar.com.hjg:pngj</include>
+                  <include>io.github.llamalad7:mixinextras-common</include>
                 <include>com.asbestosstar:featurecreep-bootstrap</include></includes>
               </artifactSet>
               <filters>
@@ -130,10 +163,6 @@
       <id>FabricMC</id>
       <url>https://maven.fabricmc.net/</url>
     </repository>
-    <repository>
-      <id>jitpack</id>
-      <url>https://jitpack.io/</url>
-    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -155,6 +184,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>io.github.llamalad7</groupId>
+      <artifactId>mixinextras-common</artifactId>
+      <version>0.5.5</version>
+    </dependency>
+    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>33.4.8-jre</version>
@@ -164,6 +198,30 @@
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.13.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.mojang</groupId>
+      <artifactId>brigadier</artifactId>
+      <version>1.3.10</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.mojang</groupId>
+      <artifactId>datafixerupper</artifactId>
+      <version>9.0.19</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>it.unimi.dsi</groupId>
+      <artifactId>fastutil</artifactId>
+      <version>8.5.18</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <version>1.0.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -182,14 +240,88 @@
       <version>${featurecreep.version}</version>
       <scope>provided</scope></dependency>
     <dependency>
-      <groupId>com.github.vincentzhang96</groupId>
-      <artifactId>DDS4J</artifactId>
-      <version>1.0.2</version>
+      <groupId>org.joml</groupId>
+      <artifactId>joml</artifactId>
+      <version>1.10.9</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>ar.com.hjg</groupId>
-      <artifactId>pngj</artifactId>
-      <version>2.1.0</version>
+      <groupId>com.mojang</groupId>
+      <artifactId>datafixerupper</artifactId>
+      <version>10.0.21</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>central-release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.4.0</version>
+            <configuration>
+              <encoding>${project.build.sourceEncoding}</encoding>
+              <docencoding>UTF-8</docencoding>
+              <doclint>all,-missing</doclint>
+              <excludePackageNames>featurecreep.api.clausewitz</excludePackageNames>
+              <failOnError>false</failOnError>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.7.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>true</autoPublish>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

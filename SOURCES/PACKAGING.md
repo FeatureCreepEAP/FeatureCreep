@@ -22,14 +22,14 @@ The bundled JAR contains the current project's game-specific API plus exactly th
 - `org.jboss.modules:jboss-modules:2.3.0`
 - `com.asbestosstar:featurecreep-loader:12`
 - `com.asbestosstar:featurecreep-api:12`
-- `com.github.vincentzhang96:DDS4J:1.0.2`
-- `ar.com.hjg:pngj:2.1.0`
+
+DDS and PNG reading/writing comes from featurecreep-api's `featurecreep.api.image` package, so no separate image libraries are bundled.
 
 Minecraft/game libraries, Fabric/Forge/NeoForge/Sponge libraries, Guava/Gson and `featurecreep-bootstrap` remain external/provided. The bootstrap is intentionally not duplicated inside every game API JAR.
 
 ## Hearts of Iron IV
 
-The HOI4 target gets the same thin + bundled build, containing JBoss Modules + Loader + API, but not DDS4J/PNGJ because that target does not use the DDS resource-pack conversion code.
+The HOI4 target gets the same thin + bundled build, containing JBoss Modules + Loader + API.
 
 The bundled artifact is attached by `maven-shade-plugin` during the normal `package` phase; no profile or second Maven command is required.
 

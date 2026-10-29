@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,8 +19,9 @@ import featurecreep.api.annotations.Internal;
 import featurecreep.api.annotations.Vainilla;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.CompositePackResources;
+import net.minecraft.server.packs.OverlayedPackResources;
 import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackMetadataResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionType;
@@ -206,7 +208,6 @@ public interface VainillaResourcePack extends PackResources {
 	 * For Minecraft 1.13+ the Resource Packs have a feature called overlays which
 	 * are like subpacks, this is the prefix for those
 	 * 
-	 * @param string
 	 * @return
 	 */
 	public default String getOverlay() {
@@ -259,25 +260,22 @@ public interface VainillaResourcePack extends PackResources {
 		public VainillaResourcePack getPack(String overley);
 
 		@Override
-		public default PackResources openPrimary(PackLocationInfo var1) {
-			// TODO Auto-generated method stub
+		public default PackMetadataResources openMetadata(PackLocationInfo var1) {
 			return getPack("");
 		}
 
 		@Override
-		public default PackResources openFull(PackLocationInfo var1, Metadata var2) {
-			// TODO Auto-generated method stub
-
+		public default Stream<PackResources> openResources(PackLocationInfo var1, Metadata var2) {
 			List<String> list = var2.overlays();
 			if (list.isEmpty()) {
-				return openPrimary(var1);
+				return Stream.of(getPack(""));
 			}
 
 			ArrayList<PackResources> list2 = new ArrayList<PackResources>(list.size());
 			for (String string : list) {
 				list2.add(getPack(string));
 			}
-			return new CompositePackResources(openPrimary(var1), list2);
+			return Stream.of(new OverlayedPackResources(getPack(""), list2));
 		}
 
 	}

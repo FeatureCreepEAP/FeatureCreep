@@ -1,6 +1,5 @@
 package featurecreep.api.bg.resource_packs;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,12 +16,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import co.phoenixlab.dds.Dds;
-import co.phoenixlab.dds.DdsImageDecoder;
 import featurecreep.api.bg.PackLoader;
 import featurecreep.api.bg.VersionDependentContstants;
 import featurecreep.api.clausewitz.mod.Mod;
 import featurecreep.api.hashing.Md5;
+import featurecreep.api.image.ImageFormat;
+import featurecreep.api.image.Images;
 import featurecreep.api.io.BasicIO;
 
 public class ClausewitzModResourcePack implements VainillaResourcePack {
@@ -135,14 +134,9 @@ public class ClausewitzModResourcePack implements VainillaResourcePack {
 	}
 
 	public static byte[] convertDDSToPNG(byte[] dds_bytes) {
-		Dds dds = new Dds();
 		byte[] ret = null;
 		try {
-			dds.read(dds_bytes);
-			DdsImageDecoder decoder = new DdsImageDecoder();
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			decoder.convertToPNG(dds, outputStream);
-			ret = outputStream.toByteArray();
+			ret = Images.convert(dds_bytes, ImageFormat.PNG);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

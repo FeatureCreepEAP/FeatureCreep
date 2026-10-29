@@ -6,6 +6,11 @@ import java.util.zip.ZipFile;
 /** NilLoader provider. NilLoader's ClassTransformer API is used for Mixin transformation. */
 public class NilGameProvider extends MinecraftGameProvider {
     @Override
+    public String getLoaderId() {
+        return "nilloader";
+    }
+
+    @Override
     public boolean isSuperLoaderModZip(File zip) {
         if (zip == null || !zip.isFile() || !zip.getName().endsWith(".jar")) return false;
         try (ZipFile zf = new ZipFile(zip)) {

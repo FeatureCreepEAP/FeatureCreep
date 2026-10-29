@@ -12,7 +12,10 @@
     <property name="FeatureCreep-Nested-Jars" value="private"/>
     <property name="Module-Version" value="12"/>
     <property name="FeatureCreep-Target-Game" value="minecraft"/>
-    <property name="FeatureCreep-Target-Version" value="26.4-snapshot1"/>
+    <property name="FeatureCreep-Target-Version" value="26.4-snapshot-6"/>
+    <property name="FeatureCreep-Target-Version-Range" value="[26.4,27)"/>
+    <property name="FeatureCreep-Loader-Version-Range" value="[12,13)"/>
+    <property name="FeatureCreep-Config-Api-Version" value="1"/>
     <property name="MixinConfigs" value="featurecreepimpl.mixins.json"/>
   </properties>
   <resources>

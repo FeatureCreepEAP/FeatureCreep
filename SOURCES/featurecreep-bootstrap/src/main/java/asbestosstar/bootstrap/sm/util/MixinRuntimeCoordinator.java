@@ -4,6 +4,7 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.security.ProtectionDomain;
@@ -92,7 +93,6 @@ public final class MixinRuntimeCoordinator {
         if (!standaloneMixinBootstrap()) return;
         Object transformer = SpongeMixinUtils.activeTransformer();
         if (transformer == null) return;
-
         try {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
             Class<?> ct = Class.forName("nilloader.api.ClassTransformer", false, cl);
@@ -122,19 +122,44 @@ public final class MixinRuntimeCoordinator {
         }
 
         if (!standaloneMixinBootstrap()) return;
-        SpongeMixinUtils.injectSpongeMixins();
         Object transformer = SpongeMixinUtils.activeTransformer();
         if (transformer == null) return;
+        SpongeMixinUtils.debugMixinState(transformer,
+                "net/minecraft/core/registries/BuiltInRegistries",
+                "net/minecraft/client/gui/screens/TitleScreen");
 
         instrumentation.addTransformer(new ClassFileTransformer() {
             @Override
             public byte[] transform(Module module, ClassLoader loader, String className, Class<?> classBeingRedefined,
                     ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
                 if (className == null || classfileBuffer == null || excluded(className)) return null;
+                if (className.equals("net/minecraft/client/gui/screens/TitleScreen")
+                        || className.equals("net/minecraft/core/registries/BuiltInRegistries")) {
+                    System.out.println("[FeatureCreep] Mixin transformer saw " + className);
+                }
                 try {
                     byte[] out = SpongeMixinUtils.transform(transformer, className, classfileBuffer);
+                    if (out != null && out != classfileBuffer) {
+                        SyntheticClassDefiner.placeReferenced(out, transformer);
+                    }
+                    if (className != null
+                            && (className.equals("net/minecraft/client/gui/screens/TitleScreen")
+                            || className.equals("net/minecraft/core/registries/BuiltInRegistries"))) {
+                        System.out.println("[FeatureCreep] Mixin result " + className
+                                + ": input=" + classfileBuffer.length + " output="
+                                + (out == null ? "null" : out.length)
+                                + " changed=" + (out != classfileBuffer));
+                    }
                     return out == classfileBuffer ? null : out;
                 } catch (Throwable t) {
+                    if (className != null
+                            && (className.equals("net/minecraft/client/gui/screens/TitleScreen")
+                            || className.equals("net/minecraft/core/registries/BuiltInRegistries"))) {
+                        System.err.println("[FeatureCreep] Mixin transform exception for " + className
+                                + " using " + transformer.getClass().getName() + " from "
+                                + transformer.getClass().getClassLoader() + ": " + t);
+                        t.printStackTrace(System.err);
+                    }
                     throw new IllegalClassFormatException("Mixin transform failed for " + className + ": " + t);
                 }
             }
@@ -147,14 +172,43 @@ public final class MixinRuntimeCoordinator {
             System.err.println("[FeatureCreep] Standalone Mixin runtime could not be made available.");
             return false;
         }
+        Thread thread = Thread.currentThread();
+        ClassLoader previousLoader = thread.getContextClassLoader();
         try {
+            // Mixin discovers IMixinService implementations through the thread
+            // context loader. Keep bootstrap and its service providers in the
+            // same standalone class space; otherwise the application classpath
+            // exposes the stock LaunchWrapper/ModLauncher providers first and
+            // ServiceLoader tries to link their unavailable host classes.
+            ClassLoader standaloneLoader = SpongeMixinUtils.standaloneMixinClassLoader();
+            if (standaloneLoader != null) {
+                thread.setContextClassLoader(standaloneLoader);
+            }
+            System.setProperty("mixin.service", "asbestosstar.bootstrap.sm.mixinhost.StandaloneMixinService");
             Class<?> bootstrap = SpongeMixinUtils.mixinClass("org.spongepowered.asm.launch.MixinBootstrap");
+            // Follow the Fabric/Sponge lifecycle: init the service first, add
+            // configurations while its service is active, then inject the
+            // transformer so its processor prepares the complete config set.
             bootstrap.getMethod("init").invoke(null);
+            SpongeMixinUtils.advanceToDefaultPhase();
+            SpongeMixinUtils.activeTransformer();
+            SpongeMixinUtils.initMixinExtras();
             SpongeMixinUtils.registerBootstrapMixinConfig();
+            SpongeMixinUtils.injectSpongeMixins();
+            Method inject = bootstrap.getDeclaredMethod("inject");
+            if (!inject.canAccess(null)) inject.setAccessible(true);
+            inject.invoke(null);
             return true;
         } catch (Throwable t) {
-            System.err.println("[FeatureCreep] Standalone Mixin bootstrap failed: " + t);
+            Throwable failure = t;
+            if (t instanceof InvocationTargetException invocation && invocation.getCause() != null) {
+                failure = invocation.getCause();
+            }
+            System.err.println("[FeatureCreep] Standalone Mixin bootstrap failed: " + failure);
+            failure.printStackTrace(System.err);
             return false;
+        } finally {
+            thread.setContextClassLoader(previousLoader);
         }
     }
 

@@ -13,6 +13,9 @@
     <property name="Module-Version" value="12"/>
     <property name="FeatureCreep-Target-Game" value="minecraft"/>
     <property name="FeatureCreep-Target-Version" value="26.1.2"/>
+    <property name="FeatureCreep-Target-Version-Range" value="[26.1.2,26.2)"/>
+    <property name="FeatureCreep-Loader-Version-Range" value="[12,13)"/>
+    <property name="FeatureCreep-Config-Api-Version" value="1"/>
     <property name="MixinConfigs" value="featurecreepimpl.mixins.json"/>
   </properties>
   <resources>

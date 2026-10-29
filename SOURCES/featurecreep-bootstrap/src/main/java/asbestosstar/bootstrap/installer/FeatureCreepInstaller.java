@@ -19,13 +19,56 @@ import javax.swing.UIManager;
 
 /** Basic GUI installer. The application selector is intentionally extensible; Minecraft is implemented first. */
 public final class FeatureCreepInstaller {
+    private static final String DEFAULT_MINECRAFT_VERSION = "26.4";
+    private static final String INSTALL_SERVER_FLAG = "--install-server";
+
     private FeatureCreepInstaller() {}
 
     public static void launch(String[] args) {
+        Path serverTarget = serverInstallTarget(args);
+        if (serverTarget != null) {
+            System.exit(installServerFromCommandLine(serverTarget));
+        }
         SwingUtilities.invokeLater(() -> {
             installMotifIfAvailable();
             createFrame().setVisible(true);
         });
+    }
+
+    /**
+     * Returns the directory requested by {@code --install-server}, the current directory when the
+     * flag has no value, or null when the flag is absent.
+     */
+    static Path serverInstallTarget(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.equals(INSTALL_SERVER_FLAG)) {
+                boolean hasValue = i + 1 < args.length && !args[i + 1].startsWith("--");
+                return hasValue ? Path.of(args[i + 1]) : Path.of("").toAbsolutePath();
+            }
+            if (arg.startsWith(INSTALL_SERVER_FLAG + "=")) {
+                String value = arg.substring(INSTALL_SERVER_FLAG.length() + 1);
+                return value.isBlank() ? Path.of("").toAbsolutePath() : Path.of(value);
+            }
+        }
+        return null;
+    }
+
+    static int installServerFromCommandLine(Path target) {
+        String version = InstallerBundleMetadata.fixedMinecraftVersion();
+        if (version == null) version = DEFAULT_MINECRAFT_VERSION;
+        try {
+            MinecraftInstallSupport.InstallResult result =
+                    MinecraftInstallSupport.installServer(target, version, new ArtifactResolver());
+            System.out.println("Installed " + result.name() + " into " + target.toAbsolutePath().normalize());
+            System.out.println("Metadata: " + result.metadata());
+            System.out.println("Review eula.txt, then start with run-featurecreep-server.sh or run-featurecreep-server.bat.");
+            return 0;
+        } catch (Throwable t) {
+            System.err.println("Server installation failed: " + t);
+            t.printStackTrace(System.err);
+            return 1;
+        }
     }
 
     static void installMotifIfAvailable() {
@@ -49,8 +92,12 @@ public final class FeatureCreepInstaller {
                 ? "FeatureCreep 12 Installer - Minecraft " + fixedMinecraftVersion
                 : "FeatureCreep 12 Installer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(650, fixedBundle ? 255 : 300);
+        frame.setSize(720, 520);
         frame.setLocationRelativeTo(null);
+
+        InstallerConsole console = new InstallerConsole();
+        console.attach();
+        console.log("FeatureCreep installer ready. Pick a location and press Install; full output appears here and in featurecreep-install.log inside the target directory.");
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
@@ -62,7 +109,7 @@ public final class FeatureCreepInstaller {
         JComboBox<String> mode = new JComboBox<>(new String[] { "Vanilla Launcher / TLauncher", "Minecraft Server" });
         JComboBox<String> version = fixedBundle ? null
                 : new JComboBox<>(MinecraftInstallSupport.SUPPORTED_VERSIONS.toArray(String[]::new));
-        if (version != null) version.setSelectedItem("26.4");
+        if (version != null) version.setSelectedItem(DEFAULT_MINECRAFT_VERSION);
         JTextField location = new JTextField(MinecraftInstallSupport.defaultMinecraftDirectory().toString(), 38);
         JButton browse = new JButton("Browse…");
         JButton install = new JButton("Install");
@@ -95,17 +142,24 @@ public final class FeatureCreepInstaller {
 
         install.addActionListener(e -> {
             install.setEnabled(false);
+            console.clear();
+            Path target = Path.of(location.getText());
+            console.setLogFile(target.resolve("featurecreep-install.log"));
+            console.log("Installing FeatureCreep " + (mode.getSelectedIndex() == 0 ? "client" : "server")
+                    + " into " + target + " ...");
             try {
                 ArtifactResolver resolver = new ArtifactResolver();
                 String v = fixedBundle ? fixedMinecraftVersion : String.valueOf(version.getSelectedItem());
                 MinecraftInstallSupport.InstallResult result = mode.getSelectedIndex() == 0
                         ? MinecraftInstallSupport.installClient(Path.of(location.getText()), v, resolver)
                         : MinecraftInstallSupport.installServer(Path.of(location.getText()), v, resolver);
+                console.log("Installation finished: " + result.name() + " (metadata: " + result.metadata() + ")");
                 JOptionPane.showMessageDialog(frame,
                         "Installed " + result.name() + "\nMetadata: " + result.metadata() +
                         (mode.getSelectedIndex() == 1 ? "\nThe official vanilla server JAR was resolved automatically. Review eula.txt before starting." : ""),
                         "FeatureCreep", JOptionPane.INFORMATION_MESSAGE);
             } catch (Throwable t) {
+                console.log("Installation failed: " + t);
                 JOptionPane.showMessageDialog(frame, t.toString(), "Installation failed", JOptionPane.ERROR_MESSAGE);
                 t.printStackTrace(System.err);
             } finally {
@@ -113,7 +167,8 @@ public final class FeatureCreepInstaller {
             }
         });
 
-        frame.add(panel, BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.NORTH);
+        frame.add(console.component(), BorderLayout.CENTER);
         return frame;
     }
 

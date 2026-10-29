@@ -1,14 +1,4 @@
 
-PNGJ https://github.com/leonbloy/pngj/
-No Changes Made, used for PNG Manipulation
-Apache 2 Licence
-
-
-DDS4J
-https://github.com/vincentzhang96/DDS4J
-Changes made to not require the Java 8 specific Libraries. Used for converting DDS (HOI4) files to PNGs for MC & DZ
-MIT Licence
-
 SmallRye Common
 https://github.com/smallrye/smallrye-common
 Used to make JBoss DMR Work, no known changes made

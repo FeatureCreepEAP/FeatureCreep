@@ -7,6 +7,11 @@ import featurecreep.loader.ExecutionSide;
 public class MCForgeGameProvider extends MinecraftGameProvider {
 
 	@Override
+	public String getLoaderId() {
+		return "forge";
+	}
+
+	@Override
 	public ExecutionSide getExecutionSide() {
 		// Forge-compatible way to detect logical side (works in both dedicated server
 		// and client environments)
@@ -15,6 +20,11 @@ public class MCForgeGameProvider extends MinecraftGameProvider {
 		} else {
 			return ExecutionSide.SERVER;
 		}
+	}
+
+	@Override
+	public boolean canApplyAccessWidening() {
+		return false;
 	}
 
 	@Override

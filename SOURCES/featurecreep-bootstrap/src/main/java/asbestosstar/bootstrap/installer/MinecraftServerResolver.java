@@ -76,14 +76,14 @@ final class MinecraftServerResolver {
         return List.of(requested);
     }
 
-    private static String findVersionUrl(String manifest, String id) {
+    static String findVersionUrl(String manifest, String id) {
         Pattern p = Pattern.compile("\\{\\s*\\\"id\\\"\\s*:\\s*\\\"" + Pattern.quote(id)
                 + "\\\".*?\\\"url\\\"\\s*:\\s*\\\"([^\\\"]+)\\\"", Pattern.DOTALL);
         Matcher m = p.matcher(manifest);
         return m.find() ? unescape(m.group(1)) : null;
     }
 
-    private static Download findServerDownload(String json) {
+    static Download findServerDownload(String json) {
         Pattern block = Pattern.compile("\\\"server\\\"\\s*:\\s*\\{(.*?)\\}", Pattern.DOTALL);
         Matcher bm = block.matcher(json);
         if (!bm.find()) return null;
@@ -112,5 +112,5 @@ final class MinecraftServerResolver {
         return HexFormat.of().formatHex(md.digest());
     }
 
-    private record Download(URI uri, String sha1) {}
+    record Download(URI uri, String sha1) {}
 }

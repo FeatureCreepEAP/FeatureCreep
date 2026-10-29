@@ -10,6 +10,11 @@ import featurecreep.loader.ExecutionSide;
 public class MedusaGameProvider extends MinecraftGameProvider {
 
 	@Override
+	public String getLoaderId() {
+		return "neoforge";
+	}
+
+	@Override
 	public List<String> getAvoidedModSuffixes() {
 		// TODO Auto-generated method stub
 
@@ -30,6 +35,11 @@ public class MedusaGameProvider extends MinecraftGameProvider {
 		} else {
 			return ExecutionSide.SERVER;
 		}
+	}
+
+	@Override
+	public boolean canApplyAccessWidening() {
+		return false;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class FileSystemClausewitzModLoader implements ClausewitzModLoader<FileSy
 	/**
 	 * A new Clausewitz Mod
 	 * 
-	 * @param fs The Filesystem to search for the .mod files and load the mods
+	 * @param searchfs The Filesystem to search for the .mod files and load the mods
 	 */
 	public void search(FileSystem searchfs) {
 		Map<String, ModFile> mfs = setupModFile(searchfs);

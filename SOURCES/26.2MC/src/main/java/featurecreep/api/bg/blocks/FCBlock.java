@@ -10,8 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,7 +37,7 @@ public class FCBlock extends Block implements FCBlockAPI<FCBlock> {
 	}
 
 	@Override
-	public void playerDestroy(ServerLevel world, ServerPlayer player, BlockPos pos, BlockState state,
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state,
 			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		player.awardStat(Stats.BLOCK_MINED.get(this));
 		player.causeFoodExhaustion(0.005f);

@@ -208,7 +208,6 @@ public interface VainillaResourcePack extends PackResources {
 	 * For Minecraft 1.13+ the Resource Packs have a feature called overlays which
 	 * are like subpacks, this is the prefix for those
 	 * 
-	 * @param string
 	 * @return
 	 */
 	public default String getOverlay() {

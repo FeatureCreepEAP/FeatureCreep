@@ -1,16 +1,21 @@
 package featurecreep.api.bg.resource_packs;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.jboss.modules.IterableResourceLoader;
 import org.jboss.modules.Module;
 import org.jboss.modules.ResourceLoader;
 
+import featurecreep.api.bg.mc.config.FCMinecraftConfig;
 import featurecreep.api.dmr.ModelNode;
 import featurecreep.loader.utils.ResourceLoaderObtainer;
 
@@ -19,6 +24,8 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 
 	public Module mod;
 	String overlay;// Does not do anything
+	private List<String> jarEntryNames;
+	private File moduleJar;
 
 	public ModuleVainillaResourcePack(Module mod, String overlay) {
 		this.overlay = overlay;
@@ -54,7 +61,7 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 		}
 
 		if (str.isEmpty()) {
-			return null;
+			return readFromModuleJar(location);
 		} else {
 			InputStream stream = str.get(0);// There should only be one
 			if (stream != null) {
@@ -82,7 +89,52 @@ public class ModuleVainillaResourcePack implements VainillaResourcePack {
 			}
 		}
 
+		if (str.isEmpty()) {
+			for (String name : moduleJarEntryNames()) {
+				if (name.startsWith(prefix)) {
+					str.add(name);
+				}
+			}
+		}
+
 		return str;
+	}
+
+	private List<String> moduleJarEntryNames() {
+		if (jarEntryNames == null) {
+			List<String> names = new ArrayList<String>();
+			File jar = moduleJarFile();
+			if (jar != null) {
+				try (JarFile jarFile = new JarFile(jar)) {
+					jarFile.stream().filter(e -> !e.isDirectory()).forEach(e -> names.add(e.getName()));
+				} catch (IOException e) {
+					System.err.println("[FeatureCreep] Could not read module jar " + jar + ": " + e);
+				}
+			}
+			jarEntryNames = names;
+		}
+		return jarEntryNames;
+	}
+
+	private Supplier<InputStream> readFromModuleJar(String location) {
+		File jar = moduleJarFile();
+		if (jar == null || !moduleJarEntryNames().contains(location)) {
+			return null;
+		}
+		try (JarFile jarFile = new JarFile(jar)) {
+			JarEntry entry = jarFile.getJarEntry(location);
+			if (entry == null) return null;
+			byte[] bytes = jarFile.getInputStream(entry).readAllBytes();
+			return () -> new ByteArrayInputStream(bytes);
+		} catch (IOException e) {
+			System.err.println("[FeatureCreep] Could not read " + location + " from module jar " + jar + ": " + e);
+			return null;
+		}
+	}
+
+	private File moduleJarFile() {
+		if (moduleJar == null) moduleJar = FCMinecraftConfig.moduleJar(mod);
+		return moduleJar;
 	}
 
 	@Override

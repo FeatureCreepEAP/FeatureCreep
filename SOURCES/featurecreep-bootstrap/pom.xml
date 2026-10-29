@@ -245,31 +245,31 @@
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
-      <version>9.5</version>
+      <version>9.8</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm-analysis</artifactId>
-      <version>9.5</version>
+      <version>9.8</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm-commons</artifactId>
-      <version>9.5</version>
+      <version>9.8</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm-tree</artifactId>
-      <version>9.5</version>
+      <version>9.8</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm-util</artifactId>
-      <version>9.5</version>
+      <version>9.8</version>
       <scope>provided</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/net.minecraftforge/eventbus -->
@@ -594,9 +594,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.spongepowered</groupId>
-      <artifactId>mixin</artifactId>
-      <version>0.8.7</version>
+      <groupId>net.fabricmc</groupId>
+      <artifactId>sponge-mixin</artifactId>
+      <version>0.17.4+mixin.0.8.7</version>
       <scope>provided</scope>
     </dependency>
     <!-- End of Do not include these in fat jar -->
@@ -657,34 +657,34 @@
                       <destFileName>jboss-modules-2.3.0.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>org.spongepowered</groupId><artifactId>mixin</artifactId><version>0.8.7</version>
+                      <groupId>net.fabricmc</groupId><artifactId>sponge-mixin</artifactId><version>0.17.4+mixin.0.8.7</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>mixin-0.8.7.jar</destFileName>
+                      <destFileName>sponge-mixin-0.17.4+mixin.0.8.7.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>org.ow2.asm</groupId><artifactId>asm</artifactId><version>9.5</version>
+                      <groupId>org.ow2.asm</groupId><artifactId>asm</artifactId><version>9.8</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>asm-9.5.jar</destFileName>
+                      <destFileName>asm-9.8.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>org.ow2.asm</groupId><artifactId>asm-analysis</artifactId><version>9.5</version>
+                      <groupId>org.ow2.asm</groupId><artifactId>asm-analysis</artifactId><version>9.8</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>asm-analysis-9.5.jar</destFileName>
+                      <destFileName>asm-analysis-9.8.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>org.ow2.asm</groupId><artifactId>asm-commons</artifactId><version>9.5</version>
+                      <groupId>org.ow2.asm</groupId><artifactId>asm-commons</artifactId><version>9.8</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>asm-commons-9.5.jar</destFileName>
+                      <destFileName>asm-commons-9.8.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>org.ow2.asm</groupId><artifactId>asm-tree</artifactId><version>9.5</version>
+                      <groupId>org.ow2.asm</groupId><artifactId>asm-tree</artifactId><version>9.8</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>asm-tree-9.5.jar</destFileName>
+                      <destFileName>asm-tree-9.8.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>org.ow2.asm</groupId><artifactId>asm-util</artifactId><version>9.5</version>
+                      <groupId>org.ow2.asm</groupId><artifactId>asm-util</artifactId><version>9.8</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>asm-util-9.5.jar</destFileName>
+                      <destFileName>asm-util-9.8.jar</destFileName>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
@@ -696,6 +696,9 @@
     </profile>
     <profile>
       <id>central-release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <maven.deploy.skip>false</maven.deploy.skip>
       </properties>

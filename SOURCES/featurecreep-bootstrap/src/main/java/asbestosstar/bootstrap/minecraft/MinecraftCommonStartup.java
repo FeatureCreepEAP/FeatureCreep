@@ -1,9 +1,20 @@
 package asbestosstar.bootstrap.minecraft;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.jar.JarFile;
+
+import org.jboss.modules.Module;
+
 import asbestosstar.bootstrap.BootstrapCommon;
 import asbestosstar.bootstrap.sm.util.MixinRuntimeCoordinator;
 import featurecreep.loader.FCLoaderBasicR9;
 import featurecreep.loader.GameProvider;
+import featurecreep.loader.finder.FCFileSystemClassPathFinder;
 
 /** Shared Minecraft bootstrap across vanilla and supported superloaders. */
 public final class MinecraftCommonStartup {
@@ -12,15 +23,32 @@ public final class MinecraftCommonStartup {
     public static final MinecraftHostKind HOST = MinecraftHostDetector.detect();
     public static final GameProvider prov = getGameProvider(HOST);
 
+    // Guarded by identityLock. Listeners wait for publication, then are released once.
+    private static final Object identityLock = new Object();
+    private static MinecraftGameIdentity identity;
+    private static boolean identityPublished;
+    private static final List<Consumer<MinecraftGameIdentity>> identityListeners = new ArrayList<>();
+
     private MinecraftCommonStartup() {}
 
     /** Loads FeatureCreep modules and configures only the transformation facilities actually required. */
     public static synchronized void bootstrap() {
         if (bootstrapped) return;
 
+        defineModuleJarsOnAppClassPath();
         BootstrapCommon.loader = new FCLoaderBasicR9(prov, 8);
-        System.out.println("Starting FeatureCreep on " + HOST + ". Loading JBoss Modules:");
+        MinecraftGameIdentity resolved = identity();
+        publishIdentity(resolved);
+        System.out.println("Starting FeatureCreep on " + HOST + " (" + resolved.gameId() + " "
+                + resolved.gameVersion() + ", loader " + resolved.loaderId() + " " + resolved.loaderVersion()
+                + "). Loading JBoss Modules:");
         BootstrapCommon.loader.loadMods();
+        if (prov.getDebugMode()) {
+            for (Module module : BootstrapCommon.loader.getModules()) {
+                System.out.println("[FeatureCreep] Loaded module " + module.getName()
+                        + " from " + module.getClassLoader());
+            }
+        }
 
         boolean moduleDeclaredInstrumentation = BootstrapCommon.loader.isHotswapNeeded();
         boolean mixinDeclaredInstrumentation = MixinRuntimeCoordinator.mixinsRequireInstrumentation(HOST);
@@ -62,6 +90,29 @@ public final class MinecraftCommonStartup {
         bootstrapped = true;
     }
 
+    /**
+     * Puts FeatureCreep module jars on the application class path so vanilla classes
+     * (which the app loader defines) and modules share one definition of each class.
+     */
+    private static void defineModuleJarsOnAppClassPath() {
+        if (BootstrapCommon.instrument == null) BootstrapCommon.initDefault();
+        if (BootstrapCommon.instrument == null) return;
+        File[] jars = new File(System.getProperty("user.dir"), "mods").listFiles((dir, name) -> name.endsWith(".jar"));
+        if (jars == null) return;
+        for (File jar : jars) {
+            if (MinecraftGameProvider.isFeatureCreepPlatformJar(jar)) continue;
+            try {
+                try (JarFile probe = new JarFile(jar)) {
+                    if (probe.getEntry("module.xml") == null) continue;
+                }
+                BootstrapCommon.instrument.appendToSystemClassLoaderSearch(new JarFile(jar));
+                FCFileSystemClassPathFinder.registerAppClassPathJar(jar);
+            } catch (IOException e) {
+                System.err.println("[FeatureCreep] Could not place module jar on the app class path: " + jar + " " + e);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         bootstrap();
         start();
@@ -72,6 +123,71 @@ public final class MinecraftCommonStartup {
         if (started) return;
         BootstrapCommon.loader.runMods();
         started = true;
+    }
+
+    /**
+     * Game and loader identity of the active provider. Resolved on first use and cached.
+     * Safe to call before {@link #bootstrap()}; it does not start any modules.
+     */
+    public static MinecraftGameIdentity identity() {
+        synchronized (identityLock) {
+            if (identity == null) {
+                identity = prov instanceof MinecraftGameProvider mgp
+                        ? mgp.getGameIdentity()
+                        : new MinecraftGameIdentity(null, null, null, null, null);
+            }
+            return identity;
+        }
+    }
+
+    /**
+     * Registers a config-API hook that receives the identity once bootstrap publishes it.
+     * If the identity was already published, the listener is invoked immediately on the caller's thread.
+     * Listeners that throw are logged and skipped so they cannot break startup.
+     */
+    public static void addIdentityListener(Consumer<MinecraftGameIdentity> listener) {
+        Objects.requireNonNull(listener, "listener");
+        MinecraftGameIdentity current;
+        synchronized (identityLock) {
+            if (!identityPublished) {
+                identityListeners.add(listener);
+                return;
+            }
+            current = identity;
+        }
+        notifyIdentityListener(listener, current);
+    }
+
+    /** Publishes the identity to pending listeners exactly once per listener. Package-private for tests. */
+    static void publishIdentity(MinecraftGameIdentity published) {
+        Objects.requireNonNull(published, "published");
+        List<Consumer<MinecraftGameIdentity>> pending;
+        synchronized (identityLock) {
+            identity = published;
+            identityPublished = true;
+            pending = List.copyOf(identityListeners);
+            identityListeners.clear();
+        }
+        for (Consumer<MinecraftGameIdentity> listener : pending) {
+            notifyIdentityListener(listener, published);
+        }
+    }
+
+    /** Clears identity state and pending listeners. Package-private, for tests only. */
+    static void resetIdentityForTests() {
+        synchronized (identityLock) {
+            identity = null;
+            identityPublished = false;
+            identityListeners.clear();
+        }
+    }
+
+    private static void notifyIdentityListener(Consumer<MinecraftGameIdentity> listener, MinecraftGameIdentity value) {
+        try {
+            listener.accept(value);
+        } catch (RuntimeException e) {
+            System.err.println("[FeatureCreep] Identity listener failed: " + e);
+        }
     }
 
     private static GameProvider getGameProvider(MinecraftHostKind host) {

@@ -4,12 +4,11 @@ import featurecreep.api.bg.ui.tabs.UnifiedItemGroupGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 
 @Deprecated(forRemoval = true, since = "13")
 
-public class FCAxe extends AxeItem implements ToolsAPI<FCAxe> {
+public class FCAxe extends Item implements ToolsAPI<FCAxe> {
 
 	public ToolFieldHolder holder = new ToolFieldHolder();
 
@@ -21,8 +20,8 @@ public class FCAxe extends AxeItem implements ToolsAPI<FCAxe> {
 	public FCAxe(int id, String modid, String name, UnifiedItemGroupGetter group, FCToolMaterial material,
 			int attackDamage, int attackSpeed) {
 
-		// Llama al constructor moderno de AxeItem (1.21.10+)
-		super(material.toMinecraftToolMaterial(), attackDamage, attackSpeed, new Item.Properties()
+		// Minecraft 26.1.x configures axes through Item.Properties rather than AxeItem.
+		super(new Item.Properties().axe(material.toMinecraftToolMaterial(), attackDamage, attackSpeed)
 				.setId(ResourceKey.create(BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(modid, name))));
 
 		initialise(id, modid, name, group, material, attackDamage, attackSpeed);
