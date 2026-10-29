@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.asbestosstar</groupId>
   <artifactId>featurecreep-bootstrap</artifactId>
-  <version>12</version>
+  <version>12.1</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -222,12 +222,12 @@
     <repository>
       <id>TLauncher</id>
       <name>TLauncher</name>
-      <url>http://res.tlauncher.org</url>
+      <url>https://res.tlauncher.org</url>
     </repository>
     <repository>
       <id>NeoForge</id>
       <name>NeoForge</name>
-      <url>https://maven.neoforged.net/</url>
+      <url>https://maven.neoforged.net/releases/</url>
     </repository>
     <repository>
       <id>FabricMC</id>
@@ -534,7 +534,7 @@
     <dependency>
       <groupId>net.minecraftforge</groupId>
       <artifactId>modlauncher</artifactId>
-      <version>10.2.1</version>
+      <version>10.2.6</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -578,13 +578,13 @@
     <dependency>
       <groupId>cpw.mods</groupId>
       <artifactId>modlauncher</artifactId>
-      <version>10.1.10</version>
+      <version>10.1.12</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.neoforged.fancymodloader</groupId>
       <artifactId>loader</artifactId>
-      <version>10.0.14</version>
+      <version>10.0.37</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -603,13 +603,13 @@
     <dependency>
       <groupId>com.asbestosstar</groupId>
       <artifactId>featurecreep-api</artifactId>
-      <version>12</version>
+      <version>12.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.asbestosstar</groupId>
       <artifactId>featurecreep-loader</artifactId>
-      <version>12</version>
+      <version>12.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -642,14 +642,14 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>com.asbestosstar</groupId><artifactId>featurecreep-loader</artifactId><version>12</version>
+                      <groupId>com.asbestosstar</groupId><artifactId>featurecreep-loader</artifactId><version>12.1</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>featurecreep-loader-12.jar</destFileName>
+                      <destFileName>featurecreep-loader-12.1.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
-                      <groupId>com.asbestosstar</groupId><artifactId>featurecreep-api</artifactId><version>12</version>
+                      <groupId>com.asbestosstar</groupId><artifactId>featurecreep-api</artifactId><version>12.1</version>
                       <outputDirectory>${project.build.outputDirectory}/META-INF/featurecreep/artifacts</outputDirectory>
-                      <destFileName>featurecreep-api-12.jar</destFileName>
+                      <destFileName>featurecreep-api-12.1.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
                       <groupId>org.jboss.modules</groupId><artifactId>jboss-modules</artifactId><version>2.3.0</version>

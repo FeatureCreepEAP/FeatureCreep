@@ -89,8 +89,8 @@ public final class FeatureCreepInstaller {
         boolean fixedBundle = fixedMinecraftVersion != null;
 
         JFrame frame = new JFrame(fixedBundle
-                ? "FeatureCreep 12 Installer - Minecraft " + fixedMinecraftVersion
-                : "FeatureCreep 12 Installer");
+                ? "FeatureCreep " + MinecraftInstallSupport.FC_VERSION + " Installer - Minecraft " + fixedMinecraftVersion
+                : "FeatureCreep " + MinecraftInstallSupport.FC_VERSION + " Installer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(720, 520);
         frame.setLocationRelativeTo(null);

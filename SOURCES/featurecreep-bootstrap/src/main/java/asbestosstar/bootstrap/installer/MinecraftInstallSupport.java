@@ -11,7 +11,7 @@ import java.util.List;
 
 /** Writes launcher/TLauncher-compatible client profiles and dedicated server layouts. */
 public final class MinecraftInstallSupport {
-    public static final String FC_VERSION = "12";
+    public static final String FC_VERSION = "12.1";
     public static final String MIXIN_VERSION = "0.17.4+mixin.0.8.7";
     public static final String ASM_VERSION = "9.8";
     public static final String JBOSS_MODULES_VERSION = "2.3.0";
@@ -59,7 +59,7 @@ public final class MinecraftInstallSupport {
         Files.createDirectories(root.resolve("libraries"));
         List<Resolved> artifacts = resolveIntoMinecraftLibraries(root, resolver);
 
-        String profileId = "FeatureCreep-" + mcVersion + "-12";
+        String profileId = "FeatureCreep-" + mcVersion + "-" + FC_VERSION;
         Path versionDir = root.resolve("versions").resolve(profileId);
         Files.createDirectories(versionDir);
         Path json = versionDir.resolve(profileId + ".json");
@@ -153,7 +153,7 @@ public final class MinecraftInstallSupport {
                 "  \"format\": 2,\n" +
                 "  \"minecraftVersion\": \"" + escape(mcVersion) + "\",\n" +
                 "  \"minecraftServerJar\": \"" + escape(serverJar) + "\",\n" +
-                "  \"featureCreepVersion\": \"12\",\n" +
+                "  \"featureCreepVersion\": \"" + FC_VERSION + "\",\n" +
                 "  \"mainClass\": \"asbestosstar.bootstrap.minecraft.VanillaMinecraftServerLauncher\",\n" +
                 "  \"jvmArgs\": [\"-Dfeaturecreep.minecraft.host=vanilla\",\"-Dfeaturecreep.launch.managed=true\",\"" + escape(agent) + "\"],\n" +
                 "  \"libraryClasspath\": \"" + escape(cp.toString()) + "\"\n" +
