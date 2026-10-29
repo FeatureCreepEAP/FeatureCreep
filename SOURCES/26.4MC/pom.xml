@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.asbestosstar</groupId>
   <artifactId>featurecreepmc-26.4</artifactId>
-  <version>12.2</version>
+  <version>12.3</version>
   <name>FeatureCreep Minecraft 26.4</name>
   <description>FeatureCreep support for Minecraft 26.4.</description>
   <url>https://github.com/FeatureCreepEAP/FeatureCreep</url>
@@ -40,7 +40,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>25</maven.compiler.release>
     <minecraft.version>26.4-snapshot-6</minecraft.version>
-    <featurecreep.version>12.2</featurecreep.version>
+    <featurecreep.version>12.3</featurecreep.version>
     <featurecreep.jpms.module>featurecreep.minecraft.v26_4</featurecreep.jpms.module>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>

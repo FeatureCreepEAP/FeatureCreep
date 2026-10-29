@@ -49,8 +49,7 @@ public final class ArtifactResolver {
         // cache when it no longer matches what is actually running.
         if (Files.isRegularFile(local) && Files.size(local) > 0 && !isStaleBootstrap(c, local)) return local;
 
-        String base = c.repository() == null || c.repository().isBlank() ? CENTRAL : c.repository();
-        URI uri = URI.create(base.endsWith("/") ? base + c.relativePath() : base + "/" + c.relativePath());
+        URI uri = URI.create(urlOf(c));
         Path tmp = Files.createTempFile(local.getParent(), c.artifactId(), ".download");
         try {
             HttpRequest request = HttpRequest.newBuilder(uri).GET().header("User-Agent", "FeatureCreep-Installer/12").build();
@@ -126,6 +125,11 @@ public final class ArtifactResolver {
         }
         String name = jar.getFileName().toString();
         return name.startsWith("featurecreep-bootstrap-") && name.endsWith(".jar");
+    }
+
+    public static String urlOf(ArtifactCoordinate c) {
+        String base = c.repository() == null || c.repository().isBlank() ? CENTRAL : c.repository();
+        return base.endsWith("/") ? base + c.relativePath() : base + "/" + c.relativePath();
     }
 
     public Path m2Repository() { return m2; }

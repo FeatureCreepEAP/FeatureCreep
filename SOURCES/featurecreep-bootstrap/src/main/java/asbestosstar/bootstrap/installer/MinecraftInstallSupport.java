@@ -5,13 +5,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.security.MessageDigest;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.List;
 
 /** Writes launcher/TLauncher-compatible client profiles and dedicated server layouts. */
 public final class MinecraftInstallSupport {
-    public static final String FC_VERSION = "12.2";
+    public static final String FC_VERSION = "12.3";
     public static final String MIXIN_VERSION = "0.17.4+mixin.0.8.7";
     public static final String ASM_VERSION = "9.8";
     public static final String JBOSS_MODULES_VERSION = "2.3.0";
@@ -56,8 +58,11 @@ public final class MinecraftInstallSupport {
     public static InstallResult installClient(Path minecraftDir, String mcVersion, ArtifactResolver resolver) throws Exception {
         validateVersion(mcVersion);
         Path root = minecraftDir.toAbsolutePath().normalize();
-        Files.createDirectories(root.resolve("libraries"));
-        List<Resolved> artifacts = resolveIntoMinecraftLibraries(root, resolver);
+        Path libraries = root.resolve("libraries");
+        Files.createDirectories(libraries);
+        List<Resolved> artifacts = new ArrayList<>(resolveInto(libraries, resolver, VANILLA_RUNTIME));
+        Resolved game = installGameJar(libraries, mcVersion, resolver);
+        artifacts.add(game);
 
         String profileId = "FeatureCreep-" + mcVersion + "-" + FC_VERSION;
         Path versionDir = root.resolve("versions").resolve(profileId);
@@ -65,13 +70,8 @@ public final class MinecraftInstallSupport {
         Path json = versionDir.resolve(profileId + ".json");
         Files.writeString(json, clientJson(profileId, mcVersion, artifacts), StandardCharsets.UTF_8);
 
-        // The child version JAR is the version-specific FeatureCreep Minecraft
-        // implementation. When the installer itself is a stamped all-in-one JAR,
-        // use that exact JAR and never ask the user to select another game version.
-        // A generic bootstrap installer resolves the matching thin game artifact.
-        Path gameJar = resolveGameJar(mcVersion, resolver);
         Path profileJar = versionDir.resolve(profileId + ".jar");
-        if (!gameJar.equals(profileJar)) Files.copy(gameJar, profileJar, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(game.path(), profileJar, StandardCopyOption.REPLACE_EXISTING);
 
         List<Path> installed = new ArrayList<>(artifacts.stream().map(Resolved::path).toList());
         installed.add(profileJar);
@@ -82,13 +82,8 @@ public final class MinecraftInstallSupport {
         validateVersion(mcVersion);
         Path root = serverDir.toAbsolutePath().normalize();
         Files.createDirectories(root.resolve("libraries"));
-        List<Resolved> artifacts = new ArrayList<>(resolveIntoServerLibraries(root, resolver));
-        ArtifactCoordinate gameCoordinate = gameCoordinate(mcVersion);
-        Path gameSource = resolveGameJar(mcVersion, resolver);
-        Path gameTarget = root.resolve("libraries").resolve(gameCoordinate.relativePath());
-        Files.createDirectories(gameTarget.getParent());
-        if (!gameSource.equals(gameTarget)) Files.copy(gameSource, gameTarget, StandardCopyOption.REPLACE_EXISTING);
-        artifacts.add(new Resolved(gameCoordinate, gameTarget));
+        List<Resolved> artifacts = new ArrayList<>(resolveInto(root.resolve("libraries"), resolver, VANILLA_RUNTIME));
+        artifacts.add(installGameJar(root.resolve("libraries"), mcVersion, resolver));
         Path config = root.resolve("featurecreep-server.json");
         String serverJar = "minecraft_server." + mcVersion + ".jar";
         new MinecraftServerResolver().ensureServerJar(root, mcVersion, serverJar);
@@ -100,17 +95,9 @@ public final class MinecraftInstallSupport {
         return new InstallResult("FeatureCreep Server " + mcVersion, config, artifacts.stream().map(Resolved::path).toList());
     }
 
-    private static List<Resolved> resolveIntoMinecraftLibraries(Path root, ArtifactResolver resolver) throws Exception {
-        return resolveInto(root.resolve("libraries"), resolver);
-    }
-
-    private static List<Resolved> resolveIntoServerLibraries(Path root, ArtifactResolver resolver) throws Exception {
-        return resolveInto(root.resolve("libraries"), resolver);
-    }
-
-    private static List<Resolved> resolveInto(Path libraries, ArtifactResolver resolver) throws Exception {
+    private static List<Resolved> resolveInto(Path libraries, ArtifactResolver resolver, List<ArtifactCoordinate> coordinates) throws Exception {
         List<Resolved> out = new ArrayList<>();
-        for (ArtifactCoordinate c : VANILLA_RUNTIME) {
+        for (ArtifactCoordinate c : coordinates) {
             Path source = resolver.resolve(c);
             Path target = libraries.resolve(c.relativePath());
             Files.createDirectories(target.getParent());
@@ -120,14 +107,11 @@ public final class MinecraftInstallSupport {
         return out;
     }
 
-    private static String clientJson(String id, String mcVersion, List<Resolved> artifacts) {
+    private static String clientJson(String id, String mcVersion, List<Resolved> artifacts) throws Exception {
         StringBuilder libs = new StringBuilder();
         for (int i = 0; i < artifacts.size(); i++) {
-            ArtifactCoordinate c = artifacts.get(i).coordinate();
             if (i > 0) libs.append(",\n");
-            libs.append("    {\"name\":\"").append(escape(c.notation())).append("\"");
-            if (c.repository() != null) libs.append(",\"url\":\"").append(escape(c.repository())).append("\"");
-            libs.append("}");
+            libs.append(libraryJson(artifacts.get(i)));
         }
         String agent = "-javaagent:${library_directory}/" + BOOTSTRAP.relativePath().replace('\\', '/');
         return "{\n" +
@@ -140,6 +124,17 @@ public final class MinecraftInstallSupport {
                 "  \"arguments\": {\"jvm\":[\"-Dfeaturecreep.minecraft.host=vanilla\",\"-Dfeaturecreep.launch.managed=true\",\"" + escape(agent) + "\"],\"game\":[]},\n" +
                 "  \"libraries\": [\n" + libs + "\n  ]\n" +
                 "}\n";
+    }
+
+    private static String libraryJson(Resolved r) throws Exception {
+        ArtifactCoordinate c = r.coordinate();
+        byte[] bytes = Files.readAllBytes(r.path());
+        String sha1 = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-1").digest(bytes));
+        return "    {\"name\":\"" + escape(c.notation()) + "\",\"downloads\":{\"artifact\":{"
+                + "\"path\":\"" + escape(c.relativePath()) + "\","
+                + "\"url\":\"" + escape(ArtifactResolver.urlOf(c)) + "\","
+                + "\"sha1\":\"" + sha1 + "\","
+                + "\"size\":" + bytes.length + "}}}";
     }
 
     private static String serverJson(String mcVersion, String serverJar, List<Resolved> artifacts) {
@@ -187,6 +182,15 @@ public final class MinecraftInstallSupport {
 
     private static ArtifactCoordinate gameCoordinate(String mcVersion) {
         return new ArtifactCoordinate("com.asbestosstar", "featurecreepmc-" + mcVersion, FC_VERSION, ArtifactResolver.CENTRAL);
+    }
+
+    private static Resolved installGameJar(Path libraries, String mcVersion, ArtifactResolver resolver) throws Exception {
+        ArtifactCoordinate game = gameCoordinate(mcVersion);
+        Path source = resolveGameJar(mcVersion, resolver);
+        Path target = libraries.resolve(game.relativePath());
+        Files.createDirectories(target.getParent());
+        if (!source.equals(target)) Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+        return new Resolved(game, target);
     }
 
     private static Path resolveGameJar(String mcVersion, ArtifactResolver resolver) throws Exception {
