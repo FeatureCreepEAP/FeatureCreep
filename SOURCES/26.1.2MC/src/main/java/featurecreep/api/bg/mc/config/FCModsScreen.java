@@ -122,7 +122,7 @@ public class FCModsScreen extends Screen {
         if (row == null) return;
         Optional<Object> created = FCMinecraftConfig.api().createScreen(row.modId, this);
         if (created.isPresent() && created.get() instanceof Screen screen) {
-            Minecraft.getInstance().gui.setScreen(screen);
+            Minecraft.getInstance().setScreen(screen);
         } else {
             System.err.println("FeatureCreep FC Mods: no config screen was produced for '" + row.modId + "'");
         }
@@ -211,12 +211,12 @@ public class FCModsScreen extends Screen {
         Identifier id = icon != null ? icon.id() : FALLBACK_ICON;
         int texWidth = icon != null ? icon.width() : FALLBACK_ICON_SIZE;
         int texHeight = icon != null ? icon.height() : FALLBACK_ICON_SIZE;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, id, x, y, 0, 0, size, size, texWidth, texHeight);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, id, x, y, 0, 0, size, size, texWidth, texHeight, texWidth, texHeight);
     }
 
     @Override
     public void onClose() {
-        Minecraft.getInstance().gui.setScreen(parent);
+        Minecraft.getInstance().setScreen(parent);
     }
 
     private static Icon iconFor(Module module, String modId) {

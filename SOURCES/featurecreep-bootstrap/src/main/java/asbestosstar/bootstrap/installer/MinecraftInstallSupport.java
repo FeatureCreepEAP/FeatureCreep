@@ -11,7 +11,7 @@ import java.util.List;
 
 /** Writes launcher/TLauncher-compatible client profiles and dedicated server layouts. */
 public final class MinecraftInstallSupport {
-    public static final String FC_VERSION = "12.1";
+    public static final String FC_VERSION = "12.2";
     public static final String MIXIN_VERSION = "0.17.4+mixin.0.8.7";
     public static final String ASM_VERSION = "9.8";
     public static final String JBOSS_MODULES_VERSION = "2.3.0";

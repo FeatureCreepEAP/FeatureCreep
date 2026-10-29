@@ -211,7 +211,7 @@ public class FCModsScreen extends Screen {
         Identifier id = icon != null ? icon.id() : FALLBACK_ICON;
         int texWidth = icon != null ? icon.width() : FALLBACK_ICON_SIZE;
         int texHeight = icon != null ? icon.height() : FALLBACK_ICON_SIZE;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, id, x, y, 0, 0, size, size, texWidth, texHeight);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, id, x, y, 0, 0, size, size, texWidth, texHeight, texWidth, texHeight);
     }
 
     @Override

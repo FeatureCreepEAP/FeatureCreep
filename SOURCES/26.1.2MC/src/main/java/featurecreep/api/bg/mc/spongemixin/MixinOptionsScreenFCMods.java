@@ -24,7 +24,7 @@ public class MixinOptionsScreenFCMods extends Screen {
     private void featurecreep$addFcModsButton(CallbackInfo ci) {
         Screen self = this;
         this.addRenderableWidget(Button.builder(Component.literal("FC Mods"),
-                        button -> Minecraft.getInstance().gui.setScreen(new FCModsScreen(self)))
+                        button -> Minecraft.getInstance().setScreen(new FCModsScreen(self)))
                 .bounds(4, this.height - 24, 80, 20)
                 .build());
     }

@@ -22,8 +22,7 @@ import featurecreep.api.annotations.Internal;
 import featurecreep.api.annotations.Vainilla;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.OverlayedPackResources;
-import net.minecraft.server.packs.PackMetadataResources;
+import net.minecraft.server.packs.CompositePackResources;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
@@ -260,16 +259,15 @@ public interface VainillaResourcePack extends PackResources {
 		public VainillaResourcePack getPack(String overlay);
 
 		@Override
-		public default PackMetadataResources openMetadata(PackLocationInfo location) {
+		public default PackResources openPrimary(PackLocationInfo location) {
 			return getPack("");
 		}
 
 		@Override
-		public default Stream<PackResources> openResources(PackLocationInfo location, Metadata metadata) {
-			VainillaResourcePack primary = getPack("");
+		public default PackResources openFull(PackLocationInfo location, Metadata metadata) {
 			List<String> overlays = metadata.overlays();
 			if (overlays.isEmpty()) {
-				return Stream.of(primary);
+				return openPrimary(location);
 			}
 
 			ArrayList<PackResources> overlayResources = new ArrayList<>(overlays.size());
@@ -277,7 +275,7 @@ public interface VainillaResourcePack extends PackResources {
 				overlayResources.add(getPack(overlay));
 			}
 
-			return Stream.of(new OverlayedPackResources(primary, overlayResources));
+			return new CompositePackResources(openPrimary(location), overlayResources);
 		}
 
 	}

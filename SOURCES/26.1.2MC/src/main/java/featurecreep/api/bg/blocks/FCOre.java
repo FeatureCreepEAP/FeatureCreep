@@ -11,8 +11,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -43,7 +42,7 @@ public class FCOre extends DropExperienceBlock implements FCBlockAPI<FCOre> {
 	}
 
 	@Override
-	public void playerDestroy(ServerLevel world, ServerPlayer player, BlockPos pos, BlockState state,
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state,
 			@Nullable BlockEntity blockEntity, ItemStack stack) {
 		player.awardStat(Stats.BLOCK_MINED.get(this));
 		player.causeFoodExhaustion(0.005f);

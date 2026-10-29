@@ -36,7 +36,7 @@ public class MixinPauseScreenFCMods extends Screen {
         }
         Screen self = this;
         this.addRenderableWidget(Button.builder(Component.literal("FC Mods"),
-                        button -> Minecraft.getInstance().gui.setScreen(new FCModsScreen(self)))
+                        button -> Minecraft.getInstance().setScreen(new FCModsScreen(self)))
                 .bounds(4, 4, 80, 20)
                 .build());
     }

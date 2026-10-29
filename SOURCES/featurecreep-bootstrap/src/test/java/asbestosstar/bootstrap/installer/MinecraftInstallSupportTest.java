@@ -12,9 +12,9 @@ import org.junit.jupiter.api.io.TempDir;
 
 class MinecraftInstallSupportTest {
     private static final List<String> RUNTIME_ARTIFACTS = List.of(
-            "com/asbestosstar/featurecreep-loader/12.1/featurecreep-loader-12.1.jar",
-            "com/asbestosstar/featurecreep-api/12.1/featurecreep-api-12.1.jar",
-            "com/asbestosstar/featurecreep-bootstrap/12.1/featurecreep-bootstrap-12.1.jar",
+            "com/asbestosstar/featurecreep-loader/12.2/featurecreep-loader-12.2.jar",
+            "com/asbestosstar/featurecreep-api/12.2/featurecreep-api-12.2.jar",
+            "com/asbestosstar/featurecreep-bootstrap/12.2/featurecreep-bootstrap-12.2.jar",
             "org/jboss/modules/jboss-modules/2.3.0/jboss-modules-2.3.0.jar",
             "net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar",
             "io/github/llamalad7/mixinextras-common/0.5.5/mixinextras-common-0.5.5.jar",
@@ -23,7 +23,7 @@ class MinecraftInstallSupportTest {
             "org/ow2/asm/asm-commons/9.8/asm-commons-9.8.jar",
             "org/ow2/asm/asm-tree/9.8/asm-tree-9.8.jar",
             "org/ow2/asm/asm-util/9.8/asm-util-9.8.jar");
-    private static final String GAME_ARTIFACT = "com/asbestosstar/featurecreepmc-26.1.2/12.1/featurecreepmc-26.1.2-12.1.jar";
+    private static final String GAME_ARTIFACT = "com/asbestosstar/featurecreepmc-26.1.2/12.2/featurecreepmc-26.1.2-12.2.jar";
 
     @TempDir Path temp;
 
@@ -37,7 +37,7 @@ class MinecraftInstallSupportTest {
         var result = MinecraftInstallSupport.installClient(mc, "26.1.2", new ArtifactResolver(m2));
         String json = Files.readString(result.metadata());
 
-        assertTrue(json.contains("-javaagent:${library_directory}/com/asbestosstar/featurecreep-bootstrap/12.1/featurecreep-bootstrap-12.1.jar"));
+        assertTrue(json.contains("-javaagent:${library_directory}/com/asbestosstar/featurecreep-bootstrap/12.2/featurecreep-bootstrap-12.2.jar"));
         assertTrue(json.contains("-Dfeaturecreep.launch.managed=true"));
         assertTrue(json.contains("org.jboss.modules:jboss-modules:2.3.0"));
         assertTrue(Files.isRegularFile(mc.resolve("libraries/org/jboss/modules/jboss-modules/2.3.0/jboss-modules-2.3.0.jar")));
@@ -64,8 +64,8 @@ class MinecraftInstallSupportTest {
         String bat = Files.readString(server.resolve("run-featurecreep-server.bat"));
         assertTrue(sh.contains("cd \"$(dirname \"$0\")\" || exit 1"));
         assertTrue(bat.contains("cd /d \"%~dp0\""));
-        assertTrue(sh.contains("-javaagent:libraries/com/asbestosstar/featurecreep-bootstrap/12.1/featurecreep-bootstrap-12.1.jar"));
-        assertTrue(bat.contains("-javaagent:libraries\\com\\asbestosstar\\featurecreep-bootstrap\\12.1\\featurecreep-bootstrap-12.1.jar"));
+        assertTrue(sh.contains("-javaagent:libraries/com/asbestosstar/featurecreep-bootstrap/12.2/featurecreep-bootstrap-12.2.jar"));
+        assertTrue(bat.contains("-javaagent:libraries\\com\\asbestosstar\\featurecreep-bootstrap\\12.2\\featurecreep-bootstrap-12.2.jar"));
         for (String script : List.of(sh, bat)) {
             assertTrue(script.contains("-Dfeaturecreep.launch.managed=true"));
             assertTrue(script.contains("asbestosstar.bootstrap.minecraft.VanillaMinecraftServerLauncher"));

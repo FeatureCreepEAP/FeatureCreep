@@ -51,7 +51,7 @@ public abstract class MixinTitleScreenFCMods extends Screen {
         boolean hasIcon = FCTitleIcon.get() != null;
         this.featurecreep$fcModsButton = this.addRenderableWidget(new FCTitleButton(0, 0, 20, 20,
                 Component.literal(hasIcon ? "" : "FC"),
-                button -> Minecraft.getInstance().gui.setScreen(new FCModsScreen(self))));
+                button -> Minecraft.getInstance().setScreen(new FCModsScreen(self))));
         this.featurecreep$fcModsButton.setPosition(this.getHorizontalPosition(currentButton.get(), numberOfButtons, 20), topPos);
         featurecreep.api.bg.mc.config.FCMixinDiagnostics.markFcModsButtonAdded();
     }
